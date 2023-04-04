@@ -41,7 +41,6 @@ const upload = multer({storage});
 
 //ROUTES WITH FILES
 app.post("/api/v1/auth/register", upload.single("picture"), register);
-
 //ROUTES
 app.use("/api/v1/auth", authRoutes);
 
