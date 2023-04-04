@@ -21,7 +21,9 @@ export const register = async (req, res) => {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return res.status(409).json({ message: "Cette adresse email est déja utilisée." });
+      return res
+        .status(409)
+        .json({ message: "Cette adresse email est déja utilisée." });
     }
 
     const salt = await bcrypt.genSalt();
@@ -52,19 +54,22 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({email: email});
-    if(!user){
-        return res.status(404).json({message: "L'email que vous avez rentré n'existe pas."})
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "L'email que vous avez rentré n'existe pas." });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if(!isMatch){
-        return res.status(404).json({message: "L'email et le mot de passe ne corresponde pas."})
+    if (!isMatch) {
+      return res
+        .status(404)
+        .json({ message: "L'email et le mot de passe ne corresponde pas." });
     }
+
     delete user.password;
-
     res.status(200).json(user);
-
   } catch (error) {
     res.status(500).json({ error: err.message });
   }
