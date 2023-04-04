@@ -11,9 +11,7 @@ export const register = async (req, res, next) => {
   if (!errors.isEmpty) {
     return next(new HttpError("Données incorrects", 422));
   }
-
-  const { firstname, lastname, email, password, location, imagePath, grade } =
-    req.body;
+  const { firstname, lastname, email, password, location, imagePath, grade } = req.body;
 
   let existingUser;
   try {
@@ -45,7 +43,6 @@ export const register = async (req, res, next) => {
     grade,
   });
 
- 
   try {
     await newUser.save();
   } catch (err) {
@@ -62,10 +59,15 @@ export const register = async (req, res, next) => {
 //LOGIN
 //@POST
 //ROUTE : api/v1/auth/login
-export const login = async (req, res) => {
-  try {
+export const login = async (req, res, next) => {
     const { email, password } = req.body;
-    const user = await User.findOne({ email: email });
+    let user;
+    try {
+        user = await User.findOne({ email: email });
+    } catch (err) {
+        const error = new HttpError('Erreur lors de l\'authentification, réessayer plus tard.', 500);
+    }
+    
     if (!user) {
       return res
         .status(404)
@@ -78,10 +80,6 @@ export const login = async (req, res) => {
         .status(404)
         .json({ message: "L'email et le mot de passe ne corresponde pas." });
     }
-
     delete user.password;
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ error: err.message });
-  }
+    res.status(200).json({message: "Logged In", user: user.toObject({ getters: true })});
 };
