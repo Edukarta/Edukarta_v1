@@ -1,51 +1,62 @@
 import bcrypt from "bcrypt";
 import User from "../models/UserModel.js";
+import { validationResult } from "express-validator";
+import HttpError from "../models/http-errors.js";
 
 //REGISTER
 //@POST
 //ROUTE : api/v1/auth/register
-export const register = async (req, res) => {
-  try {
-    const {
-      firstname,
-      lastname,
-      email,
-      password,
-      location,
-      favoriteSchools,
-      status,
-      imagePath,
-      grade,
-    } = req.body;
-
-    const existingUser = await User.findOne({ email });
-
-    if (existingUser) {
-      return res
-        .status(409)
-        .json({ message: "Cette adresse email est déja utilisée." });
-    }
-
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt);
-
-    const newUser = new User({
-      firstname,
-      lastname,
-      email,
-      password: passwordHash,
-      location,
-      favoriteSchools,
-      status,
-      imagePath,
-      grade,
-    });
-
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+export const register = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty) {
+    return next(new HttpError("Données incorrects", 422));
   }
+
+  const { firstname, lastname, email, password, location, imagePath, grade } =
+    req.body;
+
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (err) {
+    const error = new HttpError(
+      "Signing up failed, please try again later.",
+      500
+    );
+    return next(error);
+  }
+
+  if (existingUser) {
+    const error = new HttpError("Cet Email est déja utilisé", 422);
+    return next(error);
+  }
+
+  const salt = await bcrypt.genSalt();
+  const passwordHash = await bcrypt.hash(password, salt);
+
+  const newUser = new User({
+    firstname,
+    lastname,
+    email,
+    password: passwordHash,
+    location,
+    favoriteSchools: [],
+    imagePath,
+    grade,
+  });
+
+ 
+  try {
+    await newUser.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Echec lors de la création du compte, réessayez plus tard.",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(201).json({ user: newUser.toObject({ getters: true }) });
 };
 
 //LOGIN
