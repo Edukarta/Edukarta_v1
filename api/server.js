@@ -11,7 +11,7 @@ import dbConnect from "./config/dbConnect.js";
 import { register } from "./controllers/authControllers.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-
+import schoolsRoutes from "./routes/schoolsRoutes.js";
 
 
 //CONFIGURATION
@@ -48,7 +48,8 @@ app.post("/api/v1/auth/register", upload.single("picture"), register);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 
+app.use("/api/v1/schools", schoolsRoutes);
 
 const PORT = process.env.PORT || 3330;
 dbConnect();
-app.listen(PORT, () => console.log(`Backend connected on port : ${PORT}`))
+app.listen(PORT, () => console.log(`Backend connected on port : ${PORT}`));
