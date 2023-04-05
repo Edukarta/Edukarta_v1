@@ -1,38 +1,38 @@
-import Institution from "../models/InstitutionModel.js";
+import School from "../models/SchoolModel.js";
 
-//SHOW ALL INSTITUTIONS
+//SHOW ALL SCHOOLS
 //@GET
-//ROUTE : api/v1/schools/institutions
-export const getAllInstitutions = async (req, res) => {
+//ROUTE : api/v1/schools
+export const getAllSchools = async (req, res) => {
   try {
-    const institutions = await Institution.find();
-    res.status(200).json(institutions);
+    const schools = await School.find();
+    res.status(200).json(schools);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-//SHOW ONE INSTITUTION
+//SHOW ONE SCHOOL
 //@GET
-//ROUTE : api/v1/schools/institutions/:id
-export const getInstitutionById = async (req, res) => {
+//ROUTE : api/v1/schools/:id
+export const getSchoolById = async (req, res) => {
   try {
     const { id } = req.params;
-    const institution = await Institution.findById(id);
-    if (!institution) {
+    const school = await School.findById(id);
+    if (!school) {
       res.status(404).json({ message: "Institution non trouvée" });
     } else {
-      res.status(200).json(institution);
+      res.status(200).json(school);
     }
   } catch (error) {
     res.status(500).json({ error: err.message });
   }
 };
 
-//CREATE INSTITUTION
+//CREATE SCHOOL
 //@POST
 //ROUTE : api/v1/schools
-export const addInstitution = async (req, res) => {
+export const addSchool = async (req, res) => {
   try {
     const {
       name,
@@ -55,15 +55,15 @@ export const addInstitution = async (req, res) => {
       international,
     } = req.body;
 
-    const existingInstitution = await Institution.findOne({ address });
+    const existingSchool = await School.findOne({ address });
 
-    if (existingInstitution) {
+    if (existingSchool) {
       return res
         .status(409)
         .json({ message: "Une institution existe déjà à cette adresse" });
     }
 
-    const newInstitution = new Institution({
+    const newSchool = new School({
       name,
       originalName,
       acronym,
@@ -84,40 +84,40 @@ export const addInstitution = async (req, res) => {
       international,
     });
 
-    const savedInstitution = await newInstitution.save();
+    const savedSchool= await newSchool.save();
 
-    res.status(201).json(savedInstitution);
+    res.status(201).json(savedSchool);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-//UPDATE AN INSTITUTION
+//UPDATE AN SCHOOL
 //@PATCH
-//ROUTE : api/v1/schools/institutions/id
-export const updateInstitution = async (req, res) => {
+//ROUTE : api/v1/schools/:id
+export const updateSchool = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const institution = await Institution.findById(id);
+    const school = await School.findById(id);
 
-    Object.assign(institution, req.body);
+    const updatedSchool = Object.assign(school, req.body);
 
-    const savedInstitution = await updatesInstitution.save();
+    const savedSchool = await updatedSchool.save();
 
-    res.status(200).json(savedInstitution);
+    res.status(200).json(savedSchool);
   } catch (error) {
     res.status(500).json({ error: err.message });
   }
 };
 
-//CREATE AN INSTITUTION
+//CREATE AN SCHOOL
 //@DELETE
-//ROUTE : api/v1/schools/institutions/id
-export const deleteInstitution = async (req, res) => {
+//ROUTE : api/v1/schools/:id
+export const deleteSchool = async (req, res) => {
   try {
-    const institutionId = req.params.id;
-    await Institution.findByIdAndDelete(institutionId);
+    const schoolId = req.params.id;
+    await School.findByIdAndDelete(schoolId);
 
     res.status(200).json({ message: "Institution supprimée avec succès" });
   } catch (error) {

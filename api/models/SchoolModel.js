@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const InstitutionSchema = new mongoose.Schema({
+const SchoolSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -81,5 +81,5 @@ const InstitutionSchema = new mongoose.Schema({
   },
 });
 
-const Institution = mongoose.model("Institution", InstitutionSchema);
-export default Institution;
+const School = mongoose.model("School", SchoolSchema);
+export default School;
