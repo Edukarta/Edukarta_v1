@@ -1,6 +1,8 @@
 import { validationResult } from "express-validator";
 import User from "../models/UserModel.js";
+import School from "../models/SchoolModel.js";
 import HttpError from "../models/http-errors.js";
+import mongoose from "mongoose";
 
 //GET ALL USERS
 //@GET
@@ -118,5 +120,36 @@ export const deleteUser = async (req, res, next) => {
 //@DPATCH
 //ROUTE : api/v1/user/:id/:schoolId
 export const addRemoveSchool = async (req, res, next) => {
+  const { id, schoolId } = req.params;
+  let user;
+  let school;
+  try {
+    user = await User.findById(id).populate('favoriteSchools');
+    school = await School.findById(schoolId)
+  } catch (err) {
+    const error = HttpError(
+      "Un problème est survenu, impossible d'ajouter cette école à votre liste",
+      500
+    );
+    return next(error);
+  }
  
+  if (user.favoriteSchools.includes(schoolId)) {
+    user.favoriteSchools = user.favoriteSchools.filter((id) => id.toString() !== schoolId);
+  } else {
+    user.favoriteSchools.push(schoolId);
+  }
+
+  try {
+    await user.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Un problème est survenu, réessayez plus tard.",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ user: user.toObject({ getters: true }) });
+  
 };

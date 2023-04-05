@@ -26,19 +26,21 @@ const UserSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    required: true
+    required: true,
   },
-  favoriteSchools: [{ type: mongoose.Types.ObjectId, ref: 'School' }],
-  status:{
+  favoriteSchools: {
+    type: Array,
+    default: [],
+  },
+  status: {
     type: Number,
-    default: 0
+    default: 0,
   },
   imagePath: {
     type: String,
     default: "",
   },
   grade: String,
-
 });
 
 const User = mongoose.model("User", UserSchema);
