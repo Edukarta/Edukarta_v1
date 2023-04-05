@@ -5,7 +5,7 @@ const InstitutionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  original_name: {
+  originalName: {
     type: String,
     default: "",
   },
