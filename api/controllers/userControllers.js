@@ -83,34 +83,40 @@ export const updateUser = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(200).json({user: user.toObject({getters: true})});
+  res.status(200).json({ user: user.toObject({ getters: true }) });
 };
-
 
 //DELETE USER
 //@DELETE
 //ROUTE : api/v1/user/:id
 export const deleteUser = async (req, res, next) => {
-    const { id } = req.params;
-  
-    let user;
-    try {
-      user = await User.findByIdAndDelete(id);
-    } catch (err) {
-      const error = HttpError(
-        "Un problème est survenu, impossible de trouver l'utilisateur",
-        500
-      );
-      return next(error);
-    }
-  
-    if (!user) {
-      const error = HttpError(
-        "Impossible de touver un utilisateur à l'adresse fournie",
-        404
-      );
-      return next(error);
-    }
-  
-    res.json({ message: 'Utilisateur supprimé' });
-  };
+  const { id } = req.params;
+
+  let user;
+  try {
+    user = await User.findByIdAndDelete(id);
+  } catch (err) {
+    const error = HttpError(
+      "Un problème est survenu, impossible de trouver l'utilisateur",
+      500
+    );
+    return next(error);
+  }
+
+  if (!user) {
+    const error = HttpError(
+      "Impossible de touver un utilisateur à l'adresse fournie",
+      404
+    );
+    return next(error);
+  }
+
+  res.json({ message: "Utilisateur supprimé" });
+};
+
+//ADDREMOVESCHOOL
+//@DPATCH
+//ROUTE : api/v1/user/:id/:schoolId
+export const addRemoveSchool = async (req, res, next) => {
+ 
+};
