@@ -10,18 +10,18 @@ import {
 const router = express.Router();
 
 //SHOW ALL INSTITUTIONS
-router.get("/institutions", getAllInstitutions);
+router.get("/", getAllInstitutions);
 
 //SHOW ONE INSTITUTION
-router.get("/institutions/:id", getInstitutionById);
+router.get("/:id", getInstitutionById);
 
 //CREATE AN INSTITUTION
-router.post("/institutions", addInstitution);
+router.post("/", addInstitution);
 
 //UPDATE AN INSTITUTION
-router.put("/institutions", updateInstitution)
+router.patch("/:id", updateInstitution)
 
 //DELETE AN INSTITUTION
-router.delete("/institutions", deleteInstitution)
+router.delete("/:id", deleteInstitution)
 
 export default router;

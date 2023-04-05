@@ -93,8 +93,8 @@ export const addInstitution = async (req, res) => {
 };
 
 //UPDATE AN INSTITUTION
-//@PUT
-//ROUTE : api/v1/schools
+//@PATCH
+//ROUTE : api/v1/schools/institutions/id
 export const updateInstitution = async (req, res) => {
   try {
     const { id } = req.params;
@@ -113,7 +113,7 @@ export const updateInstitution = async (req, res) => {
 
 //CREATE AN INSTITUTION
 //@DELETE
-//ROUTE : api/v1/schools
+//ROUTE : api/v1/schools/institutions/id
 export const deleteInstitution = async (req, res) => {
   try {
     const institutionId = req.params.id;
