@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  favoriteSchools: [{ type: mongoose.Types.ObjectId, ref: 'Institution' }],
+  favoriteSchools: [{ type: mongoose.Types.ObjectId, ref: 'School' }],
   status:{
     type: Number,
     default: 0
