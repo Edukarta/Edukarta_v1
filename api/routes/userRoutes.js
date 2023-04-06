@@ -4,7 +4,7 @@ import {
   getUserById,
   updateUser,
   deleteUser,
-  addRemoveSchool,
+  addRemoveFavorite,
   getUserFavorite
 } from "../controllers/userControllers.js";
 
@@ -15,6 +15,6 @@ router.get("/:id", getUserById);
 router.get("/:id/favorite", getUserFavorite);
 router.delete("/:id", deleteUser);
 router.patch("/:id", updateUser);
-router.patch("/:id/:schoolId", addRemoveSchool);
+router.patch("/:id/:schoolId", addRemoveFavorite);
 
 export default router;

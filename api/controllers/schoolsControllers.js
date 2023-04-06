@@ -98,11 +98,8 @@ export const addSchool = async (req, res) => {
 export const updateSchool = async (req, res) => {
   try {
     const { id } = req.params;
-
     const school = await School.findById(id);
-
     const updatedSchool = Object.assign(school, req.body);
-
     const savedSchool = await updatedSchool.save();
 
     res.status(200).json(savedSchool);

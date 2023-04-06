@@ -118,7 +118,7 @@ export const deleteUser = async (req, res, next) => {
 //ADDREMOVESCHOOL
 //@DPATCH
 //ROUTE : api/v1/user/:id/:schoolId
-export const addRemoveSchool = async (req, res, next) => {
+export const addRemoveFavorite = async (req, res, next) => {
   const { id, schoolId } = req.params;
   let user;
   try {
