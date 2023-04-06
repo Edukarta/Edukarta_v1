@@ -12,6 +12,7 @@ const router = express.Router();
 //SHOW ALL SCHOOLS
 router.get("/", getAllSchools);
 
+
 //SHOW ONE SCHOOL
 router.get("/:id", getSchoolById);
 

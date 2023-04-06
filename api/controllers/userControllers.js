@@ -97,7 +97,7 @@ export const deleteUser = async (req, res, next) => {
   try {
     user = await User.findByIdAndDelete(id);
   } catch (err) {
-    const error = HttpError(
+    const error = new HttpError(
       "Un problème est survenu, impossible de trouver l'utilisateur",
       500
     );
@@ -105,7 +105,7 @@ export const deleteUser = async (req, res, next) => {
   }
 
   if (!user) {
-    const error = HttpError(
+    const error = new HttpError(
       "Impossible de touver un utilisateur à l'adresse fournie",
       404
     );
@@ -124,7 +124,7 @@ export const addRemoveFavorite = async (req, res, next) => {
   try {
     user = await User.findById(id).populate("favoriteSchools");
   } catch (err) {
-    const error = HttpError(
+    const error = new HttpError(
       "Un problème est survenu, impossible d'ajouter cette école à votre liste",
       500
     );
@@ -159,7 +159,7 @@ export const getUserFavorite = async (req, res, next) => {
   try {
     user = await User.findById(id);
   } catch (err) {
-    const error = HttpError(
+    const error = new HttpError(
       "Un problème est survenu",
       500
     );
@@ -170,7 +170,7 @@ export const getUserFavorite = async (req, res, next) => {
   try {
     favoriteSchools = await School.find({ _id: { $in: schoolId } });
   } catch (err) {
-    const error = HttpError(
+    const error = new HttpError(
       "Un problème est survenu",
       500
     );
