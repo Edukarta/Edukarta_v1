@@ -5,6 +5,8 @@ import {
   addSchool,
   updateSchool,
   deleteSchool,
+  getSchoolsByContinent,
+  getSchoolsByCountry,
 } from "../controllers/schoolsControllers.js";
 
 const router = express.Router();
@@ -14,6 +16,12 @@ router.get("/", getAllSchools);
 
 //SHOW ONE SCHOOL
 router.get("/:id", getSchoolById);
+
+//SHOW SCHOOL ON SELECTED CONTINENT
+router.get("/:continent", getSchoolsByContinent);
+
+//SHOW SCHOOL ON SELECTED COUNTRY
+router.get("/:country", getSchoolsByCountry);
 
 //CREATE AN SCHOOL
 router.post("/", addSchool);
