@@ -23,13 +23,13 @@ router.get("/:continent", getSchoolsByContinent);
 //SHOW SCHOOL ON SELECTED COUNTRY
 router.get("/:country", getSchoolsByCountry);
 
-//CREATE AN SCHOOL
+//CREATE A SCHOOL
 router.post("/", addSchool);
 
-//UPDATE AN SCHOOL
+//UPDATE A SCHOOL
 router.patch("/:id", updateSchool)
 
-//DELETE AN SCHOOL
+//DELETE A SCHOOL
 router.delete("/:id", deleteSchool)
 
 export default router;

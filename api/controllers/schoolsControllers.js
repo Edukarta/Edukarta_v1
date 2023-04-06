@@ -120,7 +120,7 @@ export const addSchool = async (req, res) => {
   }
 };
 
-//UPDATE AN SCHOOL
+//UPDATE SCHOOL
 //@PATCH
 //ROUTE : api/v1/schools/:id
 export const updateSchool = async (req, res) => {
@@ -139,7 +139,7 @@ export const updateSchool = async (req, res) => {
   }
 };
 
-//CREATE AN SCHOOL
+//DELETE SCHOOL
 //@DELETE
 //ROUTE : api/v1/schools/:id
 export const deleteSchool = async (req, res) => {
