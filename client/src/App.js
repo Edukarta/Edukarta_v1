@@ -1,10 +1,17 @@
-
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./schools/pages/HomePage";
+import MainNavigation from "./shared/components/Navigation/MainNavigation";
 
 function App() {
   return (
-    <div>
-        Hello from app
-    </div>
+    <>
+      <MainNavigation />
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage/>}/>
+        </Routes>
+      </main>
+    </>
   );
 }
 
