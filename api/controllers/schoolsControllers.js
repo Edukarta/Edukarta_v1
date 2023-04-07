@@ -34,6 +34,36 @@ export const getSchoolById = async (req, res) => {
   
 };
 
+//SHOW SCHOOL ON SELECTED CONTINENT
+//@GET
+//ROUTE : api/v1/schools/:continent
+export const getSchoolsByContinent = async (req, res) => {
+  try {
+    const { continent } = req.params;
+    const schools = await School.find({ continent: continent });
+
+    res.status(200).json(schools);
+  } catch (error) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+//SHOW SCHOOL ON SELECTED COUNTRY
+//@GET
+//ROUTE : api/v1/schools/:continent/:country
+export const getSchoolsByContinentAndCountry = async (req, res) => {
+  try {
+    const { continent, country } = req.params;
+    const schools = await School.find({
+      continent: continent,
+      country: country,
+    });
+    res.status(200).json(schools);
+  } catch (error) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 //CREATE SCHOOL
 //@POST
 //ROUTE : api/v1/schools
@@ -97,7 +127,7 @@ export const addSchool = async (req, res) => {
   }
 };
 
-//UPDATE AN SCHOOL
+//UPDATE SCHOOL
 //@PATCH
 //ROUTE : api/v1/schools/:id
 export const updateSchool = async (req, res) => {
@@ -113,7 +143,7 @@ export const updateSchool = async (req, res) => {
   }
 };
 
-//CREATE AN SCHOOL
+//DELETE SCHOOL
 //@DELETE
 //ROUTE : api/v1/schools/:id
 export const deleteSchool = async (req, res) => {
