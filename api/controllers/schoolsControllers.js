@@ -1,32 +1,37 @@
 import School from "../models/SchoolModel.js";
 
+
 //SHOW ALL SCHOOLS
 //@GET
 //ROUTE : api/v1/schools
 export const getAllSchools = async (req, res) => {
+  let schools;
   try {
-    const schools = await School.find();
-    res.status(200).json(schools);
-  } catch (err) {
+    schools = await School.find();
+     } catch (err) {
     res.status(500).json({ error: err.message });
   }
+  res.status(200).json(schools);
 };
 
 //SHOW ONE SCHOOL
 //@GET
 //ROUTE : api/v1/schools/:id
 export const getSchoolById = async (req, res) => {
+  let school;
   try {
     const { id } = req.params;
-    const school = await School.findById(id);
+    school = await School.findById(id);
     if (!school) {
       res.status(404).json({ message: "Institution non trouvée" });
-    } else {
-      res.status(200).json(school);
-    }
+    } 
+        
   } catch (error) {
     res.status(500).json({ error: err.message });
   }
+  
+  res.status(200).json(school);
+  
 };
 
 //SHOW SCHOOL ON SELECTED CONTINENT

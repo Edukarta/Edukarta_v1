@@ -5,7 +5,7 @@ import {
   updateUser,
   deleteUser,
   addRemoveFavorite,
-  getUserFavorite
+  getUserFavorite,
 } from "../controllers/userControllers.js";
 
 const router = express.Router();
