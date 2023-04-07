@@ -1,10 +1,12 @@
-import React from 'react';
-import Map from '../../shared/components/UIElements/Map';
+import React from "react";
+import Map from "../../shared/components/UIElements/Map";
 
 const HomePage = () => {
   return (
-    <Map/>
-  )
-}
+    <section>
+      <Map />
+    </section>
+  );
+};
 
-export default HomePage
+export default HomePage;

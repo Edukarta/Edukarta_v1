@@ -6,10 +6,11 @@ function App() {
   return (
     <>
       <MainNavigation />
-        <Routes>
-          <Route path="/" element={<HomePage/>}/>
-        </Routes>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
       <main>
+        
       </main>
     </>
   );
