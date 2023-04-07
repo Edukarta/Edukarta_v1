@@ -59,7 +59,6 @@ export const getSchoolsByContinentAndCountry = async (req, res) => {
   }
 };
 
-
 //CREATE SCHOOL
 //@POST
 //ROUTE : api/v1/schools
