@@ -1,10 +1,9 @@
-import React from 'react'
+import React from 'react';
+import Map from '../../shared/components/UIElements/Map';
 
 const HomePage = () => {
   return (
-    <div>
-      Hello From HomePage
-    </div>
+    <Map/>
   )
 }
 

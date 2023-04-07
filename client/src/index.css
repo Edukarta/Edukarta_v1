@@ -8,8 +8,13 @@
 
 body{
   font-family: "Roboto", sans-serif;
+  /* background-color: rgb(130, 170, 159); */
 }
 
 main{
-  margin-top: 8rem;
+  margin-top: 6.5rem;
+}
+
+.leaflet-container{
+  height: 500px;
 }

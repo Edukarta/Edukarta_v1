@@ -6,9 +6,9 @@
     position: fixed;
     top: 0;
     left: 0;
-    background: linear-gradient(to top, transparent 0%, rgba(142, 182, 242, 0.3) 10%);
+    background: linear-gradient(to top, transparent 0%, rgb(130, 170, 159) 50%);
     padding: 0 1rem;
-    z-index: 5;
+    z-index: 1000000;
   }
 
 

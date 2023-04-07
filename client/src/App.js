@@ -6,10 +6,10 @@ function App() {
   return (
     <>
       <MainNavigation />
-      <main>
         <Routes>
           <Route path="/" element={<HomePage/>}/>
         </Routes>
+      <main>
       </main>
     </>
   );
