@@ -1,0 +1,21 @@
+.navbarBottom__container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    background-color: #333;
+    position: absolute;
+    bottom: 0;
+    padding: 0 30px;
+}
+
+.navbarBottom__container_icon{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbarBottom__container_icon a{
+    color: rgb(155, 176, 170);;
+}

@@ -5,7 +5,7 @@
     overflow: hidden;
     position: relative;
     padding: 0 20px;
-    background: linear-gradient(to top, transparent 0%, rgb(130, 170, 159) 80%);
+    background: linear-gradient(to top, transparent 0%, rgb(130, 170, 159, 0.4) 80%);
     top: -10px;
     z-index: 200000000;
 }

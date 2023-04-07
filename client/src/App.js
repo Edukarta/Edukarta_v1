@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./schools/pages/HomePage";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
+import NavbarBottom from "./shared/components/Navigation/NavbarBottom/NavbarBottom";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <main>
         
       </main>
+      <NavbarBottom/>
     </>
   );
 }
