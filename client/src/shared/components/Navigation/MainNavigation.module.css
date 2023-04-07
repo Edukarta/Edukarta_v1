@@ -15,11 +15,12 @@
 }
 
 .mainNavigation__title {
-    font-size: 23px;
-  color: white;
+  font-size: 23px;
+  color: #181818;
+  font-weight: 800;
 }
 
 .mainNavigation__title a {
   text-decoration: none;
-  color: white;
+  color: #333;
 }
