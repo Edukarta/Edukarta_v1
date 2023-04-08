@@ -15,6 +15,24 @@ main{
   margin-top: 6.5rem;
 }
 
-.leaflet-container{
-  height: 500px;
+.slide-in-bottom-enter {
+  transform: translateY(100%);
 }
+
+.slide-in-bottom-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 200ms;
+}
+
+.slide-in-bottom-exit {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.slide-in-bottom-exit-active {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: all 200ms;
+}
+

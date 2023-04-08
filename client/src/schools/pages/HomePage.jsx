@@ -6,7 +6,7 @@ import CardSugestList from "../components/Homepage/CardSugestList";
 const HomePage = () => {
   return (
     <section>
-      <Map />
+      <Map type="homepage"/>
       <CardSugestList />
     </section>
   );
