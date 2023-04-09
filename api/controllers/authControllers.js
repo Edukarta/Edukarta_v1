@@ -11,7 +11,7 @@ export const register = async (req, res, next) => {
   if (!errors.isEmpty) {
     return next(new HttpError("Données incorrects", 422));
   }
-  const { firstname, lastname, email, password, location, imagePath, grade } = req.body;
+  const { firstname, lastname, email, password, location, address, phone, imagePath, grade } = req.body;
 
   let existingUser;
   try {
@@ -38,6 +38,8 @@ export const register = async (req, res, next) => {
     email,
     password: passwordHash,
     location,
+    address,
+    phone,
     favoriteSchools: [],
     imagePath,
     grade,

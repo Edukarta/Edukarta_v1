@@ -1,6 +1,7 @@
 .mainNavigation__container_item {
   width: 100%;
   display: flex;
+  top: 0;
   flex-direction: column;
   justify-content: center;
   margin-bottom: 20px;
@@ -20,7 +21,8 @@
   font-weight: 800;
 }
 
-.mainNavigation__title a {
+
+a{
   text-decoration: none;
   color: white;
 }

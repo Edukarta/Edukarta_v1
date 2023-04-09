@@ -1,0 +1,32 @@
+.containerFormRegister{
+   width: 100%;
+   padding: 10px;
+}
+
+.containerForm_title{
+    margin-top: 150px;
+}
+
+.formTitle{
+    text-align: center;
+    font-size: 30px;
+    color: #15373C;
+}
+
+.registerForm{
+    width: 100%;
+    padding: 20px;
+}
+
+.containerText{
+    text-align: center;
+}
+
+.containerText span{
+    color: #0275d8;
+    cursor: pointer;
+}
+
+.containerText span:hover{
+    color: #005097;;
+}
