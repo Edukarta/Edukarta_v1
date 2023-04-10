@@ -21,6 +21,17 @@
   font-weight: 800;
 }
 
+.container__avatar_logout{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+span{
+  color: white;
+  font-size: 12px;
+}
+
 
 a{
   text-decoration: none;
