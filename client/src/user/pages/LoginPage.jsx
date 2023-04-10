@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Input from "../../shared/components/FormElements/Input";
-import classes from "./Register.module.css";
+import classes from "./LoginPage.module.css";
 import Button from "../../shared/components/FormElements/Button";
 
-const Register = () => {
+const LoginPage = () => {
   const [isLoginMode, setIsLoginMode] = useState(false);
   return (
     <section className={classes.containerFormRegister}>
@@ -81,4 +81,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default LoginPage;
