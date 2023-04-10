@@ -5,6 +5,7 @@
 .listTitle{
     margin-left: 20px;
    color: var(--title-card-color);
+   text-transform: capitalize;
 }
 
 .card__container_noWrap{
