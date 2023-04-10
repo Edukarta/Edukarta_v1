@@ -6,6 +6,7 @@
   --bg-button--navBottom: #365475;
   --bg-navbar-dark: linear-gradient(to right, #15273c 20%, #365475 90%);
   --bg-navbar-light: linear-gradient(to top, transparent 0%, rgb(130, 170, 159) 50%);
+  --title-card-color:#324964;
 }
 
 *, ::after, ::before{

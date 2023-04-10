@@ -6,7 +6,7 @@
     display: flex;
     align-items: center;
     position: fixed;
-    background: var(--bg-navbar-dark);
+    background-color: var(--bg-nav-bottom);
     padding: 0 1rem;
     z-index: 1000000;
   }

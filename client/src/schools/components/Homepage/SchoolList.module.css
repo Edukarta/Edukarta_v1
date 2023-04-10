@@ -1,0 +1,22 @@
+.listContainer{
+    margin-bottom: 30px;
+}
+
+.listTitle{
+    margin-left: 20px;
+   color: var(--title-card-color);
+}
+
+.card__container_noWrap{
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    padding: 0 20px;
+}
+
+.card__container_wrap{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
