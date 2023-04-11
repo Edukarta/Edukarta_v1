@@ -2,28 +2,12 @@ import React, { useState } from "react";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import { Formik } from "formik";
-import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../shared/state/store";
 import classes from "./LoginPage.module.css";
 
 
-// const registerSchema = yup.object().shape({
-//   firstname: yup.string().required("required"),
-//   lastname: yup.string().required("required"),
-//   email: yup.string().email("invalid email").required("required"),
-//   password: yup.string().required("required"),
-//   location: yup.string().required("required"),
-//   address: yup.string().required("required"),
-//   phone: yup.string().required("required"),
-//   imagePath: yup.string().required("required"),
-// });
-
-// const loginSchema = yup.object().shape({
-//   email: yup.string().email("invalid email").required("required"),
-//   password: yup.string().required("required"),
-// });
 
 const initialValueRegister = {
   firstname: "",
@@ -115,7 +99,6 @@ const LoginPage = () => {
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={isRegister ? initialValueRegister : initialValueLogin}
-          // validationSchema={isRegister ? registerSchema : loginSchema}
         >
           {({
             values,

@@ -22,7 +22,7 @@ const MainNavigation = () => {
           {user ? (
             <div className={classes.container__avatar_logout}>
               <span>Bonjour {user.firstname}</span>
-              <Avatar userId={user.id} />
+              <Avatar userId={user.id} image={user.imagePath} default />
             </div>
           ) : (
             <Link to="/register">Sign up / Login</Link>

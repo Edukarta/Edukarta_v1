@@ -2,14 +2,21 @@ import React from "react";
 import { Link } from "react-router-dom";
 import classes from "./Avatar.module.css";
 
-const Avatar = ({userId}) => {
+const Avatar = ({ userId, image}) => {
   return (
     <Link to={`/profil/${userId}`}>
       <div className={classes.containerAvatar}>
-        <img
-          src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
-          alt="profile"
-        />
+        {image ? (
+          <img
+            src={`http://localhost:5000/assets/${image}`}
+            alt="profile"
+          />
+        ) : (
+          <img
+            src="https://www.pega.com/modules/shared/pega_user_image/assets/user-icon.png"
+            alt="profile"
+          />
+        )}
       </div>
     </Link>
   );

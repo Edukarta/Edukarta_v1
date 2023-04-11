@@ -1,12 +1,15 @@
 .containerAvatar{
     width: 30px;
     height: 30px;
+    border-radius: 50%;
+    border: 1px solid white;
 }
+
 
 .containerAvatar img{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
+   
 
 }
