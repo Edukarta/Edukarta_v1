@@ -7,19 +7,24 @@ import {
   ArrowForwardIos,
 } from "@mui/icons-material/";
 import Avatar from "../../../shared/components/UIElements/Avatar";
+import { Link, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import classes from "./SectionProfil.module.css";
 
 const SectionProfil = (props) => {
+  const navigate = useNavigate();
   return (
     <section>
       <div className={classes.container_item}>
         <h2 className={classes.title}>{props.titlePage}</h2>
-        <CardProfil
-          text={props.name}
-          sub="Afficher Profil"
-          icon={<Avatar />}
-          arrow={<ArrowForwardIos sx={{ color: "#333", fontSize: "18px" }} />}
-        />
+        <div onClick={() => navigate(`/profil/${props.id}/details`)}>
+          <CardProfil
+            text={props.name}
+            sub="Afficher Profil"
+            icon={<Avatar />}
+            arrow={<ArrowForwardIos sx={{ color: "#333", fontSize: "18px" }} />}
+          />
+        </div>
       </div>
       <div>
         <h2>{props.title}</h2>

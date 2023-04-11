@@ -34,6 +34,8 @@ const ProfilPage = () => {
           titlePage="Profil"
           name={user.firstname}
           subtitle="Afficher Profil"
+          id={user.id}
+          
         />
         <Button
           onClick={() => {
