@@ -7,8 +7,7 @@ import {
   ArrowForwardIos,
 } from "@mui/icons-material/";
 import Avatar from "../../../shared/components/UIElements/Avatar";
-import { Link, useNavigate } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import classes from "./SectionProfil.module.css";
 
 const SectionProfil = (props) => {
