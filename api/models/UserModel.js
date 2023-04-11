@@ -3,38 +3,38 @@ import mongoose from "mongoose";
 const UserSchema = new mongoose.Schema({
   firstname: {
     type: String,
-    required: true,
     min: 2,
     max: 50,
+    required: true
   },
   lastname: {
     type: String,
-    required: true,
     min: 2,
     max: 50,
+    required: true
   },
   email: {
     type: String,
-    required: true,
     max: 50,
     unique: true,
+    required: true
   },
   password: {
     type: String,
-    required: true,
     min: 5,
+    required: true
   },
   location: {
     type: String,
-    required: true,
+   
   },
   address: {
     type: String,
-    required: true,
+    
   },
   phone: {
     type: String,
-    required: true,
+   
   },
   favoriteSchools: {
     type: Array,
