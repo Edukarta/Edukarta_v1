@@ -4,13 +4,38 @@
     border-radius: 50%;
     border: 1px solid white;
 }
-
-
 .containerAvatar img{
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-   
-
 }
+
+.containerAvatarNormal{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.containerAvatarNormal img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.containerAvatarBig{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.containerAvatarBig img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+

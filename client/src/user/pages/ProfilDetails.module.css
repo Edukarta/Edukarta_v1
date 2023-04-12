@@ -1,9 +1,69 @@
 .containerProfil{
     width: 100%;
-    height: 100%;
     padding: 10px;
 }
 
+.container_title__profil{
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
 .container_infos{
-    margin-top: 200px;
+    margin-top: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.icon__change_pic{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background:#333;
+    border-radius: 50%;
+    top: 200px;
+    left: 55%;
+    
+}
+
+.container_Input{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.formControl{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.formControl input{
+    width: 100%;
+    height: 40px;
+    border: none;
+    background-color: transparent;
+    border-bottom: 1px solid #333;
+    outline: none;
+
+}
+
+.formControl input::placeholder{
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.formControl label{
+    font-size: 18px;
+    font-weight: 500;
 }

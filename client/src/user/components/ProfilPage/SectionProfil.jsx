@@ -20,7 +20,7 @@ const SectionProfil = (props) => {
           <CardProfil
             text={props.name}
             sub="Afficher Profil"
-            icon={<Avatar image={props.image} />}
+            icon={<Avatar image={props.image} normal />}
             arrow={<ArrowForwardIos sx={{ color: "#333", fontSize: "18px" }} />}
           />
         </div>
