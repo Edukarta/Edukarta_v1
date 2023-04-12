@@ -8,7 +8,7 @@ const Avatar = ({ userId, image}) => {
       <div className={classes.containerAvatar}>
         {image ? (
           <img
-            src={`http://localhost:5000/assets/${image}`}
+            src={`http://localhost:5000/public/assets/${image}`}
             alt="profile"
           />
         ) : (

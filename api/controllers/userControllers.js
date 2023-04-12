@@ -56,7 +56,7 @@ export const updateUser = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return next(new HttpError("Données incorrects", 422));
   }
-  const { firstname, lastname, imagePath } = req.body;
+  const { imagePath } = req.body;
   const { id } = req.params;
 
   let user;
@@ -70,8 +70,6 @@ export const updateUser = async (req, res, next) => {
     return next(error);
   }
 
-  user.firstname = firstname;
-  user.lastname = lastname;
   user.imagePath = imagePath;
 
   try {
