@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Dropzone from "react-dropzone";
 import { Formik } from "formik";
+import { setLogin } from "../../shared/state/store";
+import { useDispatch } from "react-redux";
+import Dropzone from "react-dropzone";
 import Avatar from "../../shared/components/UIElements/Avatar";
 import classes from "./ProfilDetails.module.css";
 
@@ -11,6 +13,7 @@ const initialValuePatch = {
 
 const ProfilDetails = () => {
   const [user, setUser] = useState();
+  const dispatch = useDispatch();
   const { id } = useParams();
 
   const getUser = async () => {
@@ -26,19 +29,31 @@ const ProfilDetails = () => {
   }, [id]);
   if (!user) return null;
 
-  const patchImg = async (values) => {
+  const patchImg = async (values, onSubmitProps) => {
     const formData = new FormData();
-    formData.append("imagePath", values.image.name);
+    formData.append("imagePath", values.image.name); // Ajoute l'imagePath d'origine
+    formData.append("image", values.image);
     const response = await fetch(`http://localhost:5000/api/v1/user/${id}`, {
-      method: "PUT",
+      method: "PATCH",
       body: formData,
     });
 
-    console.log(response)   
+    const savedResponse = await response.json();
+    onSubmitProps.resetForm();
+    
+    if(savedResponse){
+      dispatch(
+        setLogin({
+          user: savedResponse.user,
+          token: savedResponse.token,
+        })
+      );
+    }
+    console.log(savedResponse)
   };
 
-  const handleFormSubmit = async (values) => {
-    await patchImg(values);
+  const handleFormSubmit = async (values, onSubmitProps) => {
+    await patchImg(values, onSubmitProps);
   };
 
   return (
@@ -47,13 +62,15 @@ const ProfilDetails = () => {
         <h1>
           Bonjour {user.firstname} {user.lastname}
         </h1>
+        <Avatar image={user.imagePath}/>
         <Formik onSubmit={handleFormSubmit} initialValues={initialValuePatch}>
           {({ values, handleSubmit, setFieldValue, resetForm }) => (
-            <form onSubmit={handleSubmit} enctype="multipart/form-data">
+            <form onSubmit={handleSubmit}>
               <div>
                 <Dropzone
                   acceptedFiles=".jpeg,.jpg,.png"
                   multiple={false}
+                  name="image"
                   onDrop={(acceptedFiles) => {
                     setFieldValue("image", acceptedFiles[0]);
                   }}

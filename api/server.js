@@ -1,16 +1,16 @@
 import express from "express";
+import multer from "multer";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import helmet from "helmet";
-import multer from "multer";
 import cors from "cors";
 import { fileURLToPath } from "url";
 import path from "path";
 import morgan from "morgan";
 import dbConnect from "./config/dbConnect.js";
-import { updateUser } from "./controllers/userControllers.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import { updateUser } from "./controllers/userControllers.js";
 import schoolsRoutes from "./routes/schoolsRoutes.js";
 
 //CONGIGURATION
@@ -25,43 +25,25 @@ app.use(morgan('common'));
 app.use(bodyParser.json({limit: '30mb', extenced: true}));
 app.use(bodyParser.urlencoded({limit: '30mb', extended: true}));
 app.use(cors());
-app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
+app.use("/images", express.static(path.join(__dirname, 'uploads/images')));
 
-//FILES STORAGE
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/assets");
+  destination: function(req, file, cb){
+      cb(null, 'uploads/images');
   },
-  filename: function (res, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
-// Définition du type de fichiers autorisés
-const fileFilter = function (req, file, cb) {
-  const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
-  if (!allowedTypes.includes(file.mimetype)) {
-    const error = new Error("Wrong file type");
-    error.code = "LIMIT_FILE_TYPES";
-    return cb(error, false);
+  filename: function(res, file, cb){
+      cb(null, file.originalname)
   }
-  cb(null, true);
-};
-
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 5000000 },
-  fileFilter: fileFilter,
 });
+const upload = multer({storage});
 
-//ROUTES WITH FILE
-app.put("/api/v1/user/:id", upload.single("image"), updateUser);
-
+app.patch("/api/v1/user/:id", upload.single('image'), updateUser);
 //ROUTES
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 
 app.use("/api/v1/schools", schoolsRoutes);
+
 
 const PORT = process.env.PORT || 3330;
 dbConnect();

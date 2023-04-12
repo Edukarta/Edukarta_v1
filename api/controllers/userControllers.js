@@ -3,6 +3,7 @@ import User from "../models/UserModel.js";
 import School from "../models/SchoolModel.js";
 import HttpError from "../models/http-errors.js";
 
+
 //GET ALL USERS
 //@GET
 //ROUTE : api/v1/user/
@@ -56,8 +57,8 @@ export const updateUser = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return next(new HttpError("Données incorrects", 422));
   }
-  const { imagePath } = req.body;
   const { id } = req.params;
+  const { imagePath } = req.body;
 
   let user;
   try {
