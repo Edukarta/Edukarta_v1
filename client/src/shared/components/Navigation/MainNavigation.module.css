@@ -33,7 +33,7 @@ span{
 }
 
 
-a{
+.mainNavigation__container_title_avatar a{
   text-decoration: none;
   color: white;
 }

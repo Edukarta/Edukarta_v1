@@ -11,7 +11,7 @@ export const getAllUsers = async (req, res, next) => {
   try {
     users = await User.find({}, "-password");
   } catch (err) {
-    const error = HttpError(
+    const error = new HttpError(
       "La récupération des utilisateurs à échoué, veuillez réessayez",
       500
     );
@@ -30,7 +30,7 @@ export const getUserById = async (req, res, next) => {
   try {
     user = await User.findById(id);
   } catch (err) {
-    const error = HttpError(
+    const error = new HttpError(
       "Un problème est survenu, impossible de trouver l'utilisateur",
       500
     );
@@ -38,7 +38,7 @@ export const getUserById = async (req, res, next) => {
   }
 
   if (!user) {
-    const error = HttpError(
+    const error = new HttpError(
       "Impossible de touver un utilisateur à l'adresse fournie",
       404
     );
@@ -56,7 +56,7 @@ export const updateUser = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return next(new HttpError("Données incorrects", 422));
   }
-  const { firstname, lastname, imagePath } = req.body;
+  const { imagePath } = req.body;
   const { id } = req.params;
 
   let user;
@@ -70,8 +70,6 @@ export const updateUser = async (req, res, next) => {
     return next(error);
   }
 
-  user.firstname = firstname;
-  user.lastname = lastname;
   user.imagePath = imagePath;
 
   try {

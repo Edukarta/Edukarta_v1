@@ -14,6 +14,8 @@ const SchoolList = ({ title, type, size, schools }) => {
         }>
           {schools.map((school) => (
             <Card
+              key={school.id}
+              id={school.id}
               img={school.imgPath}
               name={school.name}
               continent={school.continent}

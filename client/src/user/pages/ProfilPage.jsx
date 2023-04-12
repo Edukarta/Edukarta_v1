@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./ProfilPage.module.css";
 import { useDispatch } from "react-redux";
 import { setLogout } from "../../shared/state/store";
 import { useParams, useNavigate } from "react-router-dom";
-
+import Button from "../../shared/components/FormElements/Button";
+import SectionProfil from "../components/ProfilPage/SectionProfil";
 
 const ProfilPage = () => {
   const [user, setUser] = useState();
@@ -28,11 +29,23 @@ const ProfilPage = () => {
   return (
     <div className={classes.containerProfil}>
       <div className={classes.container_info}>
-        <h1>Hello {user.firstname} {user.lastname}</h1>
-        <button onClick={() => {
-          dispatch(setLogout())
-          navigate("/")
-        }}>Logout</button>
+        <SectionProfil
+          title="Mon Compte"
+          titlePage="Profil"
+          name={user.firstname}
+          subtitle="Afficher Profil"
+          id={user.id}
+          image={user.imagePath}
+        />
+        <Button
+          onClick={() => {
+            dispatch(setLogout());
+            navigate("/");
+          }}
+          big
+        >
+          Déconnexion
+        </Button>
       </div>
     </div>
   );

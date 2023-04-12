@@ -6,6 +6,7 @@ import SchoolList from "../components/Homepage/SchoolList";
 const HomePage = () => {
   const schools = [
     {
+      id: 1,
       name: "Clark Shaw Magnet School",
       original_name: "",
       acronym: "",
@@ -26,6 +27,7 @@ const HomePage = () => {
       international: "",
     },
     {
+      id: 2,
       name: "Old Shell Creative Performing Art",
       original_name: "",
       acronym: "",
@@ -46,6 +48,7 @@ const HomePage = () => {
       international: "",
     },
     {
+      id: 3,
       name: "Phillips Preparatory Middle School",
       original_name: "",
       acronym: "",
@@ -66,6 +69,7 @@ const HomePage = () => {
       international: "",
     },
     {
+      id: 4,
       name: "Booker T Washington Magnet High School",
       original_name: "",
       acronym: "",
@@ -87,9 +91,9 @@ const HomePage = () => {
       international: "",
     },
   ];
-
   const PopularSchools = [
     {
+      id: 5,
       name: "Clark Shaw Magnet School",
       original_name: "",
       acronym: "",
@@ -110,6 +114,7 @@ const HomePage = () => {
       international: "",
     },
     {
+      id: 6,
       name: "Old Shell Creative Performing Art",
       original_name: "",
       acronym: "",
@@ -130,6 +135,7 @@ const HomePage = () => {
       international: "",
     },
     {
+      id: 7,
       name: "Phillips Preparatory Middle School",
       original_name: "",
       acronym: "",
@@ -150,6 +156,7 @@ const HomePage = () => {
       international: "",
     },
     {
+      id: 8,
       name: "Booker T Washington Magnet High School",
       original_name: "",
       acronym: "",

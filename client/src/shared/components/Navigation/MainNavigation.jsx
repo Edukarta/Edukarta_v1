@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import MainHeader from "./MainHeader";
-import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
-
 import Avatar from "../UIElements/Avatar";
 import SearchBar from "../UIElements/SearchBar";
 
 const MainNavigation = () => {
-  const [userIsLogged, setUserIsLOgged] = useState(false);
   const user = useSelector((state) => state.user);
 
   return (
@@ -22,7 +19,7 @@ const MainNavigation = () => {
           {user ? (
             <div className={classes.container__avatar_logout}>
               <span>Bonjour {user.firstname}</span>
-              <Avatar userId={user.id} />
+              <Avatar userId={user.id} image={user.imagePath} />
             </div>
           ) : (
             <Link to="/register">Sign up / Login</Link>

@@ -8,13 +8,12 @@ import { fileURLToPath } from "url";
 import path from "path";
 import morgan from "morgan";
 import dbConnect from "./config/dbConnect.js";
-import { register } from "./controllers/authControllers.js";
+import { updateUser } from "./controllers/userControllers.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import schoolsRoutes from "./routes/schoolsRoutes.js";
 
-
-//CONFIGURATION
+//CONGIGURATION
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
@@ -30,19 +29,33 @@ app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
 
 //FILES STORAGE
 const storage = multer.diskStorage({
-    destination: function(req, file, cb){
-        cb(null, 'public/assets');
-    },
-    filename: function(res, file, cb){
-        cb(null, file.originalname)
-    }
+  destination: function (req, file, cb) {
+    cb(null, "public/assets");
+  },
+  filename: function (res, file, cb) {
+    cb(null, file.originalname);
+  },
 });
-const upload = multer({storage});
 
+// Définition du type de fichiers autorisés
+const fileFilter = function (req, file, cb) {
+  const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
+  if (!allowedTypes.includes(file.mimetype)) {
+    const error = new Error("Wrong file type");
+    error.code = "LIMIT_FILE_TYPES";
+    return cb(error, false);
+  }
+  cb(null, true);
+};
 
-//ROUTES WITH FILES
-app.post("/api/v1/auth/register", upload.single("picture"), register);
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 5000000 },
+  fileFilter: fileFilter,
+});
 
+//ROUTES WITH FILE
+app.put("/api/v1/user/:id", upload.single("image"), updateUser);
 
 //ROUTES
 app.use("/api/v1/auth", authRoutes);

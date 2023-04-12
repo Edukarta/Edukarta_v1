@@ -4,6 +4,7 @@ import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import NavbarBottom from "./shared/components/Navigation/NavbarBottom/NavbarBottom";
 import LoginPage from "./user/pages/LoginPage";
 import ProfilPage from "./user/pages/ProfilPage";
+import ProfilDetails from "./user/pages/ProfilDetails";
 import { useLocation } from 'react-router-dom';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<LoginPage/>}/>
         <Route path="/profil/:id" element={<ProfilPage/>}/>
+        <Route path="/profil/:id/details" element={<ProfilDetails/>}/>
       </Routes>  
       {location.pathname !== '/register' && <NavbarBottom />}
     </>
