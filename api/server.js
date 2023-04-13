@@ -38,6 +38,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 app.patch("/api/v1/user/:id", upload.single('image'), updateUser);
+
 //ROUTES
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);

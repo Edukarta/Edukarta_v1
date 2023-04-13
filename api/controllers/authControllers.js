@@ -28,7 +28,7 @@ export const register = async (req, res, next) => {
     const error = new HttpError("Cet Email est déja utilisé", 422);
     return next(error);
   }
-
+  
   const salt = await bcrypt.genSalt();
   const passwordHash = await bcrypt.hash(password, salt);
 
