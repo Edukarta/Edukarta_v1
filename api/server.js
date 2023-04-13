@@ -10,6 +10,7 @@ import morgan from "morgan";
 import dbConnect from "./config/dbConnect.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import { register } from "./controllers/authControllers.js";
 import { updateUser } from "./controllers/userControllers.js";
 import schoolsRoutes from "./routes/schoolsRoutes.js";
 
@@ -38,11 +39,11 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 app.patch("/api/v1/user/:id", upload.single('image'), updateUser);
+app.post("/api/v1/auth/register", upload.single("picture"), register);
 
 //ROUTES
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
-
 app.use("/api/v1/schools", schoolsRoutes);
 
 

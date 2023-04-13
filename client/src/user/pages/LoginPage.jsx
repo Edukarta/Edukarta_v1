@@ -8,7 +8,6 @@ import { setLogin } from "../../shared/state/store";
 import classes from "./LoginPage.module.css";
 
 
-
 const initialValueRegister = {
   firstname: "",
   lastname: "",
@@ -32,13 +31,13 @@ const LoginPage = () => {
   const isRegister = pageType === "register";
 
   //FONCTION QUI GERE LA CREATION DE PROFIL
+  console.log("debut du code")
   const register = async (values, onSubmitProps) => {
+    console.log("je m'éxécute")
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
     }
-
-    console.log(values)
         
     const savedUserResponse = await fetch(
       "http://localhost:5000/api/v1/auth/register",
@@ -99,12 +98,16 @@ const LoginPage = () => {
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={isRegister ? initialValueRegister : initialValueLogin}
+          // validationSchema={isRegister ? registerSchema : loginSchema}
         >
           {({
             values,
+            errors,
+            touched,
             handleBlur,
             handleChange,
             handleSubmit,
+            setFieldValue,
             resetForm,
           }) => (
             <form className={classes.registerForm} onSubmit={handleSubmit}>
@@ -119,6 +122,10 @@ const LoginPage = () => {
                     onChange={handleChange}
                     value={values.firstname}
                     name="firstname"
+                    error={
+                      Boolean(touched.firstname) && Boolean(errors.firstname)
+                    }
+                    helperText={touched.firstname && errors.firstname}
                   />
                   <Input
                     id="lastname"
@@ -129,6 +136,10 @@ const LoginPage = () => {
                     onChange={handleChange}
                     value={values.lastname}
                     name="lastname"
+                    error={
+                      Boolean(touched.lastname) && Boolean(errors.lastname)
+                    }
+                    helperText={touched.lastname && errors.lastname}
                   />
                 </>
               )}
@@ -141,6 +152,8 @@ const LoginPage = () => {
                 onChange={handleChange}
                 value={values.email}
                 name="email"
+                error={Boolean(touched.email) && Boolean(errors.email)}
+                helperText={touched.email && errors.email}
               />
               <Input
                 id="password"
@@ -151,6 +164,8 @@ const LoginPage = () => {
                 onChange={handleChange}
                 value={values.password}
                 name="password"
+                error={Boolean(touched.password) && Boolean(errors.password)}
+                helperText={touched.password && errors.password}
               />
               {isRegister && (
                 <>
@@ -163,6 +178,10 @@ const LoginPage = () => {
                     onChange={handleChange}
                     value={values.location}
                     name="location"
+                    error={
+                      Boolean(touched.location) && Boolean(errors.location)
+                    }
+                    helperText={touched.location && errors.location}
                   />
                   <Input
                     id="address"
@@ -173,6 +192,8 @@ const LoginPage = () => {
                     onChange={handleChange}
                     value={values.address}
                     name="address"
+                    error={Boolean(touched.address) && Boolean(errors.address)}
+                    helperText={touched.address && errors.address}
                   />
                   <Input
                     id="phone"
@@ -183,6 +204,8 @@ const LoginPage = () => {
                     onChange={handleChange}
                     value={values.phone}
                     name="phone"
+                    error={Boolean(touched.phone) && Boolean(errors.phone)}
+                    helperText={touched.phone && errors.phone}
                   />
                 </>
               )}

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Formik } from "formik";
 import { setLogin } from "../../shared/state/store";
 import { useDispatch } from "react-redux";
-import { Create } from "@mui/icons-material";
+import { Create, Done } from "@mui/icons-material";
 import Dropzone from "react-dropzone";
 import Avatar from "../../shared/components/UIElements/Avatar";
 import Button from "../../shared/components/FormElements/Button";
@@ -15,6 +15,7 @@ const initialValuePatch = {
 
 const ProfilDetails = () => {
   const [user, setUser] = useState();
+  const [previewImage, setPreviewImage] = useState("");
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -58,13 +59,25 @@ const ProfilDetails = () => {
     await patchImg(values, onSubmitProps);
   };
 
+  const handleImageDrop = (acceptedFiles, setFieldValue) => {
+    const file = acceptedFiles[0];
+    setPreviewImage(URL.createObjectURL(file));
+    setFieldValue("image", file);
+  };
+
   return (
     <div className={classes.containerProfil}>
       <div className={classes.container_infos}>
         <h1 className={classes.container_title__profil}>
           Bonjour {user.firstname} {user.lastname}
         </h1>
-        <Avatar image={user.imagePath} big />
+        {previewImage ? (
+          <div className={classes.preview}>
+            <img src={previewImage} alt="" />
+          </div>
+        ) : (
+          <Avatar image={user.imagePath} big />
+        )}
         <Formik onSubmit={handleFormSubmit} initialValues={initialValuePatch}>
           {({ values, handleSubmit, setFieldValue, resetForm }) => (
             <form onSubmit={handleSubmit}>
@@ -73,9 +86,9 @@ const ProfilDetails = () => {
                   acceptedFiles=".jpeg,.jpg,.png"
                   multiple={false}
                   name="image"
-                  onDrop={(acceptedFiles) => {
-                    setFieldValue("image", acceptedFiles[0]);
-                  }}
+                  onDrop={(acceptedFiles) =>
+                    handleImageDrop(acceptedFiles, setFieldValue)
+                  }
                 >
                   {({ getRootProps, getInputProps }) => (
                     <div {...getRootProps()}>
@@ -85,8 +98,8 @@ const ProfilDetails = () => {
                           <Create sx={{ color: "white" }} />
                         </div>
                       ) : (
-                        <div>
-                          <h5>{values.image.name}</h5>
+                        <div className={classes.icon__change_pic_done}>
+                          <Done sx={{ color: "white", fontSize: "40px" }} />
                         </div>
                       )}
                     </div>
@@ -104,15 +117,15 @@ const ProfilDetails = () => {
           </div>
           <div className={classes.formControl}>
             <label>Nom</label>
-            <input type="text" placeholder={user.lastname} disabled  />
+            <input type="text" placeholder={user.lastname} disabled />
           </div>
           <div className={classes.formControl}>
             <label>Adresse</label>
-            <input type="text" placeholder={user.address} disabled  />
+            <input type="text" placeholder={user.address} disabled />
           </div>
           <div className={classes.formControl}>
             <label>Téléphone</label>
-            <input type="text" placeholder={user.phone} disabled  />
+            <input type="text" placeholder={user.phone} disabled />
           </div>
         </div>
       </div>
