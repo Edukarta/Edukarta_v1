@@ -65,10 +65,12 @@ const LoginPage = () => {
         body: JSON.stringify(values),
       }
     );
+    const statusCode = loggedInResponse.status;
     const loggedIn = await loggedInResponse.json();
+    console.log(loggedIn)
     onSubmitProps.resetForm();
 
-    if (loggedIn) {
+    if (statusCode === 200) {
       dispatch(
         setLogin({
           user: loggedIn.user,
@@ -76,7 +78,11 @@ const LoginPage = () => {
         })
       );
       navigate("/");
+    } else {
+      // Afficher un message d'erreur ou ne rien faire
+      console.log("Identifiant incorrect");
     }
+  
   };
 
   const handleFormSubmit = async(values, onSubmitProps) => {
