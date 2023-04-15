@@ -1,4 +1,5 @@
 import React from "react";
+import schoolIcon from "../../../img/school.png";
 import classes from "./Card.module.css";
 
 const Card = (props) => {
@@ -9,10 +10,14 @@ const Card = (props) => {
       }`}
     >
       <div className={classes.cardSugest__container_img}>
-        <img src={props.img} alt={props.name} />
+        {props.img ? (
+          <img src={props.img} alt={props.name} />
+        ) : (
+          <img src={schoolIcon}/>
+        )}
       </div>
       <div className={classes.cardSugest__container_text}>
-        <h1>{props.name}</h1>
+        <h1 className={classes.cardName}>{props.name}</h1>
         <div>
           <h4 className={classes.cardSugest__text_location}>
             {props.continent} / {props.country}

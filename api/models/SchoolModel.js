@@ -38,11 +38,11 @@ const SchoolSchema = new mongoose.Schema({
     default: "",
   },
   gps: {
-    latitude: {
+    lat: {
       type: String,
       default: "",
     },
-    longitude: {
+    long: {
       type: String,
       default: "",
     },

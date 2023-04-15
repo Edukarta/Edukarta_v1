@@ -2,7 +2,7 @@ import React from "react";
 import Card from "../../../shared/components/UIElements/Card";
 import classes from "./SchoolList.module.css";
 
-const SchoolList = ({ title, type, size, schools }) => {
+const SchoolList = ({ title, type, size, schools, numberOfSchools }) => {
   
 
   return (
@@ -12,7 +12,7 @@ const SchoolList = ({ title, type, size, schools }) => {
         <div className={
           type === "noWrap" ? classes.card__container_noWrap : classes.card__container_wrap
         }>
-          {schools.map((school) => (
+          {schools.schools?.slice(0, numberOfSchools).map((school) => (
             <Card
               key={school.id}
               id={school.id}

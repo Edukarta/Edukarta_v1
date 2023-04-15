@@ -1,6 +1,8 @@
 import School from "../models/SchoolModel.js";
 
 
+
+
 //SHOW ALL SCHOOLS
 //@GET
 //ROUTE : api/v1/schools
@@ -11,7 +13,7 @@ export const getAllSchools = async (req, res) => {
      } catch (err) {
     res.status(500).json({ error: err.message });
   }
-  res.status(200).json(schools);
+  res.status(200).json({ schools: schools.map((school) => school.toObject({ getters: true })) });
 };
 
 //SHOW ONE SCHOOL
