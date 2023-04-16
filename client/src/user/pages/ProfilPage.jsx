@@ -1,29 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import classes from "./ProfilPage.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLogout } from "../../shared/state/store";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../shared/components/FormElements/Button";
 import SectionProfil from "../components/ProfilPage/SectionProfil";
 
 const ProfilPage = () => {
-  const [user, setUser] = useState();
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id } = useParams();
 
-  const getUser = async () => {
-    const response = await fetch(`http://localhost:5000/api/v1/user/${id}`, {
-      method: "GET",
-    });
-    const data = await response.json();
-    setUser(data.user);
-    console.log(data);
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
 
   if (!user) return null;
   return (

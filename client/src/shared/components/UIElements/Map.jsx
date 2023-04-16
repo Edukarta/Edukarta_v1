@@ -4,21 +4,18 @@ import { Icon, divIcon, point } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { LocationOn } from "@mui/icons-material";
 import customMarkerImage from "../../../img/pin.png";
-import { setSchools } from "../../state/store";
-import { useDispatch, useSelector } from "react-redux";
+
 import "leaflet/dist/leaflet.css";
 import classes from "./Map.module.css";
 
 
-const Map = ({ type }) => {
-  const dispatch = useDispatch();
-  const schools = useSelector((state) => state.schools);
+const Map = ({ type, schools }) => {
+ 
 
   const customMarker = new Icon({
     iconUrl: customMarkerImage,
     iconSize: [38, 38],
   });
-
   const cretaedCustomClusterIcon = (cluster) => {
     return new divIcon({
       html: `<div class="${
@@ -29,18 +26,7 @@ const Map = ({ type }) => {
     });
   };
 
-  const fetchSchools = async () => {
-    const responseData = await fetch("http://localhost:5000/api/v1/schools", {
-      method: "GET",
-    });
-    const allSchools = await responseData.json();
-    dispatch(setSchools({ schools: allSchools }));
-  };
-
-  useEffect(() => {
-    fetchSchools();
-  }, []);
-
+ 
   return (
     <MapContainer
       center={[37.09024, -95.712891]}

@@ -31,9 +31,7 @@ const LoginPage = () => {
   const isRegister = pageType === "register";
 
   //FONCTION QUI GERE LA CREATION DE PROFIL
-  console.log("debut du code")
   const register = async (values, onSubmitProps) => {
-    console.log("je m'éxécute")
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);

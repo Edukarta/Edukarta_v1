@@ -5,6 +5,7 @@ import {
   FavoriteBorder,
   MenuBook,
   ArrowForwardIos,
+  Settings
 } from "@mui/icons-material/";
 import Avatar from "../../../shared/components/UIElements/Avatar";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +28,11 @@ const SectionProfil = (props) => {
       </div>
       <div>
         <h2>{props.title}</h2>
+        <CardProfil
+          text="Paramètres du compte"
+          icon={<Settings sx={{ color: "#333", fontSize: "30px" }} />}
+          arrow={<ArrowForwardIos sx={{ color: "#333", fontSize: "18px" }} />}
+        />
         <CardProfil
           text="Mes favoris"
           icon={<FavoriteBorder sx={{ color: "#333", fontSize: "30px" }} />}

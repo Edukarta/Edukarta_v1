@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Formik } from "formik";
 import { setLogin } from "../../shared/state/store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Create, Done } from "@mui/icons-material";
 import Dropzone from "react-dropzone";
 import Avatar from "../../shared/components/UIElements/Avatar";
@@ -14,23 +14,10 @@ const initialValuePatch = {
 };
 
 const ProfilDetails = () => {
-  const [user, setUser] = useState();
   const [previewImage, setPreviewImage] = useState("");
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const { id } = useParams();
-
-  const getUser = async () => {
-    const response = await fetch(`http://localhost:5000/api/v1/user/${id}`, {
-      method: "GET",
-    });
-    const data = await response.json();
-    setUser(data.user);
-    console.log(data);
-  };
-  useEffect(() => {
-    getUser();
-  }, [id]);
-  if (!user) return null;
 
   const patchImg = async (values, onSubmitProps) => {
     const formData = new FormData();
