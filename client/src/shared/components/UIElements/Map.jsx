@@ -4,7 +4,6 @@ import { Icon, divIcon, point } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { LocationOn } from "@mui/icons-material";
 import customMarkerImage from "../../../img/pin.png";
-
 import "leaflet/dist/leaflet.css";
 import classes from "./Map.module.css";
 
