@@ -1,0 +1,61 @@
+.container_details{
+    margin-top: 150px;
+}
+
+.school_name{
+    font-size: 30px;
+    font-weight: 600;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.container_address{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.container_icon{
+    width: 30px;
+    height: 30px;
+    background: #365475;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.school_info{
+    color: #333;
+    font-style: italic;
+    font-size: 15px;
+}
+
+.container_info{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 5px;
+}
+
+.container_img{
+    width: 100%;
+}
+
+.container_img img{
+    width: 100%;
+}
+
+.container_link{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.container_link a{
+    font-weight: 600;
+}

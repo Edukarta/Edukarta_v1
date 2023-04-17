@@ -5,20 +5,24 @@ import NavbarBottom from "./shared/components/Navigation/NavbarBottom/NavbarBott
 import LoginPage from "./user/pages/LoginPage";
 import ProfilPage from "./user/pages/ProfilPage";
 import ProfilDetails from "./user/pages/ProfilDetails";
-import { useLocation } from 'react-router-dom';
+import SchoolDetails from "./schools/pages/SchoolDetails";
+import { useLocation } from "react-router-dom";
 
 function App() {
   const location = useLocation();
   return (
     <>
       <MainNavigation />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/register" element={<LoginPage/>}/>
-        <Route path="/profil/:id" element={<ProfilPage/>}/>
-        <Route path="/profil/:id/details" element={<ProfilDetails/>}/>
-      </Routes>  
-      {location.pathname !== '/register' && <NavbarBottom />}
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/register" element={<LoginPage />} />
+          <Route path="/profil/:id" element={<ProfilPage />} />
+          <Route path="/profil/:id/details" element={<ProfilDetails />} />
+          <Route path="/school/:id" element={<SchoolDetails />} />
+        </Routes>
+        {location.pathname !== "/register" && <NavbarBottom />}
+      </main>
     </>
   );
 }

@@ -1,4 +1,5 @@
 import School from "../models/SchoolModel.js";
+import HttpError from "../models/http-errors.js";
 
 
 
@@ -20,19 +21,28 @@ export const getAllSchools = async (req, res) => {
 //@GET
 //ROUTE : api/v1/schools/:id
 export const getSchoolById = async (req, res) => {
+  const { id } = req.params;
+
   let school;
   try {
-    const { id } = req.params;
     school = await School.findById(id);
-    if (!school) {
-      res.status(404).json({ message: "Institution non trouvée" });
-    } 
-        
-  } catch (error) {
-    res.status(500).json({ error: err.message });
+  } catch (err) {
+    const error = new HttpError(
+      "Un problème est survenu, impossible de trouver l'utilisateur",
+      500
+    );
+    return next(error);
   }
-  
-  res.status(200).json(school);
+
+  if (!school) {
+    const error = new HttpError(
+      "Impossible de touver un utilisateur à l'adresse fournie",
+      404
+    );
+    return next(error);
+  }
+
+  res.json({ school: school.toObject({ getters: true }) });
   
 };
 
