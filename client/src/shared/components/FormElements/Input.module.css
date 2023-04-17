@@ -8,8 +8,10 @@
     display: block;
   }
 
-  .formControl input::placeholder{
+  .formControl input::placeholder,
+  .formControl textarea::placeholder{
     font-style: italic;
+    text-transform: capitalize;
   }
   
   .formControl label {

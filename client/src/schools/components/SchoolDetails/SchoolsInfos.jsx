@@ -32,7 +32,7 @@ const SchoolsInfos = ({ school }) => {
         <img src={schoolIcon} alt="school" />
       </div>
       <div className={classes.container_link}>
-        <Link to="/">Cette fiche vous apartient ?</Link>
+        <Link to={`/school/update/${school?.id}`}>Cette fiche vous apartient ?</Link>
       </div>
     </div>
   );

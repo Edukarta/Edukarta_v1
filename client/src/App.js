@@ -6,6 +6,7 @@ import LoginPage from "./user/pages/LoginPage";
 import ProfilPage from "./user/pages/ProfilPage";
 import ProfilDetails from "./user/pages/ProfilDetails";
 import SchoolDetails from "./schools/pages/SchoolDetails";
+import SchoolUpdate from "./schools/pages/SchoolUpdate";
 import { useLocation } from "react-router-dom";
 
 function App() {
@@ -20,8 +21,11 @@ function App() {
           <Route path="/profil/:id" element={<ProfilPage />} />
           <Route path="/profil/:id/details" element={<ProfilDetails />} />
           <Route path="/school/:id" element={<SchoolDetails />} />
+          <Route path="/school/update/:id" element={<SchoolUpdate />} />
         </Routes>
-        {location.pathname !== "/register" && <NavbarBottom />}
+        {!["/register"].includes(location.pathname) &&
+          !location.pathname.startsWith("/profil/") &&
+          !location.pathname.startsWith("/school/update/") && <NavbarBottom />}
       </main>
     </>
   );

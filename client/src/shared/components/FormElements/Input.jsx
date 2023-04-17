@@ -13,7 +13,7 @@ const Input = (props) => {
         value={props.value}
       />
     ) : (
-      <textarea id={props.id} rows={props.rows || 3} />
+      <textarea id={props.id} rows={props.rows || 3}  placeholder={props.placeholder} />
     );
 
   return (
