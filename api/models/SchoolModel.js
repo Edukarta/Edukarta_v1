@@ -5,6 +5,10 @@ const SchoolSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  nameUpdate: {
+    type: String,
+    default: ""
+  },
   originalName: {
     type: String,
     default: "",
@@ -21,15 +25,31 @@ const SchoolSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  addressUpdate: {
+    type: String,
+    default: ""
+  },
   continent: {
     type: String,
     required: true,
+  },
+  continentUpdate: {
+    type: String,
+    default: ""
   },
   country: {
     type: String,
     required: true,
   },
+  countryUpdate: {
+    type: String,
+    default: ""
+  },
   area: {
+    type: String,
+    default: "",
+  },
+  areaUpdate: {
     type: String,
     default: "",
   },
@@ -37,15 +57,13 @@ const SchoolSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  cityUpdate: {
+    type: String,
+    default: "",
+  },
   gps: {
-    lat: {
-      type: String,
-      default: "",
-    },
-    long: {
-      type: String,
-      default: "",
-    },
+    type: [],
+    default: [],
   },
   description: {
     type: String,
@@ -59,7 +77,15 @@ const SchoolSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  levelUpdate: {
+    type: String,
+    default: "",
+  },
   language: {
+    type: String,
+    default: "",
+  },
+  languageUpdate: {
     type: String,
     default: "",
   },
@@ -67,11 +93,23 @@ const SchoolSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  sectorUpdate: {
+    type: String,
+    default: "",
+  },
   gender: {
     type: String,
     default: "",
   },
+  genderUpdate: {
+    type: String,
+    default: "",
+  },
   religion: {
+    type: String,
+    default: "",
+  },
+  religionUpdate: {
     type: String,
     default: "",
   },

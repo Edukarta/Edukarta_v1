@@ -25,7 +25,7 @@ function App() {
         </Routes>
         {!["/register"].includes(location.pathname) &&
           !location.pathname.startsWith("/profil/") &&
-          !location.pathname.startsWith("/school/update/") && <NavbarBottom />}
+          !location.pathname.startsWith("/school/") && <NavbarBottom />}
       </main>
     </>
   );

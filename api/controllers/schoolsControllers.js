@@ -1,8 +1,6 @@
 import School from "../models/SchoolModel.js";
 import HttpError from "../models/http-errors.js";
-
-
-
+import { validationResult } from "express-validator";
 
 //SHOW ALL SCHOOLS
 //@GET
@@ -11,10 +9,12 @@ export const getAllSchools = async (req, res) => {
   let schools;
   try {
     schools = await School.find();
-     } catch (err) {
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
-  res.status(200).json({ schools: schools.map((school) => school.toObject({ getters: true })) });
+  res.status(200).json({
+    schools: schools.map((school) => school.toObject({ getters: true })),
+  });
 };
 
 //SHOW ONE SCHOOL
@@ -43,7 +43,6 @@ export const getSchoolById = async (req, res) => {
   }
 
   res.json({ school: school.toObject({ getters: true }) });
-  
 };
 
 //SHOW SCHOOL ON SELECTED CONTINENT
@@ -142,17 +141,36 @@ export const addSchool = async (req, res) => {
 //UPDATE SCHOOL
 //@PATCH
 //ROUTE : api/v1/schools/:id
-export const updateSchool = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const school = await School.findById(id);
-    const updatedSchool = Object.assign(school, req.body);
-    const savedSchool = await updatedSchool.save();
-
-    res.status(200).json(savedSchool);
-  } catch (error) {
-    res.status(500).json({ error: err.message });
+export const updateSchool = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(new HttpError("Données incorrects", 422));
   }
+  const { id } = req.params;
+  let school;
+  try {
+    school = await School.findById(id);
+  } catch (err) {
+    const error = new HttpError(
+      "Un problême est survenu, impossible de mettre à jour le profil",
+      500
+    );
+    return next(error);
+  }
+
+  Object.assign(school, req.body, { imgPath: req.file.filename });
+
+  try {
+    await school.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not update place.",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ school: school.toObject({ getters: true }) });
 };
 
 //DELETE SCHOOL

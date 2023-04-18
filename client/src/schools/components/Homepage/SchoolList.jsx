@@ -19,7 +19,7 @@ const SchoolList = ({ title, type, size, schools, numberOfSchools }) => {
             <Link key={school.id} to={`/school/${school.id}`}>
               <Card
                 id={school.id}
-                img={school.imgPath}
+                img={school.imgPath ? `http://localhost:5000/images/${school.imgPath}` : "" }
                 name={school.name}
                 continent={school.continent}
                 country={school.country}

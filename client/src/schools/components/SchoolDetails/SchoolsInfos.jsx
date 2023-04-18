@@ -9,6 +9,18 @@ const SchoolsInfos = ({ school }) => {
   return (
     <div className={classes.container_details}>
       <h1 className={classes.school_name}>{school?.name}</h1>
+      {!school?.imgPath ? (
+        <div className={classes.container_img}>
+          <img src={schoolIcon} alt="school" />
+        </div>
+      ) : (
+        <div className={classes.container_img}>
+          <img
+            src={`http://localhost:5000/images/${school?.imgPath}`}
+            alt="profile"
+          />
+        </div>
+      )}
       <div className={classes.container_info}>
         <div className={classes.container_icon}>
           <Public sx={{ color: "white", fontSize: "18px" }} />
@@ -28,11 +40,11 @@ const SchoolsInfos = ({ school }) => {
         <h6 className={classes.school_info}>Grade : {school?.level} /</h6>
         <h6 className={classes.school_info}>Secteur : {school?.sector}</h6>
       </div>
-      <div className={classes.container_img}>
-        <img src={schoolIcon} alt="school" />
-      </div>
+
       <div className={classes.container_link}>
-        <Link to={`/school/update/${school?.id}`}>Cette fiche vous apartient ?</Link>
+        <Link to={`/school/update/${school?.id}`}>
+          Cette fiche vous apartient ?
+        </Link>
       </div>
     </div>
   );

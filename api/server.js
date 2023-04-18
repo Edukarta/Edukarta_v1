@@ -12,6 +12,7 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import { register } from "./controllers/authControllers.js";
 import { updateUser } from "./controllers/userControllers.js";
+import { updateSchool } from "./controllers/schoolsControllers.js";
 import schoolsRoutes from "./routes/schoolsRoutes.js";
 
 //CONGIGURATION
@@ -39,6 +40,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 app.patch("/api/v1/user/:id", upload.single('image'), updateUser);
+app.patch("/api/v1/schools/:id", upload.single('picture'), updateSchool);
 app.post("/api/v1/auth/register", upload.single("picture"), register);
 
 //ROUTES
