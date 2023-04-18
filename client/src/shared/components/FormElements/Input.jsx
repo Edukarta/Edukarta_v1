@@ -13,13 +13,18 @@ const Input = (props) => {
         value={props.value}
       />
     ) : (
-      <textarea id={props.id} rows={props.rows || 3}  placeholder={props.placeholder} />
+      <textarea
+        id={props.id}
+        rows={props.rows || 3}
+        placeholder={props.placeholder}
+        onChange={props.onChange}
+        onBlur={props.onBlur}
+        value={props.value}
+      />
     );
 
   return (
-    <div
-      className={`${classes.formControl}`}
-    >
+    <div className={`${classes.formControl}`}>
       <label htmlFor={props.id}>{props.label}</label>
       {element}
       {/* {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>} */}

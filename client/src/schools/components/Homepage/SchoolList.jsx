@@ -20,12 +20,12 @@ const SchoolList = ({ title, type, size, schools, numberOfSchools }) => {
               <Card
                 id={school.id}
                 img={school.imgPath ? `http://localhost:5000/images/${school.imgPath}` : "" }
-                name={school.name}
-                continent={school.continent}
-                country={school.country}
-                area={school.area}
-                city={school.city}
-                adress={school.address}
+                name={school.nameUpdate ? school.nameUpdate : school.name }
+                continent={school.continentUpdate ? school.continentUpdate : school.continent}
+                country={school.countryUpdate ? school.countryUpdate : school.country}
+                area={school.areaUpdate ? school.areaUpdate : school.area}
+                city={school.cityUpdate ? school.cityUpdate : school.city}
+                adress={school.addressUpdate ? school.addressUpdate : school.address}
                 default={size === "default"}
                 big={size === "big"}
               />

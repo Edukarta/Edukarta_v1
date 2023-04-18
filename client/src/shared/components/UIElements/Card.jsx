@@ -13,7 +13,7 @@ const Card = (props) => {
         {props.img ? (
           <img src={props.img} alt={props.name} />
         ) : (
-          <img src={schoolIcon}/>
+          <img src={schoolIcon} />
         )}
       </div>
       <div className={classes.cardSugest__container_text}>
@@ -22,9 +22,12 @@ const Card = (props) => {
           <h4 className={classes.cardSugest__text_location}>
             {props.continent} / {props.country}
           </h4>
-          <h4 className={classes.cardSugest__text_location}>
-            {props.area} / {props.city}
-          </h4>
+          {props.city ||
+            (props.area && (
+              <h4 className={classes.cardSugest__text_location}>
+                {props.area} / {props.city}
+              </h4>
+            ))}
           <h4 className={classes.cardSugest__text_address}>{props.adress}</h4>
         </div>
       </div>
