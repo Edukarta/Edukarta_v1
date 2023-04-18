@@ -4,7 +4,8 @@
   top: 0;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 20px;
+  margin: 2px auto;
+  max-width: 1224px;
 }
 .mainNavigation__container_title_avatar {
   width: 100%;
@@ -36,4 +37,16 @@ span{
 .mainNavigation__container_title_avatar a{
   text-decoration: none;
   color: white;
+}
+
+
+@media (min-width: 600px) {
+  .mainNavigation__title {
+    font-size: 25px;
+  }
+
+  span{
+    font-size: 15px;
+  }
+
 }

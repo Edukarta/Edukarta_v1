@@ -26,7 +26,7 @@ const HomePage = () => {
     <section>
       <Map type="homepage" schools={schools}/>
       <SchoolList type="noWrap" size="default" schools={schools} numberOfSchools={5} />
-      <SchoolList title="établissements populaires" size="big" schools={schools} numberOfSchools={6} />
+      <SchoolList title="établissements populaires" size="big" schools={schools} numberOfSchools={8} />
     </section>
   );
 };

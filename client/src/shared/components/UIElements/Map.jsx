@@ -41,9 +41,10 @@ const Map = ({ type, schools }) => {
       >
         {schools.schools?.map((school) => {
           if (school.gps && school.gps.lat && school.gps.long) {
+            const latlng = school.gps.map(parseFloat)
             return (
               <Marker
-                position={school.gps}
+                position={latlng}
                 icon={customMarker}
                 key={school.id}
                 id={school.id}

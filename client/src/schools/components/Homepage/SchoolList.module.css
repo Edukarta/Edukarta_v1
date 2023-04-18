@@ -21,3 +21,12 @@
     justify-content: center;
     flex-wrap: wrap;
 }
+
+@media (min-width: 1080px) {
+ 
+    .card__container_wrap{
+        justify-content:flex-start;
+        gap: 20px;
+    }
+}
+  

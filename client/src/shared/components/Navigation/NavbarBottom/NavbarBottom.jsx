@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   House,
   Favorite,
@@ -15,14 +15,13 @@ import Map from "../../UIElements/Map";
 const NavbarBottom = () => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const schools = useSelector((state) => state.schools);
-  
 
   return (
     <>
       <div className={classes.navbarBottom__container}>
-      <MapDrawer show={drawerIsOpen}>
-        <Map schools={schools} />
-      </MapDrawer>
+        <MapDrawer show={drawerIsOpen}>
+          <Map schools={schools} />
+        </MapDrawer>
         <div className={classes.navbarBottom__container_icon}>
           <Link to="/">
             <House sx={{ fontSize: "40px" }} />
