@@ -50,7 +50,7 @@ const SchoolsInfos = ({ school }) => {
       </div>}
 
       <div className={classes.container_link}>
-        <Link to={`/school/update/${school?.id}`}>
+        <Link to={`/school/${school?.id}/request`}>
           Cette fiche vous apartient ?
         </Link>
       </div>

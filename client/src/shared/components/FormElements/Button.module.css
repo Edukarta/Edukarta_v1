@@ -37,6 +37,11 @@
     background: #830000;
     border-color: #830000;
   }
+
+  .buttonGreen{
+    background: #056d00;
+    border-color: #056d00;
+  }
   
   .buttonDanger:hover,
   .buttonDanger:active {

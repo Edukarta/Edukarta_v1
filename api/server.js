@@ -13,7 +13,9 @@ import userRoutes from "./routes/userRoutes.js";
 import { register } from "./controllers/authControllers.js";
 import { updateUser } from "./controllers/userControllers.js";
 import { updateSchool } from "./controllers/schoolsControllers.js";
+import { createRequest } from "./controllers/requestControllers.js";
 import schoolsRoutes from "./routes/schoolsRoutes.js";
+import requestRoute from "./routes/requestRoutes.js";
 
 //CONGIGURATION
 const __filename = fileURLToPath(import.meta.url);
@@ -41,12 +43,14 @@ const upload = multer({storage});
 
 app.patch("/api/v1/user/:id", upload.single('image'), updateUser);
 app.patch("/api/v1/schools/:id", upload.single('picture'), updateSchool);
+app.post("/api/v1/request", upload.single('document'), createRequest);
 app.post("/api/v1/auth/register", upload.single("picture"), register);
 
 //ROUTES
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/schools", schoolsRoutes);
+app.use("/api/v1/request", requestRoute);
 
 
 const PORT = process.env.PORT || 3330;

@@ -1,0 +1,13 @@
+.dashboard_title{
+    font-size: 18px;
+    text-align: center;
+    color: #333;
+}
+
+.container_card_request{
+    margin-top: 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
