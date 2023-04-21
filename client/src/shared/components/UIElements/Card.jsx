@@ -9,14 +9,22 @@ const Card = (props) => {
         props.big && classes.card__container_big
       }`}
     >
-      <div className={classes.cardSugest__container_img}>
+      <div
+        className={`${props.default && classes.cardSugest__container_img} ${
+          props.big && classes.cardSugest__container_img_big
+        }`}
+      >
         {props.img ? (
           <img src={props.img} alt={props.name} />
         ) : (
           <img src={schoolIcon} />
         )}
       </div>
-      <div className={classes.cardSugest__container_text}>
+      <div
+        className={`${props.default && classes.cardSugest__container_text} ${
+          props.big && classes.cardSugest__container_text_big
+        } `}
+      >
         <h1 className={classes.cardName}>{props.name}</h1>
         <div className={classes.container_infos__school}>
           <span className={classes.cardSugest__text_location}>

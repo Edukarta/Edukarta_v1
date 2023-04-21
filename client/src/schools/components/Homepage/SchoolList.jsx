@@ -52,7 +52,7 @@ const SchoolList = ({ title, type, size, schools, numberOfSchools }) => {
           ref={listRef}
         >
           {schools.schools?.slice(0, numberOfSchools).map((school) => (
-            <Link key={school.id} to={`/school/${school.id}`}>
+            <Link key={school.id} to={`/school/${school.id}`} className={classes.container_link__card}>
               <Card
                 id={school.id}
                 img={

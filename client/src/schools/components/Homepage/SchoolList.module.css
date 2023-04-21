@@ -1,5 +1,6 @@
 .listContainer{
     margin-bottom: 50px;
+    position: relative;
 }
 
 .listTitle{
@@ -20,18 +21,29 @@
 
 .card__container_wrap{
     width: 100%;
+    gap: 10px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 }
 
+.container_link__card{
+    width: 100%;
+    margin-bottom: 40px;
+    max-width: 390px;
+}
+
 .container_arrow{
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 60%;
     margin: 0 auto;
     gap: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
 }
 
 @media (min-width: 1080px) {
