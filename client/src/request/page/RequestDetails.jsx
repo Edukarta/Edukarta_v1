@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import classes from "./RequestDetails.module.css";
-import Button from "../../shared/components/FormElements/Button";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../shared/state/store";
+import MainNavigation from "../../admin/components/Navigation/MainNavigationAdmin";
+import { ArrowDownward, Done, Close, ArrowBack } from "@mui/icons-material/";
+import { Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const RequestDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const [requests, setRequests] = useState();
 
   const fetchRequest = async () => {
@@ -25,32 +32,91 @@ const RequestDetails = () => {
   if (requests) {
     console.log(requests);
   }
+
+  const updateRequestStatus = async (increment) => {
+    try {
+      const newStatus = increment
+        ? requests.request.status + 1
+        : requests.request.status - 1;
+      const res = await fetch(
+        `http://localhost:5000/api/v1/request/${id}/status`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ status: newStatus }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const { status } = await res.json();
+      const updatedUser = {
+        ...user,
+        request: user.request.map((req) =>
+          req.id === id ? { ...req, status: newStatus } : req
+        ),
+      };
+      dispatch(updateUser(updatedUser));
+      setRequests((prevRequest) => ({ ...prevRequest, status }));
+      navigate("/admin");
+    } catch (err) {
+      console.error(err);
+      // Gérer l'erreur ici
+    }
+  };
+
   return (
-    <div className={classes.container_request}>
-      <h4>
-        <span className={classes.request_bold}>
-          {requests?.user.firstname} {requests?.user.lastname}
-        </span>{" "}
-        à fait une demande de modifications.
-      </h4>
-      <h4>
-        Sa demande concerne l'établissement :{" "}
-        <span className={classes.request_bold}>{requests?.school.name}</span>
-      </h4>
-      <div className={classes.container__doc}>
-        <h5>Il justifie sa légitimité avec le document ci-dessous :</h5>
-        <div className={classes.container_img__request}>
-          <img
-            src={`http://localhost:5000/images/${requests?.request.document}`}
-            alt="profile"
-          />
+    <>
+      <MainNavigation />
+      <section className={classes.container_request}>
+        <div className={classes.container_text}>
+          <h4>
+            <span className={classes.request_bold}>
+              {requests?.user.firstname} {requests?.user.lastname}
+            </span>{" "}
+            à fait une demande de modifications.
+          </h4>
         </div>
-      </div>
-      <div className={classes.container__btn}>
-        <Button green>Accepter</Button>
-        <Button danger>Refuser</Button>
-      </div>
-    </div>
+        <div className={classes.container_text}>
+          <h4>
+            Sa demande concerne l'établissement :{" "}
+            <span className={classes.request_bold}>
+              {requests?.school.name}
+            </span>
+          </h4>
+        </div>
+        <div className={classes.container__doc}>
+          <h5>Il justifie sa légitimité avec le document ci-dessous :</h5>
+          <div className={classes.container_img__request}>
+            <img
+              src={`http://localhost:5000/images/${requests?.request.document}`}
+              alt="profile"
+            />
+            <div className={classes.container_link_icon}>
+              <ArrowDownward />
+              <a
+                href={`http://localhost:5000/images/${requests?.request.document}`}
+                download
+                target="_blank"
+              >
+                Télécharger le document
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className={classes.container__btn}>
+          <div className={classes.container_done_icon}>
+            <Done green sx={{fontSize: "30px", color: "green"}} onClick={() => updateRequestStatus(true)} />
+          </div>
+          <div className={classes.container_close_icon}>
+            <Close danger sx={{fontSize: "30px", color: "red"}} onClick={() => updateRequestStatus(false)} />
+          </div>
+        </div>
+        <Link to="/admin" className={classes.link_back}>
+          <ArrowBack/>
+          Retour
+        </Link>
+      </section>
+    </>
   );
 };
 

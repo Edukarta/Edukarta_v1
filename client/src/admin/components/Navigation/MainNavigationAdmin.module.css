@@ -1,0 +1,13 @@
+.container__admin_navbar{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+
+}
+
+.container__admin_navbar h1{
+    font-weight: 800;
+    font-size: 22px;
+}

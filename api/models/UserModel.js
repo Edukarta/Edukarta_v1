@@ -40,6 +40,10 @@ const UserSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  request: {
+    type: Array,
+    default: [],
+  },
   status: {
     type: Number,
     default: 0,

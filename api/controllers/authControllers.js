@@ -41,6 +41,7 @@ export const register = async (req, res, next) => {
     address,
     phone,
     favoriteSchools: [],
+    request:[],
     imagePath,
     grade
   });

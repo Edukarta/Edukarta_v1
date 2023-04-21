@@ -6,9 +6,9 @@ import LoginPage from "./user/pages/LoginPage";
 import ProfilPage from "./user/pages/ProfilPage";
 import ProfilDetails from "./user/pages/ProfilDetails";
 import SchoolDetails from "./schools/pages/SchoolDetails";
-import SchoolUpdate from "./schools/pages/SchoolUpdate";
 import RequestForm from "./request/page/RequestForm";
 import Dashboard from "./admin/pages/Dashboard";
+import SchoolUpdate from "./schools/pages/SchoolUpdate";
 import RequestDetails from "./request/page/RequestDetails";
 import { useLocation } from "react-router-dom";
 
@@ -25,14 +25,14 @@ function App() {
           <Route path="/profil/:id" element={<ProfilPage />} />
           <Route path="/profil/:id/details" element={<ProfilDetails />} />
           <Route path="/school/:id" element={<SchoolDetails />} />
-          <Route path="/school/update/:id" element={<SchoolUpdate />} />
+          <Route path="/school/:id/request/:requestId" element={<SchoolUpdate />} />
           <Route path="/school/:id/request" element={<RequestForm />} />
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/admin/request/:id" element={<RequestDetails />} />
         </Routes>
         {!["/register"].includes(location.pathname) &&
           !location.pathname.startsWith("/profil/") &&
-          !location.pathname.startsWith("/school/") && 
+          !location.pathname.includes("request") && 
           !location.pathname.startsWith("/admin") && <NavbarBottom />}
       </main>
     </>

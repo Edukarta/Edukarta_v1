@@ -9,12 +9,24 @@
     border-bottom: 1px solid #333;
 }
 
+.text_infos_upload{
+    color: #333;
+    font-size: 13px;
+    margin-top: 20px;
+    text-align: center;
+    font-style: italic;
+}
+
 
 .container_dropzone{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
     width: 80%;
     height: 300px;
-    margin: 30px auto;
-    background-color: #333;
+    margin: 10px auto;
+    background-color: #848484;
     position: relative;
 }
 

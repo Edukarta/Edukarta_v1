@@ -39,10 +39,18 @@
   text-overflow: ellipsis;
 }
 
+.container_infos__school{
+  display: flex;
+  flex-direction: column;
+}
+
 .cardSugest__text_location {
   font-size: 12px;
   color: rgb(155, 176, 170);
   text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cardSugest__text_address {

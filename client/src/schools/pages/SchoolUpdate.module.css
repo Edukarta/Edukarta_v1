@@ -56,3 +56,13 @@
     border-radius: 20px;
     object-fit: cover;
 }
+
+.container__spinner{
+    margin-top: 230px;
+}
+
+.container__spinner h1{
+    color: #050404;
+    font-size: 19px;
+    text-align: center;
+}

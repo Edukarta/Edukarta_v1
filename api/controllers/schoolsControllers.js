@@ -20,7 +20,7 @@ export const getAllSchools = async (req, res) => {
 //SHOW ONE SCHOOL
 //@GET
 //ROUTE : api/v1/schools/:id
-export const getSchoolById = async (req, res) => {
+export const getSchoolById = async (req, res, next) => {
   const { id } = req.params;
 
   let school;

@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Map from "../../shared/components/UIElements/Map";
 import SchoolList from "../components/Homepage/SchoolList";
-import {setSchools} from "../../shared/state/store.js";
+import { setSchools } from "../../shared/state/store.js";
 import { useDispatch, useSelector } from "react-redux";
+import classes from "./HomePage.module.css"
 
 //FECTHER LES DONNEES DANS CE COMPOSANT PASSEES EN PROPS A SCHOOLLIST
 const HomePage = () => {
@@ -21,12 +22,23 @@ const HomePage = () => {
     fetchSchools();
   }, []);
 
-
   return (
     <section>
-      <Map type="homepage" schools={schools}/>
-      <SchoolList type="noWrap" size="default" schools={schools} numberOfSchools={5} />
-      <SchoolList title="établissements populaires" size="big" schools={schools} numberOfSchools={8} />
+      <Map type="homepage" schools={schools} />
+      <div className={classes.container_slider}>
+        <SchoolList
+          type="noWrap"
+          size="default"
+          schools={schools}
+          numberOfSchools={5}
+        />
+      </div>
+      <SchoolList
+        title="établissements populaires"
+        size="big"
+        schools={schools}
+        numberOfSchools={8}
+      />
     </section>
   );
 };

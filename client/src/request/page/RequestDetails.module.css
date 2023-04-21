@@ -1,3 +1,16 @@
+.container_request{
+    margin-top: 50px;
+}
+
+.container_text{
+    border-bottom: 5px solid #b3b3b3;
+}
+
+.container_text:nth-child(2){
+    margin-top: 50px;
+    padding: 0 0 10px 0;
+}
+
 .request_bold{
     color: black;
     font-weight: 700;
@@ -25,11 +38,45 @@ h4{
 .container_img__request img{
     width: 100%;
     border-radius: 20px;
+    margin-bottom: 10px;
 }
 
 .container__btn{
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 30px;
+}
+
+.container_link_icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container_done_icon{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid green;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container_close_icon{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.link_back{
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+    font-size: 20px;
 }

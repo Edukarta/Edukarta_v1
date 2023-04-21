@@ -11,15 +11,26 @@
 .card__container_noWrap{
     width: 100%;
     display: flex;
-    overflow: hidden;
     padding: 0 20px;
+    transform: translateX(0);
+    transition: all 1s ease;
 }
+
 
 .card__container_wrap{
     width: 100%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.container_arrow{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    margin: 0 auto;
+    gap: 30px;
 }
 
 @media (min-width: 1080px) {
