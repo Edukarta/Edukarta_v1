@@ -1,9 +1,10 @@
 .listContainer{
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 
 .listTitle{
-    margin-left: 20px;
+   margin-left: 20px;
+   margin-bottom: 10px;
    color: var(--title-card-color);
    text-transform: capitalize;
 }

@@ -82,8 +82,8 @@ const SchoolList = ({ title, type, size, schools, numberOfSchools }) => {
         </div>
         {type === "noWrap" && (
           <div className={classes.container_arrow}>
-            <ArrowBackIos onClick={() => handleClick("left")} sx={{color: "#0275d8"}} />
-            <ArrowForwardIos onClick={() => handleClick("right")} sx={{color: "#0275d8"}} />
+            <ArrowBackIos onClick={() => handleClick("left")} sx={{color: "#365475", fontSize: "28px"}} />
+            <ArrowForwardIos onClick={() => handleClick("right")} sx={{color: "#365475", fontSize: "28px"}} />
           </div>
         )}
       </section>
