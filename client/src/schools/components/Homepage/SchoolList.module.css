@@ -43,7 +43,7 @@
     gap: 30px;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 10px;
+    bottom: 5px;
 }
 
 @media (min-width: 1080px) {

@@ -13,7 +13,7 @@ const ResultsPage = () => {
     <div className={classes.container_results}>
       <div className={classes.container_card}>
         {results?.results.schools.map((result) => (
-          <Link to={`/school/${result._id}`}>
+          <Link to={`/school/${result._id}`} key={result._id}>
           <div className={classes.card_item}>
             <div className={classes.container_img}>
               {result.imgPath ? (<img

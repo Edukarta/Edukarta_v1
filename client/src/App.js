@@ -12,6 +12,7 @@ import SchoolUpdate from "./schools/pages/SchoolUpdate";
 import RequestDetails from "./request/page/RequestDetails";
 import { useLocation } from "react-router-dom";
 import ResultsPage from "./schools/pages/ResultsPage";
+import AdminLogin from "./admin/pages/AdminLogin";
 
 function App() {
   const location = useLocation();
@@ -28,7 +29,8 @@ function App() {
           <Route path="/school/:id" element={<SchoolDetails />} />
           <Route path="/school/:id/request/:requestId" element={<SchoolUpdate />} />
           <Route path="/school/:id/request" element={<RequestForm />} />
-          <Route path="/admin" element={<Dashboard />} />
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/request/:id" element={<RequestDetails />} />
         </Routes>
         {!["/register"].includes(location.pathname) &&
