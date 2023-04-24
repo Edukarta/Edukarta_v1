@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import MainHeader from "./MainHeader";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setSearchResults } from "../../state/store";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
 import Avatar from "../UIElements/Avatar";
@@ -8,6 +10,25 @@ import SearchBar from "../UIElements/SearchBar";
 
 const MainNavigation = () => {
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/v1/schools/search?query=${searchQuery}`, 
+      {
+        method: "GET",
+      }
+      );
+      const data = await response.json();
+      dispatch(setSearchResults({ results: data }));
+      console.log(data);
+      navigate("/searchResult");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <MainHeader>
@@ -25,7 +46,11 @@ const MainNavigation = () => {
             <Link to="/register">Sign up / Login</Link>
           )}
         </div>
-        <SearchBar />
+        <SearchBar
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onClick={handleSearch}
+        />
       </div>
 
       <div className={classes.mainNavigation__container_item_desktop}>
@@ -33,7 +58,11 @@ const MainNavigation = () => {
           <h1 className={classes.mainNavigation__title}>
             <Link to="/">EduKarta</Link>
           </h1>
-          <SearchBar />
+          <SearchBar
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onClick={handleSearch}
+          />
           {user ? (
             <div className={classes.container__avatar_logout}>
               <span>Bonjour {user.firstname}</span>

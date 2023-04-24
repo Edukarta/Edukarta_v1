@@ -1,18 +1,20 @@
 import React from "react";
-import { TextField, InputAdornment, IconButton } from "@mui/material";
+import { TextField, InputAdornment, IconButton, Button } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import classes from "./SearchBar.module.css";
 
-const SearchBar = () => {
+const SearchBar = (props) => {
   return (
     <div className={classes.searchBar_container}>
       <TextField
-      placeholder="Search for schools"
+        placeholder="Search for schools"
+        onChange={props.onChange}
+        value={props.value}
         sx={{ width: "100%" }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <IconButton sx={{ color: "blue" }}>
+              <IconButton sx={{ color: "blue" }} onClick={props.onClick}>
                 <Search sx={{ fontSize: "20px" }} />
               </IconButton>
             </InputAdornment>

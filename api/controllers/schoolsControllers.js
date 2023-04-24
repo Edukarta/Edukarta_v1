@@ -17,6 +17,29 @@ export const getAllSchools = async (req, res) => {
   });
 };
 
+//SHOW ALL SCHOOLS
+//@GET
+//ROUTE : api/v1/search
+export const searchSchools = async (req, res, next) => {
+  console.log('searchSchools called');
+  const { query } = req.query;
+  try {
+    const schools = await School.find({
+      $or: [
+        { name: { $regex: query, $options: 'i' } },
+        { nameUpdate: { $regex: query, $options: 'i' } },
+        { city: { $regex: query, $options: 'i' } },
+        { cityUpdate: { $regex: query, $options: 'i' } },
+        { country: { $regex: query, $options: 'i' } },
+        { countryUpdate: { $regex: query, $options: 'i' } },
+      ]
+    });
+    res.json({ schools });
+  } catch (err) {
+    next(err);
+  }
+};
+
 //SHOW ONE SCHOOL
 //@GET
 //ROUTE : api/v1/schools/:id

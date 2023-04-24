@@ -11,16 +11,17 @@ import Dashboard from "./admin/pages/Dashboard";
 import SchoolUpdate from "./schools/pages/SchoolUpdate";
 import RequestDetails from "./request/page/RequestDetails";
 import { useLocation } from "react-router-dom";
+import ResultsPage from "./schools/pages/ResultsPage";
 
 function App() {
   const location = useLocation();
   return (
     <>
     {!location.pathname.startsWith("/admin") && <MainNavigation />}
-    
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/searchResult" element={<ResultsPage/>}/>
           <Route path="/register" element={<LoginPage />} />
           <Route path="/profil/:id" element={<ProfilPage />} />
           <Route path="/profil/:id/details" element={<ProfilDetails />} />
