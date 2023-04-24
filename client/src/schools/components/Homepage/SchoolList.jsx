@@ -71,9 +71,6 @@ const SchoolList = ({ title, type, size, schools, numberOfSchools }) => {
                 }
                 area={school.areaUpdate ? school.areaUpdate : school.area}
                 city={school.cityUpdate ? school.cityUpdate : school.city}
-                adress={
-                  school.addressUpdate ? school.addressUpdate : school.address
-                }
                 default={size === "default"}
                 big={size === "big"}
               />

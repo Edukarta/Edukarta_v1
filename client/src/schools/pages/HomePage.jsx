@@ -37,7 +37,7 @@ const HomePage = () => {
         title="établissements populaires"
         size="big"
         schools={schools}
-        numberOfSchools={8}
+        numberOfSchools={30}
       />
     </section>
   );

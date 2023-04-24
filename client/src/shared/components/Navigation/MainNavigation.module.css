@@ -7,6 +7,8 @@
   margin: 2px auto;
   max-width: 1224px;
 }
+
+
 .mainNavigation__container_title_avatar {
   width: 100%;
   padding: 0 10px;
@@ -40,6 +42,11 @@ span{
 }
 
 
+.mainNavigation__container_item_desktop{
+  display: none;
+}
+
+
 @media (min-width: 600px) {
   .mainNavigation__title {
     font-size: 25px;
@@ -49,4 +56,21 @@ span{
     font-size: 15px;
   }
 
+}
+
+
+@media (min-width: 1200px) {
+  .mainNavigation__container_item{
+    display: none;
+  }
+
+  .mainNavigation__container_item_desktop{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2px auto;
+    top: 0;
+    max-width: 1224px;
+  }
 }

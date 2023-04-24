@@ -17,3 +17,10 @@
       height: 8.5rem;
     }
   }
+
+  @media (min-width: 1200px) {
+    .mainheader {
+      justify-content: space-between;
+      height: 7rem;
+    }
+  }

@@ -1,8 +1,10 @@
 import React from "react";
 import schoolIcon from "../../../img/school.png";
+import { FavoriteBorder } from "@mui/icons-material/";
 import classes from "./Card.module.css";
 
 const Card = (props) => {
+  const fontSize = props.default ? "15px" : "25px";
   return (
     <div
       className={`${props.default && classes.card__container_default} ${
@@ -27,16 +29,16 @@ const Card = (props) => {
       >
         <h1 className={classes.cardName}>{props.name}</h1>
         <div className={classes.container_infos__school}>
-          <span className={classes.cardSugest__text_location}>
+          <span className={classes.cardText__country}>
             {props.continent} / {props.country}
           </span>
-          {props.city ||
-            (props.area && props.areaUpdate && (
-              <span className={classes.cardSugest__text_location}>
-                {props.area} / {props.city}
-              </span>
-            ))}
+          <span className={classes.cardText__city}>
+            {props.area ? `${props.area} / ${props.city}` : props.city}
+          </span>
         </div>
+      </div>
+      <div className={classes.container_favoriste_icon}>
+        <FavoriteBorder sx={{ color: "#333", fontWeight: "700", fontSize: fontSize }} />
       </div>
     </div>
   );

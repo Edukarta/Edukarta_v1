@@ -43,7 +43,7 @@ const RequestForm = () => {
     const requestId = savedRequest.request.id;
     const updatedUser = {
       ...user,
-      request: [savedRequest.request],
+      request: [...user.request, savedRequest.request],
     };
     dispatch(updateUser(updatedUser));
     navigate(`/school/${id}/request/${requestId}`);
