@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { Icon, divIcon, point } from "leaflet";
+import { Icon, divIcon, point, latLng, L } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { LocationOn } from "@mui/icons-material";
 import customMarkerImage from "../../../img/pin.png";
 import "leaflet/dist/leaflet.css";
 import classes from "./Map.module.css";
 
-
 const Map = ({ type, schools }) => {
- 
-
   const customMarker = new Icon({
     iconUrl: customMarkerImage,
     iconSize: [38, 38],
@@ -25,7 +22,6 @@ const Map = ({ type, schools }) => {
     });
   };
 
- 
   return (
     <MapContainer
       center={[37.09024, -95.712891]}
@@ -40,11 +36,10 @@ const Map = ({ type, schools }) => {
         iconCreateFunction={cretaedCustomClusterIcon}
       >
         {schools.schools?.map((school) => {
-          if (school.gps && school.gps.lat && school.gps.long) {
-            const latlng = school.gps.map(parseFloat)
+          if (school.gps[0] && school.gps[1]) {
             return (
               <Marker
-                position={latlng}
+                position={school.gps}
                 icon={customMarker}
                 key={school.id}
                 id={school.id}
