@@ -9,9 +9,10 @@ import classes from "./HomePage.module.css"
 const HomePage = () => {
   const dispatch = useDispatch();
   const schools = useSelector((state) => state.schools);
+  const URL = process.env.REACT_APP_BACKEND_URL;
 
   const fetchSchools = async () => {
-    const responseData = await fetch("http://localhost:5000/api/v1/schools", {
+    const responseData = await fetch(`${URL}/api/v1/schools`, {
       method: "GET",
     });
     const allSchools = await responseData.json();

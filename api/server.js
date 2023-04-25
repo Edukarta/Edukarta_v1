@@ -23,13 +23,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
+app.use(cors({
+  origin: "http://165.22.193.67:443" // ou l'URL de votre application front-end
+}));
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({policy: 'cross-origin'}));
 app.use(morgan('common'));
 app.use(bodyParser.json({limit: '30mb', extenced: true}));
 app.use(bodyParser.urlencoded({limit: '30mb', extended: true}));
-app.use(cors());
 app.use("/images", express.static(path.join(__dirname, 'uploads/images')));
 
 const storage = multer.diskStorage({
