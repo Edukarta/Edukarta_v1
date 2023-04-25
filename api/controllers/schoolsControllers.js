@@ -21,18 +21,18 @@ export const getAllSchools = async (req, res) => {
 //@GET
 //ROUTE : api/v1/search
 export const searchSchools = async (req, res, next) => {
-  console.log('searchSchools called');
+  console.log("searchSchools called");
   const { query } = req.query;
   try {
     const schools = await School.find({
       $or: [
-        { name: { $regex: query, $options: 'i' } },
-        { nameUpdate: { $regex: query, $options: 'i' } },
-        { city: { $regex: query, $options: 'i' } },
-        { cityUpdate: { $regex: query, $options: 'i' } },
-        { country: { $regex: query, $options: 'i' } },
-        { countryUpdate: { $regex: query, $options: 'i' } },
-      ]
+        { name: { $regex: query, $options: "i" } },
+        { nameUpdate: { $regex: query, $options: "i" } },
+        { city: { $regex: query, $options: "i" } },
+        { cityUpdate: { $regex: query, $options: "i" } },
+        { country: { $regex: query, $options: "i" } },
+        { countryUpdate: { $regex: query, $options: "i" } },
+      ],
     });
     res.json({ schools });
   } catch (err) {
@@ -170,6 +170,23 @@ export const updateSchool = async (req, res, next) => {
     return next(new HttpError("Données incorrects", 422));
   }
   const { id } = req.params;
+  const {
+    nameUpdate,
+    addressUpdate,
+    continentUpdate,
+    countryUpdate,
+    areaUpdate,
+    cityUpdate,
+    description,
+    foundationDate,
+    levelUpdate,
+    languageUpdate,
+    sectorUpdate,
+    genderUpdate,
+    religionUpdate,
+    imgPath,
+  } = req.body;
+
   let school;
   try {
     school = await School.findById(id);
@@ -181,7 +198,21 @@ export const updateSchool = async (req, res, next) => {
     return next(error);
   }
 
-  Object.assign(school, req.body, { imgPath: req.file.filename });
+   school.imgPath = imgPath;
+   school.nameUpdate = nameUpdate;
+   school.addressUpdate = addressUpdate;
+   school.continentUpdate = continentUpdate;
+   school.countryUpdate = countryUpdate;
+   school.areaUpdate = areaUpdate;
+   school.cityUpdate = cityUpdate;
+   school.description = description;
+   school.foundationDate = foundationDate;
+   school.levelUpdate = levelUpdate;
+   school.languageUpdate = languageUpdate;
+   school.sectorUpdate = sectorUpdate;
+   school.genderUpdate = genderUpdate;
+   school.religionUpdate = religionUpdate;
+   school.imgPath = imgPath;
 
   try {
     await school.save();

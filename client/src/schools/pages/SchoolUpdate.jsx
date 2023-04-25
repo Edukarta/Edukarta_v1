@@ -37,7 +37,7 @@ const SchoolUpdate = () => {
       formData.append(value, values[value]);
     }
     formData.append("imgPath", values.picture.name); // Ajoute l'imagePath d'origine
-    formData.append("picture", values.picture); // Ajoute l'imagePath d'origine
+    // formData.append("picture", values.picture);
 
     const updateSchoolResponse = await fetch(
       `http://localhost:5000/api/v1/schools/${id}`,
