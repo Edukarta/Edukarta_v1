@@ -14,7 +14,7 @@ const AdminLogin = () => {
     event.preventDefault();
 
     const loggedInResponse = await fetch(
-      `${URL}/api/v1/admin/login`,
+      `/api/v1/admin/login`,
       {
         method: "POST",
         headers: { "Content-type": "application/json" },

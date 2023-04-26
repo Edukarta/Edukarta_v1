@@ -8,7 +8,7 @@ const SchoolDetails = () => {
     const URL = process.env.REACT_APP_BACKEND_URL;
 
   const getSchool = async () => {
-    const response = await fetch(`${URL}/api/v1/schools/${id}`, {
+    const response = await fetch(`/api/v1/schools/${id}`, {
       method: "GET",
     });
     const data = await response.json();

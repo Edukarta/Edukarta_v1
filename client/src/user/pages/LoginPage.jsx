@@ -24,7 +24,6 @@ const initialValueLogin = {
 };
 
 const LoginPage = () => {
-  const URL = process.env.REACT_APP_BACKEND_URL;
   const [pageType, setPageType] = useState("register");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,7 +38,7 @@ const LoginPage = () => {
     }
         
     const savedUserResponse = await fetch(
-      `${URL}/api/v1/auth/register`,
+      `/api/v1/auth/register`,
       {
         method: "POST",
         body: formData,
@@ -57,7 +56,7 @@ const LoginPage = () => {
   //FONCTION QUI GERE LA CONNECTION
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch(
-      `${URL}/api/v1/auth/login`,
+      `/api/v1/auth/login`,
       {
         method: "POST",
         headers: { "Content-type": "application/json" },

@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 
 const RequestDetails = () => {
-  const URL = process.env.REACT_APP_BACKEND_URL;
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,7 +16,7 @@ const RequestDetails = () => {
 
   const fetchRequest = async () => {
     const responseData = await fetch(
-      `${URL}/api/v1/request/${id}`,
+      `/api/v1/request/${id}`,
       {
         method: "GET",
       }
@@ -40,7 +39,7 @@ const RequestDetails = () => {
         ? requests.request.status + 1
         : requests.request.status - 1;
       const res = await fetch(
-        `${URL}/api/v1/request/${id}/status`,
+        `/api/v1/request/${id}/status`,
         {
           method: "PATCH",
           body: JSON.stringify({ status: newStatus }),
