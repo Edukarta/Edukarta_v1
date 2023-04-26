@@ -52,7 +52,7 @@ app.post("/api/v1/auth/register", upload.single("picture"), register);
 
 //ROUTES
 
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
