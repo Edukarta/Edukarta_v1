@@ -33,11 +33,11 @@ function App() {
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/request/:id" element={<RequestDetails />} />
         </Routes>
+      </main>
         {!["/register"].includes(location.pathname) &&
           !location.pathname.startsWith("/profil/") &&
           !location.pathname.includes("request") && 
           !location.pathname.startsWith("/admin") && <NavbarBottom />}
-      </main>
     </>
   );
 }
