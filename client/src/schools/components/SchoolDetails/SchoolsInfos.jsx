@@ -6,10 +6,12 @@ import schoolIcon from "../../../img/school.png";
 import classes from "./SchoolsInfos.module.css";
 
 const SchoolsInfos = ({ school }) => {
-  const URL = process.env.REACT_APP_BACKEND_URL;
   const { id } = useParams();
   const user = useSelector((state) => state.user);
-  const request = user.request.find((request) => request.school === id);
+  let request;
+  if (user && user.request) {
+    request = user.request.find((request) => request.school === id);
+  }
   let userHasRequested = false;
 
   for (let i = 0; i < user.request.length; i++) {
@@ -29,7 +31,7 @@ const SchoolsInfos = ({ school }) => {
       ) : (
         <div className={classes.container_img_details}>
           <img
-            src={`${URL}/images/${school?.imgPath}`}
+            src={`http://139.59.168.36:5000/images/${school?.imgPath}`}
             alt="profile"
           />
         </div>
