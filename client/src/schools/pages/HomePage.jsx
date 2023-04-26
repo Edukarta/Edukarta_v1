@@ -7,9 +7,9 @@ import classes from "./HomePage.module.css"
 
 //FECTHER LES DONNEES DANS CE COMPOSANT PASSEES EN PROPS A SCHOOLLIST
 const HomePage = () => {
+  const URL = process.env.REACT_APP_BACKEND_URL;
   const dispatch = useDispatch();
   const schools = useSelector((state) => state.schools);
-  const URL = process.env.REACT_APP_BACKEND_URL;
 
   const fetchSchools = async () => {
     const responseData = await fetch(`${URL}/api/v1/schools`, {

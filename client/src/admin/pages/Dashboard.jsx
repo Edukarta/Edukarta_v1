@@ -5,9 +5,10 @@ import classes from "./Dashboard.module.css";
 
 const Dashboard = () => {
   const [requests, setRequests] = useState([]);
+  const URL = process.env.REACT_APP_BACKEND_URL;
 
   const fetchRequest = async () => {
-    const responseData = await fetch("http://localhost:5000/api/v1/request", {
+    const responseData = await fetch(`${URL}/api/v1/request`, {
       method: "GET",
     });
     const allRequests = await responseData.json();
@@ -43,7 +44,7 @@ const Dashboard = () => {
                     <div className={classes.container__user_img}>
                       {request.user.imagePath ? (
                         <img
-                          src={`http://localhost:5000/images/${request.user.imagePath}`}
+                          src={`${URL}/images/${request.user.imagePath}`}
                           alt="profile"
                         />
                       ) : (

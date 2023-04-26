@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 
 const RequestDetails = () => {
+  const URL = process.env.REACT_APP_BACKEND_URL;
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const RequestDetails = () => {
 
   const fetchRequest = async () => {
     const responseData = await fetch(
-      `http://localhost:5000/api/v1/request/${id}`,
+      `${URL}/api/v1/request/${id}`,
       {
         method: "GET",
       }
@@ -39,7 +40,7 @@ const RequestDetails = () => {
         ? requests.request.status + 1
         : requests.request.status - 1;
       const res = await fetch(
-        `http://localhost:5000/api/v1/request/${id}/status`,
+        `${URL}/api/v1/request/${id}/status`,
         {
           method: "PATCH",
           body: JSON.stringify({ status: newStatus }),
@@ -88,13 +89,13 @@ const RequestDetails = () => {
           <h5>Il justifie sa légitimité avec le document ci-dessous :</h5>
           <div className={classes.container_img__request}>
             <img
-              src={`http://localhost:5000/images/${requests?.request.document}`}
+              src={`${URL}/images/${requests?.request.document}`}
               alt="profile"
             />
             <div className={classes.container_link_icon}>
               <ArrowDownward />
               <a
-                href={`http://localhost:5000/images/${requests?.request.document}`}
+                href={`${URL}/images/${requests?.request.document}`}
                 download
                 target="_blank"
               >

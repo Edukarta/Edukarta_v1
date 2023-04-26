@@ -5,9 +5,10 @@ import SchoolsInfos from '../components/SchoolDetails/SchoolsInfos';
 const SchoolDetails = () => {
     const [school, setSchool] = useState();
     const { id } = useParams();
+    const URL = process.env.REACT_APP_BACKEND_URL;
 
   const getSchool = async () => {
-    const response = await fetch(`http://localhost:5000/api/v1/schools/${id}`, {
+    const response = await fetch(`${URL}/api/v1/schools/${id}`, {
       method: "GET",
     });
     const data = await response.json();

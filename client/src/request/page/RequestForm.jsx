@@ -10,6 +10,7 @@ import { Create, Done } from "@mui/icons-material";
 import classes from "./RequestForm.module.css";
 
 const RequestForm = () => {
+  const URL = process.env.REACT_APP_BACKEND_URL;
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const RequestForm = () => {
     formData.append("description", values.description);
 
     const savedRequestResponse = await fetch(
-      "http://localhost:5000/api/v1/request",
+      `${URL}/api/v1/request`,
       {
         method: "POST",
         body: formData,

@@ -9,6 +9,7 @@ import Avatar from "../UIElements/Avatar";
 import SearchBar from "../UIElements/SearchBar";
 
 const MainNavigation = () => {
+  const URL = process.env.REACT_APP_BACKEND_URL;
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const MainNavigation = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/v1/schools/search?query=${searchQuery}`, 
+      const response = await fetch(`${URL}/api/v1/schools/search?query=${searchQuery}`, 
       {
         method: "GET",
       }

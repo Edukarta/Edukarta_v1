@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import classes from "./SchoolList.module.css";
 
 const SchoolList = ({ title, type, size, schools, numberOfSchools }) => {
+  const URL = process.env.REACT_APP_BACKEND_URL;
   const [slideNumber, setSlideNumber] = useState(0);
   const listRef = useRef();
 
@@ -57,7 +58,7 @@ const SchoolList = ({ title, type, size, schools, numberOfSchools }) => {
                 id={school.id}
                 img={
                   school.imgPath
-                    ? `http://localhost:5000/images/${school.imgPath}`
+                    ? `${URL}/images/${school.imgPath}`
                     : ""
                 }
                 name={school.nameUpdate ? school.nameUpdate : school.name}

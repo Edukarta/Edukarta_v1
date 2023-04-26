@@ -5,6 +5,7 @@ import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 
 const AdminLogin = () => {
+  const URL = process.env.REACT_APP_BACKEND_URL;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const AdminLogin = () => {
     event.preventDefault();
 
     const loggedInResponse = await fetch(
-      "http://localhost:5000/api/v1/admin/login",
+      `${URL}/api/v1/admin/login`,
       {
         method: "POST",
         headers: { "Content-type": "application/json" },

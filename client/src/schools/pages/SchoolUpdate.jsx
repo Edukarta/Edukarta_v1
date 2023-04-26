@@ -26,6 +26,7 @@ const initialValueUpdate = {
 };
 
 const SchoolUpdate = () => {
+  const URL = process.env.REACT_APP_BACKEND_URL;
   const { id, requestId } = useParams();
   const [request, setRequest] = useState();
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const SchoolUpdate = () => {
     // formData.append("picture", values.picture);
 
     const updateSchoolResponse = await fetch(
-      `http://localhost:5000/api/v1/schools/${id}`,
+      `${URL}/api/v1/schools/${id}`,
       {
         method: "PATCH",
         body: formData,
