@@ -64,7 +64,7 @@ const SchoolUpdate = () => {
 
   const fetchRequest = async () => {
     const responseData = await fetch(
-      `http://localhost:5000/api/v1/request/${requestId}`,
+      `${URL}/api/v1/request/${requestId}`,
       {
         method: "GET",
       }
