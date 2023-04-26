@@ -60,4 +60,4 @@ app.use("/api/v1/request", requestRoute);
 
 const PORT = process.env.PORT || 3330;
 dbConnect();
-app.listen(PORT, '139.59.168.36', () => console.log(`Backend connected on port : ${PORT}`));
+app.listen(PORT, '0.0.0.0', () => console.log(`Backend connected on port : ${PORT}`));
