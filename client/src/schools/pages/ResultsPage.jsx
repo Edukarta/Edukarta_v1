@@ -17,7 +17,7 @@ const ResultsPage = () => {
           <div className={classes.card_item}>
             <div className={classes.container_img}>
               {result.imgPath ? (<img
-                src={`/images/${result.imgPath}`}
+                src={`${URL}/images/${result.imgPath}`}
                 alt={result.nameUpdate ? result.nameUpdate : result.name}
               />) : 
               (

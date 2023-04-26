@@ -8,7 +8,7 @@ const Dashboard = () => {
   const URL = process.env.REACT_APP_BACKEND_URL;
 
   const fetchRequest = async () => {
-    const responseData = await fetch(`/api/v1/request`, {
+    const responseData = await fetch(`${URL}/api/v1/request`, {
       method: "GET",
     });
     const allRequests = await responseData.json();

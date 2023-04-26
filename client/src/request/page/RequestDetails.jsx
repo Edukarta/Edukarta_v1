@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 
 const RequestDetails = () => {
+  const URL = process.env.REACT_APP_BACKEND_URL;
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const RequestDetails = () => {
 
   const fetchRequest = async () => {
     const responseData = await fetch(
-      `/api/v1/request/${id}`,
+      `${URL}/api/v1/request/${id}`,
       {
         method: "GET",
       }
