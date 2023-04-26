@@ -57,7 +57,7 @@ const LoginPage = () => {
   //FONCTION QUI GERE LA CONNECTION
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch(
-      `/api/v1/auth/login`,
+      `http://139.59.168.36:5000/api/v1/auth/login`,
       {
         method: "POST",
         headers: { "Content-type": "application/json" },

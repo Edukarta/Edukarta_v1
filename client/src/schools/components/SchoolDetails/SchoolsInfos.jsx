@@ -14,11 +14,13 @@ const SchoolsInfos = ({ school }) => {
   }
   let userHasRequested = false;
 
-  for (let i = 0; i < user.request.length; i++) {
-    const request = user.request[i];
-    if (request.school === id && request.user === user.id) {
-      userHasRequested = true;
-      break;
+  if (user && user.request) {
+    for (let i = 0; i < user.request.length; i++) {
+      const request = user.request[i];
+      if (request.school === id && request.user === user.id) {
+        userHasRequested = true;
+        break;
+      }
     }
   }
 
@@ -89,20 +91,18 @@ const SchoolsInfos = ({ school }) => {
             Votre demande à été validée
           </Link>
         </div>
+      ) : !userHasRequested ? (
+        <div className={classes.container_link}>
+          <Link to={`/school/${school?.id}/request`}>
+            Cette fiche vous appartient ?
+          </Link>
+        </div>
       ) : (
-        !userHasRequested ? (
-          <div className={classes.container_link}>
-            <Link to={`/school/${school?.id}/request`}>
-              Cette fiche vous appartient ?
-            </Link>
-          </div>
-        ) : (
-          <div className={classes.container_link_hasrequest}>
-            <Link to={`/school/${school?.id}/request`}>
-              Vous avez déja fait une demande pour cet établissement
-            </Link>
-          </div>
-        )
+        <div className={classes.container_link_hasrequest}>
+          <Link to={`/school/${school?.id}/request`}>
+            Vous avez déja fait une demande pour cet établissement
+          </Link>
+        </div>
       )}
     </div>
   );
