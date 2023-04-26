@@ -17,7 +17,7 @@ const MainNavigation = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(`${URL}/api/v1/schools/search?query=${searchQuery}`, 
+      const response = await fetch(`http://139.59.168.36:5000/api/v1/schools/search?query=${searchQuery}`, 
       {
         method: "GET",
       }
