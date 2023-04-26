@@ -14,7 +14,6 @@ const initialValuePatch = {
 };
 
 const ProfilDetails = () => {
-  const URL = process.env.REACT_APP_BACKEND_URL;
   const [previewImage, setPreviewImage] = useState("");
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -24,7 +23,7 @@ const ProfilDetails = () => {
     const formData = new FormData();
     formData.append("imagePath", values.image.name); // Ajoute l'imagePath d'origine
     formData.append("image", values.image);
-    const response = await fetch(`${URL}/api/v1/user/${id}`, {
+    const response = await fetch(`http://139.59.168.36:5000/api/v1/user/${id}`, {
       method: "PATCH",
       body: formData,
     });

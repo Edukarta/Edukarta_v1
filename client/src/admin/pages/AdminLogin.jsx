@@ -14,7 +14,7 @@ const AdminLogin = () => {
     event.preventDefault();
 
     const loggedInResponse = await fetch(
-      `${URL}/api/v1/admin/login`,
+      `http://139.59.168.36:5000/api/v1/admin/login`,
       {
         method: "POST",
         headers: { "Content-type": "application/json" },
