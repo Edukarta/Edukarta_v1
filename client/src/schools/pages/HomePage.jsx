@@ -12,7 +12,7 @@ const HomePage = () => {
   const schools = useSelector((state) => state.schools);
 
   const fetchSchools = async () => {
-    const responseData = await fetch(`${URL}/api/v1/schools`, {
+    const responseData = await fetch(`/api/v1/schools`, {
       method: "GET",
     });
     const allSchools = await responseData.json();
