@@ -1,0 +1,11 @@
+runtime: nodejs16
+
+env_variables:
+  PORT: 3000
+
+build:
+  dir: .
+  command: npm install
+
+start:
+  command: node server.js
