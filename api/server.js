@@ -59,8 +59,9 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/schools", schoolsRoutes);
 app.use("/api/v1/request", requestRoute);
 
-app.get('/', (req, res) => {
+app.get('/', (req, res, next) => {
   res.send('Hello World');
+  next();
 });
 
 
