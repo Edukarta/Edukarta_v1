@@ -51,14 +51,17 @@ app.post("/api/v1/request", upload.single('document'), createRequest);
 app.post("/api/v1/auth/register", upload.single("picture"), register);
 
 //ROUTES
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
+
+
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/schools", schoolsRoutes);
 app.use("/api/v1/request", requestRoute);
+
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
 
 
 const PORT = process.env.PORT || 3330;
