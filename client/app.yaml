@@ -1,0 +1,22 @@
+runtime: nodejs14
+
+env_variables:
+  NODE_ENV: production
+
+handlers:
+  - url: /.*
+    static_files: client/build/index.html
+    upload: client/build/index.html
+
+  - url: /(.*)
+    static_files: client/build/\1
+    upload: client/build/(.*)
+
+  - url: /
+    static_dir: client/build
+
+services:
+  - name: client
+    environment:
+      - NODE_ENV=production
+    command: npm start
