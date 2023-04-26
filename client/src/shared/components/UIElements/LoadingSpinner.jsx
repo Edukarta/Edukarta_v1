@@ -1,4 +1,5 @@
 import React from "react";
+import logoEdu from "../../../img/logoedu.jpg";
 import "./LoadingSpinner.css";
 
 const LoadingSpinner = (props) => {
@@ -7,7 +8,7 @@ const LoadingSpinner = (props) => {
       <div className="lds-dual-ring">
         <div className="container_logo_edu">
           <img
-            src="https://www.edukarta.com/_nuxt/img/education-token.5b2332d.jpg"
+            src={logoEdu}
             alt=""
           />
         </div>
