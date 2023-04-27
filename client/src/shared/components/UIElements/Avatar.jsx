@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import classes from "./Avatar.module.css";
 
 const Avatar = ({ userId, image, normal, big }) => {
-  const URL = process.env.REACT_APP_BACKEND_URL;
   const avatarClassName = big
     ? classes.containerAvatarBig
     : classes.containerAvatar;
@@ -15,7 +14,7 @@ const Avatar = ({ userId, image, normal, big }) => {
         } ${big ? classes.containerAvatarBig : ""}`}
       >
         {image ? (
-          <img src={`http://139.59.168.36:5000/images/${image}`} alt="profile" />
+          <img src={`http://159.65.53.97:5000/images/${image}`} alt="profile" />
         ) : (
           <img
             src="https://www.pega.com/modules/shared/pega_user_image/assets/user-icon.png"

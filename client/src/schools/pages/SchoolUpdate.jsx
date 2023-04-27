@@ -41,7 +41,7 @@ const SchoolUpdate = () => {
     // formData.append("picture", values.picture);
 
     const updateSchoolResponse = await fetch(
-      `http://139.59.168.36:5000/api/v1/schools/${id}`,
+      `http://159.65.53.97:5000/api/v1/schools/${id}`,
       {
         method: "PATCH",
         body: formData,
@@ -64,7 +64,7 @@ const SchoolUpdate = () => {
 
   const fetchRequest = async () => {
     const responseData = await fetch(
-      `http://139.59.168.36:5000/api/v1/request/${requestId}`,
+      `http://159.65.53.97:5000/api/v1/request/${requestId}`,
       {
         method: "GET",
       }
