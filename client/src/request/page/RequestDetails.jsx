@@ -16,7 +16,7 @@ const RequestDetails = () => {
 
   const fetchRequest = async () => {
     const responseData = await fetch(
-      `http://159.65.53.97:5000/api/v1/request/${id}`,
+      `https://159.65.53.97:5000/api/v1/request/${id}`,
       {
         method: "GET",
       }

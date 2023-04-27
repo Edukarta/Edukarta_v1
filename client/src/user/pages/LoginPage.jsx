@@ -39,7 +39,7 @@ const LoginPage = () => {
     }
         
     const savedUserResponse = await fetch(
-      `http://159.65.53.97:5000/api/v1/auth/register`,
+      `https://159.65.53.97:5000/api/v1/auth/register`,
       {
         method: "POST",
         body: formData,
@@ -57,7 +57,7 @@ const LoginPage = () => {
   //FONCTION QUI GERE LA CONNECTION
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch(
-      `http://159.65.53.97:5000/api/v1/auth/login`,
+      `https://159.65.53.97:5000/api/v1/auth/login`,
       {
         method: "POST",
         headers: { "Content-type": "application/json" },

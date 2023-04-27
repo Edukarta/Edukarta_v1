@@ -23,7 +23,7 @@ const ProfilDetails = () => {
     const formData = new FormData();
     formData.append("imagePath", values.image.name); // Ajoute l'imagePath d'origine
     formData.append("image", values.image);
-    const response = await fetch(`http://159.65.53.97:5000/api/v1/user/${id}`, {
+    const response = await fetch(`https://159.65.53.97:5000/api/v1/user/${id}`, {
       method: "PATCH",
       body: formData,
     });
