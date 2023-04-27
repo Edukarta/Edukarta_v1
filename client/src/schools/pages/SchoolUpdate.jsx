@@ -41,7 +41,7 @@ const SchoolUpdate = () => {
     // formData.append("picture", values.picture);
 
     const updateSchoolResponse = await fetch(
-      `https://159.65.53.97:5000/api/v1/schools/${id}`,
+      `http://159.65.53.97:5000/api/v1/schools/${id}`,
       {
         method: "PATCH",
         body: formData,
