@@ -39,7 +39,7 @@ const LoginPage = () => {
     }
         
     const savedUserResponse = await fetch(
-      `http://139.59.168.36:5000/api/v1/auth/register`,
+      `http://159.65.53.97:5000/api/v1/auth/register`,
       {
         method: "POST",
         body: formData,
