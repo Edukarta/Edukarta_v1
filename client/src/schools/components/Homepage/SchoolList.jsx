@@ -9,7 +9,7 @@ const SchoolList = ({ title, type, size, schools, numberOfSchools, firstSchool }
   const listRef = useRef();
 
   const handleClick = (direction) => {
-    const listItemWidth = listRef.current.children[0].offsetWidth;
+    const listItemWidth = listRef.current.children[0].offsetWidth + 10;
   const listWidth = listRef.current.offsetWidth;
   const distance = listItemWidth * numberOfSchools;
 
@@ -30,11 +30,11 @@ const SchoolList = ({ title, type, size, schools, numberOfSchools, firstSchool }
   // Bloquer le slider si on est arrivé à la dernière slide
   if (
     direction === "right" &&
-    slideNumber >= numberOfSchools - 2
+    slideNumber >= numberOfSchools - 3
   ) {
-    setSlideNumber(numberOfSchools - 2);
+    setSlideNumber(numberOfSchools - 3);
     listRef.current.style.transform = `translateX(${
-      (numberOfSchools - 2) * -listItemWidth
+      (numberOfSchools - 3) * -listItemWidth
     }px)`;
   }
   };

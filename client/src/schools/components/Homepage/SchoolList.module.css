@@ -6,7 +6,7 @@
 
 .listTitle {
   margin-bottom: 20px;
-  margin-top: 30px;
+
   font-size: 20px;
   color: #757575;
   font-weight: 500;
@@ -31,7 +31,7 @@
 
 .container_link__card {
   width: 100%;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   max-width: 390px;
 }
 
@@ -46,9 +46,9 @@
   margin: 0 auto;
   gap: 30px;
   left: 0px;
-  top: 70px;
+  top: 110px;
   background-color: rgba(49, 49, 49, 0.7);
-  z-index: 30000000;
+  z-index: 30;
 }
 
 .container_arrow_right{
@@ -62,9 +62,9 @@
   margin: 0 auto;
   gap: 30px;
   right: 10px;
-  top: 70px;
+  top: 110px;
   background-color: rgba(49, 49, 49, 0.7);
-  z-index: 30000000;
+  z-index: 30;
 }
 
 @media (min-width: 850px) {
