@@ -15,7 +15,7 @@ const Avatar = ({ userId, image, normal, big }) => {
         } ${big ? classes.containerAvatarBig : ""}`}
       >
         {image ? (
-          <img src={`http://159.65.53.97:5000/images/${image}`} alt="profile" />
+          <img src={`https://www.edukarta.com/images/${image}`} alt="profile" />
         ) : (
           <img
             src="https://www.pega.com/modules/shared/pega_user_image/assets/user-icon.png"

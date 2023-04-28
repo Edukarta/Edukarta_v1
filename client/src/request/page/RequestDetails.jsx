@@ -16,7 +16,7 @@ const RequestDetails = () => {
 
   const fetchRequest = async () => {
     const responseData = await fetch(
-      `http://159.65.53.97:5000/api/v1/request/${id}`,
+      `https://www.edukarta.com/api/v1/request/${id}`,
       {
         method: "GET",
       }
@@ -88,13 +88,13 @@ const RequestDetails = () => {
           <h5>Il justifie sa légitimité avec le document ci-dessous :</h5>
           <div className={classes.container_img__request}>
             <img
-              src={`http://159.65.53.97:5000/images/${requests?.request.document}`}
+              src={`https://www.edukarta.com/images/${requests?.request.document}`}
               alt="profile"
             />
             <div className={classes.container_link_icon}>
               <ArrowDownward />
               <a
-                href={`http://159.65.53.97:5000/images/${requests?.request.document}`}
+                href={`https://www.edukarta.com/images/${requests?.request.document}`}
                 download
                 target="_blank"
               >

@@ -7,7 +7,7 @@ const SchoolDetails = () => {
     const { id } = useParams();
 
   const getSchool = async () => {
-    const response = await fetch(`http://159.65.53.97:5000/api/v1/schools/${id}`, {
+    const response = await fetch(`https://www.edukarta.com/api/v1/schools/${id}`, {
       method: "GET",
     });
     const data = await response.json();

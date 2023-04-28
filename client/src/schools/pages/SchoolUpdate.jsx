@@ -64,7 +64,7 @@ const SchoolUpdate = () => {
 
   const fetchRequest = async () => {
     const responseData = await fetch(
-      `http://159.65.53.97:5000/api/v1/request/${requestId}`,
+      `https://www.edukarta.com/api/v1/request/${requestId}`,
       {
         method: "GET",
       }

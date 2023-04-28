@@ -33,7 +33,7 @@ const SchoolsInfos = ({ school }) => {
       ) : (
         <div className={classes.container_img_details}>
           <img
-            src={`http://159.65.53.97:5000/images/${school?.imgPath}`}
+            src={`https://www.edukarta.com/images/${school?.imgPath}`}
             alt="profile"
           />
         </div>

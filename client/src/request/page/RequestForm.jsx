@@ -32,7 +32,7 @@ const RequestForm = () => {
     formData.append("description", values.description);
 
     const savedRequestResponse = await fetch(
-      `http://159.65.53.97:5000/api/v1/request`,
+      `https://www.edukarta.com/api/v1/request`,
       {
         method: "POST",
         body: formData,
