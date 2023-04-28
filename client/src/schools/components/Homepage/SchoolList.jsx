@@ -4,7 +4,7 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material/";
 import { Link } from "react-router-dom";
 import classes from "./SchoolList.module.css";
 
-const SchoolList = ({ title, type, size, schools, numberOfSchools }) => {
+const SchoolList = ({ title, type, size, schools, numberOfSchools, firstSchool }) => {
   const [slideNumber, setSlideNumber] = useState(0);
   const listRef = useRef();
 
@@ -43,6 +43,11 @@ const SchoolList = ({ title, type, size, schools, numberOfSchools }) => {
     <>
       <section className={classes.listContainer}>
         <h3 className={classes.listTitle}>{title}</h3>
+        {type === "noWrap" && (
+          <div className={classes.container_arrow_left}>
+            <ArrowBackIos onClick={() => handleClick("left")} sx={{color: "white", fontSize: "28px"}} />
+          </div>
+        )}
         <div
           className={
             type === "noWrap"
@@ -51,15 +56,12 @@ const SchoolList = ({ title, type, size, schools, numberOfSchools }) => {
           }
           ref={listRef}
         >
-          {schools.schools?.slice(0, numberOfSchools).map((school) => (
+      
+          {schools.schools?.slice(firstSchool, numberOfSchools).map((school) => (
             <Link key={school.id} to={`/school/${school.id}`} className={classes.container_link__card}>
               <Card
                 id={school.id}
-                img={
-                  school.imgPath
-                    ? `https://www.edukarta.com/images/${school.imgPath}`
-                    : ""
-                }
+                img={school.imgPath}
                 name={school.nameUpdate ? school.nameUpdate : school.name}
                 continent={
                   school.continentUpdate
@@ -78,9 +80,8 @@ const SchoolList = ({ title, type, size, schools, numberOfSchools }) => {
           ))}
         </div>
         {type === "noWrap" && (
-          <div className={classes.container_arrow}>
-            <ArrowBackIos onClick={() => handleClick("left")} sx={{color: "#365475", fontSize: "28px"}} />
-            <ArrowForwardIos onClick={() => handleClick("right")} sx={{color: "#365475", fontSize: "28px"}} />
+          <div className={classes.container_arrow_right}>
+            <ArrowForwardIos onClick={() => handleClick("right")} sx={{color: "white", fontSize: "28px"}} />
           </div>
         )}
       </section>

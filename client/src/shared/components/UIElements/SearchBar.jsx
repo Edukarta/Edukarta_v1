@@ -10,7 +10,7 @@ const SearchBar = (props) => {
         placeholder="Search for schools"
         onChange={props.onChange}
         value={props.value}
-        sx={{ width: "100%" }}
+        sx={{ width: "100%"}}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

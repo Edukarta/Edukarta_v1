@@ -1,6 +1,6 @@
 .card__container_default {
-  width: 150px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   padding: 10px;
   position: relative;
 }
@@ -62,8 +62,18 @@
 }
 
 .cardName {
-  font-size: 20px;
+  font-size: 15px;
   color: #333;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardNameBig{
+  font-size: 25px;
+  color: #333;
+  font-weight: 400;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

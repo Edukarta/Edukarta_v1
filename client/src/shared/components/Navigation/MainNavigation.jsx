@@ -9,7 +9,6 @@ import Avatar from "../UIElements/Avatar";
 import SearchBar from "../UIElements/SearchBar";
 
 const MainNavigation = () => {
-  const URL = process.env.REACT_APP_BACKEND_URL;
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();

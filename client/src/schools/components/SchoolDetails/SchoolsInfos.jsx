@@ -31,13 +31,14 @@ const SchoolsInfos = ({ school }) => {
           <img src={schoolIcon} alt="school" />
         </div>
       ) : (
-        <div className={classes.container_img_details}>
+         <div className={classes.container_img_details}>
           <img
-            src={`https://www.edukarta.com/images/${school?.imgPath}`}
+            src={school?.imgPath}
             alt="profile"
           />
         </div>
       )}
+      <div className={classes.container_school_infos}>
       <h1 className={classes.school_name}>
         {school?.nameUpdate ? school?.nameUpdate : school?.name}
       </h1>
@@ -104,6 +105,7 @@ const SchoolsInfos = ({ school }) => {
           </Link>
         </div>
       )}
+      </div>
     </div>
   );
 };

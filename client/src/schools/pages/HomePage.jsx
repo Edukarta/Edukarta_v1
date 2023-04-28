@@ -7,10 +7,10 @@ import classes from "./HomePage.module.css"
 
 //FECTHER LES DONNEES DANS CE COMPOSANT PASSEES EN PROPS A SCHOOLLIST
 const HomePage = () => {
-  const URL = process.env.REACT_APP_BACKEND_URL;
   const dispatch = useDispatch();
   const schools = useSelector((state) => state.schools);
 
+  
   const fetchSchools = async () => {
     const responseData = await fetch(`https://www.edukarta.com/api/v1/schools`, {
       method: "GET",
@@ -22,7 +22,7 @@ const HomePage = () => {
   useEffect(() => {
     fetchSchools();
   }, []);
-
+ 
   return (
     <section>
       <Map type="homepage" schools={schools} />
@@ -31,14 +31,23 @@ const HomePage = () => {
           type="noWrap"
           size="default"
           schools={schools}
-          numberOfSchools={5}
+          firstSchool={1}
+          numberOfSchools={6}
         />
       </div>
       <SchoolList
         title="établissements populaires"
         size="big"
         schools={schools}
-        numberOfSchools={30}
+        firstSchool={0}
+        numberOfSchools={6}
+      />
+      <SchoolList
+        title="établissements prêt de chez vous"
+        size="big"
+        schools={schools}
+        firstSchool={4}
+        numberOfSchools={10}
       />
     </section>
   );

@@ -18,9 +18,9 @@
 
 .school_name{
     font-size: 30px;
-    font-weight: 600;
+    font-weight: 500;
     margin-top: 20px;
-    color: #333;
+    color: #6d6d6d;
 }
 
 
@@ -46,7 +46,7 @@
 
 .container_infos_global{
     padding: 15px 0;
-    border-bottom: 5px solid #a9a9a9;
+    border-bottom: 2px solid #a9a9a9;
 }
 
 .title__desc{
@@ -94,3 +94,27 @@
     text-align: center;
 }
 
+@media (min-width: 1080px) {
+    .container_details{
+        margin: 150px auto 0 auto;
+        width: 80%;
+        display: flex;
+        gap: 20px;
+    }
+
+    .container_img_details{
+        border-radius: 10px;
+        flex: 4;
+    }
+    
+    .container_img_details img{
+        border-radius: 10px;
+    }
+
+    .container_school_infos{
+        flex: 2;
+
+    }
+
+}
+  
