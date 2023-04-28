@@ -37,9 +37,9 @@ const Card = (props) => {
           </span>
         </div>
       </div>
-      <div className={classes.container_favoriste_icon}>
+      {props.big && <div className={classes.container_favoriste_icon}>
         <FavoriteBorder sx={{ color: "#333", fontWeight: "700", fontSize: fontSize }} />
-      </div>
+      </div>}
     </div>
   );
 };

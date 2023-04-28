@@ -57,7 +57,7 @@ const SchoolList = ({ title, type, size, schools, numberOfSchools }) => {
                 id={school.id}
                 img={
                   school.imgPath
-                    ? `${URL}/images/${school.imgPath}`
+                    ? `https://www.edukarta.com/images/${school.imgPath}`
                     : ""
                 }
                 name={school.nameUpdate ? school.nameUpdate : school.name}

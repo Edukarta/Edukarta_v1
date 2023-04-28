@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { Icon, divIcon, point, latLng, L } from "leaflet";
+import { Link } from "react-router-dom";
+import { Icon, divIcon, point} from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { LocationOn } from "@mui/icons-material";
 import customMarkerImage from "../../../img/pin.png";
@@ -30,7 +31,7 @@ const Map = ({ type, schools }) => {
         type === "homepage" ? classes.mapContainer : classes.mapContainer_map
       }
     >
-      <TileLayer url="https://tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=1896d58ca9f74874ab382b1866dfdd20" />
+      <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
       <MarkerClusterGroup
         chunkedLoading
         iconCreateFunction={cretaedCustomClusterIcon}
@@ -44,6 +45,7 @@ const Map = ({ type, schools }) => {
                 key={school.id}
                 id={school.id}
               >
+                <Link to={`/school/${school.id}`}>
                 <Popup>
                   {type !== "homepage" ? (
                     <div className={classes.container_Popup}>
@@ -70,9 +72,13 @@ const Map = ({ type, schools }) => {
                       </div>
                     </div>
                   ) : (
-                    <div></div>
+                    <div>
+                      <h5 className={classes.popup_schoolNameSmall}>{school.name}</h5>
+                      <p className={classes.popup_schoolAddressSmall}>{school.address}</p>
+                    </div>
                   )}
                 </Popup>
+                </Link>
               </Marker>
             );
           }
