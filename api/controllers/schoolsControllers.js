@@ -21,7 +21,6 @@ export const getAllSchools = async (req, res) => {
 //@GET
 //ROUTE : api/v1/search
 export const searchSchools = async (req, res, next) => {
-  console.log("searchSchools called");
   const { query } = req.query;
   try {
     const schools = await School.find({

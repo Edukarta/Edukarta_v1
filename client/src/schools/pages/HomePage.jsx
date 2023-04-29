@@ -43,7 +43,7 @@ const HomePage = () => {
         numberOfSchools={6}
       />
       <SchoolList
-        title="établissements prêt de chez vous"
+        title="établissements pres de chez vous"
         size="big"
         schools={schools}
         firstSchool={4}
