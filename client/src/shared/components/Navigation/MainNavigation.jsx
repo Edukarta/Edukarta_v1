@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MainHeader from "./MainHeader";
 import { useSelector, useDispatch } from "react-redux";
-import { setSearchResults } from "../../state/store";
+import { setSearchResults, setQuery } from "../../state/store";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
@@ -23,12 +23,20 @@ const MainNavigation = () => {
       );
       const data = await response.json();
       dispatch(setSearchResults({ results: data }));
+      dispatch(setQuery(searchQuery));
       console.log(data);
       navigate("/searchResult");
     } catch (error) {
       console.error(error);
     }
   };
+  
+  const handleKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      handleSearch();
+    }
+  }
+  
 
   return (
     <MainHeader>
@@ -48,6 +56,7 @@ const MainNavigation = () => {
         </div>
         <SearchBar
           value={searchQuery}
+          onKeyDown={handleKeyDown}
           onChange={(e) => setSearchQuery(e.target.value)}
           onClick={handleSearch}
         />

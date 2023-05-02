@@ -10,6 +10,7 @@ const SearchBar = (props) => {
         placeholder="Search for schools"
         onChange={props.onChange}
         value={props.value}
+        onKeyDown={props.onKeyDown}
         sx={{ width: "100%"}}
         InputProps={{
           startAdornment: (

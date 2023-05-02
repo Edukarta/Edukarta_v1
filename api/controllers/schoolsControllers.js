@@ -17,7 +17,7 @@ export const getAllSchools = async (req, res) => {
   });
 };
 
-//SHOW ALL SCHOOLS
+//SEARCH SCHOOLS
 //@GET
 //ROUTE : api/v1/search
 export const searchSchools = async (req, res, next) => {
@@ -38,6 +38,81 @@ export const searchSchools = async (req, res, next) => {
     next(err);
   }
 };
+
+//FILTER SCHOOLS
+//@GET
+//ROUTE : api/v1/search
+export const filterSchools = async (req, res, next) => {
+  const { query, previousQuery, ...filters } = req.query;
+  const searchFilters = [];
+
+  // Ajouter le filtre de recherche de la requête principale
+  if (query) {
+    const queryValues = query.split(",");
+    const queryObj = { $or: [] };
+    for (const queryValue of queryValues) {
+      queryObj["$or"].push({
+        $or: [
+          { name: { $regex: queryValue, $options: "i" } },
+          { nameUpdate: { $regex: queryValue, $options: "i" } },
+          { city: { $regex: queryValue, $options: "i" } },
+          { cityUpdate: { $regex: queryValue, $options: "i" } },
+          { country: { $regex: queryValue, $options: "i" } },
+          { countryUpdate: { $regex: queryValue, $options: "i" } },
+          { level: { $regex: queryValue, $options: "i" } },
+          { sector: { $regex: queryValue, $options: "i" } },
+          { language: { $regex: queryValue, $options: "i" } },
+        ],
+      });
+    }
+    searchFilters.push(queryObj);
+  }
+
+  // Construire les filtres de recherche
+  for (const [key, value] of Object.entries(filters)) {
+    if (value) {
+      const filterValues = value.split(",");
+      const filterObj = { $or: [] };
+      for (const filterValue of filterValues) {
+        filterObj["$or"].push({ [key]: { $regex: filterValue, $options: "i" } });
+      }
+      searchFilters.push(filterObj);
+    }
+  }
+
+  // Construire les filtres de la base de données
+  const dbFilters = {
+    $and: [
+      // Chercher les correspondances pour la requête actuelle ou la requête précédente
+      {
+        $or: [
+          { name: { $regex: previousQuery, $options: "i" } },
+          { nameUpdate: { $regex: previousQuery, $options: "i" } },
+          { city: { $regex: previousQuery, $options: "i" } },
+          { cityUpdate: { $regex: previousQuery, $options: "i" } },
+          { country: { $regex: previousQuery, $options: "i" } },
+          { countryUpdate: { $regex: previousQuery, $options: "i" } },
+          { level: { $regex: previousQuery, $options: "i" } },
+          { sector: { $regex: previousQuery, $options: "i" } },
+          { language: { $regex: previousQuery, $options: "i" } },
+        ],
+      },
+      // Ajouter les filtres de recherche
+      ...searchFilters,
+    ],
+  };
+  try {
+    // Récupérer les écoles correspondantes à partir de la base de données
+    const schools = await School.find(dbFilters);
+    res.json({ schools });
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+
+
 
 //SHOW ONE SCHOOL
 //@GET
@@ -197,21 +272,21 @@ export const updateSchool = async (req, res, next) => {
     return next(error);
   }
 
-   school.imgPath = imgPath;
-   school.nameUpdate = nameUpdate;
-   school.addressUpdate = addressUpdate;
-   school.continentUpdate = continentUpdate;
-   school.countryUpdate = countryUpdate;
-   school.areaUpdate = areaUpdate;
-   school.cityUpdate = cityUpdate;
-   school.description = description;
-   school.foundationDate = foundationDate;
-   school.levelUpdate = levelUpdate;
-   school.languageUpdate = languageUpdate;
-   school.sectorUpdate = sectorUpdate;
-   school.genderUpdate = genderUpdate;
-   school.religionUpdate = religionUpdate;
-   school.imgPath = imgPath;
+  school.imgPath = imgPath;
+  school.nameUpdate = nameUpdate;
+  school.addressUpdate = addressUpdate;
+  school.continentUpdate = continentUpdate;
+  school.countryUpdate = countryUpdate;
+  school.areaUpdate = areaUpdate;
+  school.cityUpdate = cityUpdate;
+  school.description = description;
+  school.foundationDate = foundationDate;
+  school.levelUpdate = levelUpdate;
+  school.languageUpdate = languageUpdate;
+  school.sectorUpdate = sectorUpdate;
+  school.genderUpdate = genderUpdate;
+  school.religionUpdate = religionUpdate;
+  school.imgPath = imgPath;
 
   try {
     await school.save();

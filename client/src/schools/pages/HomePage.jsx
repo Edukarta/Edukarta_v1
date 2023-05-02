@@ -27,26 +27,18 @@ const HomePage = () => {
     <section>
       <Map type="homepage" schools={schools} />
       <div className={classes.container_slider}>
-        <SchoolList
+        {/* <SchoolList
           type="noWrap"
           size="default"
           schools={schools}
           firstSchool={1}
           numberOfSchools={6}
-        />
+        /> */}
       </div>
       <SchoolList
-        title="établissements populaires"
         size="big"
         schools={schools}
         firstSchool={0}
-        numberOfSchools={6}
-      />
-      <SchoolList
-        title="établissements pres de chez vous"
-        size="big"
-        schools={schools}
-        firstSchool={4}
         numberOfSchools={10}
       />
     </section>

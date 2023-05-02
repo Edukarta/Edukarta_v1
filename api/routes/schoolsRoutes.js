@@ -4,7 +4,8 @@ import {
   getSchoolById,
   addSchool,
   deleteSchool,
-  searchSchools
+  searchSchools,
+  filterSchools
 } from "../controllers/schoolsControllers.js";
 
 const router = express.Router();
@@ -12,6 +13,7 @@ const router = express.Router();
 //SHOW ALL SCHOOLS
 router.get("/", getAllSchools);
 router.get("/search", searchSchools);
+router.get("/filter", filterSchools);
 router.get("/:id", getSchoolById);
 router.post("/", addSchool);
 

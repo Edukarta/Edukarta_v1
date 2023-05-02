@@ -3,7 +3,7 @@
     font: inherit;
     padding: 1rem 1.5rem;
     border: 1px solid rgb(159, 203, 191);
-    border-radius: 50px;
+    border-radius: 5px;
     background: var(--bg-button);
     color: white;
     cursor: pointer;
@@ -63,6 +63,6 @@
   }
   
   .buttonBig {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     width: 100%;
   }

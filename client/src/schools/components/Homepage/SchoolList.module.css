@@ -1,25 +1,23 @@
 .listContainer {
-  margin-bottom: 50px;
   position: relative;
-  padding: 10px;
+  margin: 50px 0;
 }
 
 .listTitle {
-  margin-bottom: 20px;
-
+  margin: 20px;
   font-size: 20px;
   color: #757575;
   font-weight: 500;
-  text-transform:capitalize;
+  text-transform: capitalize;
 }
 
-.card__container_noWrap {
+/* .card__container_noWrap {
   width: 100%;
   display: flex;
   padding: 0 20px;
   transform: translateX(0);
   transition: all 1s ease;
-}
+} */
 
 .card__container_wrap {
   width: 100%;
@@ -30,7 +28,7 @@
 }
 
 .container_link__card {
-  width: 100%;
+  width: 350px;
   margin-bottom: 20px;
   max-width: 390px;
 }
@@ -51,7 +49,7 @@
   z-index: 30;
 }
 
-.container_arrow_right{
+.container_arrow_right {
   position: absolute;
   display: flex;
   align-items: center;
@@ -68,6 +66,11 @@
 }
 
 @media (min-width: 850px) {
+  .listContainer {
+    width: 95%;
+    margin: 20px auto;
+  }
+
   .container_arrow_left {
     width: 50px;
     height: 50px;
@@ -75,8 +78,8 @@
     left: 10px;
     top: 120px;
   }
-  
-  .container_arrow_right{
+
+  .container_arrow_right {
     width: 50px;
     height: 50px;
     gap: 30px;
@@ -85,28 +88,26 @@
   }
 }
 
-@media (min-width: 1080px) {
-
-  .listContainer {
-    width: 80%;
-    margin: 0 auto;
-  }
-
+@media (min-width: 1200px) {
   .listTitle {
     font-size: 25px;
+    margin: 20px;
+  }
+
+  /* .card__container_wrap {
+    gap: 3px;
+  } */
+
+  .container_link__card {
+    width: 280px;
+    margin-bottom: 40px;
   }
 
   .card__container_wrap {
-    gap: 5px;
+    justify-content: start;
   }
 
-  .container_link__card {
-    width: 100%;
-    margin-bottom: 40px;
-    max-width: 390px;
-  }
-
-  .container_arrow_left {
+  /* .container_arrow_left {
     width: 50px;
     height: 50px;
     gap: 30px;
@@ -120,5 +121,5 @@
     gap: 30px;
     right: -100px;
     top: 120px;
-  }
+  } */
 }
