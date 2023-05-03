@@ -18,7 +18,7 @@ function App() {
   const location = useLocation();
   return (
     <>
-    {!location.pathname.startsWith("/admin") && <MainNavigation />}
+    {!location.pathname.startsWith("/admin") && !location.pathname.startsWith("/school") && <MainNavigation />}
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />

@@ -1,120 +1,338 @@
+.container_Navigation {
+  display: none;
+}
 
-.container_details{
-    margin-top: 110px;
+.container_name_destop {
+  display: none;
+}
+
+.container_infos_section_destop {
+  display: none;
+}
+
+.container_details {
+  width: 100%;
+  max-width: 1500px;
+}
+
+.container_bloc_img_details {
+  position: relative;
+  width: 100%;
+}
+
+.container_multi_img {
+  display: none;
+}
+
+.container_bloc_img_details__icon_Arrow {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  top: 25px;
+  left: 20px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.container_bloc_img_details__icon_Heart {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  top: 25px;
+  right: 20px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.container_img_details {
+  width: 100%;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+
+.container_img_details img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.school_name {
+  width: 90%;
+  font-size: 30px;
+  font-weight: 500;
+  margin: 20px auto 0 auto;
+  color: #6d6d6d;
+}
+
+.section_title {
+  width: 90%;
+  font-size: 30px;
+  font-weight: 500;
+  margin: 5px auto 0 auto;
+  color: #6d6d6d;
+}
+
+.container_info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 20px;
+  margin-top: 10px;
+}
+
+.container_info_icon {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.school_info_text {
+  color: #333;
+  font-size: 15px;
+}
+
+.container_infos_section {
+  padding: 15px 0;
+  border-bottom: 2px solid #a9a9a9;
+}
+
+.title__desc {
+  font-size: 20px;
+  margin: 20px 0;
+  font-weight: 700;
+}
+
+.container_link {
+  width: 80%;
+  margin: 40px auto 80px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.container_link a {
+  color: rgb(4, 66, 153);
+  font-weight: 600;
+  text-align: center;
+}
+
+.container_link_hasrequest {
+  width: 80%;
+  margin: 40px auto 140px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.container_link_hasrequest a {
+  color: crimson;
+  font-weight: 600;
+  text-align: center;
+}
+
+.container_link_validate {
+  width: 80%;
+  margin: 40px auto 140px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.container_link_validate a {
+  color: green;
+  font-weight: 600;
+  text-align: center;
+}
+
+.container_infos_links {
+  display: none;
+}
+
+@media (min-width: 850px) {
+  .container_Navigation {
     width: 100%;
-}
-
-.container_img_details{
-    width: 100%;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-}
-
-.container_img_details img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-
-.school_name{
-    font-size: 30px;
-    font-weight: 500;
-    margin-top: 20px;
-    color: #6d6d6d;
-}
-
-
-.container_info{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px 20px;
-    margin-top: 10px;
-    
-}
-
-.container_info_icon{
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.school_info_text{
-    color: #333;
-    font-size: 15px;
-}
-
-.container_infos_global{
-    padding: 15px 0;
-    border-bottom: 2px solid #a9a9a9;
-}
-
-.title__desc{
-    font-size: 20px;
-    margin: 20px 0;
-    font-weight: 700;
-}
-
-.container_link{
-    width: 80%;
-    margin: 40px auto 80px auto;
     display: flex;
     justify-content: center;
-}
-
-.container_link a{
-    color: rgb(4, 66, 153);
-    font-weight: 600;
-    text-align: center;
-}
-
-.container_link_hasrequest{
-    width: 80%;
-    margin: 40px auto 140px auto;
-    display: flex;
-    justify-content: center;
-}
-
-.container_link_hasrequest a{
-    color: crimson;
-    font-weight: 600;
-    text-align: center;
-}
-
-.container_link_validate{
-    width: 80%;
-    margin: 40px auto 140px auto;
-    display: flex;
-    justify-content: center;
-}
-
-.container_link_validate a{
-    color: green;
-    font-weight: 600;
-    text-align: center;
+  }
 }
 
 @media (min-width: 1080px) {
-    .container_details{
-        margin: 150px auto 0 auto;
-        width: 80%;
-        display: flex;
-        gap: 20px;
-    }
+  .container_details {
+    margin: 50px auto;
+    width: 80%;
+    gap: 20px;
+  }
 
-    .container_img_details{
-        border-radius: 10px;
-        flex: 4;
-    }
-    
-    .container_img_details img{
-        border-radius: 10px;
-    }
+  .container_name_destop {
+    display: block;
+    margin-top: 100px;
+    max-width: 1500px;
+  }
 
-    .container_school_infos{
-        flex: 2;
+  .school_name_desktop {
+    width: 80%;
+    font-size: 30px;
+    font-weight: 500;
+    margin: 20px auto 0 auto;
+    color: #6d6d6d;
+  }
 
-    }
+  .container_infos_section_destop {
+    width: 80%;
+    margin: 10px auto;
+    display: flex;
+  }
+
+  .container_info_destop {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .school_name {
+    display: none;
+  }
+
+  .container_bloc_img_details__icon_Arrow {
+    display: none;
+  }
+
+  .container_bloc_img_details__icon_Heart {
+    display: none;
+  }
+
+  .container_infos_section {
+    display: none;
+  }
+
+  .container_img_details {
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    min-width: 400px;
+    max-width: 800px;
+  }
+
+  .container_img_details img {
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+
+  .bloc_multi_img {
+    display: flex;
+    height: 400px;
+    gap: 10px;
+  }
+
+  .container_multi_img {
+    display: flex;
+    height: 100%;
+    gap: 10px;
+  }
+
+  .bloc_item_img_2 div {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  .item_img {
+    width: 280px;
+    height: 195px;
+    margin-bottom: 10px;
+    background-color: #858585;
+  }
+
+  .item_img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .container_links {
+    display: none;
+  }
+
+  .container_infos_links {
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    max-width: 1500px;
+  }
+
+  .container_infos_destop_device{
+    width: 70%;
+    min-width: 700px;
+  }
+
+  .container_section_description_destop {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
+
+  .container_description_destop {
+    padding: 10px 0 30px 0;
+    width: 85%;
+    color: #4e4e4e;
+    border-bottom: 1px solid #a9a9a9;
+  }
+
+  .section_title_destop {
+    font-size: 30px;
+    font-weight: 400;
+    color: #484848;
+  }
+
+  .container_links_destop {
+    width: 200px;
+    height: 400px;
+    border: 1px solid #a9a9a9;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    width: 30%;
+    min-width: 280px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+
+
+  .card_link_title {
+    color: #333;
+    font-weight: 300;
+  }
+
+  .container_price_links {
+    border: 1px solid #a9a9a9;
+    border-radius: 10px;
+    padding: 15px;
+  }
+
+  .container_price_item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 10px;
+  }
+
+  .container_links_destop h6 {
+    color: #3b3b3b;
+    font-weight: 400;
+    font-size: 15px;
+  }
+
+  .container_btn_card_price{
+    margin-bottom: 20px;
+  }
+
+  .container_links_destop span{
+    color: #333;
+  }
+
 
 }
-  
