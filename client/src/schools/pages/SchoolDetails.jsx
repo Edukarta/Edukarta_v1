@@ -21,7 +21,7 @@ const SchoolDetails = () => {
 
   return (
     <div>
-        <SchoolsInfos school={school}/>
+        {school && <SchoolsInfos school={school} />}
     </div>
   )
 }

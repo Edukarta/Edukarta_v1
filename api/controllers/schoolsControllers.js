@@ -110,10 +110,6 @@ export const filterSchools = async (req, res, next) => {
   }
 };
 
-
-
-
-
 //SHOW ONE SCHOOL
 //@GET
 //ROUTE : api/v1/schools/:id

@@ -8,7 +8,7 @@ import {
   FavoriteBorder,
 } from "@mui/icons-material/";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import Map from "../../../shared/components/UIElements/Map";
+import MapDetails from "../../../shared/components/UIElements/MapDetails";
 import MainNavigation from "../../../shared/components/Navigation/MainNavigation";
 import { useSelector } from "react-redux";
 import schoolIcon from "../../../img/school.png";
@@ -163,6 +163,7 @@ const SchoolsInfos = ({ school }) => {
           {school?.description ? (
             <>
               <div className={classes.container_infos_section}>
+                <h3 className={classes.section_title}>About us</h3>
                 <div className={classes.container_info}>
                   <p>{school?.description}</p>
                 </div>
@@ -249,7 +250,7 @@ const SchoolsInfos = ({ school }) => {
 
           <div className={classes.container_section_description_destop}>
             <h3 className={classes.section_title_destop}>Infos 3</h3>
-            <div className={classes.container_description_destop}>
+            <div className={classes.container_description_destop_bottom}>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Architecto autem nisi debitis delectus consequuntur dicta
@@ -282,6 +283,9 @@ const SchoolsInfos = ({ school }) => {
           </div>
           <span>You will have a response in 48 hours</span>
         </div>
+      </div>
+      <div className={classes.container_map_school_details}>
+        <MapDetails school={school} />
       </div>
     </>
   );

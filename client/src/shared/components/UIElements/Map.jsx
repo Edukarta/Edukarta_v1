@@ -25,8 +25,9 @@ const Map = ({ type, schools }) => {
 
   return (
     <MapContainer
-      center={[37.09024, -95.712891]}
+      center={[46.232192999999995, 2.209666999999996]}
       zoom={4}
+      minZoom={3}
       className={
         type === "homepage" ? classes.mapContainer : classes.mapContainer_map
       }

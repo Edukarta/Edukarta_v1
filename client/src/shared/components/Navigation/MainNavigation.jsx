@@ -32,7 +32,7 @@ const MainNavigation = () => {
   };
   
   const handleKeyDown = (event) => {
-    if (event.keyCode === 13) {
+    if (event.key === 'Enter') {
       handleSearch();
     }
   }

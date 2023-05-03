@@ -27,7 +27,13 @@ const Card = (props) => {
           props.big && classes.cardSugest__container_text_big
         } `}
       >
-        <h1 className={`${props.default && classes.cardName} ${props.big && classes.cardNameBig }`}>{props.name}</h1>
+        <h1
+          className={`${props.default && classes.cardName} ${
+            props.big && classes.cardNameBig
+          }`}
+        >
+          {props.name}
+        </h1>
         {/* <div className={classes.container_infos__school}>
           <span className={classes.cardText__country}>
             {props.continent} / {props.country}
@@ -37,9 +43,6 @@ const Card = (props) => {
           </span>
         </div> */}
       </div>
-      {props.big && <div className={classes.container_favoriste_icon}>
-        <FavoriteBorder sx={{ color: "#333", fontWeight: "700", fontSize: fontSize }} />
-      </div>}
     </div>
   );
 };
