@@ -15,28 +15,16 @@ const MapDetails = (props) => {
   return (
     <MapContainer
       center={[props.school.gps[0], props.school.gps[1]]}
-      zoom={7}
-      minZoom={6}
+      zoom={15}
+      minZoom={10}
       className={classes.mapContainer}
     >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
       {props.school.gps[0] && props.school.gps[1] && (
-        <Marker position={[props.school.gps[0], props.school.gps[1]]} icon={customMarker}>
-          <Popup>
-            <div className={classes.container_Popup}>
-              <div className={classes.container_Popup_img}>
-                <img src={props.school.imgPath} alt="image de l'école" />
-              </div>
-              <div className={classes.container_infos}>
-                <h1 className={classes.popup_schoolName}>{props.school.name}</h1>
-                <div className={classes.container_infos_item}>
-                  <LocationOn sx={{ color: "#324964" }} />
-                  <p className={classes.container_infos_address}>{props.school.address}</p>
-                </div>
-              </div>
-            </div>
-          </Popup>
-        </Marker>
+        <Marker
+          position={[props.school.gps[0], props.school.gps[1]]}
+          icon={customMarker}
+        ></Marker>
       )}
     </MapContainer>
   );

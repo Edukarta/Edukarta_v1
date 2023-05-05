@@ -4,6 +4,7 @@ const initialState = {
     user: null,
     token: null,
     schools: [],
+    school: null,
     searchQuery: "",
     searchResults: [],
 };
@@ -24,6 +25,9 @@ export const authSlice = createSlice({
       setSchools: (state, action) => {
         state.schools = action.payload.schools;
       },
+      setSchool: (state, action) => {
+        state.school = action.payload.school;
+      },
       updateUser: (state, action) => {
         state.user = action.payload;
       },
@@ -36,5 +40,5 @@ export const authSlice = createSlice({
     },
   });
   
-  export const {setLogin, setLogout, setSchools, updateUser, setSearchResults, setQuery} = authSlice.actions;
+  export const {setLogin, setLogout, setSchools, setSchool, updateUser, setSearchResults, setQuery} = authSlice.actions;
   export default authSlice.reducer;

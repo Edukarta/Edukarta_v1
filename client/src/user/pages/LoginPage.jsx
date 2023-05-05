@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../shared/state/store";
+import google from "../../img/logo_google.png";
 import classes from "./LoginPage.module.css";
-
 
 const initialValueRegister = {
   firstname: "",
@@ -24,12 +24,12 @@ const initialValueLogin = {
 };
 
 const LoginPage = () => {
-  const URL = process.env.REACT_APP_BACKEND_URL;
-  const [pageType, setPageType] = useState("register");
+  const [pageType, setPageType] = useState("login");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
+  let intervalId;
 
   //FONCTION QUI GERE LA CREATION DE PROFIL
   const register = async (values, onSubmitProps) => {
@@ -37,7 +37,7 @@ const LoginPage = () => {
     for (let value in values) {
       formData.append(value, values[value]);
     }
-        
+
     const savedUserResponse = await fetch(
       `https://www.edukarta.com/api/v1/auth/register`,
       {
@@ -45,7 +45,7 @@ const LoginPage = () => {
         body: formData,
       }
     );
-    
+
     const savedUser = await savedUserResponse.json();
     onSubmitProps.resetForm();
 
@@ -66,7 +66,7 @@ const LoginPage = () => {
     );
     const statusCode = loggedInResponse.status;
     const loggedIn = await loggedInResponse.json();
-    console.log(loggedIn)
+    console.log(loggedIn);
     onSubmitProps.resetForm();
 
     if (statusCode === 200) {
@@ -81,24 +81,36 @@ const LoginPage = () => {
       // Afficher un message d'erreur ou ne rien faire
       console.log("Identifiant incorrect");
     }
-  
   };
 
-  const handleFormSubmit = async(values, onSubmitProps) => {
-    if(isRegister){
-      await register(values, onSubmitProps)
+  const googleAuth = async () => {
+    try {
+      console.log("googleAuth() called");
+      window.open("http://localhost:5000/api/v1/googleAuth/google", "_self")
+    } catch (error) {
+      console.log(error);
     }
 
-    if(isLogin){
-      await login(values, onSubmitProps)
+  };
+
+
+
+  
+  const handleFormSubmit = async (values, onSubmitProps) => {
+    if (isRegister) {
+      await register(values, onSubmitProps);
     }
-  }
+
+    if (isLogin) {
+      await login(values, onSubmitProps);
+    }
+  };
 
   return (
     <section className={classes.containerFormRegister}>
       <div className={classes.containerForm_title}>
         <h1 className={classes.formTitle}>
-          {isRegister ? "Créez votre compte" : "Connectez-vous"}
+          {isRegister ? "Register" : "Login"}
         </h1>
         <Formik
           onSubmit={handleFormSubmit}
@@ -118,41 +130,43 @@ const LoginPage = () => {
             <form className={classes.registerForm} onSubmit={handleSubmit}>
               {isRegister && (
                 <>
-                  <Input
-                    id="firstname"
-                    element="input"
-                    type="text"
-                    placeholder="Prénom"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.firstname}
-                    name="firstname"
-                    error={
-                      Boolean(touched.firstname) && Boolean(errors.firstname)
-                    }
-                    helperText={touched.firstname && errors.firstname}
-                  />
-                  <Input
-                    id="lastname"
-                    element="input"
-                    type="text"
-                    placeholder="Nom"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.lastname}
-                    name="lastname"
-                    error={
-                      Boolean(touched.lastname) && Boolean(errors.lastname)
-                    }
-                    helperText={touched.lastname && errors.lastname}
-                  />
+                  <div>
+                    <Input
+                      id="firstname"
+                      element="input"
+                      type="text"
+                      placeholder="Firstname"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.firstname}
+                      name="firstname"
+                      error={
+                        Boolean(touched.firstname) && Boolean(errors.firstname)
+                      }
+                      helperText={touched.firstname && errors.firstname}
+                    />
+                    <Input
+                      id="lastname"
+                      element="input"
+                      type="text"
+                      placeholder="Name"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.lastname}
+                      name="lastname"
+                      error={
+                        Boolean(touched.lastname) && Boolean(errors.lastname)
+                      }
+                      helperText={touched.lastname && errors.lastname}
+                    />
+                  </div>
                 </>
               )}
               <Input
                 id="email"
                 element="input"
                 type="text"
-                placeholder="monemail@monemail.com"
+                placeholder="email@email.com"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.email}
@@ -164,7 +178,7 @@ const LoginPage = () => {
                 id="password"
                 element="input"
                 type="password"
-                placeholder="Mot de passe"
+                placeholder="Password"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.password}
@@ -178,7 +192,7 @@ const LoginPage = () => {
                     id="location"
                     element="input"
                     type="text"
-                    placeholder="Pays"
+                    placeholder="Country"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.location}
@@ -192,7 +206,7 @@ const LoginPage = () => {
                     id="address"
                     element="input"
                     type="text"
-                    placeholder="Votre Adresse"
+                    placeholder="Address"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.address}
@@ -204,7 +218,7 @@ const LoginPage = () => {
                     id="phone"
                     element="input"
                     type="text"
-                    placeholder="Votre N°de tel"
+                    placeholder="Phone"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.phone}
@@ -215,26 +229,34 @@ const LoginPage = () => {
                 </>
               )}
               <Button big type="submit">
-                {isRegister ? "Créer mon compte" : "Je me connecte"}
+                {isRegister ? "Register" : "Login"}
               </Button>
               <div className={classes.containerText}>
                 <h6>
                   {isRegister
-                    ? "J'ai déjà un compte, "
-                    : "Je n'ai pas encore de compte, "}
+                    ? "I already have an account, "
+                    : "I don't have an account, "}
                   <span
                     onClick={() => {
                       setPageType(isLogin ? "register" : "login");
                       resetForm();
                     }}
                   >
-                    {isRegister ? "je me connecte" : "je crée mon compte"}
+                    {isRegister ? "Login" : "Register"}
                   </span>
                 </h6>
+              </div>
+              <div className={classes.center}>
+                <div className={classes.line} />
+                <span className={classes.or}>Or</span>
               </div>
             </form>
           )}
         </Formik>
+        {/* <Button big dark onClick={googleAuth}>
+          <img src={google} alt="logo google" />
+          Sign in with Google
+        </Button> */}
       </div>
     </section>
   );

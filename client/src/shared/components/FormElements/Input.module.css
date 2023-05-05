@@ -26,7 +26,7 @@
     border: 1px solid #ccc;
     background: #f8f8f8;
     padding: 15px;
-    border-radius: 30px;
+    border-radius: 8px;
   }
   
   .formControl input:focus,

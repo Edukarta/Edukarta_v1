@@ -13,9 +13,12 @@ import RequestDetails from "./request/page/RequestDetails";
 import { useLocation } from "react-router-dom";
 import ResultsPage from "./schools/pages/ResultsPage";
 import AdminLogin from "./admin/pages/AdminLogin";
+import { useEffect } from "react";
 
 function App() {
   const location = useLocation();
+ 
+  
   return (
     <>
     {!location.pathname.startsWith("/admin") && !location.pathname.startsWith("/school") && <MainNavigation />}

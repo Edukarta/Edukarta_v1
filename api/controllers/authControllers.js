@@ -11,7 +11,17 @@ export const register = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return next(new HttpError("Données incorrects", 422));
   }
-  const { firstname, lastname, email, password, location, address, phone, imagePath, grade } = req.body;
+  const {
+    firstname,
+    lastname,
+    email,
+    password,
+    location,
+    address,
+    phone,
+    imagePath,
+    grade,
+  } = req.body;
 
   let existingUser;
   try {
@@ -41,9 +51,9 @@ export const register = async (req, res, next) => {
     address,
     phone,
     favoriteSchools: [],
-    request:[],
+    request: [],
     imagePath,
-    grade
+    grade,
   });
 
   try {
@@ -90,4 +100,29 @@ export const login = async (req, res, next) => {
   res
     .status(200)
     .json({ message: "Logged In", user: user.toObject({ getters: true }) });
+};
+
+//LOGIN GOOGLE SUCCESS
+//@GET
+//ROUTE : api/v1/auth/login/success
+export const loginSuccess = async (req, res) => {
+  if (req.user) {
+		res.status(200).json({
+			error: false,
+			message: "Successfully Loged In",
+			user: req.user,
+		});
+	} else {
+		res.status(403).json({ error: true, message: "Not Authorized" });
+	}
+};
+
+//LOGIN GOOGLE FAILED
+//@GET
+//ROUTE : api/v1/auth/login/failed
+export const loginFailed = async (req, res) => {
+  res.status(401).json({
+    succes: false,
+    message: "Athentication failed",
+  });
 };

@@ -12,6 +12,7 @@ import MapDetails from "../../../shared/components/UIElements/MapDetails";
 import MainNavigation from "../../../shared/components/Navigation/MainNavigation";
 import { useSelector } from "react-redux";
 import schoolIcon from "../../../img/school.png";
+import nft from "../../../img/nft.jpg";
 import classes from "./SchoolsInfos.module.css";
 import Button from "../../../shared/components/FormElements/Button";
 
@@ -160,6 +161,15 @@ const SchoolsInfos = ({ school }) => {
             </div>
           </div>
 
+          <div className={classes.container_infos_section}>
+            <h3 className={classes.section_title}>Badge NFT</h3>
+            <div className={classes.container_info}>
+              <div className={classes.container_nft_img_mobile}>
+                <img src={nft} alt="" />
+              </div>
+            </div>
+          </div>
+
           {school?.description ? (
             <>
               <div className={classes.container_infos_section}>
@@ -182,6 +192,20 @@ const SchoolsInfos = ({ school }) => {
               </div>
             </div>
           )}
+          <div className={classes.container_infos_section}>
+            <h3 className={classes.section_title}>Informations</h3>
+            <div className={classes.container_info}>
+              <div className={classes.container_list_info_mobile}>
+                <h6>Created at :</h6>
+                <h6>Number of students :</h6>
+                <h6>Level :</h6>
+                <h6>Sector : <span className={classes.data}>{school?.sector}</span></h6>
+                <h6>Phone :</h6>
+                <h6>Email :</h6>
+                <h6>Web site :</h6>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* LINKS MOBILE DEVICE */}
@@ -211,6 +235,14 @@ const SchoolsInfos = ({ school }) => {
       {/* DESCRIPTION DESKTOP DEVICE */}
       <div className={classes.container_infos_links}>
         <div className={classes.container_infos_destop_device}>
+          <div className={classes.container_section_description_destop}>
+            <h3 className={classes.section_title_destop}>Badge NFT</h3>
+            <div className={classes.container_description_destop}>
+              <div className={classes.container_nft_img_destop}>
+                <img src={nft} alt="" />
+              </div>
+            </div>
+          </div>
           {/* AFFICHAGE DESC */}
           {school?.description ? (
             <>
@@ -237,14 +269,17 @@ const SchoolsInfos = ({ school }) => {
 
           {/* AFFICHAGE INFOS */}
           <div className={classes.container_section_description_destop}>
-            <h3 className={classes.section_title_destop}>Infos 2</h3>
+            <h3 className={classes.section_title_destop}>Informations</h3>
             <div className={classes.container_description_destop}>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Architecto autem nisi debitis delectus consequuntur dicta
-                perferendis, fuga iusto numquam, omnis facilis unde molestias,
-                doloribus veritatis corporis quos quam eos quo!
-              </p>
+              <div className={classes.container_list_info_destop}>
+                <h6>Created at :</h6>
+                <h6>Number of students :</h6>
+                <h6>Level :</h6>
+                <h6>Sector : <span className={classes.data}>{school?.sector}</span></h6>
+                <h6>Phone :</h6>
+                <h6>Email :</h6>
+                <h6>Web site :</h6>
+              </div>
             </div>
           </div>
 

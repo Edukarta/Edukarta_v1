@@ -1,17 +1,21 @@
 .containerFormRegister{
    width: 100%;
    padding: 10px;
+   margin: 0 auto;
+   max-width: 600px;
 }
 
 .containerForm_title{
-    margin-top: 150px;
+    margin-top: 200px;
 }
 
 .formTitle{
     text-align: center;
     font-size: 30px;
-    color: #15373C;
+    font-weight: 300;
+    color: #333;
 }
+
 
 .registerForm{
     width: 100%;
@@ -20,13 +24,65 @@
 
 .containerText{
     text-align: center;
+    margin-top: 10px;
 }
 
+.containerText h6{
+    font-size: 15px;
+    font-weight: 400;
+}
 .containerText span{
     color: #0275d8;
+    font-size: 15px;
     cursor: pointer;
 }
 
 .containerText span:hover{
     color: #005097;;
 }
+
+.center{
+    width: 100%;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.or{
+    color: #333;
+    text-align: center;
+    width: 30px;
+    background-color: white;
+    z-index: 11;
+}
+
+.line{
+    width: 70%;
+    height: 0.5px;
+    background-color: #aeaeae;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 10;
+}
+
+button img{
+    width: 30px;
+}
+
+@media (min-width: 1080px) {
+
+     .containerForm_title{
+        margin-top: 90px;
+    }
+
+    .center{
+        margin: 40px 0;
+    }
+}
+  
