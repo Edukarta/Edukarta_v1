@@ -22,7 +22,6 @@ const HomePage = () => {
     dispatch(setSchools({ schools: allSchools }));
   };
   
-
   useEffect(() => {
     fetchSchools();
   }, []);

@@ -42,10 +42,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 passportSetup();
-app.use(cors({
-  origin: 'http://localhost:3000', // Remplacez l'URL avec celle de votre application React
-  credentials: true,
-}));
+app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
