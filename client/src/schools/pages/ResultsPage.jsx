@@ -3,7 +3,7 @@ import Button from "../../shared/components/FormElements/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { setSearchResults, setSearchQuery } from "../../shared/state/store";
 import FilterDrawer from "../../shared/components/UIElements/FilterDrawer";
-import {KeyboardArrowDown, KeyboardArrowUp} from '@mui/icons-material/';
+import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material/";
 import { Link } from "react-router-dom";
 import schoolIcon from "../../img/school.png";
 import classes from "./ResultsPage.module.css";
@@ -52,10 +52,15 @@ const ResultsPage = () => {
     <>
       <section className={classes.global_container}>
         <div className={classes.container_filter_result_page}>
-          <button onClick={() => setDrawerIsOpen((prev) => !prev)}>Filters{!drawerIsOpen ? <KeyboardArrowDown/> : <KeyboardArrowUp/>}</button> 
+          <button onClick={() => setDrawerIsOpen((prev) => !prev)}>
+            Filters{!drawerIsOpen ? <KeyboardArrowDown /> : <KeyboardArrowUp />}
+          </button>
         </div>
         <FilterDrawer show={drawerIsOpen}>
-            <form className={classes.container_filter_mobile} onSubmit={handleSearch}>
+          <form
+            className={classes.container_filter_mobile}
+            onSubmit={handleSearch}
+          >
             <div className={classes.container_title_filter_panel_mobile}>
               <h3>Filter by :</h3>
             </div>
@@ -161,8 +166,10 @@ const ResultsPage = () => {
                 <label htmlFor="french">French</label>
               </div>
             </div>
-            <Button big>Apply filters</Button>
-            </form>
+            <div className={classes.container_btn_filter}>
+              <Button big>Apply filters</Button>
+            </div>
+          </form>
         </FilterDrawer>
 
         <div className={classes.results_number}>
@@ -307,20 +314,6 @@ const ResultsPage = () => {
                   <div className={classes.container_infos}>
                     <span className={classes.name}>
                       {result.nameUpdate ? result.nameUpdate : result.name}
-                    </span>
-                    <span className={classes.country}>
-                      {result.continentUpdate
-                        ? result.continentUpdate
-                        : result.continent}{" "}
-                      /{" "}
-                      {result.countryUpdate
-                        ? result.countryUpdate
-                        : result.country}
-                    </span>
-                    <span className={classes.city}>
-                      {result.area || result.areaUpdate
-                        ? `${result.area} / ${result.city}`
-                        : result.cityUpdate}
                     </span>
                   </div>
                 </div>
