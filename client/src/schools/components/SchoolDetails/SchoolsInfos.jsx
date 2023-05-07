@@ -10,6 +10,7 @@ import {
 import { Link, useParams, useNavigate } from "react-router-dom";
 import MapDetails from "../../../shared/components/UIElements/MapDetails";
 import MainNavigation from "../../../shared/components/Navigation/MainNavigation";
+import { FormatQuote } from "@mui/icons-material/";
 import { useSelector } from "react-redux";
 import schoolIcon from "../../../img/school.png";
 import nft from "../../../img/nft.jpg";
@@ -45,6 +46,7 @@ const SchoolsInfos = ({ school }) => {
         <h1 className={classes.school_name_desktop}>
           {school?.nameUpdate ? school?.nameUpdate : school?.name}
         </h1>
+        <h3 className={classes.school_original_name_desktop}>志ある卓越。</h3>
       </div>
       <div className={classes.container_infos_section_destop}>
         <div className={classes.container_info_destop}>
@@ -79,6 +81,15 @@ const SchoolsInfos = ({ school }) => {
             </span>
           </div>
         </div>
+        <div className={classes.school_info_slogan_destop}>
+          <div className={classes.quote1}>
+            <FormatQuote />
+          </div>
+          <p>Discover Excellence</p>
+          <div className={classes.quote2}>
+            <FormatQuote />
+          </div>
+        </div>
       </div>
 
       {/* IMG MOBILE/DESKTOP DEVICE */}
@@ -104,12 +115,28 @@ const SchoolsInfos = ({ school }) => {
             )}
             <div className={classes.container_multi_img}>
               <div className={classes.bloc_item_img_1}>
-                <div className={classes.item_img}></div>
-                <div className={classes.item_img}></div>
+                <div className={classes.item_img}>
+                  <Link to={`/school/${school?.id}/request`} className={classes.add_item}>
+                    add image here
+                  </Link>
+                </div>
+                <div className={classes.item_img}>
+                  <Link to={`/school/${school?.id}/request`} className={classes.add_item}>
+                    add image here
+                  </Link>
+                </div>
               </div>
               <div className={classes.bloc_item_img_2}>
-                <div className={classes.item_img}></div>
-                <div className={classes.item_img}></div>
+                <div className={classes.item_img}>
+                  <Link to={`/school/${school?.id}/request`} className={classes.add_item}>
+                    add image here
+                  </Link>
+                </div>
+                <div className={classes.item_img}>
+                  <Link to={`/school/${school?.id}/request`} className={classes.add_item}>
+                    add image here
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -120,6 +147,7 @@ const SchoolsInfos = ({ school }) => {
           <h1 className={classes.school_name}>
             {school?.nameUpdate ? school?.nameUpdate : school?.name}
           </h1>
+          <h3 className={classes.school_original_name}>志ある卓越。</h3>
           <div className={classes.container_infos_section}>
             <div className={classes.container_info}>
               <div className={classes.container_info_icon}>
@@ -157,6 +185,15 @@ const SchoolsInfos = ({ school }) => {
                     ? school?.addressUpdate
                     : school?.address}
                 </span>
+              </div>
+            </div>
+            <div className={classes.container_info}>
+              <div className={classes.quote1_moboile}>
+                <FormatQuote />
+              </div>
+              <p>Discover Excellence</p>
+              <div className={classes.quote2_moboile}>
+                <FormatQuote />
               </div>
             </div>
           </div>
@@ -199,7 +236,10 @@ const SchoolsInfos = ({ school }) => {
                 <h6>Created at :</h6>
                 <h6>Number of students :</h6>
                 <h6>Level :</h6>
-                <h6>Sector : <span className={classes.data}>{school?.sector}</span></h6>
+                <h6>
+                  Sector :{" "}
+                  <span className={classes.data}>{school?.sector}</span>
+                </h6>
                 <h6>Phone :</h6>
                 <h6>Email :</h6>
                 <h6>Web site :</h6>
@@ -275,7 +315,10 @@ const SchoolsInfos = ({ school }) => {
                 <h6>Created at :</h6>
                 <h6>Number of students :</h6>
                 <h6>Level :</h6>
-                <h6>Sector : <span className={classes.data}>{school?.sector}</span></h6>
+                <h6>
+                  Sector :{" "}
+                  <span className={classes.data}>{school?.sector}</span>
+                </h6>
                 <h6>Phone :</h6>
                 <h6>Email :</h6>
                 <h6>Web site :</h6>
@@ -313,7 +356,7 @@ const SchoolsInfos = ({ school }) => {
           </div>
           <div className={classes.container_btn_card_price}>
             <Button big to={`/school/${school?.id}/request`}>
-              Make a request
+              Are you the owner of this file ?
             </Button>
           </div>
           <span>You will have a response in 48 hours</span>

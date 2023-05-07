@@ -52,7 +52,6 @@
 
 .container_img_details {
   width: 100%;
- 
 }
 
 .container_img_details img {
@@ -66,6 +65,14 @@
   font-size: 30px;
   font-weight: 500;
   margin: 20px auto 0 auto;
+  color: #363636;
+}
+
+.school_original_name {
+  width: 90%;
+  font-size: 30px;
+  font-weight: 500;
+  margin: 0 auto;
   color: #6d6d6d;
 }
 
@@ -85,7 +92,23 @@
   margin-top: 10px;
 }
 
-.container_nft_img_mobile{
+.container_info p {
+  font-size: 18px;
+  color: #858585;
+}
+
+.quote1_moboile {
+  transform: rotate(180deg);
+  margin-bottom: 10px;
+  color: #858585;
+}
+
+.quote2_moboile {
+  margin-top: 10px;
+  color: #858585;
+}
+
+.container_nft_img_mobile {
   width: 100px;
   height: 100px;
   border-radius: 10px;
@@ -93,7 +116,7 @@
   overflow: hidden;
 }
 
-.container_nft_img_mobile img{
+.container_nft_img_mobile img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -101,13 +124,12 @@
   animation: zoom 5s ease-in-out infinite;
 }
 
-
 @keyframes zoom {
   0% {
     transform: scale(1);
   }
   100% {
-    transform: scale(1.20);
+    transform: scale(1.2);
   }
 }
 
@@ -127,13 +149,13 @@
   border-bottom: 2px solid #a9a9a9;
 }
 
-.container_list_info_mobile h6{
+.container_list_info_mobile h6 {
   font-size: 15px;
   color: #6d6d6d;
   font-weight: 400;
 }
 
-.container_list_info_mobile span{
+.container_list_info_mobile span {
   color: #333;
   font-size: 15px;
   font-weight: 600;
@@ -188,7 +210,7 @@
   display: none;
 }
 
-.container_map_school_details{
+.container_map_school_details {
   width: 90%;
   margin: 0 auto 80px auto;
 }
@@ -200,14 +222,14 @@
     justify-content: center;
   }
 
-  .container_map_school_details{
+  .container_map_school_details {
     width: 80%;
     margin: 0 auto 30px auto;
     border-top: 1px solid #a9a9a9;
     padding: 30px 0;
   }
 
-  .container_info{
+  .container_info {
     width: 80%;
     margin: 0 30px;
   }
@@ -234,10 +256,19 @@
     color: #333;
   }
 
+  .school_original_name_desktop {
+    width: 80%;
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0 auto;
+    color: #808080;
+  }
+
   .container_infos_section_destop {
     width: 80%;
     margin: 10px auto;
     display: flex;
+    flex-direction: column;
   }
 
   .container_info_destop {
@@ -246,7 +277,31 @@
     gap: 20px;
   }
 
+  .school_info_slogan_destop {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    color: #3b3b3b;
+  }
+
+  .school_info_slogan_destop p {
+    font-size: 20px;
+  }
+
+  .quote1 {
+    transform: rotate(180deg);
+    margin-bottom: 10px;
+  }
+
+  .quote2 {
+    margin-top: 10px;
+  }
+
   .school_name {
+    display: none;
+  }
+
+  .school_original_name {
     display: none;
   }
 
@@ -294,14 +349,32 @@
     border-bottom-right-radius: 20px;
   }
 
+  .bloc_item_img_2 a {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
   .item_img {
     width: 280px;
     height: 195px;
     margin-bottom: 10px;
-    background-color: #858585;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d5d5d5;
   }
 
-  .item_img img{
+  .add_item{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #9b9b9b;
+  }
+
+  .item_img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -318,7 +391,7 @@
     max-width: 1500px;
   }
 
-  .container_infos_destop_device{
+  .container_infos_destop_device {
     width: 70%;
     min-width: 700px;
   }
@@ -335,10 +408,9 @@
     font-size: 15px;
     color: #656565;
     border-bottom: 1px solid #a9a9a9;
-   
   }
 
-  .container_nft_img_destop{
+  .container_nft_img_destop {
     width: 100px;
     height: 100px;
     border-radius: 20px;
@@ -346,7 +418,7 @@
     overflow: hidden;
   }
 
-  .container_nft_img_destop img{
+  .container_nft_img_destop img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -359,20 +431,18 @@
       transform: scale(1);
     }
     100% {
-      transform: scale(1.20);
+      transform: scale(1.2);
     }
   }
 
-
-
-  .container_description_destop_bottom{
+  .container_description_destop_bottom {
     padding: 10px 0 30px 0;
     width: 85%;
     font-size: 15px;
     color: #656565;
   }
 
-   .section_title_destop {
+  .section_title_destop {
     font-size: 30px;
     font-weight: 500;
     color: #333;
@@ -390,23 +460,22 @@
     text-align: center;
   }
 
-  .container_list_info_destop{
+  .container_list_info_destop {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
-  
-  .container_list_info_destop h6{
+
+  .container_list_info_destop h6 {
     color: #656565;
     font-weight: 400;
     font-size: 15px;
   }
 
-  .data{
+  .data {
     color: #333;
     font-weight: 600;
   }
-
 
   .card_link_title {
     color: #333;
@@ -433,13 +502,11 @@
     font-size: 15px;
   }
 
-  .container_btn_card_price{
+  .container_btn_card_price {
     margin-bottom: 20px;
   }
 
-  .container_links_destop span{
+  .container_links_destop span {
     color: #333;
   }
-
-
 }

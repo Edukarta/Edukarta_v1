@@ -15,11 +15,13 @@ const MapDetails = (props) => {
   return (
     <MapContainer
       center={[props.school.gps[0], props.school.gps[1]]}
-      zoom={15}
+      zoom={16}
       minZoom={10}
       className={classes.mapContainer}
+      bounceAtZoomLimits={false}
+      scrollWheelZoom={0}
     >
-      <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
+      <TileLayer url="https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png" />
       {props.school.gps[0] && props.school.gps[1] && (
         <Marker
           position={[props.school.gps[0], props.school.gps[1]]}

@@ -29,17 +29,7 @@ const HomePage = () => {
   return (
     <section>
       <Map type="homepage" schools={schools} />
-      <div className={classes.container_slider}>
-        {/* <SchoolList
-          type="noWrap"
-          size="default"
-          schools={schools}
-          firstSchool={1}
-          numberOfSchools={6}
-        /> */}
-      </div>
       <SchoolList
-        size="big"
         schools={schools}
         firstSchool={0}
         numberOfSchools={10}

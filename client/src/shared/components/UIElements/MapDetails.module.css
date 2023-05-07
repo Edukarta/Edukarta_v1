@@ -4,6 +4,9 @@
     height: 200px;
   }
   
+  span{
+    color: black;
+  }
   
   .mapContainer_map {
     width: 100%;

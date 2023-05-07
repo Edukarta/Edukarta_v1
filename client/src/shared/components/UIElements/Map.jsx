@@ -35,11 +35,13 @@ const Map = ({ type, schools }) => {
       center={[46.232192999999995, 2.209666999999996]}
       zoom={4}
       minZoom={3}
+      bounceAtZoomLimits={false}
+      scrollWheelZoom={0.2}
       className={
         type === "homepage" ? classes.mapContainer : classes.mapContainer_map
       }
     >
-      <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
+      <TileLayer url="https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png" />
       <MarkerClusterGroup
         chunkedLoading
         iconCreateFunction={cretaedCustomClusterIcon}
