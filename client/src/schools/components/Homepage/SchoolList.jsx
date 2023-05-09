@@ -39,11 +39,6 @@ const SchoolList = ({ title, type, size, schools, numberOfSchools, firstSchool }
             </Link>
           ))}
         </div>
-        {/* {type === "noWrap" && (
-          <div className={classes.container_arrow_right}>
-            <ArrowForwardIos onClick={() => handleClick("right")} sx={{color: "white", fontSize: "28px"}} />
-          </div>
-        )} */}
       </section>
     </>
   );
