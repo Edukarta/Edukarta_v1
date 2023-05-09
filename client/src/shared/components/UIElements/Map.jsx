@@ -110,11 +110,12 @@ const Map = ({ type, schools }) => {
           <div className={classes.container_infos_drawer}>
             <div className={classes.container_img_drawer}>
               <img src={schoolDrawer.imgPath} alt="" />
+              <button className={classes.drawer_close_btn} onClick={() => setDrawerIsOpen(false)}>X</button>
             </div>
             <div className={classes.container_infos}>
               <Link to={`/school/${schoolDrawer.id}`}>
                 <h3 className={classes.school_drawer_name}>
-                  {schoolDrawer.name}
+                  {schoolDrawer.nameUpdate ? schoolDrawer.nameUpdate : schoolDrawer.name}
                 </h3>
               </Link>
               <div className={classes.school_drawer_infos_items}>

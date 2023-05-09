@@ -280,9 +280,9 @@ const SchoolsInfos = ({ school, getSchool }) => {
                 </div>
               </div>
               <div className={classes.school_info_slogan_destop}>
-                <div className={classes.quote1}>
+                {school?.slogan && <div className={classes.quote1}>
                   <FormatQuote />
-                </div>
+                </div>}
                 {isEditingName ? (
                   <Input
                     id="slogan"
@@ -295,10 +295,10 @@ const SchoolsInfos = ({ school, getSchool }) => {
                     name="slogan"
                   />
                 ) : (
-                  <p>Discover Excellence</p>
+                  <p>{school?.slogan}</p>
                 )}
                 <div className={classes.quote2}>
-                  <FormatQuote />
+                  {school?.slogan && <FormatQuote />}
                 </div>
               </div>
             </div>
@@ -975,7 +975,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                       </div>
                     )}
                   </div>
-                  <div className={classes.container_description_destop}>
+                  <div className={classes.container_description_destop_bottom}>
                     <div className={classes.container_list_info_destop}>
                       {isEditingInfos ? (
                         <>
