@@ -51,10 +51,6 @@ main {
   transition: all 200ms;
 }
 
-
-
-
-
 .slide-in-top-enter {
   transform: translateY(-100%);
 }

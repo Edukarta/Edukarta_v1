@@ -52,6 +52,7 @@
 
 .container_img_details {
   width: 100%;
+  height: 300px;
 }
 
 .container_img_details img {
@@ -64,7 +65,6 @@
   width: 90%;
   font-size: 30px;
   font-weight: 500;
-  margin: 20px auto 0 auto;
   color: #363636;
 }
 
@@ -74,6 +74,44 @@
   font-weight: 500;
   margin: 0 auto;
   color: #6d6d6d;
+}
+
+.container_school_name_btn {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin: 20px auto 0 auto;
+}
+
+.edit_btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  padding: 5px 10px;
+  color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background-color: #15273c;
+  cursor: pointer;
+}
+
+.container_modify{
+  background-color: #15273c;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container_title_icon_mobile{
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+ width: 100%;
 }
 
 .section_title {
@@ -90,6 +128,7 @@
   gap: 10px;
   padding: 5px 20px;
   margin-top: 10px;
+  
 }
 
 .container_info p {
@@ -216,6 +255,11 @@
 }
 
 @media (min-width: 850px) {
+  .input_group {
+    width: 20%;
+    margin: 0 auto;
+  }
+
   .container_Navigation {
     width: 100%;
     display: flex;
@@ -236,6 +280,10 @@
 }
 
 @media (min-width: 1080px) {
+
+  .edit_btn{
+    display: none;
+  }
   .container_details {
     margin: 50px auto;
     width: 80%;
@@ -245,22 +293,45 @@
   .container_name_destop {
     display: block;
     margin-top: 100px;
-    max-width: 1500px;
+  }
+
+  .container_school_name_btn_destop {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 0 auto;
+    width: 80%;
+  }
+
+  .edit_btn_destop {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    padding: 10px 20px;
+    color: #f1f1f1;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: #15273c;
+    cursor: pointer;
+  }
+
+  .edit_btn_destop:hover {
+    background-color: #25466b;
   }
 
   .school_name_desktop {
-    width: 80%;
     font-size: 30px;
     font-weight: 500;
-    margin: 20px auto 0 auto;
     color: #333;
   }
 
   .school_original_name_desktop {
-    width: 80%;
+    width: 20%;
     font-size: 20px;
     font-weight: 500;
-    margin: 0 auto;
+    margin: 0 150px;
     color: #808080;
   }
 
@@ -362,16 +433,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #d5d5d5;
+    background-color: #e0e0e0;
   }
 
-  .add_item{
+  .add_item {
     width: 100%;
     height: 100%;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px dashed #9b9b9b;
+  }
+
+  .camera_icon {
+    position: absolute;
+    bottom: -20px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #15273c;
+    cursor: pointer;
   }
 
   .item_img img {
@@ -402,9 +488,27 @@
     margin-bottom: 30px;
   }
 
+  .container_icon_title {
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .container_icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #15273c;
+    cursor: pointer;
+  }
+
   .container_description_destop {
     padding: 10px 0 30px 0;
-    width: 85%;
+    width: 80%;
     font-size: 15px;
     color: #656565;
     border-bottom: 1px solid #a9a9a9;
@@ -508,5 +612,19 @@
 
   .container_links_destop span {
     color: #333;
+  }
+
+  .form_infos {
+    width: 100%;
+  }
+
+  .input_group_infos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bold_infos {
+    font-weight: 600;
   }
 }

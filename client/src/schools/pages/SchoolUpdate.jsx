@@ -8,12 +8,11 @@ import Dropzone from "react-dropzone";
 import classes from "./SchoolUpdate.module.css";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
-const initialValueUpdate = {
+const initialValueName = {
   nameUpdate: "",
   addressUpdate: "",
   continentUpdate: "",
   countryUpdate: "",
-  areaUpdate: "",
   cityUpdate: "",
   description: "",
   foundationDate: "",
@@ -23,6 +22,10 @@ const initialValueUpdate = {
   genderUpdate: "",
   religionUpdate: "",
   picture: "",
+};
+
+const initialValueDescription = {
+  description: "",
 };
 
 const SchoolUpdate = () => {
@@ -88,7 +91,7 @@ const SchoolUpdate = () => {
           <h1>Modifier la fiche</h1>
           <Formik
             onSubmit={handleFormSubmit}
-            initialValues={initialValueUpdate}
+            initialValues={initialValueName}
           >
             {({
               values,

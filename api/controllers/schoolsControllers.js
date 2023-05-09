@@ -243,6 +243,8 @@ export const updateSchool = async (req, res, next) => {
   const {
     nameUpdate,
     addressUpdate,
+    slogan,
+    originalName,
     continentUpdate,
     countryUpdate,
     areaUpdate,
@@ -254,6 +256,10 @@ export const updateSchool = async (req, res, next) => {
     sectorUpdate,
     genderUpdate,
     religionUpdate,
+    numberOfStudents,
+    phone,
+    email,
+    webSiteUrl,
     imgPath,
   } = req.body;
 
@@ -268,21 +274,66 @@ export const updateSchool = async (req, res, next) => {
     return next(error);
   }
 
-  school.imgPath = imgPath;
-  school.nameUpdate = nameUpdate;
-  school.addressUpdate = addressUpdate;
-  school.continentUpdate = continentUpdate;
-  school.countryUpdate = countryUpdate;
-  school.areaUpdate = areaUpdate;
-  school.cityUpdate = cityUpdate;
-  school.description = description;
-  school.foundationDate = foundationDate;
-  school.levelUpdate = levelUpdate;
-  school.languageUpdate = languageUpdate;
-  school.sectorUpdate = sectorUpdate;
-  school.genderUpdate = genderUpdate;
-  school.religionUpdate = religionUpdate;
-  school.imgPath = imgPath;
+  if (nameUpdate !== undefined) {
+    school.nameUpdate = nameUpdate;
+  }
+  if (addressUpdate !== undefined) {
+    school.addressUpdate = addressUpdate;
+  }
+  if (slogan !== undefined) {
+    school.slogan = slogan;
+  }
+  if (originalName !== undefined) {
+    school.originalName = originalName;
+  }
+  if (continentUpdate !== undefined) {
+    school.continentUpdate = continentUpdate;
+  }
+  if (countryUpdate !== undefined) {
+    school.countryUpdate = countryUpdate;
+  }
+  if (areaUpdate !== undefined) {
+    school.areaUpdate = areaUpdate;
+  }
+  if (cityUpdate !== undefined) {
+    school.cityUpdate = cityUpdate;
+  }
+  if (description !== undefined) {
+    school.description = description;
+  }
+  if (foundationDate !== undefined) {
+    school.foundationDate = foundationDate;
+  }
+  if (levelUpdate !== undefined) {
+    school.levelUpdate = levelUpdate;
+  }
+  if (languageUpdate !== undefined) {
+    school.languageUpdate = languageUpdate;
+  }
+  if (sectorUpdate !== undefined) {
+    school.sectorUpdate = sectorUpdate;
+  }
+  if (genderUpdate !== undefined) {
+    school.genderUpdate = genderUpdate;
+  }
+  if (religionUpdate !== undefined) {
+    school.religionUpdate = religionUpdate;
+  }
+  if (numberOfStudents !== undefined) {
+    school.numberOfStudents = numberOfStudents;
+  }
+  if (phone !== undefined) {
+    school.phone = phone;
+  }
+  if (email !== undefined) {
+    school.email = email;
+  }
+  if (webSiteUrl !== undefined) {
+    school.webSiteUrl = webSiteUrl;
+  }
+  if (imgPath !== undefined) {
+    school.imgPath = imgPath;
+  }
 
   try {
     await school.save();

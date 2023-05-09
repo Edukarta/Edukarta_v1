@@ -13,6 +13,10 @@ const SchoolSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  slogan: {
+    type: String,
+    default: "",
+  },
   acronym: {
     type: String,
     default: "",
@@ -117,6 +121,23 @@ const SchoolSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  numberOfStudents:{
+    type: String,
+    default: ""
+  },
+  phone:{
+    type: String,
+    default: ""
+  },
+  email:{
+    type: String,
+    default: ""
+  },
+  webSiteUrl: {
+    type: String,
+    default: ""
+  }
+
 });
 
 const School = mongoose.model("School", SchoolSchema);
