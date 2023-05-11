@@ -263,7 +263,6 @@ export const updateSchool = async (req, res, next) => {
     phone,
     email,
     webSiteUrl,
-    imgPath
   } = req.body;
 
   let school;
@@ -334,8 +333,14 @@ export const updateSchool = async (req, res, next) => {
   if (webSiteUrl !== undefined) {
     school.webSiteUrl = webSiteUrl;
   }
-  if (imgPath !== undefined) {
-    school.imgPath = imgPath;
+
+  if (req.files) {
+    for (let i = 1; i <= 5; i++) {
+      const fieldName = `picture${i}`;
+      if (req.files[fieldName]) {
+        school[`imgPath${i}`] = req.files[fieldName][0].filename;
+      }
+    }
   }
 
   try {

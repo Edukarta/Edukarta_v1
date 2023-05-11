@@ -51,7 +51,6 @@ app.use(bodyParser.json({ limit: "30mb", extenced: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use("/images", express.static(path.join(__dirname, "uploads/images")));
 
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/images");
@@ -64,7 +63,17 @@ const upload = multer({ storage });
 
 //ROUTES AVEC FICHIER
 app.patch("/api/v1/user/:id", upload.single("image"), updateUser);
-app.patch("/api/v1/schools/:id", upload.single("picture"), updateSchool);
+app.patch(
+  "/api/v1/schools/:id",
+  upload.fields([
+    { name: "picture1", maxCount: 1 },
+    { name: "picture2", maxCount: 1 },
+    { name: "picture3", maxCount: 1 },
+    { name: "picture4", maxCount: 1 },
+    { name: "picture5", maxCount: 1 },
+  ]),
+  updateSchool
+);
 app.post("/api/v1/request", upload.single("document"), createRequest);
 app.post("/api/v1/auth/register", upload.single("picture"), register);
 

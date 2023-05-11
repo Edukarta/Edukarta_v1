@@ -21,7 +21,23 @@ const SchoolSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  imgPath: {
+  imgPath1: {
+    type: String,
+    default: "",
+  },
+  imgPath2: {
+    type: String,
+    default: "",
+  },
+  imgPath3: {
+    type: String,
+    default: "",
+  },
+  imgPath4: {
+    type: String,
+    default: "",
+  },
+  imgPath5: {
     type: String,
     default: "",
   },

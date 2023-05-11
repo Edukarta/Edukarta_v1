@@ -78,17 +78,24 @@ const SchoolsInfos = ({ school, getSchool }) => {
   };
 
   const initialValueImages = {
-    picture: "",
+    picture1: "",
+    picture2: "",
+    picture3: "",
+    picture4: "",
+    picture5: "",
   };
 
   const Update = async (values, onSubmitProps) => {
     const formData = new FormData();
     for (let value in values) {
-      formData.append(value, values[value]);
-    }
-
-    if (values.picture) {
-      formData.append("imgPath", values.picture.name);
+      if (value.startsWith("picture")) {
+        formData.append(value, values[value]);
+        const index = value.slice(-1);
+        const fieldName = `imgPath${index}`;
+        formData.append(fieldName, values[fieldName]);
+      } else {
+        formData.append(value, values[value]);
+      }
     }
 
     const updateSchoolResponse = await fetch(
@@ -104,12 +111,31 @@ const SchoolsInfos = ({ school, getSchool }) => {
     getSchool();
   };
 
-  const handleImageDrop = (acceptedFiles, setFieldValue) => {
+  const handleImageDrop1 = (acceptedFiles, setFieldValue) => {
     const file = acceptedFiles[0];
-    setFieldValue("picture", file);
-    console.log();
+    setFieldValue("picture1", file);
+    setFieldValue("imgPath1", file.name);
   };
-
+  const handleImageDrop2 = (acceptedFiles, setFieldValue) => {
+    const file = acceptedFiles[0];
+    setFieldValue("picture2", file);
+    setFieldValue("imgPath2", file.name);
+  };
+  const handleImageDrop3 = (acceptedFiles, setFieldValue) => {
+    const file = acceptedFiles[0];
+    setFieldValue("picture3", file);
+    setFieldValue("imgPath3", file.name);
+  };
+  const handleImageDrop4 = (acceptedFiles, setFieldValue) => {
+    const file = acceptedFiles[0];
+    setFieldValue("picture4", file);
+    setFieldValue("imgPath4", file.name);
+  };
+  const handleImageDrop5 = (acceptedFiles, setFieldValue) => {
+    const file = acceptedFiles[0];
+    setFieldValue("picture5", file);
+    setFieldValue("imgPath5", file.name);
+  };
   const handleFormSubmit = async (values, onSubmitProps) => {
     await Update(values, onSubmitProps);
     setIsEditingName(false);
@@ -348,7 +374,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                 {/* IMG MULTI DESKTOP DEVICE */}
                 <div className={classes.bloc_multi_img}>
                   <div className={classes.img_drop_main}>
-                    {!school?.imgPath ? (
+                    {!school?.imgPath1 ? (
                       <div className={classes.container_img_details}>
                         <img src={schoolIcon} alt="school" />
                       </div>
@@ -356,10 +382,10 @@ const SchoolsInfos = ({ school, getSchool }) => {
                       <div className={classes.container_img_details}>
                         <img
                           src={
-                            school.imgPath
-                              ? school.imgPath.startsWith("http")
-                                ? school.imgPath
-                                : `http://localhost:5000/images/${school.imgPath}`
+                            school.imgPath1
+                              ? school.imgPath1.startsWith("http")
+                                ? school.imgPath1
+                                : `http://localhost:5000/images/${school.imgPath1}`
                               : ""
                           }
                         />
@@ -367,9 +393,9 @@ const SchoolsInfos = ({ school, getSchool }) => {
                     )}
                     <Dropzone
                       acceptedFiles=".jpeg,.jpg,.png"
-                      multiple={true}
+                      multiple={false}
                       onDrop={(acceptedFiles) =>
-                        handleImageDrop(acceptedFiles, setFieldValue)
+                        handleImageDrop1(acceptedFiles, setFieldValue)
                       }
                     >
                       {({ getRootProps, getInputProps }) => (
@@ -390,76 +416,174 @@ const SchoolsInfos = ({ school, getSchool }) => {
                   <div className={classes.container_multi_img}>
                     <div className={classes.bloc_item_img_1}>
                       <div className={classes.item_img}>
-                        <Link
-                          to={`/school/${school?.id}/request`}
-                          className={classes.add_item}
+                        <Dropzone
+                          acceptedFiles=".jpeg,.jpg,.png"
+                          multiple={true}
+                          onDrop={(acceptedFiles) =>
+                            handleImageDrop2(acceptedFiles, setFieldValue)
+                          }
                         >
-                          add image here
-                          {isEdit && (
-                            <div className={classes.camera_icon}>
-                              <CameraAlt
-                                sx={{ color: "white", fontSize: "17px" }}
-                              />
+                          {({ getRootProps, getInputProps }) => (
+                            <div
+                              {...getRootProps()}
+                              className={classes.add_item}
+                            >
+                              <input {...getInputProps()} />
+                              {school.imgPath2 ? (
+                                <img
+                                  src={
+                                    school.imgPath2
+                                      ? school.imgPath2.startsWith("http")
+                                        ? school.imgPath2
+                                        : `http://localhost:5000/images/${school.imgPath2}`
+                                      : ""
+                                  }
+                                />
+                              ) : (
+                                "add image here"
+                              )}
+                              {isEdit && (
+                                <div className={classes.camera_icon}>
+                                  <CameraAlt
+                                    sx={{ color: "white", fontSize: "17px" }}
+                                    onClick={() => setIsEditingImg(true)}
+                                  />
+                                </div>
+                              )}
                             </div>
                           )}
-                        </Link>
+                        </Dropzone>
                       </div>
                       <div className={classes.item_img}>
-                        <Link
-                          to={`/school/${school?.id}/request`}
-                          className={classes.add_item}
+                        <Dropzone
+                          acceptedFiles=".jpeg,.jpg,.png"
+                          multiple={true}
+                          onDrop={(acceptedFiles) =>
+                            handleImageDrop3(acceptedFiles, setFieldValue)
+                          }
                         >
-                          add image here
-                          {isEdit && (
-                            <div className={classes.camera_icon}>
-                              <CameraAlt
-                                sx={{ color: "white", fontSize: "17px" }}
-                              />
+                          {({ getRootProps, getInputProps }) => (
+                            <div
+                              {...getRootProps()}
+                              className={classes.add_item}
+                            >
+                              <input {...getInputProps()} />
+                              {school.imgPath3 ? (
+                                <img
+                                  src={
+                                    school.imgPath3
+                                      ? school.imgPath3.startsWith("http")
+                                        ? school.imgPath3
+                                        : `http://localhost:5000/images/${school.imgPath3}`
+                                      : ""
+                                  }
+                                />
+                              ) : (
+                                "add image here"
+                              )}
+                              {isEdit && (
+                                <div className={classes.camera_icon}>
+                                  <CameraAlt
+                                    sx={{ color: "white", fontSize: "17px" }}
+                                    onClick={() => setIsEditingImg(true)}
+                                  />
+                                </div>
+                              )}
                             </div>
                           )}
-                        </Link>
+                        </Dropzone>
                       </div>
                     </div>
                     <div className={classes.bloc_item_img_2}>
                       <div className={classes.item_img}>
-                        <Link
-                          to={`/school/${school?.id}/request`}
-                          className={classes.add_item}
+                        <Dropzone
+                          acceptedFiles=".jpeg,.jpg,.png"
+                          multiple={true}
+                          onDrop={(acceptedFiles) =>
+                            handleImageDrop4(acceptedFiles, setFieldValue)
+                          }
                         >
-                          add image here
-                          {isEdit && (
-                            <div className={classes.camera_icon}>
-                              <CameraAlt
-                                sx={{ color: "white", fontSize: "17px" }}
-                              />
+                          {({ getRootProps, getInputProps }) => (
+                            <div
+                              {...getRootProps()}
+                              className={classes.add_item}
+                            >
+                              <input {...getInputProps()} />
+                              {school.imgPath4 ? (
+                                <img
+                                  src={
+                                    school.imgPath4
+                                      ? school.imgPath4.startsWith("http")
+                                        ? school.imgPath4
+                                        : `http://localhost:5000/images/${school.imgPath4}`
+                                      : ""
+                                  }
+                                />
+                              ) : (
+                                "add image here"
+                              )}
+                              {isEdit && (
+                                <div className={classes.camera_icon}>
+                                  <CameraAlt
+                                    sx={{ color: "white", fontSize: "17px" }}
+                                    onClick={() => setIsEditingImg(true)}
+                                  />
+                                </div>
+                              )}
                             </div>
                           )}
-                        </Link>
+                        </Dropzone>
                       </div>
                       <div className={classes.item_img}>
-                        <Link
-                          to={`/school/${school?.id}/request`}
-                          className={classes.add_item}
+                        <Dropzone
+                          acceptedFiles=".jpeg,.jpg,.png"
+                          multiple={true}
+                          onDrop={(acceptedFiles) =>
+                            handleImageDrop5(acceptedFiles, setFieldValue)
+                          }
                         >
-                          add image here
-                          {isEdit && (
-                            <div className={classes.camera_icon}>
-                              <CameraAlt
-                                sx={{ color: "white", fontSize: "17px" }}
-                              />
+                          {({ getRootProps, getInputProps }) => (
+                            <div
+                              {...getRootProps()}
+                              className={classes.add_item}
+                            >
+                              <input {...getInputProps()} />
+                              {school.imgPath5 ? (
+                                <img
+                                  src={
+                                    school.imgPath5
+                                      ? school.imgPath5.startsWith("http")
+                                        ? school.imgPath5
+                                        : `http://localhost:5000/images/${school.imgPath5}`
+                                      : ""
+                                  }
+                                />
+                              ) : (
+                                "add image here"
+                              )}
+                              {isEdit && (
+                                <div className={classes.camera_icon}>
+                                  <CameraAlt
+                                    sx={{ color: "white", fontSize: "17px" }}
+                                    onClick={() => setIsEditingImg(true)}
+                                  />
+                                </div>
+                              )}
                             </div>
                           )}
-                        </Link>
+                        </Dropzone>
                       </div>
                     </div>
                   </div>
                 </div>
-                {isEditingImg && isEdit && <div className={classes.container_btn_apply_img}>
-                  <button className={classes.edit_btn_destop} type="submit">
-                    <Done />
-                    Apply
-                  </button>
-                </div>}
+                {isEditingImg && isEdit && (
+                  <div className={classes.container_btn_apply_img}>
+                    <button className={classes.edit_btn_destop} type="submit">
+                      <Done />
+                      Apply
+                    </button>
+                  </div>
+                )}
               </form>
             )}
           </Formik>
