@@ -74,7 +74,9 @@ export const filterSchools = async (req, res, next) => {
       const filterValues = value.split(",");
       const filterObj = { $or: [] };
       for (const filterValue of filterValues) {
-        filterObj["$or"].push({ [key]: { $regex: filterValue, $options: "i" } });
+        filterObj["$or"].push({
+          [key]: { $regex: filterValue, $options: "i" },
+        });
       }
       searchFilters.push(filterObj);
     }
@@ -239,6 +241,7 @@ export const updateSchool = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return next(new HttpError("Données incorrects", 422));
   }
+
   const { id } = req.params;
   const {
     nameUpdate,
@@ -260,7 +263,7 @@ export const updateSchool = async (req, res, next) => {
     phone,
     email,
     webSiteUrl,
-    imgPath,
+    imgPath
   } = req.body;
 
   let school;

@@ -4,14 +4,12 @@
   max-width: 2000px;
 }
 
-
-
 .card__container_wrap {
   width: 100%;
   margin-bottom: 100px;
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  grid-template-columns: repeat(auto-fill, 350px);
   grid-gap: 10px;
   max-width: 2000px;
 }
@@ -21,9 +19,6 @@
   margin-bottom: 20px;
   max-width: 390px;
 }
-
-
-
 
 @media (min-width: 400px) {
   .card__container_wrap {

@@ -24,7 +24,7 @@ const Input = (props) => {
     );
 
   return (
-    <div className={`${classes.formControl}`}>
+    <div className={`${classes.formControl} ${props.mobile && classes.formControlMobile}`}>
       <label htmlFor={props.id}>{props.label}</label>
       {element}
       {/* {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>} */}

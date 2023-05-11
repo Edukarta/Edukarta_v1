@@ -16,12 +16,21 @@
   
   .formControl label {
     font-weight: bold;
-    margin-bottom: 0.5rem;
   }
   
   .formControl input,
   .formControl textarea {
     width: 100%;
+    font: inherit;
+    border: 1px solid #ccc;
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  .formControlMobile input{
+    width: 100%;
+    height: 40px;
     font: inherit;
     border: 1px solid #ccc;
     background: #f8f8f8;

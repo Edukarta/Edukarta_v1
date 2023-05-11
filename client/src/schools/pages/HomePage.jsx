@@ -32,7 +32,7 @@ const HomePage = () => {
       <SchoolList
         schools={schools}
         firstSchool={0}
-        numberOfSchools={10}
+        numberOfSchools={300}
       />
     </section>
   );

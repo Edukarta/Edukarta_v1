@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Input from "../../../shared/components/FormElements/Input";
-import { Formik } from "formik";
+import { Formik, useFormik } from "formik";
+import Dropzone from "react-dropzone";
 import {
   LocationOn,
   Public,
@@ -32,6 +33,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingInfos, setIsEditingInfos] = useState(false);
+  const [isEditingImg, setIsEditingImg] = useState(false);
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
@@ -75,14 +77,22 @@ const SchoolsInfos = ({ school, getSchool }) => {
     webSiteUrl: "",
   };
 
+  const initialValueImages = {
+    picture: "",
+  };
+
   const Update = async (values, onSubmitProps) => {
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
     }
 
+    if (values.picture) {
+      formData.append("imgPath", values.picture.name);
+    }
+
     const updateSchoolResponse = await fetch(
-      `https://www.edukarta.com/api/v1/schools/${id}`,
+      `http://localhost:5000/api/v1/schools/${id}`,
       {
         method: "PATCH",
         body: formData,
@@ -93,12 +103,20 @@ const SchoolsInfos = ({ school, getSchool }) => {
     console.log(updateSchool);
     getSchool();
   };
+
+  const handleImageDrop = (acceptedFiles, setFieldValue) => {
+    const file = acceptedFiles[0];
+    setFieldValue("picture", file);
+    console.log();
+  };
+
   const handleFormSubmit = async (values, onSubmitProps) => {
     await Update(values, onSubmitProps);
     setIsEditingName(false);
     setIsEdit(false);
     setIsEditingDescription(false);
     setIsEditingInfos(false);
+    setIsEditingImg(false);
   };
 
   const handleEdit = (e) => {
@@ -140,7 +158,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.nameUpdate}
-                    placeholder={school?.name}
+                    placeholder="School Name"
                     name="nameUpdate"
                   />
                 ) : (
@@ -179,13 +197,13 @@ const SchoolsInfos = ({ school, getSchool }) => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.originalName}
-                    placeholder={school?.originalName}
+                    placeholder="Original Name"
                     name="originaName"
                   />
                 </div>
               ) : (
                 <h3 className={classes.school_original_name_desktop}>
-                  {school?.originalName}
+                  {school?.original_name}
                 </h3>
               )}
             </div>
@@ -202,7 +220,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.continentUpdate}
-                      placeholder={school?.continent}
+                      placeholder="Continent"
                       name="continentUpdate"
                     />
                   ) : (
@@ -223,7 +241,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.countryUpdate}
-                      placeholder={school?.country}
+                      placeholder="Country"
                       name="countryUpdate"
                     />
                   ) : (
@@ -245,7 +263,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                         onBlur={handleBlur}
                         onChange={handleChange}
                         value={values.cityUpdate}
-                        placeholder={school?.city}
+                        placeholder="City"
                         name="cityUpdate"
                       />
                     ) : (
@@ -267,7 +285,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.addressUpdate}
-                      placeholder={school?.address}
+                      placeholder="Address"
                       name="addressUpdate"
                     />
                   ) : (
@@ -280,9 +298,11 @@ const SchoolsInfos = ({ school, getSchool }) => {
                 </div>
               </div>
               <div className={classes.school_info_slogan_destop}>
-                {school?.slogan && <div className={classes.quote1}>
-                  <FormatQuote />
-                </div>}
+                {school?.slogan && (
+                  <div className={classes.quote1}>
+                    <FormatQuote />
+                  </div>
+                )}
                 {isEditingName ? (
                   <Input
                     id="slogan"
@@ -291,7 +311,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.slogan}
-                    placeholder={school?.slogan}
+                    placeholder="Slogan"
                     name="slogan"
                   />
                 ) : (
@@ -307,84 +327,142 @@ const SchoolsInfos = ({ school, getSchool }) => {
       </Formik>
 
       {/* IMG MOBILE/DESKTOP DEVICE */}
+
       <div className={classes.container_details}>
         <div className={classes.container_bloc_img_details}>
-          <div className={classes.container_bloc_img_details__icon_Arrow}>
-            <ArrowBack sx={{ color: "#696969" }} onClick={() => navigate(-1)} />
-          </div>
-          <div className={classes.container_bloc_img_details__icon_Heart}>
-            <FavoriteBorder sx={{ color: "#696969" }} />
-          </div>
-          {/* IMG MULTI DESKTOP DEVICE */}
-          <div className={classes.bloc_multi_img}>
-            {!school?.imgPath ? (
-              <div className={classes.container_img_details}>
-                <img src={schoolIcon} alt="school" />
-              </div>
-            ) : (
-              <div className={classes.container_img_details}>
-                <img src={school?.imgPath} alt="profile" />
-              </div>
+          <Formik
+            onSubmit={handleFormSubmit}
+            initialValues={initialValueImages}
+          >
+            {({ values, handleSubmit, setFieldValue }) => (
+              <form className={classes.imgForm} onSubmit={handleSubmit}>
+                <div className={classes.container_bloc_img_details__icon_Arrow}>
+                  <ArrowBack
+                    sx={{ color: "#696969" }}
+                    onClick={() => navigate(-1)}
+                  />
+                </div>
+                <div className={classes.container_bloc_img_details__icon_Heart}>
+                  <FavoriteBorder sx={{ color: "#696969" }} />
+                </div>
+                {/* IMG MULTI DESKTOP DEVICE */}
+                <div className={classes.bloc_multi_img}>
+                  <div className={classes.img_drop_main}>
+                    {!school?.imgPath ? (
+                      <div className={classes.container_img_details}>
+                        <img src={schoolIcon} alt="school" />
+                      </div>
+                    ) : (
+                      <div className={classes.container_img_details}>
+                        <img
+                          src={
+                            school.imgPath
+                              ? school.imgPath.startsWith("http")
+                                ? school.imgPath
+                                : `http://localhost:5000/images/${school.imgPath}`
+                              : ""
+                          }
+                        />
+                      </div>
+                    )}
+                    <Dropzone
+                      acceptedFiles=".jpeg,.jpg,.png"
+                      multiple={true}
+                      onDrop={(acceptedFiles) =>
+                        handleImageDrop(acceptedFiles, setFieldValue)
+                      }
+                    >
+                      {({ getRootProps, getInputProps }) => (
+                        <div {...getRootProps()}>
+                          <input {...getInputProps()} />
+                          {isEdit && (
+                            <div className={classes.camera_icon_main}>
+                              <CameraAlt
+                                sx={{ color: "white", fontSize: "17px" }}
+                                onClick={() => setIsEditingImg(true)}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </Dropzone>
+                  </div>
+                  <div className={classes.container_multi_img}>
+                    <div className={classes.bloc_item_img_1}>
+                      <div className={classes.item_img}>
+                        <Link
+                          to={`/school/${school?.id}/request`}
+                          className={classes.add_item}
+                        >
+                          add image here
+                          {isEdit && (
+                            <div className={classes.camera_icon}>
+                              <CameraAlt
+                                sx={{ color: "white", fontSize: "17px" }}
+                              />
+                            </div>
+                          )}
+                        </Link>
+                      </div>
+                      <div className={classes.item_img}>
+                        <Link
+                          to={`/school/${school?.id}/request`}
+                          className={classes.add_item}
+                        >
+                          add image here
+                          {isEdit && (
+                            <div className={classes.camera_icon}>
+                              <CameraAlt
+                                sx={{ color: "white", fontSize: "17px" }}
+                              />
+                            </div>
+                          )}
+                        </Link>
+                      </div>
+                    </div>
+                    <div className={classes.bloc_item_img_2}>
+                      <div className={classes.item_img}>
+                        <Link
+                          to={`/school/${school?.id}/request`}
+                          className={classes.add_item}
+                        >
+                          add image here
+                          {isEdit && (
+                            <div className={classes.camera_icon}>
+                              <CameraAlt
+                                sx={{ color: "white", fontSize: "17px" }}
+                              />
+                            </div>
+                          )}
+                        </Link>
+                      </div>
+                      <div className={classes.item_img}>
+                        <Link
+                          to={`/school/${school?.id}/request`}
+                          className={classes.add_item}
+                        >
+                          add image here
+                          {isEdit && (
+                            <div className={classes.camera_icon}>
+                              <CameraAlt
+                                sx={{ color: "white", fontSize: "17px" }}
+                              />
+                            </div>
+                          )}
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {isEditingImg && isEdit && <div className={classes.container_btn_apply_img}>
+                  <button className={classes.edit_btn_destop} type="submit">
+                    <Done />
+                    Apply
+                  </button>
+                </div>}
+              </form>
             )}
-            <div className={classes.container_multi_img}>
-              <div className={classes.bloc_item_img_1}>
-                <div className={classes.item_img}>
-                  <Link
-                    to={`/school/${school?.id}/request`}
-                    className={classes.add_item}
-                  >
-                    add image here
-                    {isEdit && (
-                      <div className={classes.camera_icon}>
-                        <CameraAlt sx={{ color: "white", fontSize: "17px" }} />
-                      </div>
-                    )}
-                  </Link>
-                </div>
-                <div className={classes.item_img}>
-                  <Link
-                    to={`/school/${school?.id}/request`}
-                    className={classes.add_item}
-                  >
-                    add image here
-                    {isEdit && (
-                      <div className={classes.camera_icon}>
-                        <CameraAlt sx={{ color: "white", fontSize: "17px" }} />
-                      </div>
-                    )}
-                  </Link>
-                </div>
-              </div>
-              <div className={classes.bloc_item_img_2}>
-                <div className={classes.item_img}>
-                  <Link
-                    to={`/school/${school?.id}/request`}
-                    className={classes.add_item}
-                  >
-                    add image here
-                    {isEdit && (
-                      <div className={classes.camera_icon}>
-                        <CameraAlt sx={{ color: "white", fontSize: "17px" }} />
-                      </div>
-                    )}
-                  </Link>
-                </div>
-                <div className={classes.item_img}>
-                  <Link
-                    to={`/school/${school?.id}/request`}
-                    className={classes.add_item}
-                  >
-                    add image here
-                    {isEdit && (
-                      <div className={classes.camera_icon}>
-                        <CameraAlt sx={{ color: "white", fontSize: "17px" }} />
-                      </div>
-                    )}
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+          </Formik>
         </div>
 
         {/* INFOS MOBILE DEVICE */}
@@ -408,8 +486,9 @@ const SchoolsInfos = ({ school, getSchool }) => {
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.nameUpdate}
-                      placeholder={school?.name}
+                      placeholder="School Name"
                       name="nameUpdate"
+                      mobile
                     />
                   ) : (
                     <h1 className={classes.school_name}>
@@ -433,7 +512,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                   {isEditingName && isEdit && (
                     <button className={classes.edit_btn} type="submit">
                       <Done />
-                      Apply Changes
+                      Apply
                     </button>
                   )}
                 </div>
@@ -450,8 +529,9 @@ const SchoolsInfos = ({ school, getSchool }) => {
                           onBlur={handleBlur}
                           onChange={handleChange}
                           value={values.continentUpdate}
-                          placeholder={school?.continent}
+                          placeholder="Continent"
                           name="continentUpdate"
+                          mobile
                         />
                       ) : (
                         <span className={classes.school_info_text}>
@@ -471,8 +551,9 @@ const SchoolsInfos = ({ school, getSchool }) => {
                           onBlur={handleBlur}
                           onChange={handleChange}
                           value={values.countryUpdate}
-                          placeholder={school?.country}
+                          placeholder="Country"
                           name="countryUpdate"
+                          mobile
                         />
                       ) : (
                         <span className={classes.school_info_text}>
@@ -494,8 +575,9 @@ const SchoolsInfos = ({ school, getSchool }) => {
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.cityUpdate}
-                            placeholder={school?.city}
+                            placeholder="City"
                             name="cityUpdate"
+                            mobile
                           />
                         ) : (
                           <span className={classes.school_info_text}>
@@ -520,8 +602,9 @@ const SchoolsInfos = ({ school, getSchool }) => {
                           onBlur={handleBlur}
                           onChange={handleChange}
                           value={values.addressUpdate}
-                          placeholder={school?.address}
+                          placeholder="Address"
                           name="addressUpdate"
+                          mobile
                         />
                       ) : (
                         <span className={classes.school_info_text}>
@@ -546,8 +629,9 @@ const SchoolsInfos = ({ school, getSchool }) => {
                           onBlur={handleBlur}
                           onChange={handleChange}
                           value={values.countryUpdate}
-                          placeholder={school?.country}
+                          placeholder="Slogan"
                           name="slogan"
+                          mobile
                         />
                       ) : (
                         <p>{school?.slogan}</p>
@@ -613,7 +697,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                           onBlur={handleBlur}
                           onChange={handleChange}
                           value={values.description}
-                          placeholder={school?.description}
+                          placeholder="Add description"
                           name="description"
                         />
                       </div>
@@ -647,7 +731,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
               }) => (
                 <form onSubmit={handleSubmit} className={classes.form_infos}>
                   <div className={classes.container_title_icon_mobile}>
-                    <h3 className={classes.section_title}>Information</h3>
+                    <h3 className={classes.section_title}>Informations</h3>
                     {isEditingInfos && isEdit && (
                       <button className={classes.edit_btn} type="submit">
                         <Done />
@@ -923,7 +1007,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                         onBlur={handleBlur}
                         onChange={handleChange}
                         value={values.description}
-                        placeholder={school?.description}
+                        placeholder="Add description..."
                         name="description"
                       />
                     </div>
