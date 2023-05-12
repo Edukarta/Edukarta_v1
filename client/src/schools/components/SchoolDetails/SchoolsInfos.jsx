@@ -119,14 +119,12 @@ const SchoolsInfos = ({ school, getSchool }) => {
     const file = acceptedFiles[0];
     setFieldValue("picture1", file);
     setFieldValue("imgPath1", file.name);
-    setPreviewImage(URL.createObjectURL(file));
     setisImageUpload(file);
   };
   const handleImageDrop2 = (acceptedFiles, setFieldValue) => {
     const file = acceptedFiles[0];
     setFieldValue("picture2", file);
     setFieldValue("imgPath2", file.name);
-    setPreviewImage(URL.createObjectURL(file));
     setisImageUpload(file);
     console.log(isImageUpload);
   };
@@ -134,14 +132,12 @@ const SchoolsInfos = ({ school, getSchool }) => {
     const file = acceptedFiles[0];
     setFieldValue("picture3", file);
     setFieldValue("imgPath3", file.name);
-    setPreviewImage(URL.createObjectURL(file));
     setisImageUpload(file);
   };
   const handleImageDrop4 = (acceptedFiles, setFieldValue) => {
     const file = acceptedFiles[0];
     setFieldValue("picture4", file);
     setFieldValue("imgPath4", file.name);
-    setPreviewImage(URL.createObjectURL(file));
     setisImageUpload(file);
   };
   const handleImageDrop5 = (acceptedFiles, setFieldValue) => {
@@ -408,7 +404,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                             school.imgPath1
                               ? school.imgPath1.startsWith("http")
                                 ? school.imgPath1
-                                : `http://localhost:5000/images/${school.imgPath1}`
+                                : `https://www.edukarta.com/images/${school.imgPath1}`
                               : ""
                           }
                         />
@@ -458,7 +454,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                                     school.imgPath2
                                       ? school.imgPath2.startsWith("http")
                                         ? school.imgPath2
-                                        : `http://localhost:5000/images/${school.imgPath2}`
+                                        : `https://www.edukarta.com/images/${school.imgPath2}`
                                       : ""
                                   }
                                 />
@@ -507,7 +503,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                                       school.imgPath3
                                         ? school.imgPath3.startsWith("http")
                                           ? school.imgPath3
-                                          : `http://localhost:5000/images/${school.imgPath3}`
+                                          : `https://www.edukarta.com/images/${school.imgPath3}`
                                         : ""
                                     }
                                   />
@@ -549,7 +545,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                                     school.imgPath4
                                       ? school.imgPath4.startsWith("http")
                                         ? school.imgPath4
-                                        : `http://localhost:5000/images/${school.imgPath4}`
+                                        : `https://www.edukarta.com/images/${school.imgPath4}`
                                       : ""
                                   }
                                 />
@@ -588,7 +584,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                                     school.imgPath5
                                       ? school.imgPath5.startsWith("http")
                                         ? school.imgPath5
-                                        : `http://localhost:5000/images/${school.imgPath5}`
+                                        : `https://www.edukarta.com/images/${school.imgPath5}`
                                       : ""
                                   }
                                 />
