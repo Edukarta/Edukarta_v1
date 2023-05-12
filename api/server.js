@@ -4,11 +4,12 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import helmet from "helmet";
 import cors from "cors";
-import cookieSession from "cookie-session";
 import session from "express-session";
 import passportSetup from "./utils/passport.js";
 import passport from "passport";
 import { fileURLToPath } from "url";
+import { v2 as cloudinary} from 'cloudinary';
+import {CloudinaryStorage} from "multer-storage-cloudinary";
 import path from "path";
 import morgan from "morgan";
 import dbConnect from "./config/dbConnect.js";
@@ -30,12 +31,12 @@ dotenv.config();
 const app = express();
 app.use(
   session({
-    secret: "edukarta", // Une chaîne aléatoire pour la signature des cookies de session
-    resave: false, // Ne sauvegarde pas les sessions automatiquement si rien n'a changé
-    saveUninitialized: false, // Ne sauvegarde pas les sessions qui n'ont pas été initialisées
+    secret: "edukarta",
+    resave: false,
+    saveUninitialized: false,
     cookie: {
-      secure: true, // Définir à "true" pour activer le support HTTPS
-      maxAge: 3600000, // Durée de vie du cookie de session en millisecondes (1 heure ici)
+      secure: true,
+      maxAge: 3600000,
     },
   })
 );
@@ -51,15 +52,33 @@ app.use(bodyParser.json({ limit: "30mb", extenced: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use("/images", express.static(path.join(__dirname, "uploads/images")));
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/images");
-  },
-  filename: function (res, file, cb) {
-    cb(null, file.originalname);
-  },
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "uploads/images");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname);
+//   },
+// });
+
+
+
+//CONFIGURATION CLOUDINARY
+cloudinary.config({
+  cloud_name: 'dtrktbian',
+  api_key: '134979453238365',
+  api_secret: 'vDOgu8g0DCAcwd8GjUOnassgdpM'
 });
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: 'edukarta',
+  allowedFormats: ['jpg', 'png', 'jpeg'],
+  transformation: [{ width: 500, height: 500, crop: 'limit' }]
+});
+
 const upload = multer({ storage });
+
 
 //ROUTES AVEC FICHIER
 app.patch("/api/v1/user/:id", upload.single("image"), updateUser);
@@ -78,7 +97,6 @@ app.post("/api/v1/request", upload.single("document"), createRequest);
 app.post("/api/v1/auth/register", upload.single("picture"), register);
 
 //ROUTES
-
 app.get("/", (req, res) => {
   res.send("Hello World");
 });

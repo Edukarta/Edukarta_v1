@@ -1,5 +1,6 @@
 import School from "../models/SchoolModel.js";
 import HttpError from "../models/http-errors.js";
+import { v2 as cloudinary} from 'cloudinary';
 import { validationResult } from "express-validator";
 
 //SHOW ALL SCHOOLS
@@ -31,6 +32,8 @@ export const searchSchools = async (req, res, next) => {
         { cityUpdate: { $regex: query, $options: "i" } },
         { country: { $regex: query, $options: "i" } },
         { countryUpdate: { $regex: query, $options: "i" } },
+        { level: { $regex: query, $options: "i" } },
+        { levelUpdate: { $regex: query, $options: "i" } },
       ],
     });
     res.json({ schools });
@@ -60,6 +63,7 @@ export const filterSchools = async (req, res, next) => {
           { country: { $regex: queryValue, $options: "i" } },
           { countryUpdate: { $regex: queryValue, $options: "i" } },
           { level: { $regex: queryValue, $options: "i" } },
+          { levelUpdate: { $regex: queryValue, $options: "i" } },
           { sector: { $regex: queryValue, $options: "i" } },
           { language: { $regex: queryValue, $options: "i" } },
         ],
@@ -95,6 +99,7 @@ export const filterSchools = async (req, res, next) => {
           { country: { $regex: previousQuery, $options: "i" } },
           { countryUpdate: { $regex: previousQuery, $options: "i" } },
           { level: { $regex: previousQuery, $options: "i" } },
+          { levelUpdate: { $regex: previousQuery, $options: "i" } },
           { sector: { $regex: previousQuery, $options: "i" } },
           { language: { $regex: previousQuery, $options: "i" } },
         ],
@@ -338,7 +343,8 @@ export const updateSchool = async (req, res, next) => {
     for (let i = 1; i <= 5; i++) {
       const fieldName = `picture${i}`;
       if (req.files[fieldName]) {
-        school[`imgPath${i}`] = req.files[fieldName][0].filename;
+        const result = await cloudinary.uploader.upload(req.files[fieldName][0].path, {folder : "edukarta"});
+        school[`imgPath${i}`] = result.secure_url;
       }
     }
   }
@@ -353,6 +359,7 @@ export const updateSchool = async (req, res, next) => {
     return next(error);
   }
 
+ 
   res.status(200).json({ school: school.toObject({ getters: true }) });
 };
 

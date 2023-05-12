@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-
+import schoolIcon from "../../../img/img_school.jpg";
 import { Link } from "react-router-dom";
 import { Icon, divIcon, point } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
@@ -9,6 +9,7 @@ import { setSchool } from "../../state/store";
 import { LocationOn, School, Flag, MenuBook } from "@mui/icons-material";
 import customMarkerImage from "../../../img/pin.png";
 import MapCardDrawer from "./MapCardDrawer";
+import { useMediaQuery } from '@mui/material';
 import "leaflet/dist/leaflet.css";
 import classes from "./Map.module.css";
 
@@ -16,10 +17,14 @@ const Map = ({ type, schools }) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const dispatch = useDispatch();
   const schoolDrawer = useSelector((state) => state.school);
+  const isSmallerScreen = useMediaQuery('(max-width:1080px)');
+  const zoom = isSmallerScreen ? 2 : 6;
   const customMarker = new Icon({
     iconUrl: customMarkerImage,
     iconSize: [38, 38],
+    className: 'custom-icon-class'
   });
+
   const cretaedCustomClusterIcon = (cluster) => {
     return new divIcon({
       html: `<div class="${
@@ -30,18 +35,20 @@ const Map = ({ type, schools }) => {
     });
   };
 
+
+
   return (
     <MapContainer
       center={[46.232192999999995, 2.209666999999996]}
-      zoom={4}
-      minZoom={3}
+      zoom={zoom}
+      minZoom={5}
       bounceAtZoomLimits={false}
       scrollWheelZoom={0.2}
       className={
         type === "homepage" ? classes.mapContainer : classes.mapContainer_map
       }
     >
-      <TileLayer url="https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png" />
+      <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <MarkerClusterGroup
         chunkedLoading
         iconCreateFunction={cretaedCustomClusterIcon}
@@ -109,13 +116,24 @@ const Map = ({ type, schools }) => {
         {schoolDrawer && (
           <div className={classes.container_infos_drawer}>
             <div className={classes.container_img_drawer}>
-              <img src={schoolDrawer.imgPath} alt="" />
-              <button className={classes.drawer_close_btn} onClick={() => setDrawerIsOpen(false)}>X</button>
+              {schoolDrawer.imgPath1 ? (
+                <img src={schoolDrawer.imgPath1} alt="" />
+              ) : (
+                <img src={schoolIcon} alt="" />
+              )}
+              <button
+                className={classes.drawer_close_btn}
+                onClick={() => setDrawerIsOpen(false)}
+              >
+                X
+              </button>
             </div>
             <div className={classes.container_infos}>
               <Link to={`/school/${schoolDrawer.id}`}>
                 <h3 className={classes.school_drawer_name}>
-                  {schoolDrawer.nameUpdate ? schoolDrawer.nameUpdate : schoolDrawer.name}
+                  {schoolDrawer.nameUpdate
+                    ? schoolDrawer.nameUpdate
+                    : schoolDrawer.name}
                 </h3>
               </Link>
               <div className={classes.school_drawer_infos_items}>

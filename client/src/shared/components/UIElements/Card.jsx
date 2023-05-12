@@ -1,6 +1,5 @@
 import React from "react";
-import schoolIcon from "../../../img/school.png";
-import { FavoriteBorder } from "@mui/icons-material/";
+import schoolIcon from "../../../img/img_school.jpg";
 import classes from "./Card.module.css";
 
 const Card = (props) => {

@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import Card from "../../../shared/components/UIElements/Card";
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material/";
 import { Link } from "react-router-dom";
 import classes from "./SchoolList.module.css";
 

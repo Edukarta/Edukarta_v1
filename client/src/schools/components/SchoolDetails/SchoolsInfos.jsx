@@ -21,7 +21,8 @@ import {
   Done,
 } from "@mui/icons-material/";
 import { useSelector } from "react-redux";
-import schoolIcon from "../../../img/school.png";
+import schoolIcon from "../../../img/img_school.jpg";
+import LoadingDots from "../../../shared/components/UIElements/LoadingDots";
 import nft from "../../../img/nft.jpg";
 import classes from "./SchoolsInfos.module.css";
 import Button from "../../../shared/components/FormElements/Button";
@@ -30,10 +31,13 @@ const SchoolsInfos = ({ school, getSchool }) => {
   const { id } = useParams();
   const [isEdit, setIsEdit] = useState(false);
   const [isPaid, setIsPaid] = useState(true);
+  const [previewImage, setPreviewImage] = useState("");
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingInfos, setIsEditingInfos] = useState(false);
   const [isEditingImg, setIsEditingImg] = useState(false);
+  const [isImageUpload, setisImageUpload] = useState();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
@@ -99,7 +103,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
     }
 
     const updateSchoolResponse = await fetch(
-      `http://localhost:5000/api/v1/schools/${id}`,
+      `https://www.edukarta.com/api/v1/schools/${id}`,
       {
         method: "PATCH",
         body: formData,
@@ -115,34 +119,53 @@ const SchoolsInfos = ({ school, getSchool }) => {
     const file = acceptedFiles[0];
     setFieldValue("picture1", file);
     setFieldValue("imgPath1", file.name);
+    setPreviewImage(URL.createObjectURL(file));
+    setisImageUpload(file);
   };
   const handleImageDrop2 = (acceptedFiles, setFieldValue) => {
     const file = acceptedFiles[0];
     setFieldValue("picture2", file);
     setFieldValue("imgPath2", file.name);
+    setPreviewImage(URL.createObjectURL(file));
+    setisImageUpload(file);
+    console.log(isImageUpload);
   };
   const handleImageDrop3 = (acceptedFiles, setFieldValue) => {
     const file = acceptedFiles[0];
     setFieldValue("picture3", file);
     setFieldValue("imgPath3", file.name);
+    setPreviewImage(URL.createObjectURL(file));
+    setisImageUpload(file);
   };
   const handleImageDrop4 = (acceptedFiles, setFieldValue) => {
     const file = acceptedFiles[0];
     setFieldValue("picture4", file);
     setFieldValue("imgPath4", file.name);
+    setPreviewImage(URL.createObjectURL(file));
+    setisImageUpload(file);
   };
   const handleImageDrop5 = (acceptedFiles, setFieldValue) => {
     const file = acceptedFiles[0];
     setFieldValue("picture5", file);
     setFieldValue("imgPath5", file.name);
+    setPreviewImage(URL.createObjectURL(file));
+    setisImageUpload(file);
   };
+
   const handleFormSubmit = async (values, onSubmitProps) => {
-    await Update(values, onSubmitProps);
+    setIsSubmitting(true);
     setIsEditingName(false);
     setIsEdit(false);
     setIsEditingDescription(false);
     setIsEditingInfos(false);
     setIsEditingImg(false);
+    setisImageUpload();
+    await Update(values, onSubmitProps);
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+      
+    }, 2000);
   };
 
   const handleEdit = (e) => {
@@ -440,7 +463,16 @@ const SchoolsInfos = ({ school, getSchool }) => {
                                   }
                                 />
                               ) : (
-                                "add image here"
+                                <>
+                                  {previewImage && (
+                                    <img src={previewImage} alt="Preview" />
+                                  )}
+                                  {!previewImage && (
+                                    <p>
+                                      Add image here
+                                    </p>
+                                  )}
+                                </>
                               )}
                               {isEdit && (
                                 <div className={classes.camera_icon}>
@@ -469,17 +501,19 @@ const SchoolsInfos = ({ school, getSchool }) => {
                             >
                               <input {...getInputProps()} />
                               {school.imgPath3 ? (
-                                <img
-                                  src={
-                                    school.imgPath3
-                                      ? school.imgPath3.startsWith("http")
-                                        ? school.imgPath3
-                                        : `http://localhost:5000/images/${school.imgPath3}`
-                                      : ""
-                                  }
-                                />
+                                <>
+                                  <img
+                                    src={
+                                      school.imgPath3
+                                        ? school.imgPath3.startsWith("http")
+                                          ? school.imgPath3
+                                          : `http://localhost:5000/images/${school.imgPath3}`
+                                        : ""
+                                    }
+                                  />
+                                </>
                               ) : (
-                                "add image here"
+                                <>"add image here"</>
                               )}
                               {isEdit && (
                                 <div className={classes.camera_icon}>
@@ -576,12 +610,17 @@ const SchoolsInfos = ({ school, getSchool }) => {
                     </div>
                   </div>
                 </div>
-                {isEditingImg && isEdit && (
+                {isImageUpload && !isSubmitting && (
                   <div className={classes.container_btn_apply_img}>
-                    <button className={classes.edit_btn_destop} type="submit">
+                    <button className={classes.edit_btn_validate} type="submit">
                       <Done />
                       Apply
                     </button>
+                  </div>
+                )}
+                {isSubmitting && (
+                  <div className={classes.loading_spinner}>
+                    <LoadingDots />
                   </div>
                 )}
               </form>
@@ -966,7 +1005,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                         </>
                       ) : (
                         <h6>
-                          Level :{" "}
+                          Sector :{" "}
                           <span className={classes.bold_infos}>
                             {school?.sectorUpdate}
                           </span>
@@ -1238,7 +1277,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                       {isEditingInfos ? (
                         <>
                           <div className={classes.input_group_infos}>
-                            <h6>Level :</h6>
+                            <h6>Level : {school?.levelUpdate}</h6>
                             <Input
                               id="levelUpdate"
                               element="input"
@@ -1255,7 +1294,9 @@ const SchoolsInfos = ({ school, getSchool }) => {
                         <h6>
                           Level :{" "}
                           <span className={classes.bold_infos}>
-                            {school?.levelUpdate}
+                            {school?.levelUpdate
+                              ? school.levelUpdate
+                              : school?.level}
                           </span>
                         </h6>
                       )}
@@ -1278,7 +1319,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                         </>
                       ) : (
                         <h6>
-                          Level :{" "}
+                          Sector :{" "}
                           <span className={classes.bold_infos}>
                             {school?.sectorUpdate}
                           </span>

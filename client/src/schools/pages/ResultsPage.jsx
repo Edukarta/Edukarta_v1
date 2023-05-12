@@ -5,7 +5,7 @@ import { setSearchResults, setSearchQuery } from "../../shared/state/store";
 import FilterDrawer from "../../shared/components/UIElements/FilterDrawer";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material/";
 import { Link } from "react-router-dom";
-import schoolIcon from "../../img/school.png";
+import schoolIcon from "../../img/img_school.jpg";
 import classes from "./ResultsPage.module.css";
 
 const ResultsPage = () => {
@@ -300,9 +300,9 @@ const ResultsPage = () => {
               >
                 <div className={classes.card_item}>
                   <div className={classes.container_img}>
-                    {result.imgPath ? (
+                    {result.imgPath1 ? (
                       <img
-                        src={result.imgPath}
+                        src={result.imgPath1}
                         alt={
                           result.nameUpdate ? result.nameUpdate : result.name
                         }

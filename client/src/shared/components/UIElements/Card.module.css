@@ -15,6 +15,11 @@
   display: flex;
   border-radius: 8px;
   align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.cardSugest__container_img:hover{
+  border: 2px solid #436c9a;
 }
 
 

@@ -13,7 +13,7 @@ const HomePage = () => {
 
   const fetchSchools = async () => {
     const responseData = await fetch(
-      `https://www.edukarta.com/api/v1/schools`,
+      `https://www.edukarta.com/api/v1/schools?limit=50&offset=0`,
       {
         method: "GET",
       }
@@ -32,7 +32,7 @@ const HomePage = () => {
       <SchoolList
         schools={schools}
         firstSchool={0}
-        numberOfSchools={300}
+        numberOfSchools={100}
       />
     </section>
   );

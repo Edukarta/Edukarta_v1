@@ -18,6 +18,11 @@
   width: 100%;
   margin-bottom: 20px;
   max-width: 390px;
+  transition: all 0.3s ease-in-out;
+}
+
+.container_link__card:hover {
+  transform: scale(1.03);
 }
 
 @media (min-width: 400px) {

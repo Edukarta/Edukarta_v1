@@ -89,6 +89,9 @@
 
 .school_name {
   width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 30px;
   font-weight: 500;
   color: #363636;
@@ -289,6 +292,20 @@
   margin: 20px auto;
 }
 
+.edit_btn_validate {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  padding: 10px 20px;
+  color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background-color: #15273c;
+  cursor: pointer;
+}
+
 @media (min-width: 850px) {
   .input_group {
     width: 20%;
@@ -481,6 +498,16 @@
     justify-content: center;
     border: 2px dashed #9b9b9b;
     position: relative;
+  }
+
+  .loading_spinner{
+    height: 100%;
+    width: 100%;
+    top: 250px;
+    position: absolute;
+    display: flex;
+   justify-content: center;
+   align-items: center;
   }
 
   .camera_icon {
