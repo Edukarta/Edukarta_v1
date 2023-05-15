@@ -27,7 +27,6 @@ const Input = (props) => {
     <div className={`${classes.formControl} ${props.mobile && classes.formControlMobile}`}>
       <label htmlFor={props.id}>{props.label}</label>
       {element}
-      {/* {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>} */}
     </div>
   );
 };

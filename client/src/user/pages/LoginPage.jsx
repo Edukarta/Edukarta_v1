@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../../shared/state/store";
 import google from "../../img/logo_google.png";
 import classes from "./LoginPage.module.css";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
 const initialValueRegister = {
   firstname: "",
@@ -24,24 +24,17 @@ const initialValueLogin = {
   password: "",
 };
 
-const SignupSchema = Yup.object().shape({
-  firstname: Yup.string()
-     .max(50, 'Too Long!')
-     .required('Required'),
-  lastname: Yup.string()
-     .max(50, 'Too Long!')
-     .required('Required'),
-   email: Yup.string().email('Invalid email').required('Required'),
-   password: Yup.string()
-   .min(8, 'Password is too short - should be 8 chars minimum.')
-   .required('No password provided.'),
-   location: Yup.string()
-   .required('Required'),
-   address: Yup.string()
-   .required('Required'),
-   phone: Yup.number()
-   .required('Required'),
-})
+// const SignupSchema = Yup.object().shape({
+//   firstname: Yup.string().max(50, "Too Long!").required("Required"),
+//   lastname: Yup.string().max(50, "Too Long!").required("Required"),
+//   email: Yup.string().email("Invalid email").required("Required"),
+//   password: Yup.string()
+//     .min(3, "Password is too short - should be 8 chars minimum.")
+//     .required("No password provided."),
+//   location: Yup.string().required("Required"),
+//   address: Yup.string().required("Required"),
+//   phone: Yup.number().required("Required"),
+// });
 
 const LoginPage = () => {
   const [pageType, setPageType] = useState("login");
@@ -106,16 +99,12 @@ const LoginPage = () => {
   const googleAuth = async () => {
     try {
       console.log("googleAuth() called");
-      window.open("http://localhost:5000/api/v1/googleAuth/google", "_self")
+      window.open("http://localhost:5000/api/v1/googleAuth/google", "_self");
     } catch (error) {
       console.log(error);
     }
-
   };
 
-
-
-  
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isRegister) {
       await register(values, onSubmitProps);
@@ -136,7 +125,7 @@ const LoginPage = () => {
           onSubmit={handleFormSubmit}
           initialValues={isRegister ? initialValueRegister : initialValueLogin}
           // validationSchema={isRegister ? registerSchema : loginSchema}
-          validationSchema={SignupSchema}
+          // validationSchema={SignupSchema}
         >
           {({
             values,
@@ -159,14 +148,15 @@ const LoginPage = () => {
                       placeholder="Firstname"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.firstname}
                       name="firstname"
-                      error={
-                        Boolean(touched.firstname) && Boolean(errors.firstname)
-                      }
-                      helperText={touched.firstname && errors.firstname}
+                      // error={
+                      //   Boolean(touched.firstname) && Boolean(errors.firstname)
+                      // }
+                      // helperText={touched.firstname && errors.firstname}
                     />
-                    {touched.firstname && errors.firstname && <div>{errors.firstname}</div>}
+                    {/* {touched.firstname && errors.firstname && (
+                      <p className={classes.error_msg}>{errors.firstname}</p>
+                    )} */}
                     <Input
                       id="lastname"
                       element="input"
@@ -174,15 +164,16 @@ const LoginPage = () => {
                       placeholder="Name"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.lastname}
                       name="lastname"
-                      error={
-                        Boolean(touched.lastname) && Boolean(errors.lastname)
-                      }
-                      helperText={touched.lastname && errors.lastname}
+                      // error={
+                      //   Boolean(touched.lastname) && Boolean(errors.lastname)
+                      // }
+                      // helperText={touched.lastname && errors.lastname}
                     />
                   </div>
-                  {touched.lastname && errors.lastname && <div>{errors.lastname}</div>}
+                  {/* {touched.lastname && errors.lastname && (
+                    <p className={classes.error_msg}>{errors.lastname}</p>
+                  )} */}
                 </>
               )}
               <Input
@@ -192,12 +183,12 @@ const LoginPage = () => {
                 placeholder="email@email.com"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.email}
                 name="email"
-                error={Boolean(touched.email) && Boolean(errors.email)}
-                helperText={touched.email && errors.email}
+                // error={Boolean(touched.email) && Boolean(errors.email)}
               />
-              {touched.email && errors.email && <div>{errors.email}</div>}
+              {/* {touched.email && errors.email && (
+                <p className={classes.error_msg}>{errors.email}</p>
+              )} */}
               <Input
                 id="password"
                 element="input"
@@ -205,12 +196,13 @@ const LoginPage = () => {
                 placeholder="Password"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.password}
                 name="password"
-                error={Boolean(touched.password) && Boolean(errors.password)}
-                helperText={touched.password && errors.password}
+                // error={Boolean(touched.password) && Boolean(errors.password)}
+                // helperText={touched.password && errors.password}
               />
-            {touched.password && errors.password && <div>{errors.password}</div>}
+              {/* {touched.password && errors.password && (
+                <p className={classes.error_msg}>{errors.password}</p>
+              )} */}
               {isRegister && (
                 <>
                   <Input
@@ -220,14 +212,15 @@ const LoginPage = () => {
                     placeholder="Country"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.location}
                     name="location"
-                    error={
-                      Boolean(touched.location) && Boolean(errors.location)
-                    }
-                    helperText={touched.location && errors.location}
+                    // error={
+                    //   Boolean(touched.location) && Boolean(errors.location)
+                    // }
+                    // helperText={touched.location && errors.location}
                   />
-                  {touched.location && errors.location && <div>{errors.location}</div>}
+                  {/* {touched.location && errors.location && (
+                    <p className={classes.error_msg}>{errors.location}</p>
+                  )} */}
                   <Input
                     id="address"
                     element="input"
@@ -235,12 +228,13 @@ const LoginPage = () => {
                     placeholder="Address"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.address}
                     name="address"
-                    error={Boolean(touched.address) && Boolean(errors.address)}
-                    helperText={touched.address && errors.address}
+                    // error={Boolean(touched.address) && Boolean(errors.address)}
+                    // helperText={touched.address && errors.address}
                   />
-                  {touched.address && errors.address && <div>{errors.address}</div>}
+                  {/* {touched.address && errors.address && (
+                    <p className={classes.error_msg}>{errors.address}</p>
+                  )} */}
                   <Input
                     id="phone"
                     element="input"
@@ -248,12 +242,13 @@ const LoginPage = () => {
                     placeholder="Phone"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.phone}
                     name="phone"
-                    error={Boolean(touched.phone) && Boolean(errors.phone)}
-                    helperText={touched.phone && errors.phone}
+                    // error={Boolean(touched.phone) && Boolean(errors.phone)}
+                    // helperText={touched.phone && errors.phone}
                   />
-                   {touched.phone && errors.phone && <div>{errors.phone}</div>}
+                  {/* {touched.phone && errors.phone && (
+                    <p className={classes.error_msg}>{errors.phone}</p>
+                  )} */}
                 </>
               )}
               <Button big type="submit">

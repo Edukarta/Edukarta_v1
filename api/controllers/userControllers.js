@@ -2,7 +2,7 @@ import { validationResult } from "express-validator";
 import User from "../models/UserModel.js";
 import School from "../models/SchoolModel.js";
 import HttpError from "../models/http-errors.js";
-
+import { v2 as cloudinary} from 'cloudinary';
 
 //GET ALL USERS
 //@GET
@@ -58,7 +58,7 @@ export const updateUser = async (req, res, next) => {
     return next(new HttpError("Données incorrects", 422));
   }
   const { id } = req.params;
-  const { imagePath } = req.body;
+  
 
   let user;
   try {
@@ -71,6 +71,11 @@ export const updateUser = async (req, res, next) => {
     return next(error);
   }
 
+  const result = await cloudinary.uploader.upload(req.file.path, {
+    folder: "edukarta",
+  });
+
+  const imagePath = result.secure_url;
   user.imagePath = imagePath;
 
   try {
@@ -158,24 +163,17 @@ export const getUserFavorite = async (req, res, next) => {
   try {
     user = await User.findById(id);
   } catch (err) {
-    const error = new HttpError(
-      "Un problème est survenu",
-      500
-    );
+    const error = new HttpError("Un problème est survenu", 500);
     return next(error);
-  } 
+  }
   let schoolId = user.favoriteSchools;
-  let favoriteSchools
+  let favoriteSchools;
   try {
     favoriteSchools = await School.find({ _id: { $in: schoolId } });
   } catch (err) {
-    const error = new HttpError(
-      "Un problème est survenu",
-      500
-    );
+    const error = new HttpError("Un problème est survenu", 500);
     return next(error);
   }
-
 
   res.status(200).json(favoriteSchools);
 };

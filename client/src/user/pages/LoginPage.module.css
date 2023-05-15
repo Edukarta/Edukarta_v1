@@ -75,6 +75,13 @@ button img{
     width: 30px;
 }
 
+
+.error_msg{
+    color: crimson;
+    font-size: 13px;
+    font-style: italic;
+}
+
 @media (min-width: 1080px) {
 
      .containerForm_title{
