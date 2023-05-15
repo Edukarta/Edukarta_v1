@@ -48,7 +48,7 @@ const Map = ({ type, schools }) => {
         type === "homepage" ? classes.mapContainer : classes.mapContainer_map
       }
     >
-      <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <TileLayer url="https://maptiles.p.rapidapi.com/fr/map/v1/{z}/{x}/{y}.png?rapidapi-key=6d0707b6b6msh5953627b7c9ebb1p172529jsn057f475ae858" />
       <MarkerClusterGroup
         chunkedLoading
         iconCreateFunction={cretaedCustomClusterIcon}

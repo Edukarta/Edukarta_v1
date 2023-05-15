@@ -15,12 +15,14 @@
   }
   
   .formControl label {
-    font-weight: bold;
+    font-weight: 400;
+    text-align: center;
   }
   
   .formControl input,
   .formControl textarea {
     width: 100%;
+    height: 50px;
     font: inherit;
     border: 1px solid #ccc;
     background: #f8f8f8;

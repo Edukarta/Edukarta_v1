@@ -20,6 +20,7 @@ import {
   Settings,
   Done,
 } from "@mui/icons-material/";
+import Youtube from "react-youtube";
 import { useSelector } from "react-redux";
 import schoolIcon from "../../../img/img_school.jpg";
 import LoadingDots from "../../../shared/components/UIElements/LoadingDots";
@@ -38,6 +39,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
   const [isEditingImg, setIsEditingImg] = useState(false);
   const [isImageUpload, setisImageUpload] = useState();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const videoId = school?.videoPath.split("v=")[1];
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
@@ -58,36 +60,36 @@ const SchoolsInfos = ({ school, getSchool }) => {
   }
 
   const initialValueName = {
-    nameUpdate: "",
-    addressUpdate: "",
-    originalName: "",
-    slogan: "",
-    continentUpdate: "",
-    countryUpdate: "",
-    cityUpdate: "",
-    videoPath: "",
+    nameUpdate: school.nameUpdate,
+    addressUpdate: school.addressUpdate,
+    originalName: school.originalName,
+    slogan: school.slogan,
+    continentUpdate: school.continentUpdate,
+    countryUpdate: school.countryUpdate,
+    cityUpdate: school.cityUpdate,
+    videoPath: school.videoPath,
   };
 
   const initialValueDescription = {
-    description: "",
+    description: school.description,
   };
 
   const initialValueInfos = {
-    foundationDate: "",
-    levelUpdate: "",
-    sectorUpdate: "",
-    numberOfStudents: "",
-    phone: "",
-    email: "",
-    webSiteUrl: "",
+    foundationDate: school.foundationDate,
+    levelUpdate: school.levelUpdate,
+    sectorUpdate: school.sectorUpdate,
+    numberOfStudents: school.numberOfStudents,
+    phone: school.phone,
+    email: school.email,
+    webSiteUrl: school.webSiteUrl,
   };
 
   const initialValueImages = {
-    picture1: "",
-    picture2: "",
-    picture3: "",
-    picture4: "",
-    picture5: "",
+    picture1: school.imgPath1,
+    picture2: school.imgPath2,
+    picture3: school.imgPath3,
+    picture4: school.imgPath4,
+    picture5: school.imgPath5,
   };
 
   const Update = async (values, onSubmitProps) => {
@@ -163,6 +165,8 @@ const SchoolsInfos = ({ school, getSchool }) => {
       setIsSubmitting(false);
     }, 2000);
   };
+
+  console.log(videoId);
 
   const handleEdit = (e) => {
     e.preventDefault();
@@ -367,36 +371,28 @@ const SchoolsInfos = ({ school, getSchool }) => {
                 </div>
               </div>
             </div>
-            {/* <div className={classes.container_video_destop}>
+            <div className={classes.container_video_destop}>
               {isEditingName ? (
                 <Input
-                  id="videoPath"
-                  element="input"
-                  type="text"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.videoPath}
-                  placeholder="Add video Url here"
-                  name="videoPath"
-                />
-              ) : (
-                <iframe
-                  width="560"
-                  height="315"
-                  src={school?.videoPath}
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                ></iframe>
+                    id="videoPath"
+                    label="Add youtube video URL here"
+                    element="input"
+                    type="text"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.videoPath || school?.videoPath || ""}
+                    placeholder="School Name"
+                    name="videoPath"
+                  />
+              ) : school?.videoPath && (
+                <Youtube videoId={videoId} className={classes.youtube_video} />
               )}
-            </div> */}
+            </div>
           </form>
         )}
       </Formik>
 
       {/* IMG MOBILE/DESKTOP DEVICE */}
-
       <div className={classes.container_details}>
         <div className={classes.container_bloc_img_details}>
           <Formik

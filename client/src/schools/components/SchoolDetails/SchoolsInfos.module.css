@@ -349,6 +349,12 @@
     justify-content: center;
   }
 
+  .youtube_video{
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid #7d7d7d;
+    
+  }
+
   .container_school_name_btn{
     display: none;
   }
@@ -361,6 +367,7 @@
   .container_name_destop {
     display: block;
     margin-top: 100px;
+    margin-bottom: 10px;
   }
 
   .container_school_name_btn_destop {
