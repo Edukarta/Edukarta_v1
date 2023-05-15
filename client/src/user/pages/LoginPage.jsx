@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../../shared/state/store";
 import google from "../../img/logo_google.png";
 import classes from "./LoginPage.module.css";
+import * as Yup from 'yup';
 
 const initialValueRegister = {
   firstname: "",
@@ -22,6 +23,25 @@ const initialValueLogin = {
   email: "",
   password: "",
 };
+
+const SignupSchema = Yup.object().shape({
+  firstname: Yup.string()
+     .max(50, 'Too Long!')
+     .required('Required'),
+  lastname: Yup.string()
+     .max(50, 'Too Long!')
+     .required('Required'),
+   email: Yup.string().email('Invalid email').required('Required'),
+   password: Yup.string()
+   .min(8, 'Password is too short - should be 8 chars minimum.')
+   .required('No password provided.'),
+   location: Yup.string()
+   .required('Required'),
+   address: Yup.string()
+   .required('Required'),
+   phone: Yup.number()
+   .required('Required'),
+})
 
 const LoginPage = () => {
   const [pageType, setPageType] = useState("login");
@@ -116,6 +136,7 @@ const LoginPage = () => {
           onSubmit={handleFormSubmit}
           initialValues={isRegister ? initialValueRegister : initialValueLogin}
           // validationSchema={isRegister ? registerSchema : loginSchema}
+          validationSchema={SignupSchema}
         >
           {({
             values,
@@ -145,6 +166,7 @@ const LoginPage = () => {
                       }
                       helperText={touched.firstname && errors.firstname}
                     />
+                    {touched.firstname && errors.firstname && <div>{errors.firstname}</div>}
                     <Input
                       id="lastname"
                       element="input"
@@ -160,6 +182,7 @@ const LoginPage = () => {
                       helperText={touched.lastname && errors.lastname}
                     />
                   </div>
+                  {touched.lastname && errors.lastname && <div>{errors.lastname}</div>}
                 </>
               )}
               <Input
@@ -174,6 +197,7 @@ const LoginPage = () => {
                 error={Boolean(touched.email) && Boolean(errors.email)}
                 helperText={touched.email && errors.email}
               />
+              {touched.email && errors.email && <div>{errors.email}</div>}
               <Input
                 id="password"
                 element="input"
@@ -186,6 +210,7 @@ const LoginPage = () => {
                 error={Boolean(touched.password) && Boolean(errors.password)}
                 helperText={touched.password && errors.password}
               />
+            {touched.password && errors.password && <div>{errors.password}</div>}
               {isRegister && (
                 <>
                   <Input
@@ -202,6 +227,7 @@ const LoginPage = () => {
                     }
                     helperText={touched.location && errors.location}
                   />
+                  {touched.location && errors.location && <div>{errors.location}</div>}
                   <Input
                     id="address"
                     element="input"
@@ -214,6 +240,7 @@ const LoginPage = () => {
                     error={Boolean(touched.address) && Boolean(errors.address)}
                     helperText={touched.address && errors.address}
                   />
+                  {touched.address && errors.address && <div>{errors.address}</div>}
                   <Input
                     id="phone"
                     element="input"
@@ -226,6 +253,7 @@ const LoginPage = () => {
                     error={Boolean(touched.phone) && Boolean(errors.phone)}
                     helperText={touched.phone && errors.phone}
                   />
+                   {touched.phone && errors.phone && <div>{errors.phone}</div>}
                 </>
               )}
               <Button big type="submit">
