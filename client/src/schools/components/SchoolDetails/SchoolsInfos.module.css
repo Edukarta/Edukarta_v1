@@ -10,6 +10,10 @@
   display: none;
 }
 
+.container_video_destop{
+  display: none;
+}
+
 .container_details {
   width: 100%;
   max-width: 1500px;
@@ -312,12 +316,7 @@
     margin: 0 auto;
   }
 
-  .container_Navigation {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
+ 
   .container_map_school_details {
     width: 80%;
     margin: 0 auto 30px auto;
@@ -333,11 +332,28 @@
 
 @media (min-width: 1080px) {
 
+  .container_Navigation {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
   .edit_btn{
     display: none;
   }
+
+  .container_video_destop{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container_school_name_btn{
+    display: none;
+  }
   .container_details {
-    margin: 50px auto;
+    margin: 20px auto;
     width: 80%;
     gap: 20px;
   }
@@ -389,7 +405,7 @@
 
   .container_infos_section_destop {
     width: 80%;
-    margin: 10px auto;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
   }

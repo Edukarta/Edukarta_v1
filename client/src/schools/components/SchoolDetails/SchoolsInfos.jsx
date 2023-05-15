@@ -65,6 +65,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
     continentUpdate: "",
     countryUpdate: "",
     cityUpdate: "",
+    videoPath: "",
   };
 
   const initialValueDescription = {
@@ -160,7 +161,6 @@ const SchoolsInfos = ({ school, getSchool }) => {
 
     setTimeout(() => {
       setIsSubmitting(false);
-      
     }, 2000);
   };
 
@@ -367,6 +367,30 @@ const SchoolsInfos = ({ school, getSchool }) => {
                 </div>
               </div>
             </div>
+            <div className={classes.container_video_destop}>
+              {isEditingName ? (
+                <Input
+                  id="videoPath"
+                  element="input"
+                  type="text"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.videoPath}
+                  placeholder="Add video Url here"
+                  name="videoPath"
+                />
+              ) : (
+                <iframe
+                  width="560"
+                  height="315"
+                  src={school?.videoPath}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                ></iframe>
+              )}
+            </div>
           </form>
         )}
       </Formik>
@@ -463,11 +487,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                                   {previewImage && (
                                     <img src={previewImage} alt="Preview" />
                                   )}
-                                  {!previewImage && (
-                                    <p>
-                                      Add image here
-                                    </p>
-                                  )}
+                                  {!previewImage && <p>Add image here</p>}
                                 </>
                               )}
                               {isEdit && (

@@ -268,6 +268,7 @@ export const updateSchool = async (req, res, next) => {
     phone,
     email,
     webSiteUrl,
+    videoPath
   } = req.body;
 
   let school;
@@ -337,6 +338,9 @@ export const updateSchool = async (req, res, next) => {
   }
   if (webSiteUrl !== undefined) {
     school.webSiteUrl = webSiteUrl;
+  }
+  if (videoPath !== undefined) {
+    school.videoPath = videoPath;
   }
 
   if (req.files) {

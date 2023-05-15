@@ -37,6 +37,10 @@ const SchoolSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  videoPath: {
+    type: String,
+    default: "",
+  },
   imgPath5: {
     type: String,
     default: "",
