@@ -45,7 +45,10 @@ app.use(passport.session());
 passportSetup();
 app.use(cors());
 app.use(express.json());
-app.use(helmet());
+app.use(helmet.frameguard({
+  action: 'allow-from',
+  domain: 'https://www.adukarta.com'
+}));
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extenced: true }));
