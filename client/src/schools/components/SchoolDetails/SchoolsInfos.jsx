@@ -367,7 +367,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                 </div>
               </div>
             </div>
-            <div className={classes.container_video_destop}>
+            {/* <div className={classes.container_video_destop}>
               {isEditingName ? (
                 <Input
                   id="videoPath"
@@ -390,7 +390,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                   allowFullScreen
                 ></iframe>
               )}
-            </div>
+            </div> */}
           </form>
         )}
       </Formik>
