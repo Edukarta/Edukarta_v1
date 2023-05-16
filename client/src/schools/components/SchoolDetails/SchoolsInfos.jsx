@@ -114,7 +114,6 @@ const SchoolsInfos = ({ school, getSchool }) => {
     );
 
     const updateSchool = await updateSchoolResponse.json();
-    console.log(updateSchool);
     getSchool();
   };
 
@@ -166,8 +165,6 @@ const SchoolsInfos = ({ school, getSchool }) => {
     }, 2000);
   };
 
-  console.log(videoId);
-
   const handleEdit = (e) => {
     e.preventDefault();
     if (user) {
@@ -186,7 +183,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
       <div className={classes.container_Navigation}>
         <MainNavigation />
       </div>
-
+      {/* FORM NAME DESTOP */}
       <Formik initialValues={initialValueName} onSubmit={handleFormSubmit}>
         {({
           values,
@@ -260,7 +257,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
             <div className={classes.container_infos_section_destop}>
               <div className={classes.container_info_destop}>
                 <div className={classes.container_info_icon}>
-                  <Public sx={{ color: "#696969" }} />
+                  <Public sx={{ color: "#365475", fontSize: "20px" }} />
                   {isEditingName ? (
                     <Input
                       id="continentUpdate"
@@ -281,7 +278,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                   )}
                 </div>
                 <div className={classes.container_info_icon}>
-                  <Flag sx={{ color: "#696969" }} />
+                  <Flag sx={{ color: "#365475", fontSize: "20px" }} />
                   {isEditingName ? (
                     <Input
                       id="countryUpdate"
@@ -303,7 +300,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                 </div>
                 {school?.cityUpdate ? (
                   <div className={classes.container_info_icon}>
-                    <LocationCity sx={{ color: "#696969" }} />
+                    <LocationCity sx={{ color: "#365475", fontSize: "20px" }} />
                     {isEditingName ? (
                       <Input
                         id="cityUpdate"
@@ -325,7 +322,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                   ""
                 )}
                 <div className={classes.container_info_icon}>
-                  <LocationOn sx={{ color: "#696969" }} />
+                  <LocationOn sx={{ color: "#365475", fontSize: "20px" }} />
                   {isEditingName ? (
                     <Input
                       id="addressUpdate"
@@ -349,7 +346,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
               <div className={classes.school_info_slogan_destop}>
                 {school?.slogan && (
                   <div className={classes.quote1}>
-                    <FormatQuote />
+                    <FormatQuote sx={{ fontSize: "15px" }} />
                   </div>
                 )}
                 {isEditingName ? (
@@ -364,28 +361,34 @@ const SchoolsInfos = ({ school, getSchool }) => {
                     name="slogan"
                   />
                 ) : (
-                  <p>{school?.slogan}</p>
+                  <p className={classes.slogan_desktop}>{school?.slogan}</p>
                 )}
                 <div className={classes.quote2}>
-                  {school?.slogan && <FormatQuote />}
+                  {school?.slogan && <FormatQuote sx={{ fontSize: "15px" }}/>}
                 </div>
               </div>
             </div>
             <div className={classes.container_video_destop}>
               {isEditingName ? (
                 <Input
-                    id="videoPath"
-                    label="Add youtube video URL here"
-                    element="input"
-                    type="text"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.videoPath || school?.videoPath || ""}
-                    placeholder="School Name"
-                    name="videoPath"
+                  id="videoPath"
+                  label="Add youtube video URL here"
+                  element="input"
+                  type="text"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.videoPath || school?.videoPath || ""}
+                  placeholder="School Name"
+                  name="videoPath"
+                />
+              ) : (
+                school?.videoPath && (
+                  <Youtube
+                    videoId={videoId}
+                    opts={{ width: "630", height: "360" }}
+                    className={classes.youtube_video}
                   />
-              ) : school?.videoPath && (
-                <Youtube videoId={videoId} className={classes.youtube_video} />
+                )
               )}
             </div>
           </form>
@@ -640,7 +643,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
           </Formik>
         </div>
 
-        {/* INFOS MOBILE DEVICE */}
+        {/* FORM INFOS MOBILE */}
         <div className={classes.container_school_infos}>
           <Formik initialValues={initialValueName} onSubmit={handleFormSubmit}>
             {({
@@ -1130,7 +1133,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
         </div>
       </div>
 
-      {/* DESCRIPTION DESKTOP DEVICE */}
+      {/* FORM DESCRIPTION DESTOP */}
       <div className={classes.container_infos_links}>
         <div className={classes.container_infos_destop_device}>
           <div className={classes.container_section_description_destop}>
@@ -1141,7 +1144,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
               </div>
             </div>
           </div>
-          {/* AFFICHAGE DESC */}
+          {/* AFFICHAGE DESCRIPTION DESTOP */}
           <div className={classes.container_section_description_destop}>
             <Formik
               initialValues={initialValueDescription}
@@ -1200,7 +1203,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
             </Formik>
           </div>
 
-          {/* AFFICHAGE INFOS */}
+          {/* FORM INFOS DESTOP */}
           <div className={classes.container_section_description_destop}>
             <Formik
               initialValues={initialValueInfos}

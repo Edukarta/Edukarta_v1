@@ -24,7 +24,8 @@
     justify-content: center;
     width: 50px;
     height: 50px;
-    background:#333;
+    background:#15273c;
+    border: 1px solid white;
     border-radius: 50%;
     top: 200px;
     left: 55%;
@@ -50,6 +51,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    max-width: 800px;
     margin-top: 20px;
 }
 
@@ -67,7 +69,6 @@
     background-color: transparent;
     border-bottom: 1px solid #333;
     outline: none;
-
 }
 
 .formControl input::placeholder{
@@ -94,3 +95,62 @@
     object-fit: cover;
     border-radius: 50%;
 }
+
+.container_title__profil {
+    font-size: 40px;
+    font-weight: 400;
+    color: #282828;
+    text-transform: capitalize;
+  }
+
+  .container_profil_details_validate_btn{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+@media (min-width: 1080px) {
+    .container_infos{
+        margin-top: 100px;
+    }
+
+    .formControl label{
+        font-size: 18px;
+        font-weight: 400;
+        color: #333;
+    }
+
+    .formControl{
+        margin-bottom: 20px;
+    }
+
+    .formControl input{
+        border-bottom: 1px solid #bebebe;
+    }
+
+    .container_title__profil {
+        font-size: 40px;
+        font-weight: 400;
+        color: #282828;
+        text-transform: capitalize;
+      }
+
+      .container_profil_details_validate_btn{
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+      }
+
+      .icon__change_pic{
+        top: 200px;
+        left: 53%;
+        
+    }
+    
+    .icon__change_pic_done{
+        top: 200px;
+        left: 53%;
+    }
+  }

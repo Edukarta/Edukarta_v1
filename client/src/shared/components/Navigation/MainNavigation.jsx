@@ -47,7 +47,7 @@ const MainNavigation = () => {
           </h1>
           {user ? (
             <div className={classes.container__avatar_logout}>
-              <span>Bonjour {user.firstname}</span>
+              <span>Hello {user.firstname}</span>
               <Avatar userId={user.id} image={user.imagePath} />
             </div>
           ) : (
@@ -74,7 +74,7 @@ const MainNavigation = () => {
           />
           {user ? (
             <div className={classes.container__avatar_logout}>
-              <span>Bonjour {user.firstname}</span>
+              <span>Hello {user.firstname}</span>
               <Avatar userId={user.id} image={user.imagePath} />
             </div>
           ) : (

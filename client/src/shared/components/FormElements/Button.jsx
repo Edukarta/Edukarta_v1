@@ -8,7 +8,9 @@ const Button = (props) => {
       <a
         className={`${classes.button}${props.size || classes.default} ${
           props.inverse && classes.buttonInverse
-        } ${props.danger && classes.buttonDanger} ${props.big && classes.buttonBig}`}
+        } ${props.danger && classes.buttonDanger} ${
+          props.big && classes.buttonBig
+        }`}
         href={props.href}
       >
         {props.children}
@@ -22,7 +24,9 @@ const Button = (props) => {
         exact={props.exact}
         className={`${classes.button} ${props.size || classes.default} ${
           props.inverse && classes.buttonInverse
-        } ${props.danger && classes.buttonDanger} ${props.big && classes.buttonBig}`}
+        } ${props.danger && classes.buttonDanger} ${
+          props.big && classes.buttonBig
+        }`}
       >
         {props.children}
       </Link>
@@ -32,7 +36,9 @@ const Button = (props) => {
     <button
       className={`${classes.button} ${props.size || classes.default} ${
         props.inverse && classes.buttonInverse
-      } ${props.danger && classes.buttonDanger} ${props.green && classes.buttonGreen} ${props.big && classes.buttonBig} ${props.dark && classes.buttonDark}`}
+      } ${props.danger && classes.buttonDanger} ${
+        props.green && classes.buttonGreen
+      } ${props.big && classes.buttonBig} ${props.dark && classes.buttonDark}`}
       type={props.type}
       onClick={props.onClick}
       disabled={props.disabled}

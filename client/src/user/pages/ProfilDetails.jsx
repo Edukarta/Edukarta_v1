@@ -8,6 +8,7 @@ import Dropzone from "react-dropzone";
 import Avatar from "../../shared/components/UIElements/Avatar";
 import Button from "../../shared/components/FormElements/Button";
 import classes from "./ProfilDetails.module.css";
+import LoadingDots from "../../shared/components/UIElements/LoadingDots";
 
 const initialValuePatch = {
   image: "",
@@ -15,12 +16,14 @@ const initialValuePatch = {
 
 const ProfilDetails = () => {
   const [previewImage, setPreviewImage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { id } = useParams();
 
   const patchImg = async (values, onSubmitProps) => {
     const formData = new FormData();
+    setIsSubmitting(true);
     formData.append("imagePath", values.image.name); // Ajoute l'imagePath d'origine
     formData.append("image", values.image);
     const response = await fetch(`https://www.edukarta.com/api/v1/user/${id}`, {
@@ -39,7 +42,7 @@ const ProfilDetails = () => {
         })
       );
     }
-    console.log(savedResponse);
+    setIsSubmitting(false);
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
@@ -55,9 +58,7 @@ const ProfilDetails = () => {
   return (
     <div className={classes.containerProfil}>
       <div className={classes.container_infos}>
-        <h1 className={classes.container_title__profil}>
-          Bonjour {user.firstname} {user.lastname}
-        </h1>
+        <h1 className={classes.container_title__profil}>Account Parameters</h1>
         {previewImage ? (
           <div className={classes.preview}>
             <img src={previewImage} alt="" />
@@ -92,26 +93,29 @@ const ProfilDetails = () => {
                     </div>
                   )}
                 </Dropzone>
+                {isSubmitting && <LoadingDots/>}
               </div>
-              {values.image && <Button type="submit">Valider</Button>}
+              <div className={classes.container_profil_details_validate_btn}>
+                {values.image && <Button type="submit">Valider</Button>}
+              </div>
             </form>
           )}
         </Formik>
         <div className={classes.container_Input}>
           <div className={classes.formControl}>
-            <label>Prénom</label>
+            <label>Firstname</label>
             <input type="text" placeholder={user.firstname} disabled />
           </div>
           <div className={classes.formControl}>
-            <label>Nom</label>
+            <label>Lastname</label>
             <input type="text" placeholder={user.lastname} disabled />
           </div>
           <div className={classes.formControl}>
-            <label>Adresse</label>
+            <label>Address</label>
             <input type="text" placeholder={user.address} disabled />
           </div>
           <div className={classes.formControl}>
-            <label>Téléphone</label>
+            <label>Phone</label>
             <input type="text" placeholder={user.phone} disabled />
           </div>
         </div>

@@ -342,8 +342,8 @@
   }
 
   .container_video_destop{
-    width: 80%;
-    margin: 0 auto;
+    width: 84%;
+    margin: 30px auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -404,11 +404,12 @@
 
   .school_original_name_desktop {
     width: 80%;
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 17px;
+    font-weight: 400;
     margin: 0 150px;
     color: #808080;
   }
+
 
   .container_infos_section_destop {
     width: 80%;
@@ -426,12 +427,12 @@
   .school_info_slogan_destop {
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 5px;
     color: #3b3b3b;
   }
 
   .school_info_slogan_destop p {
-    font-size: 20px;
+    font-size: 15px;
   }
 
   .quote1 {
@@ -558,7 +559,7 @@
   }
 
   .container_infos_links {
-    margin: 0 auto;
+    margin: 60px auto;
     width: 80%;
     display: flex;
     max-width: 1500px;
@@ -717,5 +718,10 @@
 
   .container_modify{
     display: none;
+  }
+
+
+  .container_info_icon span {
+   font-weight: 500;
   }
 }
