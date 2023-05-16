@@ -14,6 +14,7 @@ const ProfilPage = () => {
   const isSmallScreen = useMediaQuery("(min-width: 1080px)");
 
   if (!user) return null;
+  console.log(user.bannerPath)
   return (
     <div className={classes.containerProfil}>
       <div className={classes.container_info}>
@@ -21,9 +22,11 @@ const ProfilPage = () => {
           title="My account"
           titlePage={isSmallScreen ? "" : "Profil"}
           name={`Hi, ${user.firstname}`}
+          nameDestop={`${user.firstname} ${user.lastname}`}
           subtitle="My informations"
           id={user.id}
           image={user.imagePath}
+          bannerImage={user.bannerPath}
         />
         <div className={classes.container_logout_btn}>
           <Button

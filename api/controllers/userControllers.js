@@ -2,7 +2,7 @@ import { validationResult } from "express-validator";
 import User from "../models/UserModel.js";
 import School from "../models/SchoolModel.js";
 import HttpError from "../models/http-errors.js";
-import { v2 as cloudinary} from 'cloudinary';
+import { v2 as cloudinary } from "cloudinary";
 
 //GET ALL USERS
 //@GET
@@ -58,7 +58,6 @@ export const updateUser = async (req, res, next) => {
     return next(new HttpError("Données incorrects", 422));
   }
   const { id } = req.params;
-  
 
   let user;
   try {
@@ -71,12 +70,22 @@ export const updateUser = async (req, res, next) => {
     return next(error);
   }
 
-  const result = await cloudinary.uploader.upload(req.file.path, {
-    folder: "edukarta",
-  });
+  if (req.files && req.files.banner) {
+    const result = await cloudinary.uploader.upload(req.files.banner[0].path, {
+      folder: "edukarta",
+    });
 
-  const imagePath = result.secure_url;
-  user.imagePath = imagePath;
+    const bannerPath = result.secure_url;
+    user.bannerPath = bannerPath;
+  }
+
+  if (req.files && req.files.image) {
+    const result = await cloudinary.uploader.upload(req.files.image[0].path, {
+      folder: "edukarta",
+    });
+    const imagePath = result.secure_url;
+    user.imagePath = imagePath;
+  }
 
   try {
     await user.save();

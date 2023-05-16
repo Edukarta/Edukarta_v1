@@ -8,8 +8,8 @@ import session from "express-session";
 import passportSetup from "./utils/passport.js";
 import passport from "passport";
 import { fileURLToPath } from "url";
-import { v2 as cloudinary} from 'cloudinary';
-import {CloudinaryStorage} from "multer-storage-cloudinary";
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 import path from "path";
 import morgan from "morgan";
 import dbConnect from "./config/dbConnect.js";
@@ -61,27 +61,31 @@ app.use("/images", express.static(path.join(__dirname, "uploads/images")));
 //   },
 // });
 
-
-
 //CONFIGURATION CLOUDINARY
 cloudinary.config({
-  cloud_name: 'dtrktbian',
-  api_key: '134979453238365',
-  api_secret: 'vDOgu8g0DCAcwd8GjUOnassgdpM'
+  cloud_name: "dtrktbian",
+  api_key: "134979453238365",
+  api_secret: "vDOgu8g0DCAcwd8GjUOnassgdpM",
 });
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  folder: 'edukarta',
-  allowedFormats: ['jpg', 'png', 'jpeg'],
-  transformation: [{ width: 500, height: 500, crop: 'limit' }]
+  folder: "edukarta",
+  allowedFormats: ["jpg", "png", "jpeg"],
+  transformation: [{ width: 500, height: 500, crop: "limit" }],
 });
 
 const upload = multer({ storage });
 
-
 //ROUTES AVEC FICHIER
-app.patch("/api/v1/user/:id", upload.single("image"), updateUser);
+app.patch(
+  "/api/v1/user/:id",
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "banner", maxCount: 1 },
+  ]),
+  updateUser
+);
 app.patch(
   "/api/v1/schools/:id",
   upload.fields([

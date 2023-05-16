@@ -52,6 +52,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  bannerPath: {
+    type: String,
+    default: "",
+  },
   grade: String,
 });
 

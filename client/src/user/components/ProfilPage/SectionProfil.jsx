@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CardProfil from "./CardProfil";
 import {
   AccountBalanceWallet,
@@ -7,36 +7,146 @@ import {
   ArrowForwardIos,
   Settings,
   Logout,
+  CameraAlt,
 } from "@mui/icons-material/";
 import { useMediaQuery } from "@mui/material";
+import { useParams } from "react-router-dom";
 import Avatar from "../../../shared/components/UIElements/Avatar";
+import { updateUser } from "../../../shared/state/store";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Formik } from "formik";
+import Dropzone from "react-dropzone";
 import { setLogout } from "../../../shared/state/store";
+import LoadingDots from "../../../shared/components/UIElements/LoadingDots";
 import classes from "./SectionProfil.module.css";
 
 const SectionProfil = (props) => {
+  const { id } = useParams();
+  const [isEditing, setIsEditing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSmallScreen = useMediaQuery("(min-width: 1080px)");
+
+  const initialValuePatch = {
+    banner: "",
+  };
+
+  const patchImg = async (values, onSubmitProps) => {
+    setIsSubmitting(true);
+    setIsEditing(false);
+    try {
+      const formData = new FormData();
+      formData.append("bannerPath", values.banner.name);
+      formData.append("banner", values.banner);
+
+      const response = await fetch(`http://localhost:5000/api/v1/user/${id}`, {
+        method: "PATCH",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update user image.");
+      }
+
+      const savedResponse = await response.json();
+      if (savedResponse) {
+        dispatch(
+          updateUser({
+            ...savedResponse.user,
+            bannerPath: savedResponse.user.bannerPath,
+          })
+        );
+      }
+      onSubmitProps.resetForm();
+    } catch (error) {
+      console.error(error);
+    }
+
+    setIsSubmitting(false);
+  };
+
+  const handleFormSubmit = async (values, onSubmitProps) => {
+    await patchImg(values, onSubmitProps);
+  };
+
+  const handleImageDrop = (acceptedFiles, setFieldValue) => {
+    const file = acceptedFiles[0];
+    // setPreviewImage(URL.createObjectURL(file));
+    setFieldValue("banner", file);
+  };
 
   return (
     <section>
       <div className={classes.container_item}>
         <h2 className={classes.title}>{props.titlePage}</h2>
-        <div>
-          <CardProfil
-            text={props.name}
-            icon={
-              !isSmallScreen ? (
-                <Avatar image={props.image} normal />
-              ) : (
-                <Avatar image={props.image} big />
-              )
-            }
-            big
-          />
-        </div>
+        {!isSmallScreen ? (
+          <div>
+            <CardProfil
+              text={props.name}
+              icon={
+                !isSmallScreen ? (
+                  <Avatar image={props.image} normal />
+                ) : (
+                  <Avatar image={props.image} big />
+                )
+              }
+              big
+            />
+          </div>
+        ) : (
+          <Formik onSubmit={handleFormSubmit} initialValues={initialValuePatch}>
+            {({ values, handleSubmit, setFieldValue, resetForm }) => (
+              <form onSubmit={handleSubmit}>
+                <div
+                  className={classes.container_hero_user}
+                  style={{
+                    backgroundImage: `url(${props.bannerImage})`,
+                    backgroundSize: "cover",
+                  }}
+                >
+                  <Dropzone
+                    acceptedFiles=".jpeg,.jpg,.png"
+                    multiple={false}
+                    onDrop={(acceptedFiles) =>
+                      handleImageDrop(acceptedFiles, setFieldValue)
+                    }
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <div className={classes.container_icon_add_banner}>
+                          <CameraAlt
+                            sx={{ color: "white", fontSize: "17px" }}
+                            onClick={() => setIsEditing(true)}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </Dropzone>
+                  {isEditing && (
+                    <button
+                      type="submit"
+                      className={classes.btn_banner_validate}
+                    >
+                      Valider
+                    </button>
+                  )}
+                  {isSubmitting  && <div className={classes.container_loading}>
+                    <LoadingDots />
+                  </div>}
+                  <div className={classes.container_hero_user_avatar}>
+                    <Avatar image={props.image} big />
+                  </div>
+                  <div className={classes.container_hero_user_infos}>
+                    <h1 className={classes.infos_name}>{props.nameDestop}</h1>
+                  </div>
+                </div>
+              </form>
+            )}
+          </Formik>
+        )}
       </div>
       <div className={classes.container_item_profil}>
         <h2 className={classes.section_account_title}>{props.title}</h2>
