@@ -2,6 +2,10 @@
   margin-bottom: 30px;
 }
 
+.form_banner_profil {
+  width: 100%;
+}
+
 .container_profil_section {
   display: flex;
   flex-direction: column;
@@ -32,53 +36,213 @@ a {
   display: none;
 }
 
-.container_hero_user{
+.container_hero_user {
   width: 100%;
-  height: 300px;
-  border-radius: 10px;
+  height: 200px;
   position: relative;
   background-position: 50% 30%;
   background-color: #222222;
-  margin-bottom: 150px;
+  margin-bottom: 20px;
 }
 
-.container_hero_user_avatar{
+.container_hero_user_avatar {
   position: absolute;
-  bottom: -100px;
-  left: -50px;
+  bottom: -30px;
+  left: 10px;
   z-index: 1;
 }
 
-.container_hero_user_infos{
+.container_hero_user_infos {
   width: 100%;
   height: 50px;
   padding: 1px;
-  position: absolute;
-  bottom: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 25%, transparent 95%);;
   display: flex;
   align-items: center;
-  border-radius: 10px;
 }
 
-
-
-.infos_name{
-  position: absolute;
-  color: white;
-  margin-left: 180px;
-  font-size: 30px;
+.infos_name {
+  color: rgb(26, 26, 26);
+  margin-left: 10px;
+  margin-top: 20px;
+  font-size: 25px;
+  font-weight: 500;
+  color: #4f4f4f;
   z-index: 4;
+}
+
+.container_icon_add_banner {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  right: 10px;
+  bottom: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #15273c;
+  z-index: 55555;
+  cursor: pointer;
+}
+
+.container_icon_add_avatar {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  right: 5px;
+  bottom: 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #15273c;
+  z-index: 55555;
+  cursor: pointer;
+}
+
+.btn_banner_validate {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  padding: 5px 10px;
+  color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background-color: #15273c;
+  cursor: pointer;
+  bottom: -30px;
+  left: 50%;
+  z-index: 66666;
+}
+
+.container_loading {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+}
+
+.container_profil_account{
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.container_card_progress{
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #d1d1d1;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.card_progress_bar_title{
+  font-size: 20px;
+  text-align: center;
+  font-weight: 400;
+  color: #333;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.container_progress_bar{
+  width: 80%;
+  height: 25px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  border-radius: 20px;
+}
+
+.progress_bar_red{
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: crimson;
+  border: 1px solid #d8d8d8;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.progress_bar_orange{
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: rgb(220, 93, 20);
+  border: 1px solid #d8d8d8;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.progress_bar_green{
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: green;
+  border: 1px solid #d8d8d8;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.progress_bar_complete{
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 20px;
+  background-color: green;
+  border: 1px solid #d8d8d8;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 
 @media (min-width: 1080px) {
   .container_item_profil {
-    margin-top: 10px;
+    margin-top: 100px;
   }
+
+  .container_hero_user {
+    width: 100%;
+    height: 400px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .container_hero_user_avatar {
+    bottom: -100px;
+    left: -50px;
+  }
+
+  .infos_name {
+    position: absolute;
+    color: rgb(26, 26, 26);
+    margin-left: 160px;
+    margin-top: 0px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #2a2a2a;
+    z-index: 4;
+  }
+
   .container_profil_section {
+    width: 90%;
     display: grid;
+    justify-content: center;
     grid-template-columns: repeat(auto-fill, 310px);
-    margin-top: 20px;
     gap: 20px;
   }
 
@@ -89,7 +253,7 @@ a {
   .card_profil_item {
     border: 1px solid #d1d1d1;
     border-radius: 10px;
-    height: 150px;
+    height: 155px;
     padding: 30px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     cursor: pointer;
@@ -98,7 +262,6 @@ a {
   .card_profil_item:hover {
     background-color: #f1f1f1;
   }
-
 
   .card_profil_item_logout {
     display: flex;
@@ -129,41 +292,39 @@ a {
     color: #222222;
   }
 
-  .container_icon_add_banner{
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .container_icon_add_banner {
+    border: 3px solid white;
     right: -10px;
     bottom: -10px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #15273c;
-    z-index: 55555;
-    cursor: pointer;
+    width: 40px;
+    height: 40px;
   }
 
-  .btn_banner_validate{
-    position: absolute;
-    display: flex;
-    align-items: center;
-    font-size: 15px;
+  .container_icon_add_avatar {
+    border: 3px solid white;
+    right: 10px;
+    bottom: 15px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .btn_banner_validate {
     padding: 10px 20px;
-    color: #f1f1f1;
-    border: none;
-    border-radius: 5px;
-    outline: none;
-    background-color: #15273c;
-    cursor: pointer;
     bottom: -40px;
     left: 50%;
-    z-index: 66666;
   }
 
-  .container_loading{
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
+  .container_profil_account{
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .container_card_progress{
+    width: 600px;
+    height: 500px;
+    padding: 0;
+    border-radius: 10px;
+    border: 1px solid #d1d1d1;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   }
 }
