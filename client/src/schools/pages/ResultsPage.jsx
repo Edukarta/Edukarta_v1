@@ -29,7 +29,6 @@ const ResultsPage = () => {
     e.preventDefault();
     try {
       const query = selectedFilters.join(",");
-      console.log("query : ",query);
       const response = await fetch(
         `https://www.edukarta.com/api/v1/schools/filter?previousQuery=${previousQuery}&query=${query}`,
         {
