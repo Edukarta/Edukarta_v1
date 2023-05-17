@@ -1,6 +1,6 @@
 import School from "../models/SchoolModel.js";
 import HttpError from "../models/http-errors.js";
-import { v2 as cloudinary} from 'cloudinary';
+import { v2 as cloudinary } from "cloudinary";
 import { validationResult } from "express-validator";
 
 //SHOW ALL SCHOOLS
@@ -42,6 +42,37 @@ export const searchSchools = async (req, res, next) => {
   }
 };
 
+// Fonction permettant de reperer les champs utilisés
+const fieldsToSearch = ["level", "sector", "language"]; // Champs à rechercher
+let occurrenceFound = false; // Variable de contrôle
+
+const searchField = async (field, searchValue) => {
+  if (occurrenceFound) {
+    return; // Si une occurrence a déjà été trouvée, arrêter la recherche
+  }
+
+  const query = { [field]: { $regex: searchValue, $options: "i" } };
+  const user = await School.findOne(query);
+  if (user) {
+    occurrenceFound = true;
+    return field;
+  }
+};
+
+const searchAllFields = async (searchValue) => {
+  let promises = [];
+  occurrenceFound = false;
+  for (const field of fieldsToSearch) {
+    promises.push(searchField(field, searchValue));
+  }
+  const result = await Promise.all(promises);
+  const foundFields = result.filter((result) => result !== undefined);
+  if (!occurrenceFound) {
+    console.log("Aucun champ trouvé pour la valeur :", searchValue);
+  }
+  return { foundFields, searchValue };
+};
+
 //FILTER SCHOOLS
 //@GET
 //ROUTE : api/v1/search
@@ -52,23 +83,63 @@ export const filterSchools = async (req, res, next) => {
   // Ajouter le filtre de recherche de la requête principale
   if (query) {
     const queryValues = query.split(",");
-    const queryObj = { $or: [] };
-    for (const queryValue of queryValues) {
-      queryObj["$or"].push({
-        $or: [
-          { name: { $regex: queryValue, $options: "i" } },
-          { nameUpdate: { $regex: queryValue, $options: "i" } },
-          { city: { $regex: queryValue, $options: "i" } },
-          { cityUpdate: { $regex: queryValue, $options: "i" } },
-          { country: { $regex: queryValue, $options: "i" } },
-          { countryUpdate: { $regex: queryValue, $options: "i" } },
-          { level: { $regex: queryValue, $options: "i" } },
-          { levelUpdate: { $regex: queryValue, $options: "i" } },
-          { sector: { $regex: queryValue, $options: "i" } },
-          { language: { $regex: queryValue, $options: "i" } },
-        ],
-      });
+    const field_tested = await Promise.all(
+      queryValues.map((obj) => searchAllFields(obj))
+    );
+    // Regrouper les champs
+    const groupedData = {};
+    field_tested.forEach((item) => {
+      const key = item.foundFields[0];
+      if (groupedData[key]) {
+        groupedData[key].searchValue.push(item.searchValue);
+      } else {
+        groupedData[key] = {
+          foundFields: item.foundFields,
+          searchValue: [item.searchValue],
+        };
+      }
+    });
+    const queryGrouped = Object.values(groupedData);
+
+    const queryObj = { $and: [] };
+    for (const group of queryGrouped) {
+      const orArray = [];
+      if (group.searchValue.lenght < 1) {
+        orArray.push({
+          $or: [
+            { name: { $regex: queryValue, $options: "i" } },
+            { nameUpdate: { $regex: queryValue, $options: "i" } },
+            { city: { $regex: queryValue, $options: "i" } },
+            { cityUpdate: { $regex: queryValue, $options: "i" } },
+            { country: { $regex: queryValue, $options: "i" } },
+            { countryUpdate: { $regex: queryValue, $options: "i" } },
+            { level: { $regex: queryValue, $options: "i" } },
+            { levelUpdate: { $regex: queryValue, $options: "i" } },
+            { sector: { $regex: queryValue, $options: "i" } },
+            { language: { $regex: queryValue, $options: "i" } },
+          ],
+        });
+      } else {
+        for (const queryValue of group.searchValue) {
+          orArray.push({
+            $or: [
+              { name: { $regex: queryValue, $options: "i" } },
+              { nameUpdate: { $regex: queryValue, $options: "i" } },
+              { city: { $regex: queryValue, $options: "i" } },
+              { cityUpdate: { $regex: queryValue, $options: "i" } },
+              { country: { $regex: queryValue, $options: "i" } },
+              { countryUpdate: { $regex: queryValue, $options: "i" } },
+              { level: { $regex: queryValue, $options: "i" } },
+              { levelUpdate: { $regex: queryValue, $options: "i" } },
+              { sector: { $regex: queryValue, $options: "i" } },
+              { language: { $regex: queryValue, $options: "i" } },
+            ],
+          });
+        }
+      }
+      queryObj.$and.push({ $or: orArray });
     }
+    console.log("queryObj", queryObj);
     searchFilters.push(queryObj);
   }
 
@@ -268,7 +339,7 @@ export const updateSchool = async (req, res, next) => {
     phone,
     email,
     webSiteUrl,
-    videoPath
+    videoPath,
   } = req.body;
 
   let school;
@@ -347,7 +418,10 @@ export const updateSchool = async (req, res, next) => {
     for (let i = 1; i <= 5; i++) {
       const fieldName = `picture${i}`;
       if (req.files[fieldName]) {
-        const result = await cloudinary.uploader.upload(req.files[fieldName][0].path, {folder : "edukarta"});
+        const result = await cloudinary.uploader.upload(
+          req.files[fieldName][0].path,
+          { folder: "edukarta" }
+        );
         school[`imgPath${i}`] = result.secure_url;
       }
     }
@@ -363,7 +437,6 @@ export const updateSchool = async (req, res, next) => {
     return next(error);
   }
 
- 
   res.status(200).json({ school: school.toObject({ getters: true }) });
 };
 
