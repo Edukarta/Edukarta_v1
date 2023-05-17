@@ -312,9 +312,12 @@ const ResultsPage = () => {
                     )}
                   </div>
                   <div className={classes.container_infos}>
-                    <span className={classes.name}>
+                    <h6 className={classes.name}>
                       {result.nameUpdate ? result.nameUpdate : result.name}
-                    </span>
+                    </h6>
+                    <h6 className={classes.country}>
+                      {result.countryUpdate ? result.countryUpdate : result.country}
+                    </h6>
                   </div>
                 </div>
               </Link>
