@@ -17,30 +17,34 @@ import { useEffect } from "react";
 
 function App() {
   const location = useLocation();
- 
-  
+
   return (
     <>
-    {!location.pathname.startsWith("/admin") && !location.pathname.startsWith("/school") && <MainNavigation />}
+      {!location.pathname.startsWith("/admin") &&
+        !location.pathname.startsWith("/school") &&
+        !location.pathname.startsWith("/profil") && <MainNavigation />}
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/searchResult" element={<ResultsPage/>}/>
+          <Route path="/searchResult" element={<ResultsPage />} />
           <Route path="/register" element={<LoginPage />} />
           <Route path="/profil/:id" element={<ProfilPage />} />
           <Route path="/profil/:id/details" element={<ProfilDetails />} />
           <Route path="/school/:id" element={<SchoolDetails />} />
-          <Route path="/school/:id/request/:requestId" element={<SchoolUpdate />} />
+          <Route
+            path="/school/:id/request/:requestId"
+            element={<SchoolUpdate />}
+          />
           <Route path="/school/:id/request" element={<RequestForm />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/request/:id" element={<RequestDetails />} />
         </Routes>
       </main>
-        {!["/register"].includes(location.pathname) &&
-          !location.pathname.startsWith("/profil/") &&
-          !location.pathname.includes("request") && 
-          !location.pathname.startsWith("/admin") && <NavbarBottom />}
+      {!["/register"].includes(location.pathname) &&
+        !location.pathname.startsWith("/profil/") &&
+        !location.pathname.includes("request") &&
+        !location.pathname.startsWith("/admin") && <NavbarBottom />}
     </>
   );
 }

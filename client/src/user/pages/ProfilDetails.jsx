@@ -9,6 +9,7 @@ import Avatar from "../../shared/components/UIElements/Avatar";
 import Button from "../../shared/components/FormElements/Button";
 import classes from "./ProfilDetails.module.css";
 import LoadingDots from "../../shared/components/UIElements/LoadingDots";
+import MainNavigation from "../../shared/components/Navigation/MainNavigation";
 
 const initialValuePatch = {
   image: "",
@@ -56,6 +57,8 @@ const ProfilDetails = () => {
   };
 
   return (
+    <>
+    <MainNavigation type="profil"/>
     <div className={classes.containerProfil}>
       <div className={classes.container_infos}>
         <h1 className={classes.container_title__profil}>Account Parameters</h1>
@@ -121,6 +124,7 @@ const ProfilDetails = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

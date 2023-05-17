@@ -8,7 +8,7 @@ import classes from "./MainNavigation.module.css";
 import Avatar from "../UIElements/Avatar";
 import SearchBar from "../UIElements/SearchBar";
 
-const MainNavigation = () => {
+const MainNavigation = ({ type }) => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,10 +16,11 @@ const MainNavigation = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(`https://www.edukarta.com/api/v1/schools/search?query=${searchQuery}`, 
-      {
-        method: "GET",
-      }
+      const response = await fetch(
+        `https://www.edukarta.com/api/v1/schools/search?query=${searchQuery}`,
+        {
+          method: "GET",
+        }
       );
       const data = await response.json();
       dispatch(setSearchResults({ results: data }));
@@ -30,16 +31,15 @@ const MainNavigation = () => {
       console.error(error);
     }
   };
-  
+
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleSearch();
     }
-  }
-  
+  };
 
   return (
-    <MainHeader>
+    <MainHeader type={type}>
       <div className={classes.mainNavigation__container_item}>
         <div className={classes.mainNavigation__container_title_avatar}>
           <h1 className={classes.mainNavigation__title}>
@@ -54,12 +54,14 @@ const MainNavigation = () => {
             <Link to="/register">Sign up / Login</Link>
           )}
         </div>
-        <SearchBar
-          value={searchQuery}
-          onKeyDown={handleKeyDown}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onClick={handleSearch}
-        />
+        {type != "profil" && (
+          <SearchBar
+            value={searchQuery}
+            onKeyDown={handleKeyDown}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onClick={handleSearch}
+          />
+        )}
       </div>
 
       <div className={classes.mainNavigation__container_item_desktop}>

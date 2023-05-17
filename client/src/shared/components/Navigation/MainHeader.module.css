@@ -10,6 +10,17 @@
     z-index: 1000000;
   }
 
+  .mainheaderProfile{
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    background-color: var(--bg-nav-bottom);
+    padding: 0 1rem;
+    z-index: 1000000;
+  }
+
 
   @media (min-width: 768px) {
     .mainheader {

@@ -3,10 +3,7 @@
     padding: 10px;
 }
 
-.container_title__profil{
-    font-size: 30px;
-    margin-bottom: 10px;
-}
+
 
 .container_infos{
     margin-top: 150px;
@@ -97,7 +94,7 @@
 }
 
 .container_title__profil {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 400;
     color: #282828;
     text-transform: capitalize;
