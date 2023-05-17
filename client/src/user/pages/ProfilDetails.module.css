@@ -1,9 +1,13 @@
+.container_navigation{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .containerProfil{
     width: 100%;
     padding: 10px;
 }
-
-
 
 .container_infos{
     margin-top: 150px;
