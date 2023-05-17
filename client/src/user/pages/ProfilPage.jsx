@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import classes from "./ProfilPage.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery } from "@mui/material";
@@ -14,16 +14,7 @@ const ProfilPage = () => {
   const navigate = useNavigate();
   const isSmallScreen = useMediaQuery("(min-width: 1080px)");
 
-  useEffect(() => {
-    document.body.style.background =
-      "linear-gradient(to bottom, rgba(54, 84, 117, 0.5) 0%, white 40%)";
-
-    return () => {
-      // Réinitialiser le style du corps lorsque le composant est démonté
-      document.body.style.background = "";
-    };
-  }, []);
-
+ 
   if (!user) return null;
   console.log(user.bannerPath);
   return (
