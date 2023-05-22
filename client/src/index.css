@@ -25,9 +25,9 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-main {
+/* main {
   padding: 1px;
-}
+} */
 
 .slide-in-bottom-enter {
   transform: translateY(100%);

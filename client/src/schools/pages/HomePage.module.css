@@ -1,4 +1,6 @@
-.container_slider{
+.container_navigation {
     width: 100%;
-    overflow: hidden;
-}
+    display: flex;
+    justify-content: center;
+  }
+

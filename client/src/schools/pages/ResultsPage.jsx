@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSearchResults, setSearchQuery } from "../../shared/state/store";
 import FilterDrawer from "../../shared/components/UIElements/FilterDrawer";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material/";
+import MainNavigation from "../../shared/components/Navigation/MainNavigation";
 import { Link } from "react-router-dom";
 import schoolIcon from "../../img/img_school.jpg";
 import classes from "./ResultsPage.module.css";
@@ -50,6 +51,9 @@ const ResultsPage = () => {
 
   return (
     <>
+      <header className={classes.container_navigation}>
+        <MainNavigation />
+      </header>
       <section className={classes.global_container}>
         <div className={classes.container_filter_result_page}>
           <button onClick={() => setDrawerIsOpen((prev) => !prev)}>
@@ -316,7 +320,9 @@ const ResultsPage = () => {
                       {result.nameUpdate ? result.nameUpdate : result.name}
                     </h6>
                     <h6 className={classes.country}>
-                      {result.countryUpdate ? result.countryUpdate : result.country}
+                      {result.countryUpdate
+                        ? result.countryUpdate
+                        : result.country}
                     </h6>
                   </div>
                 </div>

@@ -231,7 +231,7 @@ const SectionProfil = (props) => {
                 normal
               />
             </div>
-            <div className={classes.card_profil_item}>
+            <div className={classes.card_profil_item} onClick={() => navigate(`/profil/${props.id}/favorite`)}>
               <CardProfil
                 text="Wishlist"
                 icon={

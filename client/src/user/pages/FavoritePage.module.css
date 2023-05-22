@@ -1,0 +1,141 @@
+.container_navigation {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.container_favorite_body {
+  width: 100%;
+  height: 100%;
+  margin-top: 64px;
+  display: flex;
+}
+
+.container_empty{
+    width: 100%;
+    height: 100vh;
+    margin-top: 64px;
+    display: flex;
+}
+
+.container_side_bar {
+  flex: 1;
+  border-top: 1px solid rgb(173, 173, 173);
+  background-color: #15273c;
+}
+
+.container_links{
+    width: 100%;
+    margin-top: 30px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container_links li{
+    width: 100%;
+    padding: 10px;
+    list-style-type: none;
+}
+
+.container_links a{
+    color: #aeaeae;
+    font-size: 17px;
+    width: 100%;
+    padding: 5px 12px;
+    border-left: 2px solid #636363;
+}
+
+.container_links a:hover {
+    color: #f1f1f1;
+    border-left: 2px solid #d6d6d6;
+}
+
+.active {
+    color: white !important;
+    font-weight: bold;
+    font-size: 17px;
+    padding: 5px 12px;
+    border-left: 2px solid #f213a4 !important;
+  }
+  
+
+
+.container_fav_item {
+  flex: 4;
+}
+.container_title_favorite {
+  width: 89%;
+  margin: 50px auto 30px auto;
+}
+.container_card {
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 350px);
+  gap: 15px;
+  z-index: 0;
+}
+
+.card_link {
+    position: relative;
+  width: 100%;
+  height: 380px;
+  margin-bottom: 10px;
+  max-width: 350px;
+}
+
+.card_item {
+  width: 100%;
+  height: 300px;
+  margin-bottom: 20px;
+  border: 1px solid #9b9b9b;
+  border-radius: 8px;
+  box-shadow: 0px 3px 5px #c1c1c1;
+}
+
+.container_img {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.container_img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.container_infos {
+  padding: 10px;
+  width: 100%;
+}
+
+.name {
+  font-size: 20px;
+  color: #2b2b2b;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.country {
+  font-size: 17px;
+  color: #9a9999;
+  font-weight: 500;
+}
+
+.icon_fav{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    z-index: 555555;
+    cursor: pointer;
+  }
+  
+  .icon_fav img{
+    width: 35px;
+  }

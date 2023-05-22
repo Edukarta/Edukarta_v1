@@ -4,6 +4,7 @@ import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import NavbarBottom from "./shared/components/Navigation/NavbarBottom/NavbarBottom";
 import LoginPage from "./user/pages/LoginPage";
 import ProfilPage from "./user/pages/ProfilPage";
+import FavoritePage from "./user/pages/FavoritePage";
 import ProfilDetails from "./user/pages/ProfilDetails";
 import SchoolDetails from "./schools/pages/SchoolDetails";
 import RequestForm from "./request/page/RequestForm";
@@ -20,15 +21,13 @@ function App() {
 
   return (
     <>
-      {!location.pathname.startsWith("/admin") &&
-        !location.pathname.startsWith("/school") &&
-        !location.pathname.startsWith("/profil") && <MainNavigation />}
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/searchResult" element={<ResultsPage />} />
           <Route path="/register" element={<LoginPage />} />
           <Route path="/profil/:id" element={<ProfilPage />} />
+          <Route path="/profil/:id/favorite" element={<FavoritePage />} />
           <Route path="/profil/:id/details" element={<ProfilDetails />} />
           <Route path="/school/:id" element={<SchoolDetails />} />
           <Route

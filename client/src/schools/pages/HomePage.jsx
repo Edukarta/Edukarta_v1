@@ -3,6 +3,7 @@ import Map from "../../shared/components/UIElements/Map";
 import SchoolList from "../components/Homepage/SchoolList";
 import { setSchools } from "../../shared/state/store.js";
 import { useDispatch, useSelector } from "react-redux";
+import MainNavigation from "../../shared/components/Navigation/MainNavigation";
 import classes from "./HomePage.module.css";
 
 //FECTHER LES DONNEES DANS CE COMPOSANT PASSEES EN PROPS A SCHOOLLIST
@@ -27,6 +28,10 @@ const HomePage = () => {
   }, []);
 
   return (
+    <>
+    <header className={classes.container_navigation}>
+      <MainNavigation/>
+    </header>
     <section>
       <Map type="homepage" schools={schools} />
       <SchoolList
@@ -35,6 +40,8 @@ const HomePage = () => {
         numberOfSchools={100}
       />
     </section>
+
+    </>
   );
 };
 

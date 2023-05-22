@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import Card from "../../../shared/components/UIElements/Card";
-import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { updateUser } from "../../../shared/state/store";
 import classes from "./SchoolList.module.css";
 
 const SchoolList = ({
@@ -11,6 +12,32 @@ const SchoolList = ({
   numberOfSchools,
   firstSchool,
 }) => {
+  const dispatch = useDispatch();
+  const id = useSelector((state) => state.user?.id);
+  const favoriteSchools = useSelector((state) => state.user?.favoriteSchools || []);
+  
+  const isSchoolFavorite = (schoolId) => {
+    return favoriteSchools.includes(schoolId);
+  };
+
+  const addRemoveFav = async (schoolId) => {
+    const response = await fetch(
+      `https://www.edukarta.com/api/v1/user/${id}/${schoolId}`,
+      {
+        method: "PATCH",
+      }
+    );
+    const savedResponse = await response.json();
+    if (savedResponse) {
+      dispatch(
+        updateUser({
+          ...savedResponse.user,
+        })
+      );
+    }
+    console.log(savedResponse)
+  };
+
   return (
     <>
       <section className={classes.listContainer}>
@@ -25,13 +52,12 @@ const SchoolList = ({
           {schools.schools
             ?.slice(firstSchool, numberOfSchools)
             .map((school) => (
-              <Link
-                key={school.id}
-                to={`/school/${school.id}`}
-                className={classes.container_link__card}
-              >
+              <div key={school.id} className={classes.container_link__card}>
                 <Card
                   id={school.id}
+                  iconColor={isSchoolFavorite(school.id) ? true : false}
+                  onClick={() => addRemoveFav(school.id)}
+                  link={`/school/${school.id}`}
                   img={
                     school.imgPath1
                       ? school.imgPath1.startsWith("http")
@@ -53,7 +79,7 @@ const SchoolList = ({
                   default={size === "default"}
                   big={size === "big"}
                 />
-              </Link>
+              </div>
             ))}
         </div>
       </section>
