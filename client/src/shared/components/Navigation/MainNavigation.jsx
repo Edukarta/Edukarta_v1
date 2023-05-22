@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import MainHeader from "./MainHeader";
 import { useSelector, useDispatch } from "react-redux";
 import { setSearchResults, setQuery } from "../../state/store";
+import { NotificationsNone } from "@mui/icons-material/";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
@@ -46,10 +47,13 @@ const MainNavigation = ({ type }) => {
             <Link to="/">EduKarta</Link>
           </h1>
           {user ? (
-            <div className={classes.container__avatar_logout}>
-              <span>Hello {user.firstname}</span>
-              <Avatar userId={user.id} image={user.imagePath} />
-            </div>
+            <>
+              <div className={classes.container__avatar_logout}>
+                <span>Hello {user.firstname}</span>
+                <Avatar userId={user.id} image={user.imagePath} />
+                <NotificationsNone sx={{color: "white"}}/>
+              </div>
+            </>
           ) : (
             <Link to="/register">Sign up / Login</Link>
           )}
@@ -75,10 +79,13 @@ const MainNavigation = ({ type }) => {
             onClick={handleSearch}
           />
           {user ? (
-            <div className={classes.container__avatar_logout}>
-              <span>Hello {user.firstname}</span>
-              <Avatar userId={user.id} image={user.imagePath} />
-            </div>
+            <>
+              <div className={classes.container__avatar_logout}>
+                <span>Hello {user.firstname}</span>
+                <Avatar userId={user.id} image={user.imagePath} />
+                <NotificationsNone sx={{color: "white"}}/>
+              </div>
+            </>
           ) : (
             <Link to="/register">Sign up / Login</Link>
           )}

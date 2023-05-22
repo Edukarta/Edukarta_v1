@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useLocation, NavLink } from "react-router-dom";
+import {
+  useParams,
+  Link,
+  useLocation,
+  NavLink,
+  useNavigate,
+} from "react-router-dom";
 import { updateUser } from "../../shared/state/store";
+import { SentimentVeryDissatisfied } from "@mui/icons-material/";
 import { useDispatch } from "react-redux";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
+import Button from "../../shared/components/FormElements/Button";
 import starFav from "../../img/star_fav.png";
 import schoolIcon from "../../img/img_school.jpg";
 import classes from "./FavoritePage.module.css";
 
 const FavoritePage = () => {
   const [favoriteSchools, setFavoriteSchools] = useState([]);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
   const { pathname } = useLocation();
@@ -46,10 +55,10 @@ const FavoritePage = () => {
         })
       );
     }
-    console.log(savedResponse)
+    console.log(savedResponse);
     getFavorite();
   };
-  
+
   useEffect(() => {
     getFavorite();
   }, []);
@@ -89,14 +98,23 @@ const FavoritePage = () => {
                 favoriteSchools.length > 1 ? "schools" : "school"
               }`}</h3>
             ) : (
-              <h3>No favorites yet</h3>
+              <div className={classes.container_empty_text}>
+                <div className={classes.container_empty_text_icon}>
+                  <h3>No favorites yet</h3>
+                  <SentimentVeryDissatisfied sx={{color: "#15273c", fontSize: "35px"}}/>
+                </div>
+                <Button onClick={() => navigate("/")}>Add here</Button>
+              </div>
             )}
           </div>
           <div className={classes.container_card}>
             {favoriteSchools.map((school, index) => (
               <div className={classes.card_link}>
-                <div className={classes.icon_fav} onClick={() => addRemoveFav(school._id)}>
-                    <img src={starFav} alt="" />
+                <div
+                  className={classes.icon_fav}
+                  onClick={() => addRemoveFav(school._id)}
+                >
+                  <img src={starFav} alt="" />
                 </div>
                 <Link key={index} to={`/school/${school._id}`}>
                   <div className={classes.card_item}>
