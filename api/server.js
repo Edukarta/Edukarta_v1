@@ -75,7 +75,12 @@ const storage = new CloudinaryStorage({
   transformation: [{ width: 500, height: 500, crop: "limit" }],
 });
 
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 30 * 1024 * 1024, // 30 Mo en octets
+  },
+});
 
 //ROUTES AVEC FICHIER
 app.patch(

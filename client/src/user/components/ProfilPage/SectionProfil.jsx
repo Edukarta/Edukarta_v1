@@ -233,7 +233,7 @@ const SectionProfil = (props) => {
             </div>
             <div className={classes.card_profil_item}>
               <CardProfil
-                text="My favorites"
+                text="Wishlist"
                 icon={
                   <FavoriteBorder sx={{ color: "#555555", fontSize: "30px" }} />
                 }
@@ -249,7 +249,7 @@ const SectionProfil = (props) => {
             </div>
             <div className={classes.card_profil_item}>
               <CardProfil
-                text="My Classes"
+                text="Courses"
                 icon={<MenuBook sx={{ color: "#555555", fontSize: "30px" }} />}
                 arrow={
                   !isSmallScreen && (
