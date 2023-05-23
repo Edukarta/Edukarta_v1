@@ -10,6 +10,7 @@ import { updateUser } from "../../shared/state/store";
 import { SentimentVeryDissatisfied } from "@mui/icons-material/";
 import { useDispatch } from "react-redux";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
+import Modal from "../../shared/components/UIElements/Modal";
 import Button from "../../shared/components/FormElements/Button";
 import starFav from "../../img/star_fav.png";
 import schoolIcon from "../../img/img_school.jpg";
@@ -17,6 +18,8 @@ import classes from "./FavoritePage.module.css";
 
 const FavoritePage = () => {
   const [favoriteSchools, setFavoriteSchools] = useState([]);
+  const [selectedSchoolId, setSelectedSchoolId] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -59,16 +62,18 @@ const FavoritePage = () => {
     getFavorite();
   };
 
+ 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getFavorite();
   }, []);
-  console.log(favoriteSchools);
+
 
   return (
     <>
-      <div className={classes.container_navigation}>
+      <header className={classes.container_navigation}>
         <MainNavigation type="profil" />
-      </div>
+      </header>
       <div
         className={`${
           favoriteSchools.length <= 3
@@ -92,6 +97,15 @@ const FavoritePage = () => {
           </ul>
         </div>
         <div className={classes.container_fav_item}>
+          <Modal
+            text="Remove this school from my favorites"
+            show={modalIsOpen}
+            remove={() => {
+              addRemoveFav(selectedSchoolId);
+              setModalIsOpen(false);
+            }}
+            hideModal={() => setModalIsOpen(false)}
+          />
           <div className={classes.container_title_favorite}>
             {favoriteSchools.length >= 1 ? (
               <h3>{`You added ${favoriteSchools.length} ${
@@ -101,7 +115,9 @@ const FavoritePage = () => {
               <div className={classes.container_empty_text}>
                 <div className={classes.container_empty_text_icon}>
                   <h3>No favorites yet</h3>
-                  <SentimentVeryDissatisfied sx={{color: "#15273c", fontSize: "35px"}}/>
+                  <SentimentVeryDissatisfied
+                    sx={{ color: "#15273c", fontSize: "35px" }}
+                  />
                 </div>
                 <Button onClick={() => navigate("/")}>Add here</Button>
               </div>
@@ -109,14 +125,17 @@ const FavoritePage = () => {
           </div>
           <div className={classes.container_card}>
             {favoriteSchools.map((school, index) => (
-              <div className={classes.card_link}>
+              <div className={classes.card_link} key={index}>
                 <div
                   className={classes.icon_fav}
-                  onClick={() => addRemoveFav(school._id)}
+                  onClick={() => {
+                    setSelectedSchoolId(school._id);
+                    setModalIsOpen(true);
+                  }}
                 >
                   <img src={starFav} alt="" />
                 </div>
-                <Link key={index} to={`/school/${school._id}`}>
+                <Link to={`/school/${school._id}`}>
                   <div className={classes.card_item}>
                     <div className={classes.container_img}>
                       {school.imgPath1 ? (

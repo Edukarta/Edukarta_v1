@@ -6,11 +6,16 @@ const Button = (props) => {
   if (props.href) {
     return (
       <a
-        className={`${classes.button}${props.size || classes.default} ${
+        className={`${classes.button} ${props.size || classes.default} ${
           props.inverse && classes.buttonInverse
         } ${props.danger && classes.buttonDanger} ${
-          props.big && classes.buttonBig
-        }`}
+          props.green && classes.buttonGreen
+        } ${props.big && classes.buttonBig} ${
+          props.small && classes.buttonSmall
+        } ${props.dark && classes.buttonDark}`}
+        type={props.type}
+        onClick={props.onClick}
+        disabled={props.disabled}
         href={props.href}
       >
         {props.children}
@@ -38,7 +43,9 @@ const Button = (props) => {
         props.inverse && classes.buttonInverse
       } ${props.danger && classes.buttonDanger} ${
         props.green && classes.buttonGreen
-      } ${props.big && classes.buttonBig} ${props.dark && classes.buttonDark}`}
+      } ${props.big && classes.buttonBig} ${
+        props.small && classes.buttonSmall
+      } ${props.dark && classes.buttonDark}`}
       type={props.type}
       onClick={props.onClick}
       disabled={props.disabled}

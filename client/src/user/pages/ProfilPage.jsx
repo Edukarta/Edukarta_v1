@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import classes from "./ProfilPage.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery } from "@mui/material";
@@ -13,10 +13,12 @@ const ProfilPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSmallScreen = useMediaQuery("(min-width: 1080px)");
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
- 
   if (!user) return null;
-  console.log(user.bannerPath);
+
   return (
     <>
       <div className={classes.container_navigation}>

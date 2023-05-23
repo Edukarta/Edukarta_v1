@@ -224,13 +224,13 @@ a {
 
   .container_hero_user_avatar {
     bottom: -100px;
-    left: -50px;
+    left: 10px;
   }
 
   .infos_name {
     position: absolute;
     color: rgb(26, 26, 26);
-    margin-left: 160px;
+    margin-left: 220px;
     margin-top: 0px;
     font-size: 30px;
     font-weight: 500;

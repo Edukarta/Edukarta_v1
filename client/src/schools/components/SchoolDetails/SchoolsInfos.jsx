@@ -1439,7 +1439,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
             </div>
           </div>
           <div className={classes.container_btn_card_price}>
-            <Button big to={`/school/${school?.id}/request`}>
+            <Button big to={"/prices"}>
               Are you the owner of this file ?
             </Button>
           </div>
