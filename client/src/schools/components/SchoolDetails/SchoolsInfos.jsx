@@ -1113,19 +1113,19 @@ const SchoolsInfos = ({ school, getSchool }) => {
         <div className={classes.container_links}>
           {request && request.status === 1 ? (
             <div className={classes.container_link_validate}>
-              <Link to={`/school/${school?.id}/request/${request.id}`}>
+              <Link to={"/prices"}>
                 Votre demande à été validée
               </Link>
             </div>
           ) : !userHasRequested ? (
             <div className={classes.container_link}>
-              <Link to={`/school/${school?.id}/request`}>
+              <Link to={"/prices"}>
                 Cette fiche vous appartient ?
               </Link>
             </div>
           ) : (
             <div className={classes.container_link_hasrequest}>
-              <Link to={`/school/${school?.id}/request`}>
+              <Link to={"/prices"}>
                 Vous avez déja fait une demande pour cet établissement
               </Link>
             </div>
