@@ -21,7 +21,7 @@
 .btn_hero {
   position: absolute;
   cursor: pointer;
-  bottom: 30px;
+  bottom: 60px;
   animation: arrowDown 2s ease-in-out infinite;
 }
 
@@ -121,55 +121,55 @@
   color: #f1f1f1;
 }
 
-.divider{
-    height: 1px;
-    width: 50%;
-    margin: 0 auto;
-    background-color: rgb(132, 132, 132);
+.divider {
+  height: 1px;
+  width: 50%;
+  margin: 0 auto;
+  background-color: rgb(132, 132, 132);
 }
 
-.container_btn_info{
+.container_btn_info {
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
 @media (min-width: 704px) {
-    .prices_table_title {
-        font-size: 70px;
-      }
+  .prices_table_title {
+    font-size: 70px;
+  }
 
-      .prices_sub_title {
-        font-size: 30px;
-      }
+  .prices_sub_title {
+    font-size: 30px;
+  }
 
-      .container_prices_card {
-        width: 100%;
-        padding: 70px 0;
-        margin: 0;
-        display: grid;
-        justify-content: center;
-        grid-template-columns: repeat(auto-fill, 400px);
-        grid-gap: 20px;
-      }
+  .container_prices_card {
+    width: 100%;
+    padding: 70px 0;
+    margin: 0;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, 400px);
+    grid-gap: 20px;
+  }
 
-      .container_information_prices {
-        width: 100%;
-        padding: 20px;
-        display: grid;
-        justify-content: center;
-        grid-template-columns: repeat(auto-fill, 450px);
-        margin-bottom: 200px;
-        background-color: #15273c;
-      }
-  
+  .container_information_prices {
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, 450px);
+    margin-bottom: 200px;
+    background-color: #15273c;
+  }
+
+  .btn_hero {
+    bottom: 30px;
+  }
 }
 
 @media (min-width: 940px) {
   .bloc_information_text p {
     text-align: start;
   }
-
-
 }
-  
