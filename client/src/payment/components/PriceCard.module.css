@@ -4,6 +4,12 @@
   background-color: #f1f1f1;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.container_card_main:hover{
+  transform: translateY(-10px);
+  filter: brightness(1.03);
 }
 
 .card_header {
@@ -36,57 +42,101 @@
 
 .card_header_icon {
   position: absolute;
-  bottom: -25px;
+  bottom: -22px;
   transform: rotate(90deg);
 }
 
-.card_body{
-    padding: 20px 40px;
+.card_body {
+  padding: 20px 40px;
 }
 
-.divider{
-    height: 2px;
-    width: 100px;
-    margin: 30px auto;
-    background-color: #c1c1c1;
+.divider {
+  height: 2px;
+  width: 100px;
+  margin: 30px auto;
+  background-color: #c1c1c1;
 }
 
-.container_card_price{
-    padding: 0 40px;
-    text-align: center;
+.container_card_price {
+
+  text-align: center;
 }
 
-.container_card_price h4{
-    font-size: 35px;
-    text-transform: capitalize;
-    font-weight: 400;
+.container_card_price span {
+  font-size: 35px;
+  text-transform: capitalize;
+  font-weight: 400;
 }
 
-.text_green{
-    color: #088f8f;
+.text_green {
+  color: #088f8f;
 }
 
-.text_blue{
-    color: #414c68;
+.text_blue {
+  color: #414c68;
 }
 
-.text_orange{
-    color: #ff8b3d;
+.text_orange {
+  color: #ff8b3d;
 }
 
-.container_btn_card{
-    padding: 0 40px;
-    display: flex;
-    justify-content: center;
+.container_btn_card {
+  padding: 0 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.prices_card_info_btn {
+  font: inherit;
+  padding: 1rem 1.5rem;
+  border: 1px solid rgb(159, 203, 191);
+  border-radius: 5px;
+  background: var(--bg-button);
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 20px;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.prices_card_info_btn:hover {
+  background: #5981b1;
+  border-color: #5981b1;
+}
+
+.container_logo_payement {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.container_logo_payement img {
+  width: 25px;
 }
 
 @media (min-width: 704px) {
-    .container_card_main {
-        width: 400px;
-        height: 850px;
-        background-color: #f1f1f1;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-        border-radius: 20px;
-      }
-  
+  .container_card_main {
+    width: 400px;
+    height: 850px;
+    background-color: #f1f1f1;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+  }
+
+  .prices_card_info_btn {
+    font: inherit;
+    padding: 1rem 1.5rem;
+    border: 1px solid rgb(159, 203, 191);
+    border-radius: 5px;
+    background: var(--bg-button);
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 20px;
+    display: inline-block;
+    
+  }
 }

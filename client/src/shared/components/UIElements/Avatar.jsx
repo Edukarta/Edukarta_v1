@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import classes from "./Avatar.module.css";
 
-const Avatar = ({ userId, image, normal, big }) => {
+const Avatar = ({ userId, image, normal, big, medium }) => {
 
   const avatarClassName = big
     ? classes.containerAvatarBig
@@ -12,7 +12,7 @@ const Avatar = ({ userId, image, normal, big }) => {
       <div
         className={`${classes.containerAvatar} ${
           normal ? classes.containerAvatarNormal : ""
-        } ${big ? classes.containerAvatarBig : ""}`}
+        } ${big ? classes.containerAvatarBig : ""} ${medium ? classes.containerAvatarMedium : ""}`}
       >
         {image ? (
           <img src={image} alt="profile" />

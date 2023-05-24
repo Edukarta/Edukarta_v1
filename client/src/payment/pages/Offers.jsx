@@ -1,11 +1,13 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
+import { Link as ScrollLink } from "react-scroll";
 import {
   DoneRounded,
   CloseRounded,
   KeyboardDoubleArrowDown,
 } from "@mui/icons-material/";
 import PriceCard from "../components/PriceCard";
+import Button from "../../shared/components/FormElements/Button";
 import classes from "./Offers.module.css";
 import banner from "../../img/banner.jpg";
 
@@ -28,19 +30,26 @@ const Offers = () => {
           <h2 className={classes.prices_sub_title}>
             Choose a plan and start customize.
           </h2>
-          <a href="#table" className={classes.btn_hero}>
+          <ScrollLink
+            to="table"
+            className={classes.btn_hero}
+            smooth={true}
+            duration={500}
+            spy={true}
+            offset={-50}
+          >
             <KeyboardDoubleArrowDown
               sx={{ fontSize: "60px", color: "white" }}
             />
-          </a>
+          </ScrollLink>
         </div>
         <div className={classes.container_prices_card} id="table">
           <PriceCard
-            title="Eco"
+            title="Eco Plan"
             green
             color="#088f8f"
             price="120€ / year"
-            href="#eco"
+            anchor="info"
             text_green
           >
             <div className={classes.container_body_price}>
@@ -85,12 +94,12 @@ const Offers = () => {
             </div>
           </PriceCard>
           <PriceCard
-            title="Basic"
+            title="Basic Plan"
             blue
             color="#414c68"
             price="480€ / year"
+            anchor="info"
             text_blue
-            href="#basic"
           >
             <div className={classes.container_body_price}>
               <div className={classes.container_text_icon}>
@@ -134,12 +143,12 @@ const Offers = () => {
             </div>
           </PriceCard>
           <PriceCard
-            title="Premium"
+            title="Premium Plan"
             orange
             color="#ff8b3d"
             price="1560€ / year"
             text_orange
-            href="#premium"
+            anchor="info"
           >
             <div className={classes.container_body_price}>
               <div className={classes.container_text_icon}>
@@ -183,12 +192,15 @@ const Offers = () => {
             </div>
           </PriceCard>
         </div>
-        <div className={classes.divider}></div>
-        <div className={classes.container_information_prices}>
-          <div className={classes.bloc_information_text} id="eco">
+
+        <div className={classes.container_information_prices} id="info">
+          <div className={classes.bloc_information_text}>
             <h3>Eco</h3>
             <p>
-              With the{" "}
+              Promoting education in an institution is not easy, even if some
+              people think so. Each visitor who comes across your school's page
+              must appreciate its content and find the information he is looking
+              for. With the{" "}
               <span className={classes.description_bold}>Eco plan</span> you can
               start customizing your school's file to promote it
               internationally. <br />
@@ -198,15 +210,18 @@ const Offers = () => {
               Edukarta offers you to highlight the teaching of your
               establishment.
             </p>
+            <div className={classes.container_btn_info}>
+              <Button>Subscribe</Button>
+            </div>
           </div>
-          <div className={classes.divider}></div>
-          <div className={classes.bloc_information_text} id="basic">
+        
+          <div className={classes.bloc_information_text}>
             <h3>Basic</h3>
             <p>
               Promoting education in an institution is not easy, even if some
               people think so. Each visitor who comes across your school's page
               must appreciate its content and find the information he is looking
-              for. <br /> With the{" "}
+              for. With the{" "}
               <span className={classes.description_bold}>Basic plan</span> you
               will have access to a much more advanced customization.
               <br />
@@ -218,9 +233,12 @@ const Offers = () => {
               Edukarta offers you to highlight the teaching of your
               establishment.
             </p>
+            <div className={classes.container_btn_info}>
+              <Button>Subscribe</Button>
+            </div>
           </div>
-          <div className={classes.divider}></div>
-          <div className={classes.bloc_information_text} id="premium">
+
+          <div className={classes.bloc_information_text}>
             <h3>Premium</h3>
             <p>
               With the{" "}
@@ -239,6 +257,9 @@ const Offers = () => {
               Edukarta offers you to highlight the teaching of your
               establishment.
             </p>
+            <div className={classes.container_btn_info}>
+              <Button>Subscribe</Button>
+            </div>
           </div>
         </div>
       </section>

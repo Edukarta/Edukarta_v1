@@ -1,5 +1,88 @@
-
 .button {
+  font: inherit;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid rgb(159, 203, 191);
+  border-radius: 5px;
+  background: var(--bg-button);
+  color: white;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: none;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button:hover,
+.button:active {
+  background: #5981b1;
+  border-color: #5981b1;
+}
+
+.buttonInverse {
+  background: transparent;
+  color: #5981b1;
+}
+
+.buttonInverse:hover,
+.buttonInverse:active {
+  color: white;
+  background: #5981b1;
+}
+
+.buttonDanger {
+  background: #d9534f;
+  border-color: #d9534f;
+}
+
+.buttonGreen {
+  background: #056d00;
+  border-color: #056d00;
+}
+
+.buttonDark {
+  background: #171717;
+  border-color: #171717;
+}
+
+.buttonDanger:hover,
+.buttonDanger:active {
+  background: #f34343;
+  border-color: #f34343;
+}
+
+.button:disabled,
+.button:hover:disabled,
+.button:active:disabled {
+  background: #ccc;
+  color: #979797;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.button--small {
+  font-size: 0.8rem;
+}
+
+.buttonBig {
+  font-size: 1.2rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.buttonSmall {
+  font-size: 1rem;
+  padding: 0.8rem 2rem;
+}
+
+@media (min-width: 704px) {
+  .button {
     font: inherit;
     padding: 1rem 1.5rem;
     border: 1px solid rgb(159, 203, 191);
@@ -11,72 +94,4 @@
     margin-top: 20px;
     display: inline-block;
   }
-  
-  .button:focus {
-    outline: none;
-  }
-  
-  .button:hover,
-  .button:active {
-    background: #5981B1;
-    border-color: #5981B1;
-  }
-  
-  .buttonInverse {
-    background: transparent;
-    color: #5981B1;
-  }
-  
-  .buttonInverse:hover,
-  .buttonInverse:active {
-    color: white;
-    background: #5981B1;
-  }
-  
-  .buttonDanger {
-    background: #d9534f;
-    border-color: #d9534f;
-  }
-
-  .buttonGreen{
-    background: #056d00;
-    border-color: #056d00;
-  }
-
-  .buttonDark{
-    background: #171717;
-    border-color: #171717;
-  }
-  
-  .buttonDanger:hover,
-  .buttonDanger:active {
-    background: #f34343;
-    border-color: #f34343;
-  }
-  
-  .button:disabled,
-  .button:hover:disabled,
-  .button:active:disabled {
-    background: #ccc;
-    color: #979797;
-    border-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  .button--small {
-    font-size: 0.8rem;
-  }
-  
-  .buttonBig {
-    font-size: 1.2rem;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .buttonSmall{
-    font-size: 1rem;
-    padding: 0.8rem 2rem;
-  }
+}

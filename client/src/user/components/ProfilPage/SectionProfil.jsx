@@ -8,6 +8,10 @@ import {
   Settings,
   Logout,
   CameraAlt,
+  House,
+  Language,
+  Email,
+  Send,
 } from "@mui/icons-material/";
 import { useMediaQuery } from "@mui/material";
 import { useParams } from "react-router-dom";
@@ -45,10 +49,13 @@ const SectionProfil = (props) => {
       formData.append("image", values.image);
       formData.append("imagePath", values.image.name);
 
-      const response = await fetch(`https://www.edukarta.com/api/v1/user/${id}`, {
-        method: "PATCH",
-        body: formData,
-      });
+      const response = await fetch(
+        `https://www.edukarta.com/api/v1/user/${id}`,
+        {
+          method: "PATCH",
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to update user image.");
@@ -196,25 +203,79 @@ const SectionProfil = (props) => {
           )}
         </Formik>
       </div>
-      <div className={classes.container_item_profil}>
-        <div className={classes.container_profil_account}>
-          <div className={classes.container_card_progress}>
-            <h6 className={classes.card_progress_bar_title}>
+
+      <div className={classes.container_profil_account}>
+        <div className={classes.container_card_progress}>
+          {/* <h6 className={classes.card_progress_bar_title}>
               Profil completed
             </h6>
             <div className={classes.container_progress_bar}>
               <div
-                className={`${progress < 20 ? classes.progress_bar_red : (progress > 20 && progress < 80) ? classes.progress_bar_orange : (progress >= 80 && progress < 100) ? classes.progress_bar_green : (progress === 100) ? classes.progress_bar_complete : ''}`}
+                className={`${
+                  progress < 20
+                    ? classes.progress_bar_red
+                    : progress > 20 && progress < 80
+                    ? classes.progress_bar_orange
+                    : progress >= 80 && progress < 100
+                    ? classes.progress_bar_green
+                    : progress === 100
+                    ? classes.progress_bar_complete
+                    : ""
+                }`}
                 style={{
                   width: `${progress}%`,
                 }}
               >
                 {`${progress.toFixed(0)}%`}
               </div>
+            </div> */}
+          <h4 className={classes.profil_info_title}>About Me</h4>
+          <div className={classes.profil_info_items_group}>
+            <div className={classes.profil_info_item}>
+              <House sx={{ color: "#365475", fontSize: "30px" }} />
+              <span className={classes.infos_text_light}>I live at </span>
+              <span className={classes.infos_text_bold}>
+                {props.user.address}
+              </span>
+            </div>
+            <div className={classes.profil_info_item}>
+              <Language sx={{ color: "#365475", fontSize: "30px" }} />
+              <span className={classes.infos_text_light}>I come from </span>
+              <span className={classes.infos_text_bold}>
+                {props.user.location}
+              </span>
+            </div>
+            <div className={classes.profil_info_item}>
+              <Email sx={{ color: "#365475", fontSize: "30px" }} />
+              <span className={classes.infos_text_light}>My Email </span>
+              <span className={classes.infos_text_bold}>
+                {props.user.email}
+              </span>
             </div>
           </div>
-          <div className={classes.container_profil_section}>
-            <div
+        </div>
+
+        <div className={classes.container_profil_section}>
+          <div className={classes.container_input_user_post}>
+            <div className={classes.user_post_avatar_input}>
+              <Avatar image={props.image} medium />
+              <input placeholder="how i feel today ?" />
+              <div className={classes.container_icon_send}>
+                <Send sx={{color: "white"}}/>
+              </div>
+            </div>
+          </div>
+          <div className={classes.container_user_feed_title}>
+              <h4>The latest news</h4>
+              <div className={classes.container_choice_feed}>
+                  <button>Schools</button>
+                  <button>People</button>
+              </div>
+          </div>
+          <div className={classes.container_user_feed}>
+
+          </div>
+          {/* <div
               className={classes.card_profil_item}
               onClick={() => navigate(`/profil/${props.id}/details`)}
             >
@@ -231,7 +292,10 @@ const SectionProfil = (props) => {
                 normal
               />
             </div>
-            <div className={classes.card_profil_item} onClick={() => navigate(`/profil/${props.id}/favorite`)}>
+            <div
+              className={classes.card_profil_item}
+              onClick={() => navigate(`/profil/${props.id}/favorite`)}
+            >
               <CardProfil
                 text="Wishlist"
                 icon={
@@ -288,8 +352,7 @@ const SectionProfil = (props) => {
             >
               <Logout sx={{ color: "white", fontSize: "30px" }} />
               <h6 className={classes.card_profil_logout_text}>Logout</h6>
-            </div>
-          </div>
+            </div>*/}
         </div>
       </div>
     </section>
