@@ -226,7 +226,7 @@ input{
   justify-content: space-between;
 }
 
-button{
+.container_choice_feed button{
   width: 50%;
   height: 40px;
   background:none;
@@ -237,11 +237,11 @@ button{
   cursor: pointer;
 }
 
-button:nth-child(1){
+.container_choice_feed button:nth-child(1){
   border-right: 1px solid #b1bac4;
 }
 
-button:hover{
+.container_choice_feed button:hover{
   color: #1b6fc8;
 }
 
