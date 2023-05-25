@@ -156,8 +156,11 @@ const SchoolSchema = new mongoose.Schema({
   webSiteUrl: {
     type: String,
     default: ""
+  },
+  owner:{
+    type: String,
+    default: ""
   }
-
 });
 
 const School = mongoose.model("School", SchoolSchema);

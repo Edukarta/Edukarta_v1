@@ -22,8 +22,6 @@ const CardFav = (props) => {
     getFavorite();
   }, []);
 
-  console.log(favoriteSchools);
-
   return (
     <div>
       <div className={classes.container_header_title}>

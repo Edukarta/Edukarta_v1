@@ -1428,16 +1428,6 @@ const SchoolsInfos = ({ school, getSchool }) => {
           <h4 className={classes.card_link_title}>
             Edit informations of this school
           </h4>
-          <div className={classes.container_price_links}>
-            <div className={classes.container_price_item}>
-              <h6>Edit school infos </h6>
-              <h6>50€</h6>
-            </div>
-            <div className={classes.container_price_item}>
-              <h6>become the owner of this school file </h6>
-              <h6>100€</h6>
-            </div>
-          </div>
           <div className={classes.container_btn_card_price}>
             <Button big to={"/prices"}>
               Are you the owner of this file ?

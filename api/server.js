@@ -22,6 +22,7 @@ import { updateSchool } from "./controllers/schoolsControllers.js";
 import { createRequest } from "./controllers/requestControllers.js";
 import googleRoutes from "./routes/googleRoutes.js";
 import schoolsRoutes from "./routes/schoolsRoutes.js";
+import paiementRoutes from "./routes/paiementRoutes.js";
 import requestRoute from "./routes/requestRoutes.js";
 
 //CONGIGURATION
@@ -116,6 +117,7 @@ app.use("/api/v1/googleAuth", googleRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/schools", schoolsRoutes);
 app.use("/api/v1/request", requestRoute);
+app.use("/api/v1/paiement", paiementRoutes);
 
 const PORT = process.env.PORT || 3330;
 dbConnect();

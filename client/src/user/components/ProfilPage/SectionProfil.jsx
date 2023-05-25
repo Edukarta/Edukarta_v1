@@ -22,6 +22,7 @@ import Dropzone from "react-dropzone";
 import { setLogout } from "../../../shared/state/store";
 import LoadingDots from "../../../shared/components/UIElements/LoadingDots";
 import CardFav from "./CardFav";
+import CardFriends from "./CardFriends";
 import classes from "./SectionProfil.module.css";
 
 const SectionProfil = (props) => {
@@ -201,7 +202,7 @@ const SectionProfil = (props) => {
                   <div className={classes.container_profil_menu}>
                     <Link to={`/profil/${props.id}/details`}>
                       <div className={classes.profil_menu_item}>
-                        <Settings sx={{ color: "#365475", fontSize: "30px" }} />
+                        <Settings sx={{ color: "#365475", fontSize: "25px" }} />
                         <span className={classes.profil_menu_item_text}>
                           Parameters
                         </span>
@@ -209,7 +210,7 @@ const SectionProfil = (props) => {
                     </Link>
 
                     <div className={classes.profil_menu_item}>
-                      <MenuBook sx={{ color: "#365475", fontSize: "30px" }} />
+                      <MenuBook sx={{ color: "#365475", fontSize: "25px" }} />
                       <span className={classes.profil_menu_item_text}>
                         My Courses
                       </span>
@@ -217,7 +218,7 @@ const SectionProfil = (props) => {
 
                     <div className={classes.profil_menu_item}>
                       <AccountBalanceWallet
-                        sx={{ color: "#365475", fontSize: "30px" }}
+                        sx={{ color: "#365475", fontSize: "25px"}}
                       />
                       <span className={classes.profil_menu_item_text}>
                         My Wallet
@@ -231,7 +232,7 @@ const SectionProfil = (props) => {
                         navigate("/");
                       }}
                     >
-                      <Logout sx={{ color: "crimson", fontSize: "30px" }} />
+                      <Logout sx={{ color: "crimson", fontSize: "25px"}} />
                       <span className={classes.profil_menu_item_text}>
                         Logout
                       </span>
@@ -303,6 +304,10 @@ const SectionProfil = (props) => {
 
           <div className={classes.card_item_infos}>
             <CardFav id={props.user.id} />
+          </div>
+
+          <div className={classes.card_item_infos}>
+            <CardFriends id={props.user.id} />
           </div>
         </div>
 

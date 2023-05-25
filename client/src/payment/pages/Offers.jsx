@@ -9,7 +9,7 @@ import {
 import PriceCard from "../components/PriceCard";
 import Button from "../../shared/components/FormElements/Button";
 import classes from "./Offers.module.css";
-import banner from "../../img/banner.jpg";
+import banner from "../../img/banner_v2.jpg";
 
 const Offers = () => {
   useEffect(() => {

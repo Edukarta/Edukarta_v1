@@ -5,42 +5,43 @@ const UserSchema = new mongoose.Schema({
     type: String,
     min: 2,
     max: 50,
-    required: true
+    required: true,
   },
   lastname: {
     type: String,
     min: 2,
     max: 50,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     max: 50,
     unique: true,
-    required: true
+    required: true,
   },
   password: {
     type: String,
     min: 4,
-    required: true
+    required: true,
   },
   location: {
     type: String,
-   
   },
   address: {
     type: String,
-    
   },
   phone: {
     type: String,
-   
   },
   favoriteSchools: {
     type: Array,
     default: [],
   },
   request: {
+    type: Array,
+    default: [],
+  },
+  friends: {
     type: Array,
     default: [],
   },
@@ -56,6 +57,24 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  order: [{
+    orderId: {
+      type: String,
+      default: ""
+    },
+    school: {
+      type: String,
+      default: "",
+    },
+    price: {
+      type: Number,
+      default: 0
+    },
+    orderStatus: {
+      type: String,
+      default: "En attente"
+    }
+  }],
   grade: String,
 });
 
