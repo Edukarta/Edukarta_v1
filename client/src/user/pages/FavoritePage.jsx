@@ -42,7 +42,7 @@ const FavoritePage = () => {
     }
   };
 
-  //Fonction pour supprimer mles favoris de la liste
+  //Fonction pour supprimer les favoris de la liste
   const addRemoveFav = async (schoolId) => {
     const response = await fetch(
       `https://www.edukarta.com/api/v1/user/${id}/${schoolId}`,

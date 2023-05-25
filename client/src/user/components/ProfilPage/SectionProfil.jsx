@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import CardProfil from "./CardProfil";
+import { Link } from "react-router-dom";
 import {
   AccountBalanceWallet,
-  FavoriteBorder,
   MenuBook,
-  ArrowForwardIos,
   Settings,
   Logout,
   CameraAlt,
@@ -23,6 +21,7 @@ import { Formik } from "formik";
 import Dropzone from "react-dropzone";
 import { setLogout } from "../../../shared/state/store";
 import LoadingDots from "../../../shared/components/UIElements/LoadingDots";
+import CardFav from "./CardFav";
 import classes from "./SectionProfil.module.css";
 
 const SectionProfil = (props) => {
@@ -197,18 +196,64 @@ const SectionProfil = (props) => {
                 </div>
               </div>
               <div className={classes.container_hero_user_infos}>
-                <h1 className={classes.infos_name}>{props.nameDestop}</h1>
+                <div className={classes.user_infos_item}>
+                  <h1 className={classes.infos_name}>{props.nameDestop}</h1>
+                  <div className={classes.container_profil_menu}>
+                    <Link to={`/profil/${props.id}/details`}>
+                      <div className={classes.profil_menu_item}>
+                        <Settings sx={{ color: "#365475", fontSize: "30px" }} />
+                        <span className={classes.profil_menu_item_text}>
+                          Parameters
+                        </span>
+                      </div>
+                    </Link>
+
+                    <div className={classes.profil_menu_item}>
+                      <MenuBook sx={{ color: "#365475", fontSize: "30px" }} />
+                      <span className={classes.profil_menu_item_text}>
+                        My Courses
+                      </span>
+                    </div>
+
+                    <div className={classes.profil_menu_item}>
+                      <AccountBalanceWallet
+                        sx={{ color: "#365475", fontSize: "30px" }}
+                      />
+                      <span className={classes.profil_menu_item_text}>
+                        My Wallet
+                      </span>
+                    </div>
+
+                    <div
+                      className={classes.profil_menu_item}
+                      onClick={() => {
+                        dispatch(setLogout());
+                        navigate("/");
+                      }}
+                    >
+                      <Logout sx={{ color: "crimson", fontSize: "30px" }} />
+                      <span className={classes.profil_menu_item_text}>
+                        Logout
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </form>
           )}
         </Formik>
       </div>
 
+      {/* LEFT BLOC */}
       <div className={classes.container_profil_account}>
-        <div className={classes.container_card_progress}>
-          {/* <h6 className={classes.card_progress_bar_title}>
-              Profil completed
-            </h6>
+        <div className={classes.container_card_infos_left}>
+          <div className={classes.card_item_infos}>
+            <h4 className={classes.profil_info_title}>About Me</h4>
+
+            {/* BARRE DE PROGRESSION */}
+            <div className={classes.card_progress_bar_title}>
+              <span>Profil completed</span>
+            </div>
             <div className={classes.container_progress_bar}>
               <div
                 className={`${
@@ -228,131 +273,60 @@ const SectionProfil = (props) => {
               >
                 {`${progress.toFixed(0)}%`}
               </div>
-            </div> */}
-          <h4 className={classes.profil_info_title}>About Me</h4>
-          <div className={classes.profil_info_items_group}>
-            <div className={classes.profil_info_item}>
-              <House sx={{ color: "#365475", fontSize: "30px" }} />
-              <span className={classes.infos_text_light}>I live at </span>
-              <span className={classes.infos_text_bold}>
-                {props.user.address}
-              </span>
             </div>
-            <div className={classes.profil_info_item}>
-              <Language sx={{ color: "#365475", fontSize: "30px" }} />
-              <span className={classes.infos_text_light}>I come from </span>
-              <span className={classes.infos_text_bold}>
-                {props.user.location}
-              </span>
+            <div className={classes.infos_divider}></div>
+
+            <div className={classes.profil_info_items_group}>
+              <div className={classes.profil_info_item}>
+                <House sx={{ color: "#365475", fontSize: "30px" }} />
+                <span className={classes.infos_text_light}>I live at </span>
+                <span className={classes.infos_text_bold}>
+                  {props.user.address}
+                </span>
+              </div>
+              <div className={classes.profil_info_item}>
+                <Language sx={{ color: "#365475", fontSize: "30px" }} />
+                <span className={classes.infos_text_light}>I come from </span>
+                <span className={classes.infos_text_bold}>
+                  {props.user.location}
+                </span>
+              </div>
+              <div className={classes.profil_info_item}>
+                <Email sx={{ color: "#365475", fontSize: "30px" }} />
+                <span className={classes.infos_text_light}>My Email </span>
+                <span className={classes.infos_text_bold}>
+                  {props.user.email}
+                </span>
+              </div>
             </div>
-            <div className={classes.profil_info_item}>
-              <Email sx={{ color: "#365475", fontSize: "30px" }} />
-              <span className={classes.infos_text_light}>My Email </span>
-              <span className={classes.infos_text_bold}>
-                {props.user.email}
-              </span>
-            </div>
+          </div>
+
+          <div className={classes.card_item_infos}>
+            <CardFav id={props.user.id} />
           </div>
         </div>
 
+        {/* RIGHT BLOC */}
         <div className={classes.container_profil_section}>
           <div className={classes.container_input_user_post}>
             <div className={classes.user_post_avatar_input}>
               <Avatar image={props.image} medium />
               <input placeholder="how i feel today ?" />
               <div className={classes.container_icon_send}>
-                <Send sx={{color: "white"}}/>
+                <Send sx={{ color: "white" }} />
               </div>
             </div>
           </div>
           <div className={classes.container_user_feed_title}>
-              <h4>The latest news</h4>
-              <div className={classes.container_choice_feed}>
-                  <button>Schools</button>
-                  <button>People</button>
-              </div>
+            <h4>The latest news</h4>
+            <div className={classes.container_choice_feed}>
+              <button>Schools</button>
+              <button>People</button>
+            </div>
           </div>
           <div className={classes.container_user_feed}>
-
+            {/* IMPLEMENTER LE FETCH DES POST ECOLE ET USER */}
           </div>
-          {/* <div
-              className={classes.card_profil_item}
-              onClick={() => navigate(`/profil/${props.id}/details`)}
-            >
-              <CardProfil
-                text="Parameters"
-                icon={<Settings sx={{ color: "#555555", fontSize: "30px" }} />}
-                arrow={
-                  !isSmallScreen && (
-                    <ArrowForwardIos
-                      sx={{ color: "#555555", fontSize: "18px" }}
-                    />
-                  )
-                }
-                normal
-              />
-            </div>
-            <div
-              className={classes.card_profil_item}
-              onClick={() => navigate(`/profil/${props.id}/favorite`)}
-            >
-              <CardProfil
-                text="Wishlist"
-                icon={
-                  <FavoriteBorder sx={{ color: "#555555", fontSize: "30px" }} />
-                }
-                arrow={
-                  !isSmallScreen && (
-                    <ArrowForwardIos
-                      sx={{ color: "#555555", fontSize: "18px" }}
-                    />
-                  )
-                }
-                normal
-              />
-            </div>
-            <div className={classes.card_profil_item}>
-              <CardProfil
-                text="Courses"
-                icon={<MenuBook sx={{ color: "#555555", fontSize: "30px" }} />}
-                arrow={
-                  !isSmallScreen && (
-                    <ArrowForwardIos
-                      sx={{ color: "#555555", fontSize: "18px" }}
-                    />
-                  )
-                }
-                normal
-              />
-            </div>
-            <div className={classes.card_profil_item}>
-              <CardProfil
-                text="Wallet"
-                icon={
-                  <AccountBalanceWallet
-                    sx={{ color: "#555555", fontSize: "30px" }}
-                  />
-                }
-                arrow={
-                  !isSmallScreen && (
-                    <ArrowForwardIos
-                      sx={{ color: "#555555", fontSize: "18px" }}
-                    />
-                  )
-                }
-                normal
-              />
-            </div>
-            <div
-              className={classes.card_profil_item_logout}
-              onClick={() => {
-                dispatch(setLogout());
-                navigate("/");
-              }}
-            >
-              <Logout sx={{ color: "white", fontSize: "30px" }} />
-              <h6 className={classes.card_profil_logout_text}>Logout</h6>
-            </div>*/}
         </div>
       </div>
     </section>

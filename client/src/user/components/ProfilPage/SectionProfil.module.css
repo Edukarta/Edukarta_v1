@@ -34,10 +34,6 @@ a {
   text-decoration: none;
 }
 
-.card_profil_item_logout {
-  display: none;
-}
-
 .container_hero_user {
   width: 100%;
   height: 200px;
@@ -56,16 +52,43 @@ a {
 
 .container_hero_user_infos {
   width: 100%;
-  height: 50px;
+  height: 80px;
   padding: 1px;
   display: flex;
   align-items: center;
+  padding: 0 10px;
+}
+
+.user_infos_item{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container_profil_menu{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.profil_menu_item{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.profil_menu_item:nth-child(4){
+  display: none;
+}
+
+.profil_menu_item_text{
+  display: none;
 }
 
 .infos_name {
   color: rgb(26, 26, 26);
-  margin-left: 10px;
-  margin-top: 20px;
   font-size: 25px;
   font-weight: 500;
   color: #4f4f4f;
@@ -128,18 +151,30 @@ a {
 }
 
 .container_profil_account {
-  width: 95%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
 }
 
-.container_card_progress {
+.container_card_infos_left{
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 100%);
+  gap: 20px;
+}
+
+.card_item_infos {
   width: 100%;
   padding: 10px;
-  border-radius: 10px;
   border: 1px solid #d1d1d1;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.profil_info_title{
+  font-size: 22px;
+  font-weight: 500;
 }
 
 .profil_info_items_group{
@@ -187,15 +222,17 @@ a {
   align-items: center;
   gap: 15px;
 }
+
+
 input{
-  width: 100%;
+  width: 80%;
   outline: none;
   border: none;
   border-bottom: 2px solid #b1bac4;
 }
 
 .container_icon_send{
-  height: 40px;
+  height: 50px;
   width: 60px;
   display: flex;
   align-items: center;
@@ -256,22 +293,29 @@ input{
 /* --------- */
 
 .card_progress_bar_title {
-  font-size: 20px;
-  text-align: center;
+  font-size: 15px;
   font-weight: 400;
+  text-align: center;
   color: #333;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 0 auto;
 }
 
 .container_progress_bar {
   width: 80%;
   height: 25px;
-  margin: 0 auto;
+  margin: 10px auto 30px auto;
   display: flex;
   align-items: center;
+  flex-direction: column;
   background-color: #333;
   border-radius: 20px;
+}
+
+.infos_divider{
+  width: 100%;
+  height: 1px;
+  margin-bottom: 30px;
+  background-color: #b0b0b0;
 }
 
 .progress_bar_red {
@@ -325,7 +369,13 @@ input{
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 
-@media (min-width: 1080px) {
+@media(min-width: 600px){
+  input{
+    width: 100%;
+  } 
+}
+
+@media (min-width: 1250px) {
   .container_item {
     margin-bottom: 0;
   }
@@ -346,59 +396,18 @@ input{
   }
 
   .container_hero_user_infos {
-    height: 100px;
-    border-bottom: 3px solid #ccd3db;
+    padding: 0 160px 0 280px;
   }
 
-  .infos_name {
-    position: absolute;
-    color: rgb(26, 26, 26);
-    margin-left: 280px;
-    margin-top: 0px;
-    font-size: 30px;
-    font-weight: 500;
-    color: #2a2a2a;
-    z-index: 4;
-  }
-
-  .icon_arrow_profil {
-    display: none;
-  }
-
-  .card_profil_item {
-    border: 1px solid #d1d1d1;
-    border-radius: 10px;
-    height: 155px;
-    padding: 30px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-  }
-
-  .card_profil_item:hover {
-    background-color: #f1f1f1;
-  }
-
-  .card_profil_item_logout {
+  .profil_menu_item:nth-child(4){
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background-color: #365475;
-    border: 1px solid #d1d1d1;
-    border-radius: 10px;
-    height: 150px;
-    padding: 30px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
   }
 
-  .card_profil_item_logout:hover {
-    background-color: #6288b1;
-  }
-
-  .card_profil_logout_text {
-    color: white;
-    font-size: 30px;
+  .profil_menu_item_text{
+    display: block;
+    font-size: 17px;
+    color: #4f4f4f;
+    font-weight: 600;
   }
 
   .section_account_title {
@@ -454,15 +463,10 @@ input{
     width: 100%;
   }
 
-  .container_icon_send{
-    height: 40px;
-    width: 50px;
-  }
-
-  .container_card_progress {
+  .card_item_infos {
     width: 400px;
     height: 500px;
-    padding: 30px;
+    padding: 20px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -472,6 +476,8 @@ input{
     font-size: 22px;
     font-weight: 500;
   }
+
+
 
  
 }
