@@ -245,8 +245,8 @@ const SectionProfil = (props) => {
         </Formik>
       </div>
 
-      {/* LEFT BLOC */}
       <div className={classes.container_profil_account}>
+          {/* LEFT BLOC */}
         <div className={classes.container_card_infos_left}>
           <div className={classes.card_item_infos}>
             <h4 className={classes.profil_info_title}>About Me</h4>

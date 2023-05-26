@@ -21,9 +21,9 @@ const ProfilPage = () => {
 
   return (
     <>
-      <div className={classes.container_navigation}>
+      <header className={classes.container_navigation}>
         <MainNavigation type="profil" />
-      </div>
+      </header>
       <div className={classes.containerProfil}>
         <div className={classes.container_info}>
           <SectionProfil
