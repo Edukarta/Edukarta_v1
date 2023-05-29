@@ -12,7 +12,7 @@ const Input = (props) => {
         onBlur={props.onBlur}
         value={props.value}
       />
-    ) : (
+    ) : props.element === "textarea" ? (
       <textarea
         id={props.id}
         rows={props.rows || 3}
@@ -21,10 +21,27 @@ const Input = (props) => {
         onBlur={props.onBlur}
         value={props.value}
       />
-    );
+    ) : props.element === "select" ? (
+      <select
+        id={props.id}
+        onChange={props.onChange}
+        onBlur={props.onBlur}
+        value={props.value}
+      >
+        {props.options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    ) : null;
 
   return (
-    <div className={`${classes.formControl} ${props.mobile && classes.formControlMobile}`}>
+    <div
+      className={`${classes.formControl} ${
+        props.mobile && classes.formControlMobile
+      }`}
+    >
       <label htmlFor={props.id}>{props.label}</label>
       {element}
     </div>

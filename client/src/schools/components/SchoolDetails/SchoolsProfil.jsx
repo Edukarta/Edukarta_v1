@@ -19,10 +19,13 @@ import Youtube from "react-youtube";
 import fav from "../../../img/star_default.png";
 import Button from "../../../shared/components/FormElements/Button";
 import Avatar from "../../../shared/components/UIElements/Avatar";
+import ModalForm from "../../../shared/components/UIElements/ModalForm";
 import classes from "./SchoolsProfil.module.css";
 
 const SchoolsProfil = ({ school, getSchools }) => {
   const [isMoved, setIsMoved] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isOwner, setIsOwner] = useState(true);
   const [slideNumber, setSlideNumber] = useState(0);
   const listRef = useRef();
   const videoId = school?.videoPath.split("v=")[1];
@@ -65,6 +68,11 @@ const SchoolsProfil = ({ school, getSchools }) => {
 
   return (
     <>
+      <ModalForm
+        show={modalIsOpen}
+        text="Modify Infos"
+        onClick={() => setModalIsOpen(false)}
+      />
       <section>
         {/* HERO */}
         <div className={classes.container_item}>
@@ -126,128 +134,137 @@ const SchoolsProfil = ({ school, getSchools }) => {
           </form>
         </div>
 
-        <div className={classes.container_profil_account}>
-          {/* LEFT BLOC */}
-          <div className={classes.container_card_infos_left}>
-            <div className={classes.card_item_infos}>
-              <h4 className={classes.profil_info_title}>About Us</h4>
-              <div className={classes.profil_info_items_group}>
-                <div className={classes.profil_info_item}>
-                  <Create sx={{ color: "#365475", fontSize: "30px" }} />
-                  <span className={classes.infos_text_light}>Created at </span>
-                  <span className={classes.infos_text_bold}>
-                    {school?.foundationDate}
-                  </span>
-                </div>
-
-                <div className={classes.profil_info_item}>
-                  <Person sx={{ color: "#365475", fontSize: "30px" }} />
-                  <span className={classes.infos_text_light}>
-                    Number of students
-                  </span>
-                  <span className={classes.infos_text_bold}>
-                    {school?.numberOfStudents}
-                  </span>
-                </div>
-
-                <div className={classes.profil_info_item}>
-                  <School sx={{ color: "#365475", fontSize: "30px" }} />
-                  <span className={classes.infos_text_light}>Level </span>
-                  <span className={classes.infos_text_bold}>
-                    {school?.levelUpdate}
-                  </span>
-                </div>
-
-                <div className={classes.profil_info_item}>
-                  <House sx={{ color: "#365475", fontSize: "30px" }} />
-                  <span className={classes.infos_text_light}>Sector </span>
-                  <span className={classes.infos_text_bold}>
-                    {school?.sectorUpdate}
-                  </span>
-                </div>
-
-                <div className={classes.profil_info_item}>
-                  <Phone sx={{ color: "#365475", fontSize: "30px" }} />
-                  <span className={classes.infos_text_light}>Phone</span>
-                  <span className={classes.infos_text_bold}>
-                    {school?.phone}
-                  </span>
-                </div>
-
-                <div className={classes.profil_info_item}>
-                  <Email sx={{ color: "#365475", fontSize: "30px" }} />
-                  <span className={classes.infos_text_light}>Email</span>
-                  <span className={classes.infos_text_bold}>
-                    {school?.email}
-                  </span>
-                </div>
-
-                <div className={classes.profil_info_item}>
-                  <Web sx={{ color: "#365475", fontSize: "30px" }} />
-                  <span className={classes.infos_text_light}>Web Site</span>
-                  <span className={classes.infos_text_bold}>
-                    {school?.webSiteUrl}
-                  </span>
-                </div>
-                <Button to={"/prices"}>Are you the owner ?</Button>
-              </div>
-            </div>
-
-            <div className={classes.card_item_infos}>
-              <h4 className={classes.profil_info_title}>Description</h4>
-              <p className={classes.profil_info_description}>
-                {school?.description ? (
-                  <p className={classes.profil_infos_school_description}>
-                    {school?.description}
-                  </p>
-                ) : (
-                  <p className={classes.profil_infos_school_description}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consequatur ullam aliquam atque voluptas tenetur modi cumque
-                    accusamus sapiente alias odio. Sed minus rerum, placeat
-                    doloribus impedit eveniet aut nobis natus.
-                  </p>
-                )}
-              </p>
-              <Button to={"/prices"} big>
-                Apply
-              </Button>
-            </div>
-          </div>
-
-          {/* RIGHT BLOC */}
-          <div className={classes.container_profil_section}>
-            <div className={classes.container_carrousel_right_Bloc}>
-              <div className={classes.container_arrow_left}>
-                <ArrowBack
-                  sx={{ fontSize: "30px", color: "#333" }}
-                  onClick={() => handleClick("left")}
-                />
-              </div>
-              <div className={classes.container_img_group} ref={listRef}>
-                {school.videoPath && (
-                  <div className={classes.container_img_item}>
-                    <Youtube
-                      videoId={videoId}
-                      opts={{ width: "100%", height: "100%" }}
-                      className={classes.video_youtube}
-                    />
+        <>
+          <div className={classes.container_profil_account}>
+            {/* LEFT BLOC */}
+            <div className={classes.container_card_infos_left}>
+              <div className={classes.card_item_infos}>
+                <h4 className={classes.profil_info_title}>About Us</h4>
+                <div className={classes.profil_info_items_group}>
+                  <div className={classes.profil_info_item}>
+                    <Create sx={{ color: "#365475", fontSize: "30px" }} />
+                    <span className={classes.infos_text_light}>
+                      Created at{" "}
+                    </span>
+                    <span className={classes.infos_text_bold}>
+                      {school?.foundationDate}
+                    </span>
                   </div>
-                )}
-                {sliderImages.map((image, index) => (
-                  <div className={classes.container_img_item} key={index}>
-                    {image.image ? (
-                      <img src={image.image} alt={`Image ${index}`} />
-                    ) : (
-                      <img
-                        src="https://cdn-prod.voxy.com/wp-content/uploads/2012/10/school-1.jpg"
-                        alt="default image"
+
+                  <div className={classes.profil_info_item}>
+                    <Person sx={{ color: "#365475", fontSize: "30px" }} />
+                    <span className={classes.infos_text_light}>
+                      Number of students
+                    </span>
+                    <span className={classes.infos_text_bold}>
+                      {school?.numberOfStudents}
+                    </span>
+                  </div>
+
+                  <div className={classes.profil_info_item}>
+                    <School sx={{ color: "#365475", fontSize: "30px" }} />
+                    <span className={classes.infos_text_light}>Level </span>
+                    <span className={classes.infos_text_bold}>
+                      {school?.levelUpdate}
+                    </span>
+                  </div>
+
+                  <div className={classes.profil_info_item}>
+                    <House sx={{ color: "#365475", fontSize: "30px" }} />
+                    <span className={classes.infos_text_light}>Sector </span>
+                    <span className={classes.infos_text_bold}>
+                      {school?.sectorUpdate}
+                    </span>
+                  </div>
+
+                  <div className={classes.profil_info_item}>
+                    <Phone sx={{ color: "#365475", fontSize: "30px" }} />
+                    <span className={classes.infos_text_light}>Phone</span>
+                    <span className={classes.infos_text_bold}>
+                      {school?.phone}
+                    </span>
+                  </div>
+
+                  <div className={classes.profil_info_item}>
+                    <Email sx={{ color: "#365475", fontSize: "30px" }} />
+                    <span className={classes.infos_text_light}>Email</span>
+                    <span className={classes.infos_text_bold}>
+                      {school?.email}
+                    </span>
+                  </div>
+
+                  <div className={classes.profil_info_item}>
+                    <Web sx={{ color: "#365475", fontSize: "30px" }} />
+                    <span className={classes.infos_text_light}>Web Site</span>
+                    <span className={classes.infos_text_bold}>
+                      {school?.webSiteUrl}
+                    </span>
+                  </div>
+                  {!isOwner ? (
+                    <Button to={"/prices"}>Are you the owner ?</Button>
+                  ) : (
+                    <Button onClick={() => setModalIsOpen(true)}>
+                      Modify Infos
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              <div className={classes.card_item_infos}>
+                <h4 className={classes.profil_info_title}>Description</h4>
+                <p className={classes.profil_info_description}>
+                  {school?.description ? (
+                    <p className={classes.profil_infos_school_description}>
+                      {school?.description}
+                    </p>
+                  ) : (
+                    <p className={classes.profil_infos_school_description}>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Consequatur ullam aliquam atque voluptas tenetur modi
+                      cumque accusamus sapiente alias odio. Sed minus rerum,
+                      placeat doloribus impedit eveniet aut nobis natus.
+                    </p>
+                  )}
+                </p>
+                <Button to={"/prices"} big>
+                  Apply
+                </Button>
+              </div>
+            </div>
+
+            {/* RIGHT BLOC */}
+            <div className={classes.container_profil_section}>
+              <div className={classes.container_carrousel_right_Bloc}>
+                <div className={classes.container_arrow_left}>
+                  <ArrowBack
+                    sx={{ fontSize: "30px", color: "#333" }}
+                    onClick={() => handleClick("left")}
+                  />
+                </div>
+                <div className={classes.container_img_group} ref={listRef}>
+                  {school.videoPath && (
+                    <div className={classes.container_img_item}>
+                      <Youtube
+                        videoId={videoId}
+                        opts={{ width: "100%", height: "100%" }}
+                        className={classes.video_youtube}
                       />
-                    )}
-                  </div>
-                ))}
-              </div>
-              {/* <div className={classes.container_thumbnail}>
+                    </div>
+                  )}
+                  {sliderImages.map((image, index) => (
+                    <div className={classes.container_img_item} key={index}>
+                      {image.image ? (
+                        <img src={image.image} alt={`Image ${index}`} />
+                      ) : (
+                        <img
+                          src="https://cdn-prod.voxy.com/wp-content/uploads/2012/10/school-1.jpg"
+                          alt="default image"
+                        />
+                      )}
+                    </div>
+                  ))}
+                </div>
+                {/* <div className={classes.container_thumbnail}>
                 {sliderImages.map((image, index) => (
                   <div
                     className={classes.container_img_item_thumbnail}
@@ -265,24 +282,25 @@ const SchoolsProfil = ({ school, getSchools }) => {
                   </div>
                 ))}
               </div> */}
-              <div
-                className={classes.container_arrow_right}
-                onClick={() => handleClick("right")}
-              >
-                <ArrowForward sx={{ fontSize: "30px", color: "#333" }} />
+                <div
+                  className={classes.container_arrow_right}
+                  onClick={() => handleClick("right")}
+                >
+                  <ArrowForward sx={{ fontSize: "30px", color: "#333" }} />
+                </div>
               </div>
-            </div>
-            <div className={classes.container_input_school_post}>
-              <h4 className={classes.profil_info_title}>What's New Today?</h4>
-              <div className={classes.container_input}>
-                <Avatar medium />
-                <button className={classes.input_btn_school}>
-                  What would you like to talk about?
-                </button>
+              <div className={classes.container_input_school_post}>
+                <h4 className={classes.profil_info_title}>What's New Today?</h4>
+                <div className={classes.container_input}>
+                  <Avatar medium />
+                  <button className={classes.input_btn_school}>
+                    What would you like to talk about?
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       </section>
     </>
   );

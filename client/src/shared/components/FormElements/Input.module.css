@@ -4,30 +4,34 @@
   
   .formControl label,
   .formControl input,
-  .formControl textarea {
+  .formControl textarea,
+  .formControl select {
     display: block;
   }
 
-  .formControl input::placeholder,
-  .formControl textarea::placeholder{
-    font-style: italic;
-    text-transform: capitalize;
-  }
+  /* .formControl input::placeholder,
+  .formControl textarea::placeholder,
+  .formControl select::placeholder{
+   
+  } */
   
   .formControl label {
-    font-weight: 400;
-    text-align: center;
+    font-weight: 500;
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 5px;
   }
   
   .formControl input,
-  .formControl textarea {
+  .formControl textarea,
+  .formControl select {
     width: 100%;
     height: 50px;
     font: inherit;
     border: 1px solid #ccc;
     background: #f8f8f8;
     padding: 15px;
-    border-radius: 8px;
+    border-radius: 5px;
   }
 
   .formControlMobile input{
