@@ -24,15 +24,20 @@ import classes from "./SchoolsProfil.module.css";
 const SchoolsProfil = ({ school, getSchools }) => {
   const [isMoved, setIsMoved] = useState(false);
   const [slideNumber, setSlideNumber] = useState(0);
+  const listRef = useRef();
+  const videoId = school?.videoPath.split("v=")[1];
   const sliderImages = [
     { image: school?.imgPath1 },
     { image: school?.imgPath2 },
     { image: school?.imgPath3 },
     { image: school?.imgPath4 },
+    { image: school?.imgPath5 },
   ];
-  const listRef = useRef();
+
+  //FONCTION CARROUSEL
   const handleClick = (direction) => {
     setIsMoved(true);
+    const totalSlides = school.videoPath ? 5 : 4;
     const slideWidth = listRef.current.offsetWidth + 15;
     const distance = slideWidth * slideNumber;
 
@@ -43,13 +48,18 @@ const SchoolsProfil = ({ school, getSchools }) => {
       }px)`;
     }
 
-    if (direction === "right" && slideNumber < 5) {
+    if (direction === "right" && slideNumber < totalSlides) {
       setSlideNumber(slideNumber + 1);
       listRef.current.style.transform = `translateX(${
         -distance - slideWidth
       }px)`;
     }
   };
+
+  // const handleThumbnailClick = (index) => {
+  //   setSlideNumber(index + 1);
+  //   console.log(index + "clicked" )
+  // };
 
   console.log(slideNumber);
 
@@ -184,7 +194,24 @@ const SchoolsProfil = ({ school, getSchools }) => {
             </div>
 
             <div className={classes.card_item_infos}>
-              <h4 className={classes.profil_info_title}>About Us</h4>
+              <h4 className={classes.profil_info_title}>Description</h4>
+              <p className={classes.profil_info_description}>
+                {school?.description ? (
+                  <p className={classes.profil_infos_school_description}>
+                    {school?.description}
+                  </p>
+                ) : (
+                  <p className={classes.profil_infos_school_description}>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Consequatur ullam aliquam atque voluptas tenetur modi cumque
+                    accusamus sapiente alias odio. Sed minus rerum, placeat
+                    doloribus impedit eveniet aut nobis natus.
+                  </p>
+                )}
+              </p>
+              <Button to={"/prices"} big>
+                Apply
+              </Button>
             </div>
           </div>
 
@@ -198,17 +225,60 @@ const SchoolsProfil = ({ school, getSchools }) => {
                 />
               </div>
               <div className={classes.container_img_group} ref={listRef}>
+                {school.videoPath && (
+                  <div className={classes.container_img_item}>
+                    <Youtube
+                      videoId={videoId}
+                      opts={{ width: "100%", height: "100%" }}
+                      className={classes.video_youtube}
+                    />
+                  </div>
+                )}
                 {sliderImages.map((image, index) => (
-                  <div className={classes.container_img_item } key={index}>
-                    <img src={image.image} alt={`Image ${index}`} />
+                  <div className={classes.container_img_item} key={index}>
+                    {image.image ? (
+                      <img src={image.image} alt={`Image ${index}`} />
+                    ) : (
+                      <img
+                        src="https://cdn-prod.voxy.com/wp-content/uploads/2012/10/school-1.jpg"
+                        alt="default image"
+                      />
+                    )}
                   </div>
                 ))}
               </div>
+              {/* <div className={classes.container_thumbnail}>
+                {sliderImages.map((image, index) => (
+                  <div
+                    className={classes.container_img_item_thumbnail}
+                    key={index}
+                    onClick={() => handleThumbnailClick(index)}
+                  >
+                    {image.image ? (
+                      <img src={image.image} alt={`Image ${index}`} />
+                    ) : (
+                      <img
+                        src="https://cdn-prod.voxy.com/wp-content/uploads/2012/10/school-1.jpg"
+                        alt="default image"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div> */}
               <div
                 className={classes.container_arrow_right}
                 onClick={() => handleClick("right")}
               >
                 <ArrowForward sx={{ fontSize: "30px", color: "#333" }} />
+              </div>
+            </div>
+            <div className={classes.container_input_school_post}>
+              <h4 className={classes.profil_info_title}>What's New Today?</h4>
+              <div className={classes.container_input}>
+                <Avatar medium />
+                <button className={classes.input_btn_school}>
+                  What would you like to talk about?
+                </button>
               </div>
             </div>
           </div>
