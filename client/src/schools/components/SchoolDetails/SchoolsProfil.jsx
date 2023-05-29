@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
+import { useParams } from "react-router-dom";
 import {
   CameraAlt,
   LocationOn,
   Public,
   Flag,
-  LocationCity,
   ArrowBack,
   ArrowForward,
   House,
@@ -22,7 +22,8 @@ import Avatar from "../../../shared/components/UIElements/Avatar";
 import ModalForm from "../../../shared/components/UIElements/ModalForm";
 import classes from "./SchoolsProfil.module.css";
 
-const SchoolsProfil = ({ school, getSchools }) => {
+const SchoolsProfil = ({ school, getSchool }) => {
+  const { id } = useParams();
   const [isMoved, setIsMoved] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isOwner, setIsOwner] = useState(true);
@@ -59,12 +60,7 @@ const SchoolsProfil = ({ school, getSchools }) => {
     }
   };
 
-  // const handleThumbnailClick = (index) => {
-  //   setSlideNumber(index + 1);
-  //   console.log(index + "clicked" )
-  // };
-
-  console.log(slideNumber);
+ 
 
   return (
     <>
@@ -72,6 +68,10 @@ const SchoolsProfil = ({ school, getSchools }) => {
         show={modalIsOpen}
         text="Modify Infos"
         onClick={() => setModalIsOpen(false)}
+        modal={() => setModalIsOpen(false)}
+        getSchool={getSchool}
+        id={id}
+        school={school}
       />
       <section>
         {/* HERO */}
@@ -98,24 +98,24 @@ const SchoolsProfil = ({ school, getSchools }) => {
             <div className={classes.container_hero_school_infos}>
               <div className={classes.container_sub_header}>
                 <div className={classes.bloc_infos}>
-                  <h1 className={classes.infos_name}>{school?.name}</h1>
+                  <h1 className={classes.infos_name}>{school?.nameUpdate ? school?.nameUpdate : school?.name}</h1>
                   <div className={classes.infos_item_group}>
                     <div className={classes.infos_item}>
                       <LocationOn sx={{ fontSize: "20px", color: "#365475" }} />
                       <span className={classes.school_sub_info}>
-                        {school?.address}
+                        {school?.addressUpdate ? school?.addressUpdate : school?.address }
                       </span>
                     </div>
                     <div className={classes.infos_item}>
                       <Public sx={{ fontSize: "20px", color: "#365475" }} />
                       <span className={classes.school_sub_info}>
-                        {school?.continent}
+                      {school?.continentUpdate ? school?.continentUpdate : school?.continent }
                       </span>
                     </div>
                     <div className={classes.infos_item}>
                       <Flag sx={{ fontSize: "20px", color: "#365475" }} />
                       <span className={classes.school_sub_info}>
-                        {school?.country}
+                      {school?.countryUpdate ? school?.countryUpdate : school?.country }
                       </span>
                     </div>
                   </div>
@@ -197,7 +197,7 @@ const SchoolsProfil = ({ school, getSchools }) => {
                     <Web sx={{ color: "#365475", fontSize: "30px" }} />
                     <span className={classes.infos_text_light}>Web Site</span>
                     <span className={classes.infos_text_bold}>
-                      {school?.webSiteUrl}
+                      <a href={`https://${school?.webSiteUrl}`} target="_blank">{school?.webSiteUrl}</a>
                     </span>
                   </div>
                   {!isOwner ? (
@@ -212,7 +212,7 @@ const SchoolsProfil = ({ school, getSchools }) => {
 
               <div className={classes.card_item_infos}>
                 <h4 className={classes.profil_info_title}>Description</h4>
-                <p className={classes.profil_info_description}>
+                <div className={classes.profil_info_description}>
                   {school?.description ? (
                     <p className={classes.profil_infos_school_description}>
                       {school?.description}
@@ -225,7 +225,7 @@ const SchoolsProfil = ({ school, getSchools }) => {
                       placeat doloribus impedit eveniet aut nobis natus.
                     </p>
                   )}
-                </p>
+                </div>
                 <Button to={"/prices"} big>
                   Apply
                 </Button>
@@ -264,24 +264,6 @@ const SchoolsProfil = ({ school, getSchools }) => {
                     </div>
                   ))}
                 </div>
-                {/* <div className={classes.container_thumbnail}>
-                {sliderImages.map((image, index) => (
-                  <div
-                    className={classes.container_img_item_thumbnail}
-                    key={index}
-                    onClick={() => handleThumbnailClick(index)}
-                  >
-                    {image.image ? (
-                      <img src={image.image} alt={`Image ${index}`} />
-                    ) : (
-                      <img
-                        src="https://cdn-prod.voxy.com/wp-content/uploads/2012/10/school-1.jpg"
-                        alt="default image"
-                      />
-                    )}
-                  </div>
-                ))}
-              </div> */}
                 <div
                   className={classes.container_arrow_right}
                   onClick={() => handleClick("right")}

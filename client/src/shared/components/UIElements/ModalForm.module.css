@@ -92,9 +92,12 @@
 
 .modal_body {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Deux colonnes de largeur égale */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Deux colonnes de largeur égale */
   gap: 10px; /* Espacement entre les colonnes et les lignes */
   padding: 20px;
+}
+.modal_body > div:last-child {
+    grid-column: 1 / -1; /* L'élément s'étend sur toutes les colonnes */
 }
 
 .modal_divider {

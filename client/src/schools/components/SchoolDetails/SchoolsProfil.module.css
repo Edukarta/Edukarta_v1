@@ -158,6 +158,14 @@
   font-weight: 600;
 }
 
+.infos_text_bold a{
+  color: #06448b;
+}
+
+.infos_text_bold a:hover{
+  color: #3486e3;
+}
+
 .container_profil_section {
   width: 100%;
   display: flex;
