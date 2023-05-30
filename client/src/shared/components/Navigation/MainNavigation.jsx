@@ -60,7 +60,7 @@ const MainNavigation = ({ type }) => {
             <Link to="/register">Sign up / Login</Link>
           )}
         </div>
-        {type != "profil" && (
+        {type !== "profil" && (
           <SearchBar
             value={searchQuery}
             onKeyDown={handleKeyDown}

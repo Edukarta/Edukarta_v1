@@ -43,7 +43,7 @@
   justify-content: center;
   align-items: center;
   border: 1px solid white;
-  right: 20px;
+  right: -5px;
   bottom: 15px;
   width: 40px;
   height: 40px;
@@ -77,21 +77,28 @@
 }
 
 .infos_item_group {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
 .infos_item {
+  max-width: 200px;
   display: flex;
   align-items: center;
+  overflow: hidden;
   gap: 2px;
 }
+
 
 .school_sub_info {
   font-weight: 600;
   font-size: 13px;
   color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .bloc_icon_item {
@@ -316,6 +323,12 @@
   margin-top: 20px;
 }
 
+@media (min-width: 550px){
+  .infos_item {
+    max-width: 400px;
+  }
+}
+
 @media (min-width: 1250px) {
   .container_item {
     margin-bottom: 0;
@@ -351,6 +364,8 @@
   .school_sub_info {
     font-size: 17px;
   }
+
+  
 
   .profil_menu_item:nth-child(4) {
     display: flex;

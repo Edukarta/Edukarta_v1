@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Formik } from "formik";
 import Dropzone from "react-dropzone";
+import Tooltip from "@mui/material/Tooltip";
 import LoadingDots from "../../../shared/components/UIElements/LoadingDots";
 import { useParams } from "react-router-dom";
 import {
@@ -246,11 +247,20 @@ const SchoolsProfil = ({ school, getSchool }) => {
                         <LocationOn
                           sx={{ fontSize: "20px", color: "#365475" }}
                         />
-                        <span className={classes.school_sub_info}>
-                          {school?.addressUpdate
-                            ? school?.addressUpdate
-                            : school?.address}
-                        </span>
+                        <Tooltip
+                          title={
+                            school.addressUpdate
+                              ? school.addressUpdate
+                              : school.address
+                          }
+                          enterTouchDelay={0}
+                        >
+                          <span className={classes.school_sub_info}>
+                            {school?.addressUpdate
+                              ? school?.addressUpdate
+                              : school?.address}
+                          </span>
+                        </Tooltip>
                       </div>
                       <div className={classes.infos_item}>
                         <Public sx={{ fontSize: "20px", color: "#365475" }} />
@@ -365,7 +375,9 @@ const SchoolsProfil = ({ school, getSchool }) => {
 
             {!isSmallScreen && (
               <div className={classes.card_img_mobile}>
-              <h4 className={classes.profil_info_title}>{school?.name} images</h4>
+                <h4 className={classes.profil_info_title}>
+                  {school?.name} images
+                </h4>
                 <div className={classes.container_grid_img_mobile}>
                   {imgMobile.map(
                     (image, index) =>
