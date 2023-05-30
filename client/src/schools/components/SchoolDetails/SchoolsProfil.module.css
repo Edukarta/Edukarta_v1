@@ -65,13 +65,14 @@
   height: 80px;
   display: flex;
   align-items: center;
-  padding: 60px 10px;
+  padding: 70px 10px;
 }
 
 .infos_name {
   color: rgb(26, 26, 26);
   font-size: 23px;
   font-weight: 500;
+  margin-bottom: 10px;
   color: #4f4f4f;
 }
 
@@ -133,7 +134,7 @@
   gap: 20px;
 }
 
-.profil_infos_school_description{
+.profil_infos_school_description {
   line-height: 25px;
   font-size: 17px;
   color: #4f4f4f;
@@ -160,11 +161,11 @@
   font-weight: 600;
 }
 
-.infos_text_bold a{
+.infos_text_bold a {
   color: #06448b;
 }
 
-.infos_text_bold a:hover{
+.infos_text_bold a:hover {
   color: #3486e3;
 }
 
@@ -174,6 +175,11 @@
   flex-direction: column;
   margin-top: 10px;
   gap: 20px;
+}
+
+.profil_info_title {
+  font-size: 22px;
+  font-weight: 500;
 }
 
 .container_carrousel_right_Bloc {
@@ -197,10 +203,10 @@
 }
 
 .container_img_item {
-    flex-grow: 1;
-    height: 100%;
-    min-width: 100%; 
-    gap: 15px;
+  flex-grow: 1;
+  height: 100%;
+  min-width: 100%;
+  gap: 15px;
 }
 
 .container_img_item img {
@@ -215,7 +221,7 @@
   min-width: 100%;
 }
 
-.card_img_mobile{
+.card_img_mobile {
   width: 100%;
   height: 300px;
   padding: 10px 5px;
@@ -224,16 +230,15 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.container_grid_img_mobile{
+.container_grid_img_mobile {
   width: 100%;
-  height: 100%;
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(auto-fill, 110px);
   gap: 5px;
 }
 
-.container_img{
+.container_img {
   width: 110px;
   height: 110px;
   border-radius: 10px;
@@ -241,25 +246,24 @@
   transition: all 0.1s ease-in-out;
 }
 
-.container_img:hover{
+.container_img:hover {
   transform: scale(1.03);
 }
 
-.container_img img{
+.container_img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
 }
 
-
-.container_input{
+.container_input {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.input_btn_school{
+.input_btn_school {
   padding: 10px;
   width: 80%;
   border: none;
@@ -271,7 +275,7 @@
   cursor: pointer;
 }
 
-.input_btn_school:hover{
+.input_btn_school:hover {
   background-color: #e1e1e1;
 }
 
@@ -279,7 +283,7 @@
   transform: translateX(-200px);
 }
 
-.container_input_school_post{
+.container_input_school_post {
   width: 100%;
   padding: 15px;
   background-color: white;
@@ -289,13 +293,13 @@
   overflow: hidden;
 }
 
-.container_btn_banner_apply{
+.container_btn_banner_apply {
   position: absolute;
   top: 50%;
   left: 50%;
 }
 
-.container_btn_logo_apply{
+.container_btn_logo_apply {
   position: absolute;
   top: 30%;
   left: 50%;
@@ -311,7 +315,6 @@
   padding: 15px;
   margin-top: 20px;
 }
-
 
 @media (min-width: 1250px) {
   .container_item {
@@ -422,14 +425,20 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   }
 
-  .profil_info_title {
-    font-size: 22px;
-    font-weight: 500;
-  }
-
   .container_carrousel_right_Bloc {
     height: 500px;
     padding: 15px;
+  }
+
+  .carousel_no_images {
+    width: 100%;
+    height: 100%;
+    border: 2px dashed #656565;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: #989898;
   }
 
   .container_arrow_left {

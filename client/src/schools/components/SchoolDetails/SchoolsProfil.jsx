@@ -136,36 +136,78 @@ const SchoolsProfil = ({ school, getSchool }) => {
         id={id}
         school={school}
       />
-   
-        {/* HERO */}
-        <div className={classes.container_item}>
-          <Formik initialValues={initialValues} onSubmit={handleFormSubmit}>
-            {({
-              values,
-              handleBlur,
-              handleChange,
-              handleSubmit,
-              setFieldValue,
-              resetForm,
-            }) => (
-              <form
-                className={classes.form_banner_school}
-                onSubmit={handleSubmit}
+
+      {/* HERO */}
+      <div className={classes.container_item}>
+        <Formik initialValues={initialValues} onSubmit={handleFormSubmit}>
+          {({
+            values,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+            setFieldValue,
+            resetForm,
+          }) => (
+            <form
+              className={classes.form_banner_school}
+              onSubmit={handleSubmit}
+            >
+              <div
+                className={classes.container_hero_school}
+                style={{
+                  backgroundImage: `url(${school?.imgPath6})`,
+                  backgroundSize: "cover",
+                }}
               >
-                <div
-                  className={classes.container_hero_school}
-                  style={{
-                    backgroundImage: `url(${school?.imgPath6})`,
-                    backgroundSize: "cover",
-                  }}
+                {imgHeroIsSubmitting && !isLoading && (
+                  <div className={classes.container_btn_banner_apply}>
+                    <Button type="submit">Apply</Button>
+                  </div>
+                )}
+                {isLoading && imgHeroIsSubmitting && (
+                  <div className={classes.container_btn_banner_apply}>
+                    <LoadingDots />
+                  </div>
+                )}
+                <Dropzone
+                  acceptedFiles=".jpeg,.jpg,.png"
+                  multiple={false}
+                  onDrop={(acceptedFiles) =>
+                    handleImageDrop1(acceptedFiles, setFieldValue)
+                  }
                 >
-                  {imgHeroIsSubmitting && !isLoading && (
-                    <div className={classes.container_btn_banner_apply}>
-                      <Button type="submit">Apply</Button>
+                  {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <div
+                        className={classes.container_icon_add_banner}
+                        onClick={() => setImgHeroIsSubmitting(true)}
+                      >
+                        <CameraAlt sx={{ color: "white", fontSize: "17px" }} />
+                      </div>
                     </div>
                   )}
-                  {isLoading && imgHeroIsSubmitting && (
-                    <div className={classes.container_btn_banner_apply}>
+                </Dropzone>
+                <div className={classes.container_hero_school_avatar}>
+                  {isSmallScreen ? (
+                    <Avatar
+                      image={school?.imgPath7}
+                      big
+                      type="school"
+                      link={`/school/${id}`}
+                    />
+                  ) : (
+                    <Avatar image={school?.imgPath7} normal type="school" />
+                  )}
+                  {imgLogoIsSubmitting && !isLoading && (
+                    <div className={classes.container_btn_logo_apply}>
+                      <Button type="submit" small>
+                        Apply
+                      </Button>
+                    </div>
+                  )}
+                  {isLoading && imgLogoIsSubmitting && (
+                    <div className={classes.container_btn_logo_apply}>
                       <LoadingDots />
                     </div>
                   )}
@@ -173,15 +215,15 @@ const SchoolsProfil = ({ school, getSchool }) => {
                     acceptedFiles=".jpeg,.jpg,.png"
                     multiple={false}
                     onDrop={(acceptedFiles) =>
-                      handleImageDrop1(acceptedFiles, setFieldValue)
+                      handleImageDrop2(acceptedFiles, setFieldValue)
                     }
                   >
                     {({ getRootProps, getInputProps }) => (
                       <div {...getRootProps()}>
                         <input {...getInputProps()} />
                         <div
-                          className={classes.container_icon_add_banner}
-                          onClick={() => setImgHeroIsSubmitting(true)}
+                          className={classes.container_icon_add_avatar}
+                          onClick={() => setImgLogoIsSubmitting(true)}
                         >
                           <CameraAlt
                             sx={{ color: "white", fontSize: "17px" }}
@@ -190,270 +232,226 @@ const SchoolsProfil = ({ school, getSchool }) => {
                       </div>
                     )}
                   </Dropzone>
-                  <div className={classes.container_hero_school_avatar}>
-                    {isSmallScreen ? (
-                      <Avatar image={school?.imgPath7} big type="school" link={`/school/${id}`} />
-                    ) : (
-                      <Avatar image={school?.imgPath7} normal type="school" />
-                    )}
-                    {imgLogoIsSubmitting && !isLoading && (
-                      <div className={classes.container_btn_logo_apply}>
-                        <Button type="submit" small>
-                          Apply
-                        </Button>
-                      </div>
-                    )}
-                    {isLoading && imgLogoIsSubmitting && (
-                      <div className={classes.container_btn_logo_apply}>
-                        <LoadingDots />
-                      </div>
-                    )}
-                    <Dropzone
-                      acceptedFiles=".jpeg,.jpg,.png"
-                      multiple={false}
-                      onDrop={(acceptedFiles) =>
-                        handleImageDrop2(acceptedFiles, setFieldValue)
-                      }
-                    >
-                      {({ getRootProps, getInputProps }) => (
-                        <div {...getRootProps()}>
-                          <input {...getInputProps()} />
-                          <div
-                            className={classes.container_icon_add_avatar}
-                            onClick={() => setImgLogoIsSubmitting(true)}
-                          >
-                            <CameraAlt
-                              sx={{ color: "white", fontSize: "17px" }}
-                            />
-                          </div>
-                        </div>
-                      )}
-                    </Dropzone>
-                  </div>
                 </div>
-                {/* SCHOOL INFOS */}
-                <div className={classes.container_hero_school_infos}>
-                  <div className={classes.container_sub_header}>
-                    <div className={classes.bloc_infos}>
-                      <h1 className={classes.infos_name}>
-                        {school?.nameUpdate ? school?.nameUpdate : school?.name}
-                      </h1>
-                      <div className={classes.infos_item_group}>
-                        <div className={classes.infos_item}>
-                          <LocationOn
-                            sx={{ fontSize: "20px", color: "#365475" }}
-                          />
-                          <span className={classes.school_sub_info}>
-                            {school?.addressUpdate
-                              ? school?.addressUpdate
-                              : school?.address}
-                          </span>
-                        </div>
-                        <div className={classes.infos_item}>
-                          <Public sx={{ fontSize: "20px", color: "#365475" }} />
-                          <span className={classes.school_sub_info}>
-                            {school?.continentUpdate
-                              ? school?.continentUpdate
-                              : school?.continent}
-                          </span>
-                        </div>
-                        <div className={classes.infos_item}>
-                          <Flag sx={{ fontSize: "20px", color: "#365475" }} />
-                          <span className={classes.school_sub_info}>
-                            {school?.countryUpdate
-                              ? school?.countryUpdate
-                              : school?.country}
-                          </span>
-                        </div>
+              </div>
+              {/* SCHOOL INFOS */}
+              <div className={classes.container_hero_school_infos}>
+                <div className={classes.container_sub_header}>
+                  <div className={classes.bloc_infos}>
+                    <h1 className={classes.infos_name}>
+                      {school?.nameUpdate ? school?.nameUpdate : school?.name}
+                    </h1>
+                    <div className={classes.infos_item_group}>
+                      <div className={classes.infos_item}>
+                        <LocationOn
+                          sx={{ fontSize: "20px", color: "#365475" }}
+                        />
+                        <span className={classes.school_sub_info}>
+                          {school?.addressUpdate
+                            ? school?.addressUpdate
+                            : school?.address}
+                        </span>
+                      </div>
+                      <div className={classes.infos_item}>
+                        <Public sx={{ fontSize: "20px", color: "#365475" }} />
+                        <span className={classes.school_sub_info}>
+                          {school?.continentUpdate
+                            ? school?.continentUpdate
+                            : school?.continent}
+                        </span>
+                      </div>
+                      <div className={classes.infos_item}>
+                        <Flag sx={{ fontSize: "20px", color: "#365475" }} />
+                        <span className={classes.school_sub_info}>
+                          {school?.countryUpdate
+                            ? school?.countryUpdate
+                            : school?.country}
+                        </span>
                       </div>
                     </div>
+                  </div>
 
+                  {isSmallScreen && (
                     <div className={classes.bloc_icon}>
                       <div className={classes.bloc_icon_item}>
-                        {isSmallScreen && (
-                          <div className={classes.container_icon_fav}>
-                            <img src={fav} alt="favoris" />
-                          </div>
-                        )}
+                        <div className={classes.container_icon_fav}>
+                          <img src={fav} alt="favoris" />
+                        </div>
                         <span>Add</span>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </form>
-            )}
-          </Formik>
-        </div>
-        <>
-          <div className={classes.container_profil_account}>
-            {/* LEFT BLOC */}
-            <div className={classes.container_card_infos_left}>
-              <div className={classes.card_item_infos}>
-                <h4 className={classes.profil_info_title}>About Us</h4>
-                <div className={classes.profil_info_items_group}>
-                  <div className={classes.profil_info_item}>
-                    <Create sx={{ color: "#365475", fontSize: "30px" }} />
-                    <span className={classes.infos_text_light}>
-                      Created at{" "}
-                    </span>
-                    <span className={classes.infos_text_bold}>
-                      {school?.foundationDate}
-                    </span>
-                  </div>
-
-                  <div className={classes.profil_info_item}>
-                    <Person sx={{ color: "#365475", fontSize: "30px" }} />
-                    <span className={classes.infos_text_light}>
-                      Number of students
-                    </span>
-                    <span className={classes.infos_text_bold}>
-                      {school?.numberOfStudents}
-                    </span>
-                  </div>
-
-                  <div className={classes.profil_info_item}>
-                    <School sx={{ color: "#365475", fontSize: "30px" }} />
-                    <span className={classes.infos_text_light}>Level </span>
-                    <span className={classes.infos_text_bold}>
-                      {school?.levelUpdate}
-                    </span>
-                  </div>
-
-                  <div className={classes.profil_info_item}>
-                    <House sx={{ color: "#365475", fontSize: "30px" }} />
-                    <span className={classes.infos_text_light}>Sector </span>
-                    <span className={classes.infos_text_bold}>
-                      {school?.sectorUpdate}
-                    </span>
-                  </div>
-
-                  <div className={classes.profil_info_item}>
-                    <Phone sx={{ color: "#365475", fontSize: "30px" }} />
-                    <span className={classes.infos_text_light}>Phone</span>
-                    <span className={classes.infos_text_bold}>
-                      {school?.phone}
-                    </span>
-                  </div>
-
-                  <div className={classes.profil_info_item}>
-                    <Email sx={{ color: "#365475", fontSize: "30px" }} />
-                    <span className={classes.infos_text_light}>Email</span>
-                    <span className={classes.infos_text_bold}>
-                      {school?.email}
-                    </span>
-                  </div>
-
-                  <div className={classes.profil_info_item}>
-                    <Web sx={{ color: "#365475", fontSize: "30px" }} />
-                    <span className={classes.infos_text_light}>Web Site</span>
-                    <span className={classes.infos_text_bold}>
-                      <a href={`https://${school?.webSiteUrl}`} target="_blank">
-                        {school?.webSiteUrl}
-                      </a>
-                    </span>
-                  </div>
-                  {!isOwner ? (
-                    <Button to={"/prices"}>Are you the owner ?</Button>
-                  ) : (
-                    <Button onClick={() => setModalIsOpen(true)}>
-                      Modify Infos
-                    </Button>
                   )}
                 </div>
               </div>
+            </form>
+          )}
+        </Formik>
+      </div>
+      <>
+        <div className={classes.container_profil_account}>
+          {/* LEFT BLOC */}
+          <div className={classes.container_card_infos_left}>
+            <div className={classes.card_item_infos}>
+              <h4 className={classes.profil_info_title}>About Us</h4>
+              <div className={classes.profil_info_items_group}>
+                <div className={classes.profil_info_item}>
+                  <Create sx={{ color: "#365475", fontSize: "30px" }} />
+                  <span className={classes.infos_text_light}>Created at </span>
+                  <span className={classes.infos_text_bold}>
+                    {school?.foundationDate}
+                  </span>
+                </div>
 
-              {!isSmallScreen && (
-                <div className={classes.card_img_mobile}>
-                  <div className={classes.container_grid_img_mobile}>
-                    {imgMobile.map((image, index) => {
-                      return (
+                <div className={classes.profil_info_item}>
+                  <Person sx={{ color: "#365475", fontSize: "30px" }} />
+                  <span className={classes.infos_text_light}>
+                    Number of students
+                  </span>
+                  <span className={classes.infos_text_bold}>
+                    {school?.numberOfStudents}
+                  </span>
+                </div>
+
+                <div className={classes.profil_info_item}>
+                  <School sx={{ color: "#365475", fontSize: "30px" }} />
+                  <span className={classes.infos_text_light}>Level </span>
+                  <span className={classes.infos_text_bold}>
+                    {school?.levelUpdate}
+                  </span>
+                </div>
+
+                <div className={classes.profil_info_item}>
+                  <House sx={{ color: "#365475", fontSize: "30px" }} />
+                  <span className={classes.infos_text_light}>Sector </span>
+                  <span className={classes.infos_text_bold}>
+                    {school?.sectorUpdate}
+                  </span>
+                </div>
+
+                <div className={classes.profil_info_item}>
+                  <Phone sx={{ color: "#365475", fontSize: "30px" }} />
+                  <span className={classes.infos_text_light}>Phone</span>
+                  <span className={classes.infos_text_bold}>
+                    {school?.phone}
+                  </span>
+                </div>
+
+                <div className={classes.profil_info_item}>
+                  <Email sx={{ color: "#365475", fontSize: "30px" }} />
+                  <span className={classes.infos_text_light}>Email</span>
+                  <span className={classes.infos_text_bold}>
+                    {school?.email}
+                  </span>
+                </div>
+
+                <div className={classes.profil_info_item}>
+                  <Web sx={{ color: "#365475", fontSize: "30px" }} />
+                  <span className={classes.infos_text_light}>Web Site</span>
+                  <span className={classes.infos_text_bold}>
+                    <a href={`https://${school?.webSiteUrl}`} target="_blank">
+                      {school?.webSiteUrl}
+                    </a>
+                  </span>
+                </div>
+                {!isOwner ? (
+                  <Button to={"/prices"}>Are you the owner ?</Button>
+                ) : (
+                  <Button onClick={() => setModalIsOpen(true)}>
+                    Modify Infos
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            {!isSmallScreen && (
+              <div className={classes.card_img_mobile}>
+              <h4 className={classes.profil_info_title}>{school?.name} images</h4>
+                <div className={classes.container_grid_img_mobile}>
+                  {imgMobile.map(
+                    (image, index) =>
+                      image.image && (
                         <div className={classes.container_img} key={index}>
                           <img src={image.image} alt={image.image} />
                         </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-
-              <div className={classes.card_item_infos}>
-                <h4 className={classes.profil_info_title}>Description</h4>
-                <div className={classes.profil_info_description}>
-                  {school?.description ? (
-                    <p className={classes.profil_infos_school_description}>
-                      {school?.description}
-                    </p>
-                  ) : (
-                    <p className={classes.profil_infos_school_description}>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Consequatur ullam aliquam atque voluptas tenetur modi
-                      cumque accusamus sapiente alias odio. Sed minus rerum,
-                      placeat doloribus impedit eveniet aut nobis natus.
-                    </p>
+                      )
                   )}
                 </div>
-                <Button to={"/prices"} big>
-                  Apply
-                </Button>
               </div>
-            </div>
+            )}
 
-            {/* RIGHT BLOC */}
-            <div className={classes.container_profil_section}>
-              {isSmallScreen && (
-                <div className={classes.container_carrousel_right_Bloc}>
-                  <>
-                    <div className={classes.container_arrow_left}>
-                      <ArrowBack
-                        sx={{ fontSize: "30px", color: "#333" }}
-                        onClick={() => handleClick("left")}
-                      />
-                    </div>
-                    <div className={classes.container_img_group} ref={listRef}>
-                      {school.videoPath && (
-                        <div className={classes.container_img_item}>
-                          <Youtube
-                            videoId={videoId}
-                            opts={{ width: "100%", height: "100%" }}
-                            className={classes.video_youtube}
-                          />
-                        </div>
-                      )}
-                      {sliderImages.map((image, index) => (
-                        <div className={classes.container_img_item} key={index}>
-                          {image.image ? (
-                            <img src={image.image} alt={`Image ${index}`} />
-                          ) : (
-                            <img
-                              src="https://cdn-prod.voxy.com/wp-content/uploads/2012/10/school-1.jpg"
-                              alt="default image"
-                            />
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                    <div
-                      className={classes.container_arrow_right}
-                      onClick={() => handleClick("right")}
-                    >
-                      <ArrowForward sx={{ fontSize: "30px", color: "#333" }} />
-                    </div>
-                  </>
-                </div>
-              )}
-              <div className={classes.container_input_school_post}>
-                <h4 className={classes.profil_info_title}>What's New Today?</h4>
-                <div className={classes.container_input}>
-                  <Avatar medium image={school?.imgPath7} />
-                  <button className={classes.input_btn_school}>
-                    What would you like to talk about?
-                  </button>
-                </div>
+            <div className={classes.card_item_infos}>
+              <h4 className={classes.profil_info_title}>Description</h4>
+              <div className={classes.profil_info_description}>
+                {school?.description ? (
+                  <p className={classes.profil_infos_school_description}>
+                    {school?.description}
+                  </p>
+                ) : (
+                  <p className={classes.profil_infos_school_description}>
+                    No description yet.
+                  </p>
+                )}
+              </div>
+              <Button to={"/prices"} big>
+                Apply
+              </Button>
+            </div>
+          </div>
+
+          {/* RIGHT BLOC */}
+          <div className={classes.container_profil_section}>
+            {isSmallScreen && (
+              <div className={classes.container_carrousel_right_Bloc}>
+                <>
+                  <div className={classes.container_arrow_left}>
+                    <ArrowBack
+                      sx={{ fontSize: "30px", color: "#333" }}
+                      onClick={() => handleClick("left")}
+                    />
+                  </div>
+                  <div className={classes.container_img_group} ref={listRef}>
+                    {school.videoPath && (
+                      <div className={classes.container_img_item}>
+                        <Youtube
+                          videoId={videoId}
+                          opts={{ width: "100%", height: "100%" }}
+                          className={classes.video_youtube}
+                        />
+                      </div>
+                    )}
+                    {sliderImages.map((image, index) => (
+                      <div className={classes.container_img_item} key={index}>
+                        {image.image ? (
+                          <img src={image.image} alt={`Image ${index}`} />
+                        ) : (
+                          <div className={classes.carousel_no_images}>
+                            No img here yet.
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <div
+                    className={classes.container_arrow_right}
+                    onClick={() => handleClick("right")}
+                  >
+                    <ArrowForward sx={{ fontSize: "30px", color: "#333" }} />
+                  </div>
+                </>
+              </div>
+            )}
+            <div className={classes.container_input_school_post}>
+              <h4 className={classes.profil_info_title}>What's New Today?</h4>
+              <div className={classes.container_input}>
+                <Avatar medium image={school?.imgPath7} />
+                <button className={classes.input_btn_school}>
+                  What would you like to talk about?
+                </button>
               </div>
             </div>
           </div>
-        </>
-
+        </div>
+      </>
     </>
   );
 };
