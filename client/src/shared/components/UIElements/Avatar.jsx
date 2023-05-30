@@ -2,24 +2,29 @@ import React from "react";
 import { Link } from "react-router-dom";
 import classes from "./Avatar.module.css";
 
-const Avatar = ({ userId, image, normal, big, medium }) => {
-
+const Avatar = ({ userId, image, normal, big, medium, type, link }) => {
   const avatarClassName = big
     ? classes.containerAvatarBig
     : classes.containerAvatar;
   return (
-    <Link to={`/profil/${userId}`}>
+    <Link to={link}>
       <div
         className={`${classes.containerAvatar} ${
           normal ? classes.containerAvatarNormal : ""
-        } ${big ? classes.containerAvatarBig : ""} ${medium ? classes.containerAvatarMedium : ""}`}
+        } ${big ? classes.containerAvatarBig : ""} ${
+          medium ? classes.containerAvatarMedium : ""
+        }`}
       >
         {image ? (
-          <img src={image} alt="profile" />
+          <img src={image} alt={image} />
+        ) : type === "school" ? (
+          <div className={classes.container_add_logo_here}>
+            <h6>Add your logo here</h6>
+          </div>
         ) : (
           <img
             src="https://www.pega.com/modules/shared/pega_user_image/assets/user-icon.png"
-            alt="profile"
+            alt="user"
           />
         )}
       </div>

@@ -1,5 +1,5 @@
 .container_item {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .form_banner_school {
@@ -32,8 +32,8 @@
 
 .container_hero_school_avatar {
   position: absolute;
-  bottom: -100px;
-  left: 30px;
+  bottom: -30px;
+  left: 10px;
   z-index: 1;
 }
 
@@ -63,14 +63,14 @@
 .container_hero_school_infos {
   width: 100%;
   height: 80px;
-  padding: 0 160px 0 250px;
   display: flex;
   align-items: center;
+  padding: 60px 10px;
 }
 
 .infos_name {
   color: rgb(26, 26, 26);
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 500;
   color: #4f4f4f;
 }
@@ -89,6 +89,7 @@
 
 .school_sub_info {
   font-weight: 600;
+  font-size: 13px;
   color: #333;
 }
 
@@ -121,6 +122,7 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  padding: 15px;
 }
 
 .container_card_infos_left {
@@ -175,7 +177,7 @@
 }
 
 .container_carrousel_right_Bloc {
-  height: 500px;
+  height: 300px;
   width: 100%;
   padding: 15px;
   background-color: white;
@@ -213,60 +215,43 @@
   min-width: 100%;
 }
 
-.container_arrow_left {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  top: 50%;
-  left: 15px;
-  background-color: rgba(255, 255, 255, 0.8);
-  height: 50px;
-  width: 50px;
-  cursor: pointer;
-  z-index: 55555;
-}
-
-.container_arrow_right {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  top: 50%;
-  right: 15px;
-  background-color: rgba(255, 255, 255, 0.8);
-  height: 50px;
-  width: 50px;
-  cursor: pointer;
-  z-index: 55555;
-}
-
-.container_thumbnail{
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
+.card_img_mobile{
   width: 100%;
-  height: 70px;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  z-index: 55555;
+  height: 300px;
+  padding: 10px 5px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.container_img_item_thumbnail{
-  width: 60px;
-  height: 40px;
-}
-
-.container_img_item_thumbnail img{
+.container_grid_img_mobile{
   width: 100%;
   height: 100%;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 110px);
+  gap: 5px;
 }
+
+.container_img{
+  width: 110px;
+  height: 110px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  transition: all 0.1s ease-in-out;
+}
+
+.container_img:hover{
+  transform: scale(1.03);
+}
+
+.container_img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
 
 .container_input{
   display: flex;
@@ -304,6 +289,29 @@
   overflow: hidden;
 }
 
+.container_btn_banner_apply{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.container_btn_logo_apply{
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.container_profil_section {
+  width: 100%;
+  margin: 0 0 100px 0;
+}
+
+.container_input_school_post {
+  padding: 15px;
+  margin-top: 20px;
+}
+
 
 @media (min-width: 1250px) {
   .container_item {
@@ -320,13 +328,25 @@
     margin-bottom: 0;
   }
 
-  .container_hero_user_avatar {
+  .container_hero_school_avatar {
     bottom: -100px;
-    left: 80px;
+    left: 30px;
   }
 
-  .container_hero_user_infos {
-    padding: 0 160px 0 280px;
+  .container_hero_school_infos {
+    width: 100%;
+    height: 80px;
+    padding: 0 160px 0 250px;
+    display: flex;
+    align-items: center;
+  }
+
+  .infos_name {
+    font-size: 25px;
+  }
+
+  .school_sub_info {
+    font-size: 17px;
   }
 
   .profil_menu_item:nth-child(4) {
@@ -405,5 +425,40 @@
   .profil_info_title {
     font-size: 22px;
     font-weight: 500;
+  }
+
+  .container_carrousel_right_Bloc {
+    height: 500px;
+    padding: 15px;
+  }
+
+  .container_arrow_left {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    top: 50%;
+    left: 15px;
+    background-color: rgba(255, 255, 255, 0.8);
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    z-index: 55555;
+  }
+
+  .container_arrow_right {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    top: 50%;
+    right: 15px;
+    background-color: rgba(255, 255, 255, 0.8);
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    z-index: 55555;
   }
 }

@@ -45,6 +45,14 @@ const SchoolSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  imgPath6: {
+    type: String,
+    default: "",
+  },
+  imgPath7: {
+    type: String,
+    default: "",
+  },
   address: {
     type: String,
     required: true,

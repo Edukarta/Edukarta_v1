@@ -415,7 +415,7 @@ export const updateSchool = async (req, res, next) => {
   }
 
   if (req.files) {
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 7; i++) {
       const fieldName = `picture${i}`;
       if (req.files[fieldName]) {
         const result = await cloudinary.uploader.upload(

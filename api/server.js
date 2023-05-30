@@ -100,6 +100,8 @@ app.patch(
     { name: "picture3", maxCount: 1 },
     { name: "picture4", maxCount: 1 },
     { name: "picture5", maxCount: 1 },
+    { name: "picture6", maxCount: 1 },
+    { name: "picture7", maxCount: 1 },
   ]),
   updateSchool
 );

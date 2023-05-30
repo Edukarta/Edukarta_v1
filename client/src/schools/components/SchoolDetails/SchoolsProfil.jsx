@@ -1,4 +1,7 @@
 import React, { useState, useRef } from "react";
+import { Formik } from "formik";
+import Dropzone from "react-dropzone";
+import LoadingDots from "../../../shared/components/UIElements/LoadingDots";
 import { useParams } from "react-router-dom";
 import {
   CameraAlt,
@@ -17,6 +20,7 @@ import {
 } from "@mui/icons-material/";
 import Youtube from "react-youtube";
 import fav from "../../../img/star_default.png";
+import { useMediaQuery } from "@mui/material";
 import Button from "../../../shared/components/FormElements/Button";
 import Avatar from "../../../shared/components/UIElements/Avatar";
 import ModalForm from "../../../shared/components/UIElements/ModalForm";
@@ -24,12 +28,23 @@ import classes from "./SchoolsProfil.module.css";
 
 const SchoolsProfil = ({ school, getSchool }) => {
   const { id } = useParams();
+  const [imgHeroIsSubmitting, setImgHeroIsSubmitting] = useState(false);
+  const [imgLogoIsSubmitting, setImgLogoIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isMoved, setIsMoved] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isOwner, setIsOwner] = useState(true);
   const [slideNumber, setSlideNumber] = useState(0);
+  const isSmallScreen = useMediaQuery("(min-width: 1080px)");
   const listRef = useRef();
   const videoId = school?.videoPath.split("v=")[1];
+  const imgMobile = [
+    { image: school.imgPath1 },
+    { image: school.imgPath2 },
+    { image: school.imgPath3 },
+    { image: school.imgPath4 },
+    { image: school.imgPath5 },
+  ];
   const sliderImages = [
     { image: school?.imgPath1 },
     { image: school?.imgPath2 },
@@ -37,7 +52,6 @@ const SchoolsProfil = ({ school, getSchool }) => {
     { image: school?.imgPath4 },
     { image: school?.imgPath5 },
   ];
-
   //FONCTION CARROUSEL
   const handleClick = (direction) => {
     setIsMoved(true);
@@ -60,7 +74,56 @@ const SchoolsProfil = ({ school, getSchool }) => {
     }
   };
 
- 
+  const initialValues = {
+    picture6: school.imgPath6,
+    picture7: school.imgPath7,
+  };
+
+  const Update = async (values, onSubmitProps) => {
+    setIsLoading(true);
+    const formData = new FormData();
+    for (let value in values) {
+      if (value.startsWith("picture")) {
+        formData.append(value, values[value]);
+        const index = value.slice(-1);
+        const fieldName = `imgPath${index}`;
+        formData.append(fieldName, values[fieldName]);
+      } else {
+        formData.append(value, values[value]);
+      }
+    }
+
+    const updateSchoolResponse = await fetch(
+      `http://localhost:5000/api/v1/schools/${id}`,
+      {
+        method: "PATCH",
+        body: formData,
+      }
+    );
+    const updateSchool = await updateSchoolResponse.json();
+    setImgHeroIsSubmitting(false);
+    setImgLogoIsSubmitting(false);
+    setIsLoading(false);
+    getSchool();
+
+    console.log(updateSchool);
+  };
+
+  const handleImageDrop1 = (acceptedFiles, setFieldValue) => {
+    const file = acceptedFiles[0];
+    setFieldValue("picture6", file);
+    setFieldValue("imgPath6", file.name);
+  };
+
+  const handleImageDrop2 = (acceptedFiles, setFieldValue) => {
+    const file = acceptedFiles[0];
+    setFieldValue("picture7", file);
+    setFieldValue("imgPath7", file.name);
+  };
+
+  const handleFormSubmit = async (values, onSubmitProps) => {
+    await Update(values, onSubmitProps);
+  };
 
   return (
     <>
@@ -73,67 +136,154 @@ const SchoolsProfil = ({ school, getSchool }) => {
         id={id}
         school={school}
       />
-      <section>
+   
         {/* HERO */}
         <div className={classes.container_item}>
-          <form className={classes.form_banner_school}>
-            <div
-              className={classes.container_hero_school}
-              style={{
-                backgroundImage: `url(${school?.imgPath1})`,
-                backgroundSize: "cover",
-              }}
-            >
-              <div className={classes.container_icon_add_banner}>
-                <CameraAlt sx={{ color: "white", fontSize: "17px" }} />
-              </div>
-              <div className={classes.container_hero_school_avatar}>
-                <Avatar big />
-                <div className={classes.container_icon_add_avatar}>
-                  <CameraAlt sx={{ color: "white", fontSize: "17px" }} />
-                </div>
-              </div>
-            </div>
-            {/* SCHOOL INFOS */}
-            <div className={classes.container_hero_school_infos}>
-              <div className={classes.container_sub_header}>
-                <div className={classes.bloc_infos}>
-                  <h1 className={classes.infos_name}>{school?.nameUpdate ? school?.nameUpdate : school?.name}</h1>
-                  <div className={classes.infos_item_group}>
-                    <div className={classes.infos_item}>
-                      <LocationOn sx={{ fontSize: "20px", color: "#365475" }} />
-                      <span className={classes.school_sub_info}>
-                        {school?.addressUpdate ? school?.addressUpdate : school?.address }
-                      </span>
+          <Formik initialValues={initialValues} onSubmit={handleFormSubmit}>
+            {({
+              values,
+              handleBlur,
+              handleChange,
+              handleSubmit,
+              setFieldValue,
+              resetForm,
+            }) => (
+              <form
+                className={classes.form_banner_school}
+                onSubmit={handleSubmit}
+              >
+                <div
+                  className={classes.container_hero_school}
+                  style={{
+                    backgroundImage: `url(${school?.imgPath6})`,
+                    backgroundSize: "cover",
+                  }}
+                >
+                  {imgHeroIsSubmitting && !isLoading && (
+                    <div className={classes.container_btn_banner_apply}>
+                      <Button type="submit">Apply</Button>
                     </div>
-                    <div className={classes.infos_item}>
-                      <Public sx={{ fontSize: "20px", color: "#365475" }} />
-                      <span className={classes.school_sub_info}>
-                      {school?.continentUpdate ? school?.continentUpdate : school?.continent }
-                      </span>
+                  )}
+                  {isLoading && imgHeroIsSubmitting && (
+                    <div className={classes.container_btn_banner_apply}>
+                      <LoadingDots />
                     </div>
-                    <div className={classes.infos_item}>
-                      <Flag sx={{ fontSize: "20px", color: "#365475" }} />
-                      <span className={classes.school_sub_info}>
-                      {school?.countryUpdate ? school?.countryUpdate : school?.country }
-                      </span>
-                    </div>
+                  )}
+                  <Dropzone
+                    acceptedFiles=".jpeg,.jpg,.png"
+                    multiple={false}
+                    onDrop={(acceptedFiles) =>
+                      handleImageDrop1(acceptedFiles, setFieldValue)
+                    }
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <div
+                          className={classes.container_icon_add_banner}
+                          onClick={() => setImgHeroIsSubmitting(true)}
+                        >
+                          <CameraAlt
+                            sx={{ color: "white", fontSize: "17px" }}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </Dropzone>
+                  <div className={classes.container_hero_school_avatar}>
+                    {isSmallScreen ? (
+                      <Avatar image={school?.imgPath7} big type="school" link={`/school/${id}`} />
+                    ) : (
+                      <Avatar image={school?.imgPath7} normal type="school" />
+                    )}
+                    {imgLogoIsSubmitting && !isLoading && (
+                      <div className={classes.container_btn_logo_apply}>
+                        <Button type="submit" small>
+                          Apply
+                        </Button>
+                      </div>
+                    )}
+                    {isLoading && imgLogoIsSubmitting && (
+                      <div className={classes.container_btn_logo_apply}>
+                        <LoadingDots />
+                      </div>
+                    )}
+                    <Dropzone
+                      acceptedFiles=".jpeg,.jpg,.png"
+                      multiple={false}
+                      onDrop={(acceptedFiles) =>
+                        handleImageDrop2(acceptedFiles, setFieldValue)
+                      }
+                    >
+                      {({ getRootProps, getInputProps }) => (
+                        <div {...getRootProps()}>
+                          <input {...getInputProps()} />
+                          <div
+                            className={classes.container_icon_add_avatar}
+                            onClick={() => setImgLogoIsSubmitting(true)}
+                          >
+                            <CameraAlt
+                              sx={{ color: "white", fontSize: "17px" }}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </Dropzone>
                   </div>
                 </div>
+                {/* SCHOOL INFOS */}
+                <div className={classes.container_hero_school_infos}>
+                  <div className={classes.container_sub_header}>
+                    <div className={classes.bloc_infos}>
+                      <h1 className={classes.infos_name}>
+                        {school?.nameUpdate ? school?.nameUpdate : school?.name}
+                      </h1>
+                      <div className={classes.infos_item_group}>
+                        <div className={classes.infos_item}>
+                          <LocationOn
+                            sx={{ fontSize: "20px", color: "#365475" }}
+                          />
+                          <span className={classes.school_sub_info}>
+                            {school?.addressUpdate
+                              ? school?.addressUpdate
+                              : school?.address}
+                          </span>
+                        </div>
+                        <div className={classes.infos_item}>
+                          <Public sx={{ fontSize: "20px", color: "#365475" }} />
+                          <span className={classes.school_sub_info}>
+                            {school?.continentUpdate
+                              ? school?.continentUpdate
+                              : school?.continent}
+                          </span>
+                        </div>
+                        <div className={classes.infos_item}>
+                          <Flag sx={{ fontSize: "20px", color: "#365475" }} />
+                          <span className={classes.school_sub_info}>
+                            {school?.countryUpdate
+                              ? school?.countryUpdate
+                              : school?.country}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
 
-                <div className={classes.bloc_icon}>
-                  <div className={classes.bloc_icon_item}>
-                    <div className={classes.container_icon_fav}>
-                      <img src={fav} alt="favoris" />
+                    <div className={classes.bloc_icon}>
+                      <div className={classes.bloc_icon_item}>
+                        {isSmallScreen && (
+                          <div className={classes.container_icon_fav}>
+                            <img src={fav} alt="favoris" />
+                          </div>
+                        )}
+                        <span>Add</span>
+                      </div>
                     </div>
-                    <span>Add</span>
                   </div>
                 </div>
-              </div>
-            </div>
-          </form>
+              </form>
+            )}
+          </Formik>
         </div>
-
         <>
           <div className={classes.container_profil_account}>
             {/* LEFT BLOC */}
@@ -197,7 +347,9 @@ const SchoolsProfil = ({ school, getSchool }) => {
                     <Web sx={{ color: "#365475", fontSize: "30px" }} />
                     <span className={classes.infos_text_light}>Web Site</span>
                     <span className={classes.infos_text_bold}>
-                      <a href={`https://${school?.webSiteUrl}`} target="_blank">{school?.webSiteUrl}</a>
+                      <a href={`https://${school?.webSiteUrl}`} target="_blank">
+                        {school?.webSiteUrl}
+                      </a>
                     </span>
                   </div>
                   {!isOwner ? (
@@ -209,6 +361,20 @@ const SchoolsProfil = ({ school, getSchool }) => {
                   )}
                 </div>
               </div>
+
+              {!isSmallScreen && (
+                <div className={classes.card_img_mobile}>
+                  <div className={classes.container_grid_img_mobile}>
+                    {imgMobile.map((image, index) => {
+                      return (
+                        <div className={classes.container_img} key={index}>
+                          <img src={image.image} alt={image.image} />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
               <div className={classes.card_item_infos}>
                 <h4 className={classes.profil_info_title}>Description</h4>
@@ -234,47 +400,51 @@ const SchoolsProfil = ({ school, getSchool }) => {
 
             {/* RIGHT BLOC */}
             <div className={classes.container_profil_section}>
-              <div className={classes.container_carrousel_right_Bloc}>
-                <div className={classes.container_arrow_left}>
-                  <ArrowBack
-                    sx={{ fontSize: "30px", color: "#333" }}
-                    onClick={() => handleClick("left")}
-                  />
-                </div>
-                <div className={classes.container_img_group} ref={listRef}>
-                  {school.videoPath && (
-                    <div className={classes.container_img_item}>
-                      <Youtube
-                        videoId={videoId}
-                        opts={{ width: "100%", height: "100%" }}
-                        className={classes.video_youtube}
+              {isSmallScreen && (
+                <div className={classes.container_carrousel_right_Bloc}>
+                  <>
+                    <div className={classes.container_arrow_left}>
+                      <ArrowBack
+                        sx={{ fontSize: "30px", color: "#333" }}
+                        onClick={() => handleClick("left")}
                       />
                     </div>
-                  )}
-                  {sliderImages.map((image, index) => (
-                    <div className={classes.container_img_item} key={index}>
-                      {image.image ? (
-                        <img src={image.image} alt={`Image ${index}`} />
-                      ) : (
-                        <img
-                          src="https://cdn-prod.voxy.com/wp-content/uploads/2012/10/school-1.jpg"
-                          alt="default image"
-                        />
+                    <div className={classes.container_img_group} ref={listRef}>
+                      {school.videoPath && (
+                        <div className={classes.container_img_item}>
+                          <Youtube
+                            videoId={videoId}
+                            opts={{ width: "100%", height: "100%" }}
+                            className={classes.video_youtube}
+                          />
+                        </div>
                       )}
+                      {sliderImages.map((image, index) => (
+                        <div className={classes.container_img_item} key={index}>
+                          {image.image ? (
+                            <img src={image.image} alt={`Image ${index}`} />
+                          ) : (
+                            <img
+                              src="https://cdn-prod.voxy.com/wp-content/uploads/2012/10/school-1.jpg"
+                              alt="default image"
+                            />
+                          )}
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                    <div
+                      className={classes.container_arrow_right}
+                      onClick={() => handleClick("right")}
+                    >
+                      <ArrowForward sx={{ fontSize: "30px", color: "#333" }} />
+                    </div>
+                  </>
                 </div>
-                <div
-                  className={classes.container_arrow_right}
-                  onClick={() => handleClick("right")}
-                >
-                  <ArrowForward sx={{ fontSize: "30px", color: "#333" }} />
-                </div>
-              </div>
+              )}
               <div className={classes.container_input_school_post}>
                 <h4 className={classes.profil_info_title}>What's New Today?</h4>
                 <div className={classes.container_input}>
-                  <Avatar medium />
+                  <Avatar medium image={school?.imgPath7} />
                   <button className={classes.input_btn_school}>
                     What would you like to talk about?
                   </button>
@@ -283,7 +453,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
             </div>
           </div>
         </>
-      </section>
+
     </>
   );
 };
