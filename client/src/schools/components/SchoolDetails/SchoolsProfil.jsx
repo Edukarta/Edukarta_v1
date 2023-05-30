@@ -94,7 +94,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
     }
 
     const updateSchoolResponse = await fetch(
-      `http://localhost:5000/api/v1/schools/${id}`,
+      `https://www.edukarta.com/api/v1/schools/${id}`,
       {
         method: "PATCH",
         body: formData,
