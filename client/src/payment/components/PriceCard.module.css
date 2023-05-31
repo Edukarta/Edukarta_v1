@@ -1,21 +1,20 @@
 .container_card_main {
   width: 320px;
-  height: 850px;
+  height: 700px;
   background-color: #f1f1f1;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
+  border-radius: 10px;
   transition: all 0.3s ease-in-out;
 }
 
-.container_card_main:hover{
-  transform: translateY(-10px);
-  filter: brightness(1.03);
+.container_card_main:nth-child(2){
+  transform: scale(1);
 }
 
 .card_header {
   position: relative;
   width: 100%;
-  height: 150px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,20 +22,8 @@
   border-top-right-radius: 20px;
 }
 
-.headerGreen {
-  background-color: #088f8f;
-}
-
-.headerBlue {
-  background-color: #414c68;
-}
-
-.headerOrange {
-  background-color: #ff8b3d;
-}
-
 .card_title {
-  color: white;
+  color: #333;
   font-size: 30px;
 }
 
@@ -47,7 +34,8 @@
 }
 
 .card_body {
-  padding: 20px 40px;
+  padding: 10px 40px;
+  margin-bottom: 30px;
 }
 
 .divider {
@@ -114,11 +102,6 @@
   font-size: 12px;
 }
 
-.prices_card_info_btn:hover {
-  background: #5981b1;
-  border-color: #5981b1;
-}
-
 .container_logo_payement {
   width: 100%;
   display: flex;
@@ -134,10 +117,9 @@
 @media (min-width: 704px) {
   .container_card_main {
     width: 400px;
-    height: 850px;
+    height: 730px;
     background-color: #f1f1f1;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    border-radius: 20px;
   }
 
   .prices_card_info_btn {
@@ -166,4 +148,15 @@
     margin-top: 20px;
     display: inline-block;
   }
+}
+
+@media (min-width: 1220px) {
+ 
+
+  .container_card_main:nth-child(2){
+    transform: scale(1.07);
+  }
+
+
+
 }

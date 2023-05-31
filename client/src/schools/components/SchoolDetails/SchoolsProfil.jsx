@@ -34,7 +34,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isMoved, setIsMoved] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [isOwner, setIsOwner] = useState(true);
+  const [isOwner, setIsOwner] = useState(false);
   const [slideNumber, setSlideNumber] = useState(0);
   const isSmallScreen = useMediaQuery("(min-width: 1080px)");
   const listRef = useRef();

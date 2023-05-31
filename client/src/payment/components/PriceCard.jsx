@@ -1,6 +1,6 @@
 import React from "react";
 import { PlayArrowRounded } from "@mui/icons-material/";
-import { Link as ScrollLink} from "react-scroll";
+import { Link as ScrollLink } from "react-scroll";
 import cb from "../../img/cb_logo.png";
 import master from "../../img/mastercard_logo.png";
 import paypal from "../../img/paypal_logo.png";
@@ -11,23 +11,10 @@ import classes from "./PriceCard.module.css";
 const PriceCard = (props) => {
   return (
     <div className={classes.container_card_main}>
-      <div
-        className={`${classes.card_header} ${
-          props.green && classes.headerGreen
-        } ${props.blue && classes.headerBlue} ${
-          props.orange && classes.headerOrange
-        }`}
-      >
+      <div className={classes.card_header}>
         <h3 className={classes.card_title}>{props.title}</h3>
-        <div className={classes.card_header_icon}>
-          <PlayArrowRounded sx={{ fontSize: "35px", color: props.color }} />
-        </div>
       </div>
-      <div className={classes.card_body}>
-        <div className={classes.divider}></div>
-        {props.children}
-        <div className={classes.divider}></div>
-      </div>
+      <div className={classes.card_body}>{props.children}</div>
       <div className={classes.container_card_price}>
         <span
           className={`${props.text_green && classes.text_green} ${

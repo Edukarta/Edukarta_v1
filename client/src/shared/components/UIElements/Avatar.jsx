@@ -19,7 +19,7 @@ const Avatar = ({ userId, image, normal, big, medium, type, link }) => {
           <img src={image} alt={image} />
         ) : type === "school" ? (
           <div className={classes.container_add_logo_here}>
-            <h6>Add your logo here</h6>
+            <h6>No logo here yet.</h6>
           </div>
         ) : (
           <img

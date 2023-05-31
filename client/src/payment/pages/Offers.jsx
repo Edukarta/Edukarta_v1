@@ -10,6 +10,7 @@ import PriceCard from "../components/PriceCard";
 import Button from "../../shared/components/FormElements/Button";
 import classes from "./Offers.module.css";
 import banner from "../../img/banner_v2.jpg";
+import logo from "../../img/edukarta.png";
 
 const Offers = () => {
   useEffect(() => {
@@ -21,179 +22,237 @@ const Offers = () => {
       <header className={classes.container_navigation}>
         <MainNavigation />
       </header>
-      <section className={classes.container_prices}>
-        <div
-          className={classes.container_hero}
-          style={{ backgroundImage: `url(${banner})`, backgroundSize: "cover" }}
-        >
-          <h1 className={classes.prices_table_title}>Edukarta custom plan</h1>
+      <section
+        className={classes.container_prices}
+        style={{ backgroundImage: `url(${banner})`, backgroundSize: "cover" }}
+      >
+        <div className={classes.container_hero}>
+          {/* <div className={classes.container_img_hero_logo}>
+          <img src={logo} alt="" />
+        </div> */}
+          <h1 className={classes.prices_table_title}>
+            Edukarta <br /> Custom{" "}
+            <span className={classes.text_bold_color}>Plan</span>
+          </h1>
           <h2 className={classes.prices_sub_title}>
-            Choose a plan and start customize.
+            Edukarta is the largest database of schools in the world, <br />{" "}
+            choose your plan and start customize a school page.
           </h2>
-          <ScrollLink
-            to="table"
-            className={classes.btn_hero}
-            smooth={true}
-            duration={500}
-            spy={true}
-            offset={-50}
-          >
-            <KeyboardDoubleArrowDown
-              sx={{ fontSize: "60px", color: "white" }}
-            />
-          </ScrollLink>
+          <div className={classes.container_btn_hero}>
+            <ScrollLink
+              to="table"
+              smooth={true}
+              duration={500}
+              spy={true}
+              offset={-50}
+            >
+              <button className={classes.btn_choose}>Choose a Plan</button>
+            </ScrollLink>
+            <ScrollLink
+              to="info"
+              smooth={true}
+              duration={500}
+              spy={true}
+              offset={-50}
+            >
+              <button className={classes.btn_learn}>Learn More</button>
+            </ScrollLink>
+          </div>
         </div>
-        <div className={classes.container_prices_card} id="table">
-          <PriceCard
-            title="Eco Plan"
-            green
-            color="#088f8f"
-            price="120€ / year"
-            anchor="info"
-            text_green
-          >
-            <div className={classes.container_body_price}>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add logo</span>
+        <div className={classes.container_prices_item} id="table">
+          <h3 className={classes.prices_card_title}>
+            A Smater Way{" "}
+            <span className={classes.text_bold_color}>To Increase</span>
+            <br /> Your School Visibility
+          </h3>
+          <div className={classes.container_enum}>
+           
+              <div className={classes.enum_item}>
+                <span className={classes.number}>1</span>
+                <h6 className={classes.enum_title}>Simple</h6>
+                <p className={classes.enum_description}>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
               </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>
-                  Change school informations
-                </span>
+              <div className={classes.enum_item}>
+                <span className={classes.number}>2</span>
+                <h6 className={classes.enum_title}>Clear</h6>
+                <p className={classes.enum_description}>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
               </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add description</span>
+              <div className={classes.enum_item}>
+                <span className={classes.number}>3</span>
+                <h6 className={classes.enum_title}>effective</h6>
+                <p className={classes.enum_description}>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
               </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add cover image</span>
+       
+          </div>
+          <div className={classes.container_prices_card}>
+            <PriceCard
+              title="Eco Plan"
+              green
+              color="#088f8f"
+              price="120€ / year"
+              anchor="info"
+              text_green
+            >
+              <div className={classes.container_body_price}>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add logo</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>
+                    Change school informations
+                  </span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add description</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add cover image</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add video</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>
+                    add multiple images
+                  </span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>personal shop</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>wallet</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>NFT creator</span>
+                </div>
               </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add video</span>
+            </PriceCard>
+            <PriceCard
+              title="Standard Plan"
+              blue
+              color="#414c68"
+              price="480€ / year"
+              anchor="info"
+              text_blue
+            >
+              <div className={classes.container_body_price}>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add logo</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>
+                    Change school informations
+                  </span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add description</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add cover image</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add video</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>
+                    add multiple images
+                  </span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>personal shop</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>wallet</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>NFT creator</span>
+                </div>
               </div>
-              <div className={classes.container_text_icon}>
-                <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
-                <span className={classes.price_item}>add multiple images</span>
+            </PriceCard>
+            <PriceCard
+              title="Premium Plan"
+              orange
+              color="#ff8b3d"
+              price="1560€ / year"
+              text_orange
+              anchor="info"
+            >
+              <div className={classes.container_body_price}>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add logo</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>
+                    Change school informations
+                  </span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add description</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add cover image</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add video</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>
+                    add multiple images
+                  </span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>personal shop</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>wallet</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>NFT creator</span>
+                </div>
               </div>
-              <div className={classes.container_text_icon}>
-                <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
-                <span className={classes.price_item}>personal shop</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
-                <span className={classes.price_item}>wallet</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
-                <span className={classes.price_item}>NFT creator</span>
-              </div>
-            </div>
-          </PriceCard>
-          <PriceCard
-            title="Basic Plan"
-            blue
-            color="#414c68"
-            price="480€ / year"
-            anchor="info"
-            text_blue
-          >
-            <div className={classes.container_body_price}>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add logo</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>
-                  Change school informations
-                </span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add description</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add cover image</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add video</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add multiple images</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
-                <span className={classes.price_item}>personal shop</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
-                <span className={classes.price_item}>wallet</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
-                <span className={classes.price_item}>NFT creator</span>
-              </div>
-            </div>
-          </PriceCard>
-          <PriceCard
-            title="Premium Plan"
-            orange
-            color="#ff8b3d"
-            price="1560€ / year"
-            text_orange
-            anchor="info"
-          >
-            <div className={classes.container_body_price}>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add logo</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>
-                  Change school informations
-                </span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add description</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add cover image</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add video</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>add multiple images</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>personal shop</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>wallet</span>
-              </div>
-              <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                <span className={classes.price_item}>NFT creator</span>
-              </div>
-            </div>
-          </PriceCard>
+            </PriceCard>
+          </div>
         </div>
 
-        <div className={classes.container_information_prices} id="info">
+        <h3 className={classes.prices_card_title} id="info">
+          What You Get
+          <span className={classes.text_bold_color}> With</span>
+          <br /> Each Plan
+        </h3>
+        <div className={classes.container_information_prices}>
           <div className={classes.bloc_information_text}>
             <h3>Eco</h3>
             <p>
@@ -214,9 +273,9 @@ const Offers = () => {
               <Button>Subscribe</Button>
             </div>
           </div>
-        
+
           <div className={classes.bloc_information_text}>
-            <h3>Basic</h3>
+            <h3>Standard</h3>
             <p>
               Promoting education in an institution is not easy, even if some
               people think so. Each visitor who comes across your school's page
