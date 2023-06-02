@@ -31,7 +31,7 @@ const PriceCard = (props) => {
         </div>
       </div>
       <div className={classes.container_btn_card}>
-        <button className={classes.prices_btn}>Subscribe</button>
+        <button className={classes.prices_btn} onClick={props.onClick}>Subscribe</button>
         <ScrollLink
           to={props.anchor}
           className={classes.prices_card_info_btn}

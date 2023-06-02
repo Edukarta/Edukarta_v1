@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MainHeader from "./MainHeader";
 import { useSelector, useDispatch } from "react-redux";
 import { setSearchResults, setQuery } from "../../state/store";
-import { NotificationsNone } from "@mui/icons-material/";
+import { NotificationsNone, ShoppingCart } from "@mui/icons-material/";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
@@ -11,6 +11,7 @@ import SearchBar from "../UIElements/SearchBar";
 
 const MainNavigation = ({ type }) => {
   const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
@@ -50,9 +51,19 @@ const MainNavigation = ({ type }) => {
             <>
               <div className={classes.container__avatar_logout}>
                 <span>Hello {user.firstname}</span>
-                <Avatar userId={user.id} image={user.imagePath} link={`/profil/${user.id}`} />
+                <Avatar
+                  userId={user.id}
+                  image={user.imagePath}
+                  link={`/profil/${user.id}`}
+                />
                 <div className={classes.container_icon_notification}>
                   <NotificationsNone sx={{ color: "white" }} />
+                </div>
+                <div className={classes.container_icon_notification}>
+                  <div className={classes.cart_item_number}>
+                    <h6>{cart.length}</h6>
+                  </div>
+                  <ShoppingCart sx={{ color: "white" }} />
                 </div>
               </div>
             </>
@@ -84,9 +95,24 @@ const MainNavigation = ({ type }) => {
             <>
               <div className={classes.container__avatar_logout}>
                 <span>Hello {user.firstname}</span>
-                <Avatar userId={user.id} image={user.imagePath} link={`/profil/${user.id}`} />
+                <Avatar
+                  userId={user.id}
+                  image={user.imagePath}
+                  link={`/profil/${user.id}`}
+                />
                 <div className={classes.container_icon_notification}>
                   <NotificationsNone sx={{ color: "white" }} />
+                </div>
+                <div
+                  className={classes.container_icon_notification}
+                  onClick={() => navigate("/paiement")}
+                >
+                  {cart.length > 0 && (
+                    <div className={classes.cart_item_number}>
+                      <h6>{cart.length}</h6>
+                    </div>
+                  )}
+                  <ShoppingCart sx={{ color: "white" }} />
                 </div>
               </div>
             </>

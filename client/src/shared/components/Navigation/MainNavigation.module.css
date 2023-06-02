@@ -44,6 +44,7 @@
 }
 
 .container_icon_notification{
+  position: relative;
   width: 35px;
   height: 35px;
   background-color: #9a9a9a;
@@ -51,7 +52,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  z-index: 1;
 }
+
+.container_icon_notification:hover{
+  background-color: #bdbcbc;
+}
+
+.cart_item_number{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: crimson;
+  top: -5px;
+  right: -5px;
+  z-index: 2;
+}
+
+.cart_item_number h6{
+  color: white;
+  font-size: 15px;
+}
+
 
 @media (min-width: 600px) {
   .mainNavigation__title {

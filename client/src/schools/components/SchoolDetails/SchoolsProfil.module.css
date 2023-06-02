@@ -93,6 +93,7 @@
 
 
 .school_sub_info {
+  max-width: 100px;
   font-weight: 600;
   font-size: 13px;
   color: #333;
@@ -362,10 +363,9 @@
   }
 
   .school_sub_info {
+    max-width: 300px;
     font-size: 17px;
   }
-
-  
 
   .profil_menu_item:nth-child(4) {
     display: flex;

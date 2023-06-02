@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import { Formik } from "formik";
@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../../shared/state/store";
 import google from "../../img/logo_google.png";
 import classes from "./LoginPage.module.css";
-import * as Yup from "yup";
+
 
 const initialValueRegister = {
   firstname: "",
@@ -24,17 +24,6 @@ const initialValueLogin = {
   password: "",
 };
 
-// const SignupSchema = Yup.object().shape({
-//   firstname: Yup.string().max(50, "Too Long!").required("Required"),
-//   lastname: Yup.string().max(50, "Too Long!").required("Required"),
-//   email: Yup.string().email("Invalid email").required("Required"),
-//   password: Yup.string()
-//     .min(3, "Password is too short - should be 8 chars minimum.")
-//     .required("No password provided."),
-//   location: Yup.string().required("Required"),
-//   address: Yup.string().required("Required"),
-//   phone: Yup.number().required("Required"),
-// });
 
 const LoginPage = () => {
   const [pageType, setPageType] = useState("login");
@@ -89,7 +78,7 @@ const LoginPage = () => {
           token: loggedIn.token,
         })
       );
-      navigate("/");
+      navigate(-1);
     } else {
       // Afficher un message d'erreur ou ne rien faire
       console.log("Identifiant incorrect");

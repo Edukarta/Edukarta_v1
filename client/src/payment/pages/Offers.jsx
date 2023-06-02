@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
 import { Link as ScrollLink } from "react-scroll";
 import {
@@ -6,13 +6,57 @@ import {
   CloseRounded,
   KeyboardDoubleArrowDown,
 } from "@mui/icons-material/";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setCartItem } from "../../shared/state/store";
 import PriceCard from "../components/PriceCard";
 import Button from "../../shared/components/FormElements/Button";
 import classes from "./Offers.module.css";
 import banner from "../../img/banner_v2.jpg";
-import logo from "../../img/edukarta.png";
 
 const Offers = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [school, setSchool] = useState();
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  const getSchool = async () => {
+    const response = await fetch(
+      `https://www.edukarta.com/api/v1/schools/${id}`,
+      {
+        method: "GET",
+      }
+    );
+    const data = await response.json();
+    setSchool(data.school);
+    console.log(school?.name);
+  };
+  useEffect(() => {
+    getSchool();
+  }, [id]);
+
+  const handleSubscribe = (title, price) => {
+    // const existingItemIndex = user.cart.findIndex(item => item.title === title);
+    const userCart = {
+      cart: [
+        ...cart,
+        {
+          schoolId: id,
+          schoolName: school.name,
+          schoolImg: school.imgPath7,
+          price: price,
+          title: title,
+          quantity: 1
+        }
+      ]
+    };
+    dispatch(setCartItem(userCart));
+    navigate("/paiement")
+
+  };
+
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -27,9 +71,6 @@ const Offers = () => {
         style={{ backgroundImage: `url(${banner})`, backgroundSize: "cover" }}
       >
         <div className={classes.container_hero}>
-          {/* <div className={classes.container_img_hero_logo}>
-          <img src={logo} alt="" />
-        </div> */}
           <h1 className={classes.prices_table_title}>
             Edukarta <br /> Custom{" "}
             <span className={classes.text_bold_color}>Plan</span>
@@ -66,29 +107,27 @@ const Offers = () => {
             <br /> Your School Visibility
           </h3>
           <div className={classes.container_enum}>
-           
-              <div className={classes.enum_item}>
-                <span className={classes.number}>1</span>
-                <h6 className={classes.enum_title}>Simple</h6>
-                <p className={classes.enum_description}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-              </div>
-              <div className={classes.enum_item}>
-                <span className={classes.number}>2</span>
-                <h6 className={classes.enum_title}>Clear</h6>
-                <p className={classes.enum_description}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-              </div>
-              <div className={classes.enum_item}>
-                <span className={classes.number}>3</span>
-                <h6 className={classes.enum_title}>effective</h6>
-                <p className={classes.enum_description}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-              </div>
-       
+            <div className={classes.enum_item}>
+              <span className={classes.number}>1</span>
+              <h6 className={classes.enum_title}>Simple</h6>
+              <p className={classes.enum_description}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </p>
+            </div>
+            <div className={classes.enum_item}>
+              <span className={classes.number}>2</span>
+              <h6 className={classes.enum_title}>Clear</h6>
+              <p className={classes.enum_description}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </p>
+            </div>
+            <div className={classes.enum_item}>
+              <span className={classes.number}>3</span>
+              <h6 className={classes.enum_title}>effective</h6>
+              <p className={classes.enum_description}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </p>
+            </div>
           </div>
           <div className={classes.container_prices_card}>
             <PriceCard
@@ -96,6 +135,7 @@ const Offers = () => {
               green
               color="#088f8f"
               price="120€ / year"
+              onClick={() => handleSubscribe("Eco", 120)}
               anchor="info"
               text_green
             >
@@ -147,6 +187,7 @@ const Offers = () => {
               blue
               color="#414c68"
               price="480€ / year"
+              onClick={() => handleSubscribe("Standard", 480)}
               anchor="info"
               text_blue
             >
@@ -198,6 +239,7 @@ const Offers = () => {
               orange
               color="#ff8b3d"
               price="1560€ / year"
+              onClick={() => handleSubscribe("Premium", 1560)}
               text_orange
               anchor="info"
             >

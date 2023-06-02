@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { Formik } from "formik";
 import Dropzone from "react-dropzone";
 import Tooltip from "@mui/material/Tooltip";
+import { useSelector } from "react-redux";
 import LoadingDots from "../../../shared/components/UIElements/LoadingDots";
 import { useParams } from "react-router-dom";
 import {
@@ -29,23 +30,16 @@ import classes from "./SchoolsProfil.module.css";
 
 const SchoolsProfil = ({ school, getSchool }) => {
   const { id } = useParams();
+  const user = useSelector((state) => state.user);
   const [imgHeroIsSubmitting, setImgHeroIsSubmitting] = useState(false);
   const [imgLogoIsSubmitting, setImgLogoIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isMoved, setIsMoved] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
   const [slideNumber, setSlideNumber] = useState(0);
   const isSmallScreen = useMediaQuery("(min-width: 1080px)");
   const listRef = useRef();
   const videoId = school?.videoPath.split("v=")[1];
-  const imgMobile = [
-    { image: school.imgPath1 },
-    { image: school.imgPath2 },
-    { image: school.imgPath3 },
-    { image: school.imgPath4 },
-    { image: school.imgPath5 },
-  ];
   const sliderImages = [
     { image: school?.imgPath1 },
     { image: school?.imgPath2 },
@@ -53,9 +47,9 @@ const SchoolsProfil = ({ school, getSchool }) => {
     { image: school?.imgPath4 },
     { image: school?.imgPath5 },
   ];
+
   //FONCTION CARROUSEL
   const handleClick = (direction) => {
-    setIsMoved(true);
     const totalSlides = school.videoPath ? 5 : 4;
     const slideWidth = listRef.current.offsetWidth + 15;
     const distance = slideWidth * slideNumber;
@@ -264,19 +258,37 @@ const SchoolsProfil = ({ school, getSchool }) => {
                       </div>
                       <div className={classes.infos_item}>
                         <Public sx={{ fontSize: "20px", color: "#365475" }} />
-                        <span className={classes.school_sub_info}>
-                          {school?.continentUpdate
-                            ? school?.continentUpdate
-                            : school?.continent}
-                        </span>
+                        <Tooltip
+                          title={
+                            school.continentUpdate
+                              ? school.continentUpdate
+                              : school.continent
+                          }
+                          enterTouchDelay={0}
+                        >
+                          <span className={classes.school_sub_info}>
+                            {school?.continentUpdate
+                              ? school?.continentUpdate
+                              : school?.continent}
+                          </span>
+                        </Tooltip>
                       </div>
                       <div className={classes.infos_item}>
                         <Flag sx={{ fontSize: "20px", color: "#365475" }} />
-                        <span className={classes.school_sub_info}>
-                          {school?.countryUpdate
-                            ? school?.countryUpdate
-                            : school?.country}
-                        </span>
+                        <Tooltip
+                          title={
+                            school.countryUpdate
+                              ? school.countryUpdate
+                              : school.country
+                          }
+                          enterTouchDelay={0}
+                        >
+                          <span className={classes.school_sub_info}>
+                            {school?.countryUpdate
+                              ? school?.countryUpdate
+                              : school?.country}
+                          </span>
+                        </Tooltip>
                       </div>
                     </div>
                   </div>
@@ -364,7 +376,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
                   </span>
                 </div>
                 {!isOwner ? (
-                  <Button to={"/prices"}>Are you the owner ?</Button>
+                  <Button to={user ? `/prices/${id}` : "/register"}>Are you the owner ?</Button>
                 ) : (
                   <Button onClick={() => setModalIsOpen(true)}>
                     Modify Infos
@@ -379,7 +391,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
                   {school?.name} images
                 </h4>
                 <div className={classes.container_grid_img_mobile}>
-                  {imgMobile.map(
+                  {sliderImages.map(
                     (image, index) =>
                       image.image && (
                         <div className={classes.container_img} key={index}>
