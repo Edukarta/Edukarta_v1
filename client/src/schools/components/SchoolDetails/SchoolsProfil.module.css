@@ -94,7 +94,7 @@
 
 .school_sub_info {
   max-width: 100px;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 13px;
   color: #333;
   white-space: nowrap;
@@ -484,5 +484,9 @@
     width: 50px;
     cursor: pointer;
     z-index: 55555;
+  }
+
+  .container_input_school_post {
+    margin-top: 0px;
   }
 }

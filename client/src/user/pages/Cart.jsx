@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { setCartItem } from "../../shared/state/store";
 import { useDispatch } from "react-redux";
@@ -10,6 +11,7 @@ import classes from "./Cart.module.css";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const tvaRate = 20;
   const [tva, setTva] = useState(0);
@@ -64,7 +66,7 @@ const Cart = () => {
                       )}
                     </div>
                     <Tooltip title={school.schoolName} enterTouchDelay={0}>
-                      <span className={classes.school_name}>
+                      <span className={classes.school_name} onClick={() => navigate(`/school/${school.schoolId}`)}>
                         {school.schoolName}
                       </span>
                     </Tooltip>
@@ -75,7 +77,7 @@ const Cart = () => {
                   <span
                     className={classes.school_price}
                   >{`${school.price}€`}</span>
-                  <span>{`${school.quantity}`}</span>
+                  <span className={classes.school_quantity}>{`${school.quantity}`}</span>
                   <span className={classes.school_price}>{`${
                     school.price * school.quantity
                   }€`}</span>

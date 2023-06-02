@@ -18,12 +18,12 @@ export const authSlice = createSlice({
       setLogin: (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.cart = action.payload.cart;
+        state.cart = [];
       },
       setLogout: (state) => {
         state.user = null;
         state.token = null;
-        state.cart = null;
+        state.cart = [];
       },
       setCartItem: (state, action) => {
         state.cart = action.payload.cart;

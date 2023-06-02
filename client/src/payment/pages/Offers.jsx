@@ -142,10 +142,6 @@ const Offers = () => {
               <div className={classes.container_body_price}>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>add logo</span>
-                </div>
-                <div className={classes.container_text_icon}>
-                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
                   <span className={classes.price_item}>
                     Change school informations
                   </span>
@@ -159,14 +155,26 @@ const Offers = () => {
                   <span className={classes.price_item}>add cover image</span>
                 </div>
                 <div className={classes.container_text_icon}>
-                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>add video</span>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>annoucement</span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
                   <span className={classes.price_item}>
                     add multiple images
                   </span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>add logo</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>add banner</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>add video</span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
@@ -194,10 +202,6 @@ const Offers = () => {
               <div className={classes.container_body_price}>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>add logo</span>
-                </div>
-                <div className={classes.container_text_icon}>
-                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
                   <span className={classes.price_item}>
                     Change school informations
                   </span>
@@ -212,13 +216,26 @@ const Offers = () => {
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>add video</span>
+                  <span className={classes.price_item}>annoucement</span>
                 </div>
                 <div className={classes.container_text_icon}>
-                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
                   <span className={classes.price_item}>
                     add multiple images
                   </span>
+                </div>
+                
+                <div className={classes.container_text_icon}>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>add logo</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>add banner</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
+                  <span className={classes.price_item}>add video</span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
@@ -246,10 +263,6 @@ const Offers = () => {
               <div className={classes.container_body_price}>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>add logo</span>
-                </div>
-                <div className={classes.container_text_icon}>
-                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
                   <span className={classes.price_item}>
                     Change school informations
                   </span>
@@ -264,13 +277,25 @@ const Offers = () => {
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>add video</span>
+                  <span className={classes.price_item}>annoucement</span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
                   <span className={classes.price_item}>
                     add multiple images
                   </span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add logo</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add banner</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>add video</span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />

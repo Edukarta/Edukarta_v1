@@ -59,10 +59,15 @@ const MainNavigation = ({ type }) => {
                 <div className={classes.container_icon_notification}>
                   <NotificationsNone sx={{ color: "white" }} />
                 </div>
-                <div className={classes.container_icon_notification}>
-                  <div className={classes.cart_item_number}>
-                    <h6>{cart.length}</h6>
-                  </div>
+                <div
+                  className={classes.container_icon_notification}
+                  onClick={() => navigate("/paiement")}
+                >
+                  {cart && cart.length > 0 && (
+                    <div className={classes.cart_item_number}>
+                      <h6>{cart.length}</h6>
+                    </div>
+                  )}
                   <ShoppingCart sx={{ color: "white" }} />
                 </div>
               </div>
@@ -107,7 +112,7 @@ const MainNavigation = ({ type }) => {
                   className={classes.container_icon_notification}
                   onClick={() => navigate("/paiement")}
                 >
-                  {cart.length > 0 && (
+                  {cart && cart.length > 0 && (
                     <div className={classes.cart_item_number}>
                       <h6>{cart.length}</h6>
                     </div>

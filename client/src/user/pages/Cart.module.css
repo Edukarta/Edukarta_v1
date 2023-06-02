@@ -98,11 +98,21 @@ li:nth-child(6) {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  cursor: pointer;
 }
+
+.school_name:hover {
+    color: #3275f3;
+  }
 
 .school_title {
   font-weight: 600;
   color: #404040;
+}
+
+.school_quantity{
+    font-weight: 400;
+    color: #404040; 
 }
 
 .school_price {
