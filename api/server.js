@@ -120,6 +120,39 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/schools", schoolsRoutes);
 app.use("/api/v1/request", requestRoute);
 app.use("/api/v1/paiement", paiementRoutes);
+app.post('/verify-hcaptcha', async (req, res) => {
+  const { token } = req.body;
+  console.log("token : ", token);
+  try {
+    // Vérification du token hCaptcha côté serveur
+    const response = await fetch('https://hcaptcha.com/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `secret=0x0000000000000000000000000000000000000000&response=${token}`,
+    });
+
+    // Vérification de la réponse du serveur hCaptcha
+    const data = await response.json();
+    console.log("data:", data);
+
+    if (data.success) {
+      // Le hCaptcha est valide, continuer avec le traitement des données
+      res.send({ success: true });
+    } else {
+      console.log("ERREUR");
+      // Le hCaptcha est invalide, renvoyer une erreur
+      res.status(403).json({ error: 'Invalid hCaptcha token' });
+    }
+  } catch (error) {
+    // Erreur lors de la vérification du hCaptcha
+    console.error('Erreur lors de la vérification du hCaptcha:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 
 const PORT = process.env.PORT || 3330;
 dbConnect();

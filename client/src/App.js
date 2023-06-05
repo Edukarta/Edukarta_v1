@@ -15,6 +15,7 @@ import Offers from "./payment/pages/Offers";
 import { useLocation } from "react-router-dom";
 import ResultsPage from "./schools/pages/ResultsPage";
 import AdminLogin from "./admin/pages/AdminLogin";
+import Captcha from "./captcha/pages/captcha";
 
 function App() {
   const location = useLocation();
@@ -37,6 +38,7 @@ function App() {
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/request/:id" element={<RequestDetails />} />
+          <Route path="/captcha" element={<Captcha />} />
         </Routes>
       </main>
       {!["/register"].includes(location.pathname) &&
