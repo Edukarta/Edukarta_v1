@@ -1,9 +1,11 @@
 import React, { useState, useRef } from 'react';
+import  {useNavigate } from 'react-router-dom';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 const Captcha = (props) => {
   const [token, setToken] = useState(null);
   const captchaRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -17,6 +19,7 @@ const Captcha = (props) => {
       });
 
       if (response.ok) {
+        navigate(-1)
         // redirection et reset de la limite
         // Le backend a validé le hCaptcha avec succès, continuer avec la logique de votre application
       } else {

@@ -24,6 +24,8 @@ import googleRoutes from "./routes/googleRoutes.js";
 import schoolsRoutes from "./routes/schoolsRoutes.js";
 import paiementRoutes from "./routes/paiementRoutes.js";
 import requestRoute from "./routes/requestRoutes.js";
+import rateLimit,{MemoryStore} from "express-rate-limit"
+
 
 //CONGIGURATION
 const __filename = fileURLToPath(import.meta.url);
@@ -83,6 +85,21 @@ const upload = multer({
   },
 });
 
+// -----------------------------------------------------------------
+//             CAPTCHA
+// -----------------------------------------------------------------
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // Période de temps (1 minute)
+  max: 60, // Nombre maximal de requêtes autorisées par période de temps
+  message: 'Too many requests from this IP, please try again after a minute.',
+  keyGenerator: (req) => req.ip,
+    // store: new MemoryStore(),
+    statusCode:429,
+});
+app.use("/api",limiter)
+  // -----------------------------------------------------------------------
+    
+
 //ROUTES AVEC FICHIER
 app.patch(
   "/api/v1/user/:id",
@@ -117,9 +134,13 @@ app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/googleAuth", googleRoutes);
 app.use("/api/v1/user", userRoutes);
-app.use("/api/v1/schools", schoolsRoutes);
+app.use("/api/v1/schools",schoolsRoutes);
 app.use("/api/v1/request", requestRoute);
 app.use("/api/v1/paiement", paiementRoutes);
+
+// -----------------------------------------------------------------
+//             CAPTCHA
+// -----------------------------------------------------------------
 app.post('/verify-hcaptcha', async (req, res) => {
   const { token } = req.body;
   console.log("token : ", token);
@@ -133,12 +154,10 @@ app.post('/verify-hcaptcha', async (req, res) => {
       body: `secret=0x0000000000000000000000000000000000000000&response=${token}`,
     });
 
-    // Vérification de la réponse du serveur hCaptcha
     const data = await response.json();
-    console.log("data:", data);
 
     if (data.success) {
-      // Le hCaptcha est valide, continuer avec le traitement des données
+      limiter.resetKey(req.ip);
       res.send({ success: true });
     } else {
       console.log("ERREUR");
@@ -151,8 +170,7 @@ app.post('/verify-hcaptcha', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-
+// -----------------------------------------------------------------
 
 const PORT = process.env.PORT || 3330;
 dbConnect();
