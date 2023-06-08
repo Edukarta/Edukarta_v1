@@ -10,7 +10,6 @@ import passport from "passport";
 import { fileURLToPath } from "url";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
-import pdfToImg from "pdf-to-img";
 import path from "path";
 import morgan from "morgan";
 import dbConnect from "./config/dbConnect.js";
@@ -32,21 +31,29 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
+
 app.use(
   session({
     secret: "edukarta",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: true,
-      maxAge: 3600000,
-    },
+    resave: true,
+    saveUninitialized: true,
+    // cookie: {
+    //   secure: true,
+    //   maxAge: 3600000,
+    // },
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
 passportSetup();
-app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
@@ -76,7 +83,6 @@ const storage = new CloudinaryStorage({
   folder: "edukarta",
   allowedFormats: ["jpg", "png", "jpeg", "doc", "docx", "pdf"],
   transformation: [{ width: 500, height: 500, crop: "limit" }],
-  
 });
 
 const upload = multer({

@@ -50,10 +50,10 @@ const MainNavigation = ({ type }) => {
           {user ? (
             <>
               <div className={classes.container__avatar_logout}>
-                <span>Hello {user.firstname}</span>
+                {user.firstname ? <span>Hello {user.firstname}</span> : <span>Hello {user.name}</span> }
                 <Avatar
                   userId={user.id}
-                  image={user.imagePath}
+                  image={user.imagePath ? user.imagePath : user.picture}
                   link={`/profil/${user.id}`}
                 />
                 <div className={classes.container_icon_notification}>
@@ -99,10 +99,10 @@ const MainNavigation = ({ type }) => {
           {user ? (
             <>
               <div className={classes.container__avatar_logout}>
-                <span>Hello {user.firstname}</span>
+              {user.firstname ? <span>Hello {user.firstname}</span> : <span>Hello {user.name}</span> }
                 <Avatar
                   userId={user.id}
-                  image={user.imagePath}
+                  image={user.imagePath ? user.imagePath : user.picture}
                   link={`/profil/${user.id}`}
                 />
                 <div className={classes.container_icon_notification}>

@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import { Formik } from "formik";
@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../../shared/state/store";
 import google from "../../img/logo_google.png";
 import classes from "./LoginPage.module.css";
-
 
 const initialValueRegister = {
   firstname: "",
@@ -23,7 +22,6 @@ const initialValueLogin = {
   email: "",
   password: "",
 };
-
 
 const LoginPage = () => {
   const [pageType, setPageType] = useState("login");
@@ -93,6 +91,8 @@ const LoginPage = () => {
       console.log(error);
     }
   };
+
+  
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isRegister) {
@@ -265,10 +265,10 @@ const LoginPage = () => {
             </form>
           )}
         </Formik>
-        {/* <Button big dark onClick={googleAuth}>
+        <Button big dark onClick={googleAuth}>
           <img src={google} alt="logo google" />
           Sign in with Google
-        </Button> */}
+        </Button>
       </div>
     </section>
   );

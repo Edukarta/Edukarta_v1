@@ -107,14 +107,15 @@ export const login = async (req, res, next) => {
 //ROUTE : api/v1/auth/login/success
 export const loginSuccess = async (req, res) => {
   if (req.user) {
-		res.status(200).json({
-			error: false,
-			message: "Successfully Loged In",
-			user: req.user,
-		});
-	} else {
-		res.status(403).json({ error: true, message: "Not Authorized" });
-	}
+    console.log(req.user);
+    res.status(200).json({
+      error: false,
+      message: "Successfully Logged In",
+      user: req.user,
+    });
+  } else {
+    res.status(403).json({ error: true, message: "Not Authorized" });
+  }
 };
 
 //LOGIN GOOGLE FAILED
