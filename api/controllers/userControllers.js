@@ -87,6 +87,37 @@ export const updateUser = async (req, res, next) => {
     user.imagePath = imagePath;
   }
 
+  if (req.files && req.files.resume) {
+    try {
+      const result = await cloudinary.uploader.upload(req.files.resume[0].path, {
+        folder: "edukarta",
+      });
+      const resumePath = result.secure_url;
+      user.resumePath = resumePath;
+      console.log("Resume uploaded successfully:", resumePath);
+    } catch (err) {
+      console.error("Failed to upload resume file:", err);
+      const error = new HttpError("Failed to upload resume file.", 500);
+      return next(error);
+    }
+  }
+
+  if (req.files && req.files.letter1) {
+    const result = await cloudinary.uploader.upload(req.files.letter1[0].path, {
+      folder: "edukarta",
+    });
+    const letter1Path = result.secure_url;
+    user.letter1Path = letter1Path;
+  }
+
+  if (req.files && req.files.letter2) {
+    const result = await cloudinary.uploader.upload(req.files.letter2[0].path, {
+      folder: "edukarta",
+    });
+    const letter2Path = result.secure_url;
+    user.letter2Path = letter2Path;
+  }
+
   try {
     await user.save();
   } catch (err) {

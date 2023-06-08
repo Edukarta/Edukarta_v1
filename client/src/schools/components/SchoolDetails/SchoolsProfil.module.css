@@ -188,6 +188,36 @@
 .profil_info_title {
   font-size: 22px;
   font-weight: 500;
+  color: #343434;
+
+}
+
+.title_bold_color{
+  color: #4a739f;
+}
+
+.container_btn_kartajob{
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 100px);
+  gap: 10px;
+}
+
+.btn_kartajob{
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #cacaca;
+  border-radius: 10px;
+  background-color: #f1f1f1;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+}
+
+.btn_kartajob:hover{
+  background-color: #c5c5c5;
 }
 
 .container_carrousel_right_Bloc {
@@ -438,6 +468,16 @@
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .card_item_infos:nth-child(2) {
+    height: 300px;
+  }
+
+  .card_item_infos:nth-child(3) {
+
+    height: 250px;
+   
   }
 
   .container_carrousel_right_Bloc {

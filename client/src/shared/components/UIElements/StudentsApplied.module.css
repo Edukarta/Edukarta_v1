@@ -1,0 +1,106 @@
+.student_applied{
+    width: 80%;
+    
+}
+
+.student_applied_header{
+    width: 80%;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.student_applied_header h1{
+    font-weight: 400;
+    color: #646464;
+}
+
+.student_applied_body{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+    gap: 20px;
+}
+
+.item_student{
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 10px;
+    border: 1px solid #d4d4d4;
+    border-radius: 5px;
+    padding: 10px 25px;
+    box-shadow: 0 0 13px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+    cursor: pointer;
+}
+
+.container_avatar{
+    position: absolute;
+    top: -20px;
+    left: -10px;
+}
+
+.container_student_infos{
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.student_name{
+    font-size: 20px;
+    font-weight: 400;
+    color: #474747;
+}
+
+.student_location{
+    font-size: 15px;
+    color: #7e7e7e;
+}
+
+.container_resume{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.container_item{
+    width: 250px;
+    height: 320px;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+   
+}
+
+.container_item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+iframe{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.download{
+    color: black;
+    z-index: 5555;
+}
+
+.modal_title{
+    margin-top: 30px;
+    font-weight: 500;
+    color: #656565;
+}
+
+.span_title{
+    font-weight: 400;
+    color: #727272;
+}

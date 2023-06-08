@@ -2,6 +2,10 @@ import React, { useState, useRef } from "react";
 import { Formik } from "formik";
 import Dropzone from "react-dropzone";
 import Tooltip from "@mui/material/Tooltip";
+import { CalendarMonth, Article, FileOpen } from "@mui/icons-material";
+import Calendar from "../../../shared/components/UIElements/Calendar";
+import Apply from "../../../shared/components/UIElements/Apply";
+import ModalKartaJob from "../../../shared/components/UIElements/ModalKartaJob";
 import { useSelector } from "react-redux";
 import LoadingDots from "../../../shared/components/UIElements/LoadingDots";
 import { useParams } from "react-router-dom";
@@ -27,12 +31,15 @@ import Button from "../../../shared/components/FormElements/Button";
 import Avatar from "../../../shared/components/UIElements/Avatar";
 import ModalForm from "../../../shared/components/UIElements/ModalForm";
 import classes from "./SchoolsProfil.module.css";
+import StudentsApplied from "../../../shared/components/UIElements/StudentsApplied";
 
 const SchoolsProfil = ({ school, getSchool }) => {
   const { id } = useParams();
   const user = useSelector((state) => state.user);
   const [imgHeroIsSubmitting, setImgHeroIsSubmitting] = useState(false);
   const [imgLogoIsSubmitting, setImgLogoIsSubmitting] = useState(false);
+  const [modalContent, setModalContent] = useState("");
+  const [openModalKartaJob, setOpenModalKartaJob] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
@@ -314,7 +321,9 @@ const SchoolsProfil = ({ school, getSchool }) => {
           {/* LEFT BLOC */}
           <div className={classes.container_card_infos_left}>
             <div className={classes.card_item_infos}>
-              <h4 className={classes.profil_info_title}>About Us</h4>
+              <h4 className={classes.profil_info_title}>
+                About <span className={classes.title_bold_color}>Us</span>
+              </h4>
               <div className={classes.profil_info_items_group}>
                 <div className={classes.profil_info_item}>
                   <Create sx={{ color: "#365475", fontSize: "30px" }} />
@@ -376,7 +385,9 @@ const SchoolsProfil = ({ school, getSchool }) => {
                   </span>
                 </div>
                 {!isOwner ? (
-                  <Button to={user ? `/prices/${id}` : "/register"}>Are you the owner ?</Button>
+                  <Button to={user ? `/prices/${id}` : "/register"}>
+                    Are you the owner ?
+                  </Button>
                 ) : (
                   <Button onClick={() => setModalIsOpen(true)}>
                     Modify Infos
@@ -403,8 +414,11 @@ const SchoolsProfil = ({ school, getSchool }) => {
               </div>
             )}
 
+            {/* DESCRIPTION */}
             <div className={classes.card_item_infos}>
-              <h4 className={classes.profil_info_title}>Description</h4>
+              <h4 className={classes.profil_info_title}>
+                Descript<span className={classes.title_bold_color}>ion</span>
+              </h4>
               <div className={classes.profil_info_description}>
                 {school?.description ? (
                   <p className={classes.profil_infos_school_description}>
@@ -416,9 +430,65 @@ const SchoolsProfil = ({ school, getSchool }) => {
                   </p>
                 )}
               </div>
-              <Button to={"/prices"} big>
-                Apply
-              </Button>
+            </div>
+
+            {/* KARTAJOB */}
+            <ModalKartaJob
+              show={openModalKartaJob}
+              onClick={() => setOpenModalKartaJob(false)}
+            >
+              {modalContent === "calendar" && (
+                <Calendar school={school?.name} id={school?.id} />
+              )}
+              {modalContent === "apply" && (
+                <Apply
+                  userImage={user.imagePath}
+                  firstname={user.firstname}
+                  lastname={user.lastname}
+                  userId={user.id}
+                  id={id}
+                  closeModal={() => setOpenModalKartaJob(false)}
+                />
+              )}
+              {modalContent === "student" && <StudentsApplied id={id} />}
+            </ModalKartaJob>
+            <div className={classes.card_item_infos}>
+              <h4 className={classes.profil_info_title}>
+                Karta<span className={classes.title_bold_color}>Job</span>
+              </h4>
+              <div className={classes.container_btn_kartajob}>
+                <Tooltip title="Planning" enterTouchDelay={0}>
+                  <div
+                    className={classes.btn_kartajob}
+                    onClick={() => {
+                      setOpenModalKartaJob(true);
+                      setModalContent("calendar");
+                    }}
+                  >
+                    <CalendarMonth
+                      sx={{ fontSize: "70px", color: "#15273c" }}
+                    />
+                  </div>
+                </Tooltip>
+                <div
+                  className={classes.btn_kartajob}
+                  onClick={() => {
+                    setOpenModalKartaJob(true);
+                    setModalContent("apply");
+                  }}
+                >
+                  <FileOpen sx={{ fontSize: "70px", color: "#15273c" }} />
+                </div>
+                <div
+                  className={classes.btn_kartajob}
+                  onClick={() => {
+                    setOpenModalKartaJob(true);
+                    setModalContent("student");
+                  }}
+                >
+                  <Person sx={{ fontSize: "70px", color: "#15273c" }} />
+                </div>
+              </div>
             </div>
           </div>
 

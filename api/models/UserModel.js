@@ -57,24 +57,46 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  order: [{
-    orderId: {
-      type: String,
-      default: ""
+  resumePath: {
+    type: String,
+    default: "",
+  },
+  letter1Path: {
+    type: String,
+    default: "",
+  },
+  letter2Path: {
+    type: String,
+    default: "",
+  },
+  order: [
+    {
+      orderId: {
+        type: String,
+        default: "",
+      },
+      school: {
+        type: String,
+        default: "",
+      },
+      price: {
+        type: Number,
+        default: 0,
+      },
+      orderStatus: {
+        type: String,
+        default: "En attente",
+      },
     },
-    school: {
-      type: String,
-      default: "",
+  ],
+  schoolApplied: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "School",
+      default: [],
+      timestamp: true
     },
-    price: {
-      type: Number,
-      default: 0
-    },
-    orderStatus: {
-      type: String,
-      default: "En attente"
-    }
-  }],
+  ],
   grade: String,
 });
 

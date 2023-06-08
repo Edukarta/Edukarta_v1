@@ -10,6 +10,7 @@ import {
   Language,
   Email,
   Send,
+  PostAdd,
 } from "@mui/icons-material/";
 import { useMediaQuery } from "@mui/material";
 import { useParams } from "react-router-dom";
@@ -24,9 +25,11 @@ import LoadingDots from "../../../shared/components/UIElements/LoadingDots";
 import CardFav from "./CardFav";
 import CardFriends from "./CardFriends";
 import classes from "./SectionProfil.module.css";
+import ModalUserUpload from "../../../shared/components/UIElements/ModalUserUpload";
 
 const SectionProfil = (props) => {
   const { id } = useParams();
+  const [openModalUpload, setOpenMoadlUpload] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,6 +40,9 @@ const SectionProfil = (props) => {
   const initialValuePatch = {
     banner: "",
     image: "",
+    resume: "",
+    letter1: "",
+    letter2: "",
   };
 
   const patchImg = async (values, onSubmitProps) => {
@@ -48,6 +54,12 @@ const SectionProfil = (props) => {
       formData.append("banner", values.banner);
       formData.append("image", values.image);
       formData.append("imagePath", values.image.name);
+      formData.append("resume", values.resume);
+      formData.append("resumePath", values.resume.name);
+      formData.append("letter1", values.letter1);
+      formData.append("letter1Path", values.letter1.name);
+      formData.append("letter2", values.letter2);
+      formData.append("letter2Path", values.letter2.name);
 
       const response = await fetch(
         `https://www.edukarta.com/api/v1/user/${id}`,
@@ -218,7 +230,7 @@ const SectionProfil = (props) => {
 
                     <div className={classes.profil_menu_item}>
                       <AccountBalanceWallet
-                        sx={{ color: "#365475", fontSize: "25px"}}
+                        sx={{ color: "#365475", fontSize: "25px" }}
                       />
                       <span className={classes.profil_menu_item_text}>
                         My Wallet
@@ -232,7 +244,7 @@ const SectionProfil = (props) => {
                         navigate("/");
                       }}
                     >
-                      <Logout sx={{ color: "crimson", fontSize: "25px"}} />
+                      <Logout sx={{ color: "crimson", fontSize: "25px" }} />
                       <span className={classes.profil_menu_item_text}>
                         Logout
                       </span>
@@ -246,7 +258,7 @@ const SectionProfil = (props) => {
       </div>
 
       <div className={classes.container_profil_account}>
-          {/* LEFT BLOC */}
+        {/* LEFT BLOC */}
         <div className={classes.container_card_infos_left}>
           <div className={classes.card_item_infos}>
             <h4 className={classes.profil_info_title}>About Me</h4>
@@ -302,13 +314,37 @@ const SectionProfil = (props) => {
             </div>
           </div>
 
+          <ModalUserUpload
+            show={openModalUpload}
+            onClick={() => setOpenMoadlUpload(false)}
+            openModal={() => setOpenMoadlUpload(false)}
+          />
+          <div className={classes.card_item_resume}>
+            <h4 className={classes.profil_info_title}>Kartajob</h4>
+            <div className={classes.resume_group_item}>
+              <div
+                className={classes.resume_item}
+                onClick={() => setOpenMoadlUpload(true)}
+              >
+                <PostAdd sx={{ fontSize: "70px", color: "#15273c" }} />
+              </div>
+              <div>
+                <span>Upload my resume</span>
+              </div>
+            </div>
+          </div>
+
           <div className={classes.card_item_infos}>
             <CardFav id={props.user.id} />
           </div>
 
           <div className={classes.card_item_infos}>
-            <CardFriends id={props.user.id} />
+            <CardFav id={props.user.id} />
           </div>
+
+          {/* <div className={classes.card_item_infos}>
+            <CardFriends id={props.user.id} />
+          </div> */}
         </div>
 
         {/* RIGHT BLOC */}

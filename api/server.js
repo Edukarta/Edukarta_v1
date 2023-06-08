@@ -10,6 +10,7 @@ import passport from "passport";
 import { fileURLToPath } from "url";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
+import pdfToImg from "pdf-to-img";
 import path from "path";
 import morgan from "morgan";
 import dbConnect from "./config/dbConnect.js";
@@ -24,6 +25,7 @@ import googleRoutes from "./routes/googleRoutes.js";
 import schoolsRoutes from "./routes/schoolsRoutes.js";
 import paiementRoutes from "./routes/paiementRoutes.js";
 import requestRoute from "./routes/requestRoutes.js";
+import eventRoutes from "./routes/eventRoutes.js";
 
 //CONGIGURATION
 const __filename = fileURLToPath(import.meta.url);
@@ -72,8 +74,9 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   folder: "edukarta",
-  allowedFormats: ["jpg", "png", "jpeg"],
+  allowedFormats: ["jpg", "png", "jpeg", "doc", "docx", "pdf"],
   transformation: [{ width: 500, height: 500, crop: "limit" }],
+  
 });
 
 const upload = multer({
@@ -89,6 +92,9 @@ app.patch(
   upload.fields([
     { name: "image", maxCount: 1 },
     { name: "banner", maxCount: 1 },
+    { name: "resume", maxCount: 1 },
+    { name: "letter1", maxCount: 1 },
+    { name: "letter2", maxCount: 1 },
   ]),
   updateUser
 );
@@ -118,6 +124,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/googleAuth", googleRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/schools", schoolsRoutes);
+app.use("/api/v1/event", eventRoutes);
 app.use("/api/v1/request", requestRoute);
 app.use("/api/v1/paiement", paiementRoutes);
 

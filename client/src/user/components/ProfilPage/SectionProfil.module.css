@@ -172,6 +172,40 @@ a {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
+.card_item_resume{
+  width: 400px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.resume_group_item{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.resume_group_item span{
+  text-transform: capitalize;
+  font-weight: 500;
+  color: #6c6c6c;
+}
+
+.resume_item{
+  border: 1px solid #aeaeae;
+  border-radius: 10px;
+  background-color: #e2e2e2;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+}
+
+.resume_item:hover{
+  background-color: #c1c1c1;
+}
+
 .profil_info_title{
   font-size: 22px;
   font-weight: 500;
@@ -352,7 +386,7 @@ input{
   color: white;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
-  background-color: green;
+  background-color: #15273c;
   border: 1px solid #d8d8d8;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
@@ -364,7 +398,7 @@ input{
   align-items: center;
   color: white;
   border-radius: 20px;
-  background-color: green;
+  background-color: #15273c;
   border: 1px solid #d8d8d8;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
