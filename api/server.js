@@ -34,7 +34,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://www.edukarta.com",
+    origin: "https://edukarta.com", // Utilisez l'URL correspondant à votre front-end
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })
