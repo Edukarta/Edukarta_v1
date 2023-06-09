@@ -445,7 +445,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
                   userImage={user.imagePath}
                   firstname={user.firstname}
                   lastname={user.lastname}
-                  userId={user.id}
+                  userId={user._id}
                   id={id}
                   closeModal={() => setOpenModalKartaJob(false)}
                 />

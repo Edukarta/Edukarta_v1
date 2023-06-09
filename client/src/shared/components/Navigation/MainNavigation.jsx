@@ -52,7 +52,7 @@ const MainNavigation = ({ type }) => {
               <div className={classes.container__avatar_logout}>
                 <span>Hello {user.firstname}</span>
                 <Avatar
-                  userId={user.id}
+                  userId={user._id}
                   image={user.imagePath}
                   link={`/profil/${user._id}`}
                 />
@@ -101,9 +101,9 @@ const MainNavigation = ({ type }) => {
               <div className={classes.container__avatar_logout}>
               <span>Hello {user.firstname}</span>
                 <Avatar
-                  userId={user.id}
+                  userId={user._id}
                   image={user.imagePath}
-                  link={`/profil/${user.id}`}
+                  link={`/profil/${user._id}`}
                 />
                 <div className={classes.container_icon_notification}>
                   <NotificationsNone sx={{ color: "white" }} />

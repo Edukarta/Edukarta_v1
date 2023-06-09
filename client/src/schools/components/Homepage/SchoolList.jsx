@@ -13,7 +13,7 @@ const SchoolList = ({
   firstSchool,
 }) => {
   const dispatch = useDispatch();
-  const id = useSelector((state) => state.user?.id);
+  const id = useSelector((state) => state.user._id);
   const favoriteSchools = useSelector(
     (state) => state.user?.favoriteSchools || []
   );
