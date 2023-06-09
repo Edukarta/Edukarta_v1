@@ -24,7 +24,7 @@ router.get("/google", passport.authenticate("google", ["profile", "email"]));
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "http://localhost:3000/",
+    successRedirect: "https://www.edukarta.com/googleRedirect",
     failureRedirect: "/google/failed",
   }),
 );
