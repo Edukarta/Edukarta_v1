@@ -57,27 +57,30 @@ const LoginPage = () => {
   //FONCTION QUI GERE LA CONNECTION
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch(
-      `https://www.edukarta.com/api/v1/auth/login`,
+      `https://www.edukarta.com//api/v1/auth/login`,
       {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(values),
       }
-    );
-    const statusCode = loggedInResponse.status;
-    const loggedIn = await loggedInResponse.json();
-    console.log(loggedIn);
-    onSubmitProps.resetForm();
-
-    if (statusCode === 200) {
+      );
+      const statusCode = loggedInResponse.status;
+      // console.log("log :",loggedIn);
+      onSubmitProps.resetForm();
+      if (statusCode === 200) {
+      const loggedIn = await loggedInResponse.json();
       dispatch(
         setLogin({
           user: loggedIn.user,
           token: loggedIn.token,
         })
-      );
-      navigate(-1);
-    } else {
+        );
+        navigate(-1);
+      } 
+      else if(statusCode === 429){
+        navigate("/captcha")
+        }
+        else {
       // Afficher un message d'erreur ou ne rien faire
       console.log("Identifiant incorrect");
     }

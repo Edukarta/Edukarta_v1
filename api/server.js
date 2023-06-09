@@ -24,8 +24,10 @@ import googleRoutes from "./routes/googleRoutes.js";
 import schoolsRoutes from "./routes/schoolsRoutes.js";
 import paiementRoutes from "./routes/paiementRoutes.js";
 import requestRoute from "./routes/requestRoutes.js";
+import rateLimit,{MemoryStore} from "express-rate-limit"
 import eventRoutes from "./routes/eventRoutes.js";
 import nocache from "nocache";
+
 
 //CONGIGURATION
 const __filename = fileURLToPath(import.meta.url);
@@ -105,6 +107,21 @@ const upload = multer({
   },
 });
 
+// -----------------------------------------------------------------
+//             CAPTCHA
+// -----------------------------------------------------------------
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // Période de temps (1 minute)
+  max: 60, // Nombre maximal de requêtes autorisées par période de temps
+  message: 'Too many requests from this IP, please try again after a minute.',
+  keyGenerator: (req) => req.ip,
+    // store: new MemoryStore(),
+    statusCode:429,
+});
+app.use("/api",limiter)
+  // -----------------------------------------------------------------------
+    
+
 //ROUTES AVEC FICHIER
 app.patch(
   "/api/v1/user/:id",
@@ -146,6 +163,40 @@ app.use("/api/v1/schools", schoolsRoutes);
 app.use("/api/v1/event", eventRoutes);
 app.use("/api/v1/request", requestRoute);
 app.use("/api/v1/paiement", paiementRoutes);
+
+// -----------------------------------------------------------------
+//             CAPTCHA
+// -----------------------------------------------------------------
+app.post('/verify-hcaptcha', async (req, res) => {
+  const { token } = req.body;
+  console.log("token : ", token);
+  try {
+    // Vérification du token hCaptcha côté serveur
+    const response = await fetch('https://hcaptcha.com/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `secret=0x95c6d9C468De413889CC94109D02da76C625982b&response=${token}`,
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      limiter.resetKey(req.ip);
+      res.send({ success: true });
+    } else {
+      console.log("ERREUR");
+      // Le hCaptcha est invalide, renvoyer une erreur
+      res.status(403).json({ error: 'Invalid hCaptcha token' });
+    }
+  } catch (error) {
+    // Erreur lors de la vérification du hCaptcha
+    console.error('Erreur lors de la vérification du hCaptcha:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+// -----------------------------------------------------------------
 
 const PORT = process.env.PORT || 3330;
 dbConnect();
