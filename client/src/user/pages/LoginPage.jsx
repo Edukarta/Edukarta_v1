@@ -86,13 +86,11 @@ const LoginPage = () => {
   const googleAuth = async () => {
     try {
       console.log("googleAuth() called");
-      window.open("http://localhost:5000/api/v1/googleAuth/google", "_self");
+      window.open("https://www.edukarta.com/api/v1/googleAuth/google", "_self");
     } catch (error) {
       console.log(error);
     }
   };
-
-  
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isRegister) {
@@ -258,17 +256,23 @@ const LoginPage = () => {
                   </span>
                 </h6>
               </div>
-              <div className={classes.center}>
-                <div className={classes.line} />
-                <span className={classes.or}>Or</span>
-              </div>
+              {pageType === "login" && (
+                <div className={classes.center}>
+                  <div className={classes.line} />
+                  <div className={classes.or}>Or</div>
+                </div>
+              )}
             </form>
           )}
         </Formik>
-        <Button big dark onClick={googleAuth}>
-          <img src={google} alt="logo google" />
-          Sign in with Google
-        </Button>
+        {pageType === "login" && (
+          <div className={classes.container_btn_google}>
+            <Button big dark onClick={googleAuth}>
+              <img src={google} alt="logo google" />
+              Sign in with Google
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

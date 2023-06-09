@@ -11,7 +11,7 @@ const StudentsApplied = (props) => {
 
   const getSchool = async () => {
     const response = await fetch(
-      `http://localhost:5000/api/v1/schools/${props.id}/apply`,
+      `https://www.edukarta.com/api/v1/schools/${props.id}/apply`,
       {
         method: "GET",
       }

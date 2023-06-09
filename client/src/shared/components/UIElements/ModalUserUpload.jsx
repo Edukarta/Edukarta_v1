@@ -35,7 +35,7 @@ function ModalUserUpload(props) {
       formData.append("letter2", values.letter2);
       formData.append("letter2Path", values.letter2.name);
 
-      const response = await fetch(`http://localhost:5000/api/v1/user/${id}`, {
+      const response = await fetch(`https://www.edukarta.com/api/v1/user/${id}`, {
         method: "PATCH",
         body: formData,
       });

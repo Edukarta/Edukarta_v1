@@ -71,7 +71,7 @@ const Calendar = (props) => {
   const getEventsBySchoolId = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/v1/event/${props.id}`,
+        `https://www.edukarta.com/api/v1/event/${props.id}`,
         {
           method: "GET",
         }
@@ -88,7 +88,7 @@ const Calendar = (props) => {
   const deleteEventById = async (eventId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/v1/event/${eventId}`,
+        `https://www.edukarta.com/api/v1/event/${eventId}`,
         {
           method: "DELETE",
         }

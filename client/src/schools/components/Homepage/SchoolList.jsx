@@ -62,7 +62,7 @@ const SchoolList = ({
                   school.imgPath1
                     ? school.imgPath1.startsWith("http")
                       ? school.imgPath1
-                      : `http://localhost:5000/images/${school.imgPath1}`
+                      : `https://www.edukarta.com/images/${school.imgPath1}`
                     : ""
                 }
                 name={school.nameUpdate ? school.nameUpdate : school.name}
