@@ -35,12 +35,12 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://edukarta.com", // Utilisez l'URL correspondant à votre front-end
+    origin: ["https://edukarta.com", "https://www.edukarta.com"],
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })
 );
-app.use(nocache())
+
 // app.use(
 //   cors({
 //     origin: "http://localhost:3000",
@@ -48,6 +48,9 @@ app.use(nocache())
 //     credentials: true,
 //   })
 // );
+
+app.use(nocache())
+
 
 
 app.use(
