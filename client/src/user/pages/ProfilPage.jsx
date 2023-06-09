@@ -30,9 +30,9 @@ const ProfilPage = () => {
             title="My account"
             titlePage={isSmallScreen ? "" : "Profil"}
             name={`Hi, ${user.firstname}`}
-            nameDestop={`${user.firstname} ${user.lastname}`}
+            nameDestop={`${user.firstname} ${user.lastname ? user.lastname : ""}`}
             subtitle="My informations"
-            id={user.id}
+            id={user._id}
             image={user.imagePath}
             bannerImage={user.bannerPath}
             user={user}

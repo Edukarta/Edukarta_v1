@@ -25,6 +25,8 @@ import schoolsRoutes from "./routes/schoolsRoutes.js";
 import paiementRoutes from "./routes/paiementRoutes.js";
 import requestRoute from "./routes/requestRoutes.js";
 import rateLimit,{MemoryStore} from "express-rate-limit"
+import eventRoutes from "./routes/eventRoutes.js";
+import nocache from "nocache";
 
 
 //CONGIGURATION
@@ -32,21 +34,41 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
+
+app.use(
+  cors({
+    origin: ["https://edukarta.com", "https://www.edukarta.com"],
+    methods: "GET,POST,PUT,DELETE,PATCH",
+    credentials: true,
+  })
+);
+
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//     methods: "GET,POST,PUT,DELETE,PATCH",
+//     credentials: true,
+//   })
+// );
+
+app.use(nocache())
+
+
+
 app.use(
   session({
     secret: "edukarta",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: true,
-      maxAge: 3600000,
-    },
+    resave: true,
+    saveUninitialized: true,
+    // cookie: {
+    //   secure: true,
+    //   maxAge: 3600000,
+    // },
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
 passportSetup();
-app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
@@ -74,7 +96,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   folder: "edukarta",
-  allowedFormats: ["jpg", "png", "jpeg"],
+  allowedFormats: ["jpg", "png", "jpeg", "doc", "docx", "pdf"],
   transformation: [{ width: 500, height: 500, crop: "limit" }],
 });
 
@@ -106,6 +128,9 @@ app.patch(
   upload.fields([
     { name: "image", maxCount: 1 },
     { name: "banner", maxCount: 1 },
+    { name: "resume", maxCount: 1 },
+    { name: "letter1", maxCount: 1 },
+    { name: "letter2", maxCount: 1 },
   ]),
   updateUser
 );
@@ -134,7 +159,8 @@ app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/googleAuth", googleRoutes);
 app.use("/api/v1/user", userRoutes);
-app.use("/api/v1/schools",schoolsRoutes);
+app.use("/api/v1/schools", schoolsRoutes);
+app.use("/api/v1/event", eventRoutes);
 app.use("/api/v1/request", requestRoute);
 app.use("/api/v1/paiement", paiementRoutes);
 

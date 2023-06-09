@@ -1,4 +1,5 @@
 import School from "../models/SchoolModel.js";
+import User from "../models/UserModel.js";
 import HttpError from "../models/http-errors.js";
 import { v2 as cloudinary } from "cloudinary";
 import { validationResult } from "express-validator";
@@ -7,15 +8,23 @@ import { validationResult } from "express-validator";
 //@GET
 //ROUTE : api/v1/schools
 export const getAllSchools = async (req, res) => {
-  let schools;
+  const currentPage = parseInt(req.query.page) || 1;
+  const itemsPerPage = parseInt(req.query.limit) || 52;
+
   try {
-    schools = await School.find();
+    const totalCount = await School.countDocuments();
+    const schools = await School.find()
+      .skip((currentPage - 1) * itemsPerPage)
+      .limit(itemsPerPage);
+
+    res.status(200).json({
+      schools: schools.map((school) => school.toObject({ getters: true })),
+      currentPage,
+      totalPages: Math.ceil(totalCount / itemsPerPage),
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-  res.status(200).json({
-    schools: schools.map((school) => school.toObject({ getters: true })),
-  });
 };
 
 //SEARCH SCHOOLS
@@ -452,4 +461,63 @@ export const deleteSchool = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+//SCHOOL APPLY
+//@PATCH
+//ROUTE : api/v1/schools/:id
+export const schoolApply = async (req, res) => {
+  const { id, userId } = req.params;
+
+  try {
+    // Récupérer l'utilisateur et l'école
+    const user = await User.findById(userId).populate("schoolApplied");
+    const school = await School.findById(id).populate("studentApplied");
+
+    // Vérifier si l'utilisateur et l'école existent
+    if (!user || !school) {
+      return res
+        .status(404)
+        .json({ error: "Utilisateur ou école non trouvé." });
+    }
+
+    // Ajouter l'école dans schoolApplied de User
+    user.schoolApplied.push(school);
+    school.studentApplied.push(user);
+
+    // Sauvegarder les modifications
+    await user.save();
+    await school.save();
+
+    res.json({ user, school });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Une erreur s'est produite lors de l'ajout de l'application.",
+    });
+  }
+};
+
+//SCHOOL APPLY
+//@PATCH
+//ROUTE : api/v1/schools/:id
+export const getUserApply = async (req, res) => {
+  const { id } = req.params;
+  let school;
+  try {
+    school = await School.findById(id);
+  } catch (err) {
+    const error = new HttpError("Un problème est survenu", 500);
+    return next(error);
+  }
+  let userId = school.studentApplied;
+  let userApplied;
+  try {
+    userApplied = await User.find({ _id: { $in: userId } });
+  } catch (err) {
+    const error = new HttpError("Un problème est survenu", 500);
+    return next(error);
+  }
+
+  res.status(200).json(userApplied);
 };

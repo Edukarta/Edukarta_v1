@@ -3,6 +3,7 @@
     height: 30px;
     border-radius: 50%;
     border: 1px solid white;
+    background-color: white;
 }
 .containerAvatar img{
     width: 100%;
@@ -16,6 +17,7 @@
     height: 50px;
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: white;
 }
 
 .containerAvatarMedium img{
@@ -30,6 +32,7 @@
     height: 150px;
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: white;
 }
 
 .containerAvatarNormal img{
@@ -45,6 +48,7 @@
     overflow: hidden;
     border-radius: 50%;
     border: 15px solid rgba(255, 255, 255, 0.3);
+    background-color: white;
     
 }
 

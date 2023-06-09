@@ -15,6 +15,8 @@
     
 }
 
+
+
 .dots2{
     width: 20px;
     height: 20px;
@@ -29,6 +31,32 @@
     width: 20px;
     height: 20px;
     background-color: #333;
+    border-radius: 50%;
+    animation: loading 1s ease-in-out infinite;
+    animation-delay: 1.50s;
+}
+
+.dot1white{
+    width: 20px;
+    height: 20px;
+    background-color: #e6e6e6;
+    border-radius: 50%;
+    animation: loading 1s ease-in-out infinite;
+}
+
+.dot2white{
+    width: 20px;
+    height: 20px;
+    background-color: #e6e6e6;
+    border-radius: 50%;
+    animation: loading 1s ease-in-out infinite;
+    animation-delay: 1.25s;
+}
+
+.dot3white{
+    width: 20px;
+    height: 20px;
+    background-color: #e6e6e6;
     border-radius: 50%;
     animation: loading 1s ease-in-out infinite;
     animation-delay: 1.50s;

@@ -53,7 +53,7 @@ const Map = ({ type, schools }) => {
         chunkedLoading
         iconCreateFunction={cretaedCustomClusterIcon}
       >
-        {schools.schools?.map((school) => {
+        {schools.map((school) => {
           if (school.gps[0] && school.gps[1]) {
             return (
               <Marker

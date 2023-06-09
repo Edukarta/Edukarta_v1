@@ -1,0 +1,39 @@
+.container_apply{
+    width: 80%;
+    text-align: center;
+}
+
+.apply_title{
+    margin-top: 40px;
+    font-size: 35px;
+    font-weight: 500;
+    color: #444444;
+}
+
+.span_title{
+    font-weight: 400;
+    color: #727272;
+}
+
+.apply_text{
+    margin-top: 30px;
+    color: #6a6a6a;
+}
+
+.container_profil{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.name_user{
+    font-size: 25px;
+    color: #686868;
+}
+
+.container_btn_kartajob{
+    margin: 30px auto;
+    width: 40%;
+}

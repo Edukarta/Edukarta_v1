@@ -168,7 +168,15 @@ const SchoolSchema = new mongoose.Schema({
   owner:{
     type: String,
     default: ""
-  }
+  },
+  studentApplied: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: [],
+      timestamp: true
+    },
+  ],
 });
 
 const School = mongoose.model("School", SchoolSchema);
