@@ -10,7 +10,7 @@ const Captcha = (props) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/verify-hcaptcha', {
+      const response = await fetch('https://www.edukarta.com/verify-hcaptcha', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
