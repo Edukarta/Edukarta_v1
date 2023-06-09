@@ -39,7 +39,7 @@ const Captcha = (props) => {
   return (
     <form onSubmit={handleFormSubmit}>
       <HCaptcha
-        sitekey="10000000-ffff-ffff-ffff-000000000001"
+        sitekey="4e1f3309-5335-4fa9-9df4-bc69ca38c2b8"
         onLoad={onLoad}
         onVerify={setToken}
         ref={captchaRef}

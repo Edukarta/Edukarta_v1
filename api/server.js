@@ -151,7 +151,7 @@ app.post('/verify-hcaptcha', async (req, res) => {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `secret=0x0000000000000000000000000000000000000000&response=${token}`,
+      body: `secret=0x95c6d9C468De413889CC94109D02da76C625982b&response=${token}`,
     });
 
     const data = await response.json();
