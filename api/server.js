@@ -41,6 +41,7 @@ app.use(
   })
 );
 
+
 // app.use(
 //   cors({
 //     origin: "http://localhost:3000",
@@ -50,9 +51,6 @@ app.use(
 // );
 
 app.use(nocache())
-
-
-
 app.use(
   session({
     secret: "edukarta",
