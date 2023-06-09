@@ -14,7 +14,7 @@ const RedirectionPage = () => {
   const getUser = async () => {
     try {
       if (!user) {
-        const url = `https://www.edukarta.com/api/v1/googleAuth//google/success`;
+        const url = `https://www.edukarta.com/api/v1/googleAuth/google/success`;
         const { data } = await axios.get(url, { withCredentials: true });
         dispatch(
           setLogin({

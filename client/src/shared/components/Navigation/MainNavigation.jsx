@@ -54,7 +54,7 @@ const MainNavigation = ({ type }) => {
                 <Avatar
                   userId={user.id}
                   image={user.imagePath}
-                  link={`/profil/${user.id}`}
+                  link={`/profil/${user._id}`}
                 />
                 <div className={classes.container_icon_notification}>
                   <NotificationsNone sx={{ color: "white" }} />
