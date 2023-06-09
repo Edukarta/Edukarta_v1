@@ -25,6 +25,7 @@ import schoolsRoutes from "./routes/schoolsRoutes.js";
 import paiementRoutes from "./routes/paiementRoutes.js";
 import requestRoute from "./routes/requestRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
+import nocache from "nocache";
 
 //CONGIGURATION
 const __filename = fileURLToPath(import.meta.url);
@@ -39,7 +40,7 @@ app.use(
     credentials: true,
   })
 );
-
+app.use(nocache())
 // app.use(
 //   cors({
 //     origin: "http://localhost:3000",
