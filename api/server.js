@@ -108,7 +108,7 @@ const upload = multer({
 //             CAPTCHA
 // -----------------------------------------------------------------
 const limiter = rateLimit({
-  windowMs: 1 * 15 * 1000, // Période de temps (1 minute)
+  windowMs: 1 * 10 * 1000, // Période de temps (1 minute)
   max: 7, // Nombre maximal de requêtes autorisées par période de temps
   message: 'Too many requests from this IP, please try again after a minute.',
   keyGenerator: (req) => req.ip,
@@ -178,7 +178,6 @@ app.post('/verify-hcaptcha', async (req, res) => {
     });
 
     const data = await response.json();
-
     if (data.success) {
       limiter.resetKey(req.ip);
       res.send({ success: true });
