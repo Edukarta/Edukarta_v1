@@ -37,8 +37,8 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://locahost:3000", "http://locahost:3000"],
-    // origin: ["https://edukarta.com", "https://www.edukarta.com"],
+    // origin: ["https://localhost:3000", "http://localhost:3000","https://hcaptcha.com/siteverify"],
+    origin: ["https://edukarta.com", "https://www.edukarta.com","https://hcaptcha.com/siteverify"],
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })
@@ -112,8 +112,8 @@ const upload = multer({
 //             CAPTCHA
 // -----------------------------------------------------------------
 const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // Période de temps (1 minute)
-  max: 60, // Nombre maximal de requêtes autorisées par période de temps
+  windowMs: 1 * 10 * 1000, // Période de temps (1 minute)
+  max: 7, // Nombre maximal de requêtes autorisées par période de temps
   message: 'Too many requests from this IP, please try again after a minute.',
   keyGenerator: (req) => req.ip,
     // store: new MemoryStore(),
@@ -182,7 +182,6 @@ app.post('/verify-hcaptcha', async (req, res) => {
     });
 
     const data = await response.json();
-
     if (data.success) {
       limiter.resetKey(req.ip);
       res.send({ success: true });
