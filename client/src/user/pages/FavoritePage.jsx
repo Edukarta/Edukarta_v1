@@ -31,7 +31,7 @@ const FavoritePage = () => {
   //Fonction qui récupère les favoris
   const getFavorite = async () => {
     const response = await fetch(
-      `https://www.edukarta.com/api/v1/user/${id}/favorite`,
+      `${process.env.REACT_APP_API_URL}/api/v1/user/${id}/favorite`,
       {
         method: "GET",
       }
@@ -45,7 +45,7 @@ const FavoritePage = () => {
   //Fonction pour supprimer les favoris de la liste
   const addRemoveFav = async (schoolId) => {
     const response = await fetch(
-      `https://www.edukarta.com/api/v1/user/${id}/${schoolId}`,
+      `${process.env.REACT_APP_API_URL}/api/v1/user/${id}/${schoolId}`,
       {
         method: "PATCH",
       }

@@ -13,7 +13,7 @@ const passportSetup = () => {
         clientID:
           "121193193747-k7l4dvkrsnr8nrv2260kounuo9n53kdj.apps.googleusercontent.com",
         clientSecret: "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",
-        callbackURL: "https://www.edukarta.com/api/v1/googleAuth/google/callback",
+        callbackURL: `${process.env.URL_API}/api/v1/googleAuth/google/callback`,
         scope: ["profile", "email"],
       },
       async (req, accessToken, refreshToken, profile, done) => {

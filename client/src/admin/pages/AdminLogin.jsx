@@ -14,7 +14,7 @@ const AdminLogin = () => {
     event.preventDefault();
 
     const loggedInResponse = await fetch(
-      `https://www.edukarta.com/api/v1/admin/login`,
+      `${process.env.REACT_APP_API_URL}/api/v1/admin/login`,
       {
         method: "POST",
         headers: { "Content-type": "application/json" },

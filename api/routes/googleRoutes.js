@@ -24,7 +24,7 @@ router.get("/google", passport.authenticate("google", ["profile", "email"]));
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "https://www.edukarta.com/googleRedirect",
+    successRedirect: `${process.env.URL_API}/googleRedirect`,
     failureRedirect: "/google/failed",
   }),
 );

@@ -32,12 +32,11 @@ import nocache from "nocache";
 //CONGIGURATION
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-dotenv.config();
 const app = express();
 
 app.use(
   cors({
-    origin: ["https://edukarta.com", "https://www.edukarta.com"],
+    origin: [process.env.ACCESS_URL_LOCAL,process.env.ACCESS_URL_LOCAL2,'https://hcaptcha.com/siteverify'],
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })
@@ -87,8 +86,8 @@ app.use("/images", express.static(path.join(__dirname, "uploads/images")));
 //CONFIGURATION CLOUDINARY
 cloudinary.config({
   cloud_name: "dtrktbian",
-  api_key: "134979453238365",
-  api_secret: "vDOgu8g0DCAcwd8GjUOnassgdpM",
+  api_key: process.env.api_key_CLOUDINARY,
+  api_secret: process.env.api_secret_cloudiary,
 });
 
 const storage = new CloudinaryStorage({
@@ -109,8 +108,8 @@ const upload = multer({
 //             CAPTCHA
 // -----------------------------------------------------------------
 const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // Période de temps (1 minute)
-  max: 60, // Nombre maximal de requêtes autorisées par période de temps
+  windowMs: 1 * 15 * 1000, // Période de temps (1 minute)
+  max: 7, // Nombre maximal de requêtes autorisées par période de temps
   message: 'Too many requests from this IP, please try again after a minute.',
   keyGenerator: (req) => req.ip,
     // store: new MemoryStore(),
@@ -175,7 +174,7 @@ app.post('/verify-hcaptcha', async (req, res) => {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `secret=0x95c6d9C468De413889CC94109D02da76C625982b&response=${token}`,
+      body: `secret=${process.env.secret_Hcaptcha}&response=${token}`,
     });
 
     const data = await response.json();

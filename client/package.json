@@ -17,6 +17,7 @@
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.8",
     "dotenv": "^16.0.3",
+    "env-cmd": "^10.1.0",
     "formik": "^2.2.9",
     "leaflet": "^1.9.3",
     "os-browserify": "^0.3.0",
@@ -44,7 +45,8 @@
     "yup": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "env-cmd -f .env react-scripts start",
+    "dev": "env-cmd -f .env.development.local react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

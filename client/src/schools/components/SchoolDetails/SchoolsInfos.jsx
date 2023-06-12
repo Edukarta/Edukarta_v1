@@ -106,7 +106,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
     }
 
     const updateSchoolResponse = await fetch(
-      `https://www.edukarta.com/api/v1/schools/${id}`,
+      `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
       {
         method: "PATCH",
         body: formData,
@@ -427,7 +427,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                             school.imgPath1
                               ? school.imgPath1.startsWith("http")
                                 ? school.imgPath1
-                                : `https://www.edukarta.com/images/${school.imgPath1}`
+                                : `${process.env.REACT_APP_URL}/images/${school.imgPath1}`
                               : ""
                           }
                         />
@@ -477,7 +477,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                                     school.imgPath2
                                       ? school.imgPath2.startsWith("http")
                                         ? school.imgPath2
-                                        : `https://www.edukarta.com/images/${school.imgPath2}`
+                                        : `${process.env.REACT_APP_URL}/images/${school.imgPath2}`
                                       : ""
                                   }
                                 />
@@ -522,7 +522,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                                       school.imgPath3
                                         ? school.imgPath3.startsWith("http")
                                           ? school.imgPath3
-                                          : `https://www.edukarta.com/images/${school.imgPath3}`
+                                          : `${process.env.REACT_APP_URL}/images/${school.imgPath3}`
                                         : ""
                                     }
                                   />
@@ -564,7 +564,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                                     school.imgPath4
                                       ? school.imgPath4.startsWith("http")
                                         ? school.imgPath4
-                                        : `https://www.edukarta.com/images/${school.imgPath4}`
+                                        : `${process.env.REACT_APP_URL}/images/${school.imgPath4}`
                                       : ""
                                   }
                                 />
@@ -603,7 +603,7 @@ const SchoolsInfos = ({ school, getSchool }) => {
                                     school.imgPath5
                                       ? school.imgPath5.startsWith("http")
                                         ? school.imgPath5
-                                        : `https://www.edukarta.com/images/${school.imgPath5}`
+                                        : `${process.env.REACT_APP_URL}/images/${school.imgPath5}`
                                       : ""
                                   }
                                 />

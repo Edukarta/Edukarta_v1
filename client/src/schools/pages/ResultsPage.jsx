@@ -31,7 +31,7 @@ const ResultsPage = () => {
     try {
       const query = selectedFilters.join(",");
       const response = await fetch(
-        `https://www.edukarta.com/api/v1/schools/filter?previousQuery=${previousQuery}&query=${query}`,
+        `${process.env.REACT_APP_API_URL}/api/v1/schools/filter?previousQuery=${previousQuery}&query=${query}`,
         {
           method: "GET",
         }

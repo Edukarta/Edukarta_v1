@@ -44,7 +44,7 @@ const SchoolUpdate = () => {
     // formData.append("picture", values.picture);
 
     const updateSchoolResponse = await fetch(
-      `https://www.edukarta.com/api/v1/schools/${id}`,
+      `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
       {
         method: "PATCH",
         body: formData,
@@ -67,7 +67,7 @@ const SchoolUpdate = () => {
 
   const fetchRequest = async () => {
     const responseData = await fetch(
-      `https://www.edukarta.com/api/v1/request/${requestId}`,
+      `${process.env.REACT_APP_API_URL}/api/v1/request/${requestId}`,
       {
         method: "GET",
       }

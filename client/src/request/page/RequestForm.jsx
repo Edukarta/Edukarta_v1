@@ -34,7 +34,7 @@ const RequestForm = () => {
     formData.append("description", values.description);
 
     const savedRequestResponse = await fetch(
-      `https://www.edukarta.com/api/v1/request`,
+      `${process.env.REACT_APP_API_URL}/api/v1/request`,
       {
         method: "POST",
         body: formData,
