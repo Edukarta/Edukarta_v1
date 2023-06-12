@@ -37,7 +37,8 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://edukarta.com", "https://www.edukarta.com"],
+    origin: ["https://locahost:3000", "http://locahost:3000"],
+    // origin: ["https://edukarta.com", "https://www.edukarta.com"],
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })
