@@ -39,7 +39,7 @@ const LoginPage = () => {
     }
 
     const savedUserResponse = await fetch(
-      `https://www.edukarta.com/api/v1/auth/register`,
+      `${process.env.REACT_APP_API_URL}/api/v1/auth/register`,
       {
         method: "POST",
         body: formData,
@@ -57,8 +57,7 @@ const LoginPage = () => {
   //FONCTION QUI GERE LA CONNECTION
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch(
-      `https://www.edukarta.com//api/v1/auth/login`,
-      // `http://localhost:5000/api/v1/auth/login`,
+      `${process.env.REACT_APP_API_URL}/api/v1/auth/login`,
       {
         method: "POST",
         headers: { "Content-type": "application/json" },
@@ -90,7 +89,7 @@ const LoginPage = () => {
   const googleAuth = async () => {
     try {
       console.log("googleAuth() called");
-      window.open("https://www.edukarta.com/api/v1/googleAuth/google", "_self");
+      window.open(`${process.env.REACT_APP_API_URL}/api/v1/googleAuth/google`, "_self");
     } catch (error) {
       console.log(error);
     }

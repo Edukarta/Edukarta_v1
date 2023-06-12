@@ -8,7 +8,7 @@ const Dashboard = () => {
 
 
   const fetchRequest = async () => {
-    const responseData = await fetch(`https://www.edukarta.com/api/v1/request`, {
+    const responseData = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/request`, {
       method: "GET",
     });
     const allRequests = await responseData.json();
@@ -44,7 +44,7 @@ const Dashboard = () => {
                     <div className={classes.container__user_img}>
                       {request.user.imagePath ? (
                         <img
-                          src={`https://www.edukarta.com/images/${request.user.imagePath}`}
+                          src={`${process.env.REACT_APP_URL}/images/${request.user.imagePath}`}
                           alt="profile"
                         />
                       ) : (

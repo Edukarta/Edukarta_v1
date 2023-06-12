@@ -29,7 +29,7 @@ const Suggest = ({
                 school.imgPath1
                   ? school.imgPath1.startsWith("http")
                     ? school.imgPath1
-                    : `https://www.edukarta.com/images/${school.imgPath1}`
+                    : `${process.env.REACT_APP_URL}/images/${school.imgPath1}`
                   : ""
               }
               name={school.nameUpdate ? school.nameUpdate : school.name}

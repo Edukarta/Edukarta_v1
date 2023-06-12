@@ -96,7 +96,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
     }
 
     const updateSchoolResponse = await fetch(
-      `https://www.edukarta.com/api/v1/schools/${id}`,
+      `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
       {
         method: "PATCH",
         body: formData,

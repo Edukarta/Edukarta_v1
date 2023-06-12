@@ -11,7 +11,7 @@ const StudentsApplied = (props) => {
 
   const getSchool = async () => {
     const response = await fetch(
-      `https://www.edukarta.com/api/v1/schools/${props.id}/apply`,
+      `${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply`,
       {
         method: "GET",
       }

@@ -32,13 +32,11 @@ import nocache from "nocache";
 //CONGIGURATION
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-dotenv.config();
 const app = express();
 
 app.use(
   cors({
-    // origin: ["https://localhost:3000", "http://localhost:3000","https://hcaptcha.com/siteverify"],
-    origin: ["https://edukarta.com", "https://www.edukarta.com","https://hcaptcha.com/siteverify"],
+    origin: [process.env.ACCESS_URL_LOCAL,process.env.ACCESS_URL_LOCAL2,'https://hcaptcha.com/siteverify'],
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })
@@ -88,8 +86,8 @@ app.use("/images", express.static(path.join(__dirname, "uploads/images")));
 //CONFIGURATION CLOUDINARY
 cloudinary.config({
   cloud_name: "dtrktbian",
-  api_key: "134979453238365",
-  api_secret: "vDOgu8g0DCAcwd8GjUOnassgdpM",
+  api_key: process.env.api_key_CLOUDINARY,
+  api_secret: process.env.api_secret_cloudiary,
 });
 
 const storage = new CloudinaryStorage({
@@ -176,7 +174,7 @@ app.post('/verify-hcaptcha', async (req, res) => {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `secret=0x95c6d9C468De413889CC94109D02da76C625982b&response=${token}`,
+      body: `secret=${process.env.secret_Hcaptcha}&response=${token}`,
     });
 
     const data = await response.json();
