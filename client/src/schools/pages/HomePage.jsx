@@ -21,7 +21,7 @@ const HomePage = () => {
         }
       );
       const allSchools = await responseData.json();
-      console.log(allSchools);
+   
   
       setSchools((prevSchools) => {
         const updatedSchools = [...prevSchools];
@@ -56,7 +56,6 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchSchools();
-    console.log(schools)
     window.addEventListener('scroll', handleScroll);
 
     return () => {

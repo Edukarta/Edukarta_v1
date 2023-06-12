@@ -93,7 +93,7 @@ const StudentsApplied = (props) => {
       </div>
       <div className={classes.student_applied_body}>
         {school?.map((student, index) => (
-          <>
+  
             <div
               key={index}
               className={classes.item_student}
@@ -106,15 +106,15 @@ const StudentsApplied = (props) => {
                 <Avatar medium image={student.imagePath} />
               </div>
               <div className={classes.container_student_infos}>
-                <span className={classes.student_name}>
-                  {student.firstname} {student.lastname}
-                </span>
+                <h5 className={classes.student_name}>
+                  {student.firstname} <br /> {student.lastname}
+                </h5>
                 <span className={classes.student_location}>
                   {student.location}
                 </span>
               </div>
             </div>
-          </>
+
         ))}
       </div>
     </div>

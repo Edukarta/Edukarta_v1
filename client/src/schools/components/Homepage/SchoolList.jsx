@@ -13,7 +13,8 @@ const SchoolList = ({
   firstSchool,
 }) => {
   const dispatch = useDispatch();
-  const id = useSelector((state) => state.user?.id);
+  const token = useSelector((state) => state.token);
+  const id = useSelector((state) => state.user?._id);
   const favoriteSchools = useSelector(
     (state) => state.user?.favoriteSchools || []
   );
@@ -27,6 +28,7 @@ const SchoolList = ({
       `${process.env.REACT_APP_API_URL}/api/v1/user/${id}/${schoolId}`,
       {
         method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` }
       }
     );
     const savedResponse = await response.json();
