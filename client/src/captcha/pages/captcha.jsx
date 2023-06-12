@@ -10,7 +10,8 @@ const Captcha = (props) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('https://www.edukarta.com/verify-hcaptcha', {
+      // const response = await fetch('http://localhost:5000/verify-hcaptcha', {
+      const response = await fetch('http://edukarta.com/verify-hcaptcha', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,6 +40,7 @@ const Captcha = (props) => {
   return (
     <form onSubmit={handleFormSubmit}>
       <HCaptcha
+        // sitekey="10000000-ffff-ffff-ffff-000000000001"
         sitekey="4e1f3309-5335-4fa9-9df4-bc69ca38c2b8"
         onLoad={onLoad}
         onVerify={setToken}

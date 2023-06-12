@@ -57,7 +57,8 @@ const LoginPage = () => {
   //FONCTION QUI GERE LA CONNECTION
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch(
-      `https://www.edukarta.com/api/v1/auth/login`,
+      `https://www.edukarta.com//api/v1/auth/login`,
+      // `http://localhost:5000/api/v1/auth/login`,
       {
         method: "POST",
         headers: { "Content-type": "application/json" },
