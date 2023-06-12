@@ -19,7 +19,7 @@ const MainNavigation = ({ type }) => {
   const handleSearch = async () => {
     try {
       const response = await fetch(
-        `https://www.edukarta.com/api/v1/schools/search?query=${searchQuery}`,
+        `${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${searchQuery}`,
         {
           method: "GET",
         }

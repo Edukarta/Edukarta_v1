@@ -65,7 +65,7 @@ const ModalForm = (props) => {
     }
 
     const updateSchoolResponse = await fetch(
-      `https://www.edukarta.com/api/v1/schools/${props.id}`,
+      `${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}`,
       {
         method: "PATCH",
         body: formData,

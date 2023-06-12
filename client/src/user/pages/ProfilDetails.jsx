@@ -27,7 +27,7 @@ const ProfilDetails = () => {
     setIsSubmitting(true);
     formData.append("imagePath", values.image.name); // Ajoute l'imagePath d'origine
     formData.append("image", values.image);
-    const response = await fetch(`https://www.edukarta.com/api/v1/user/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`, {
       method: "PATCH",
       body: formData,
     });
