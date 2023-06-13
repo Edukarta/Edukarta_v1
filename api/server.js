@@ -107,17 +107,35 @@ const upload = multer({
 // -----------------------------------------------------------------
 //             CAPTCHA
 // -----------------------------------------------------------------
+let blockedIPs = [];
+
 const limiter = rateLimit({
   windowMs: 1 * 10 * 1000, // Période de temps (1 minute)
   max: 7, // Nombre maximal de requêtes autorisées par période de temps
-  message: 'Too many requests from this IP, please try again after a minute.',
+  message: 'Too many requests from this IP, please try again after a minute or complete the captcha.',
   keyGenerator: (req) => req.ip,
     // store: new MemoryStore(),
-    statusCode:429,
+  statusCode:429,
+  handler: (request, response, next, options) => {
+    blockedIPs.push(request.ip);
+    console.log("Excluded IP: ", request.ip);
+    response.status(options.statusCode).send(options.message);
+  },
 });
 app.use("/api",limiter)
   // -----------------------------------------------------------------------
-    
+  //           Bloqueur d'Ip
+  // -----------------------------------------------------------------------
+
+  function blockIP(request, response, next) {
+    if (blockedIPs.includes(request.ip)) {
+      return response.status(403).json({ error: 'IP blocked' });
+    }
+    next();
+  }
+  // Utilisation du middleware personnalisé
+  app.use("/api",blockIP);
+  
 
 //ROUTES AVEC FICHIER
 app.patch(
@@ -179,7 +197,8 @@ app.post('/verify-hcaptcha', async (req, res) => {
 
     const data = await response.json();
     if (data.success) {
-      limiter.resetKey(req.ip);
+      limiter.resetKey(req.ip); 
+      blockedIPs = blockedIPs.filter(ip => ip !== req.ip)
       res.send({ success: true });
     } else {
       console.log("ERREUR");

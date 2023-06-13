@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "env-cmd -f .env nodemon server.js",
-    "dev": "env-cmd -f .env.development.local nodemon NODE_ENV=dev server.js"
+    "dev": "env-cmd -f .env.development.local nodemon NODE_ENV=dev server.js",
+    "test": "env-cmd -f .env.test.local nodemon NODE_ENV=test server.js"
   },
   "author": "",
   "license": "ISC",
