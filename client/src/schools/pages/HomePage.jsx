@@ -15,7 +15,7 @@ const HomePage = () => {
   const fetchSchools = async () => {
     try {
       const responseData = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/schools?page=${page}&limit=${limit}`,
+        `https://www.edukarta.com/api/v1/schools?page=${page}&limit=${limit}`,
         {
           method: "GET",
         }
