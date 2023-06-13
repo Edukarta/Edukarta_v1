@@ -124,7 +124,7 @@ const limiter = rateLimit({
     response.status(options.statusCode).send(options.message);
   },
 });
-// app.use("/api",limiter)
+app.use("/api",limiter)
   // -----------------------------------------------------------------------
   //           Bloqueur d'Ip
   // -----------------------------------------------------------------------
