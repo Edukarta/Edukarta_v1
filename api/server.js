@@ -184,7 +184,7 @@ app.post('/verify-hcaptcha', async (req, res) => {
       res.send({ success: true });
     } else {
       console.log("ERREUR");
-      // Le hCaptcha est invalide, renvoyer une erreur
+      // Le hCaptcha est invalide, renvoyer une erreurtttt
       res.status(403).json({ error: 'Invalid hCaptcha token' });
     }
   } catch (error) {
