@@ -25,21 +25,28 @@ const CardFav = (props) => {
   return (
     <div>
       <div className={classes.container_header_title}>
-        <span className={classes.card_fav_title}>Favorite schools</span>
+        <span className={classes.card_fav_title}>
+          Favorite <span className={classes.title_bold_color}>schools</span>
+        </span>
         <Link to={`/profil/${props.id}/favorite`}>See All</Link>
       </div>
-      {favoriteSchools.length > 0 ? <div className={classes.container_grid_img}>
-        {favoriteSchools.slice(0, 9).map((school, index) => {
-          return (
-            <Link to={`/school/${school._id}`} className={classes.container_img} key={index}>
-              <img src={school.imgPath1} alt="" />
-            </Link>
-          );
-        })}
-      </div> : 
-      <h6 className={classes.noFav_text}>
-        No favorite schools yet.
-      </h6>}
+      {favoriteSchools.length > 0 ? (
+        <div className={classes.container_grid_img}>
+          {favoriteSchools.slice(0, 9).map((school, index) => {
+            return (
+              <Link
+                to={`/school/${school._id}`}
+                className={classes.container_img}
+                key={index}
+              >
+                <img src={school.imgPath1} alt="" />
+              </Link>
+            );
+          })}
+        </div>
+      ) : (
+        <h6 className={classes.noFav_text}>No favorite schools yet.</h6>
+      )}
     </div>
   );
 };

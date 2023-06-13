@@ -17,7 +17,7 @@ import { useParams } from "react-router-dom";
 import Avatar from "../../../shared/components/UIElements/Avatar";
 import { updateUser } from "../../../shared/state/store";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik } from "formik";
 import Dropzone from "react-dropzone";
 import { setLogout } from "../../../shared/state/store";
@@ -28,7 +28,7 @@ import classes from "./SectionProfil.module.css";
 import ModalUserUpload from "../../../shared/components/UIElements/ModalUserUpload";
 
 const SectionProfil = (props) => {
-  const { id } = useParams();
+  const id = useSelector((state) => state.user._id);
   const [openModalUpload, setOpenMoadlUpload] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
@@ -260,30 +260,34 @@ const SectionProfil = (props) => {
         {/* LEFT BLOC */}
         <div className={classes.container_card_infos_left}>
           <div className={classes.card_item_infos}>
-            <h4 className={classes.profil_info_title}>About Me</h4>
+            <h4 className={classes.profil_info_title}>
+              About <span className={classes.title_bold_color}>Me</span>
+            </h4>
 
             {/* BARRE DE PROGRESSION */}
             <div className={classes.card_progress_bar_title}>
               <span>Profil completed</span>
             </div>
             <div className={classes.container_progress_bar}>
-              <div
-                className={`${
-                  progress < 20
-                    ? classes.progress_bar_red
-                    : progress > 20 && progress < 80
-                    ? classes.progress_bar_orange
-                    : progress >= 80 && progress < 100
-                    ? classes.progress_bar_green
-                    : progress === 100
-                    ? classes.progress_bar_complete
-                    : ""
-                }`}
-                style={{
-                  width: `${progress}%`,
-                }}
-              >
-                {`${progress.toFixed(0)}%`}
+              <div className={classes.container_bar}>
+                <div
+                  className={`${
+                    progress < 20
+                      ? classes.progress_bar_red
+                      : progress > 20 && progress < 80
+                      ? classes.progress_bar_orange
+                      : progress >= 80 && progress < 100
+                      ? classes.progress_bar_green
+                      : progress === 100
+                      ? classes.progress_bar_complete
+                      : ""
+                  }`}
+                  style={{
+                    width: `${progress}%`,
+                  }}
+                >
+                  {`${progress.toFixed(0)}%`}
+                </div>
               </div>
             </div>
             <div className={classes.infos_divider}></div>
@@ -319,7 +323,9 @@ const SectionProfil = (props) => {
             openModal={() => setOpenMoadlUpload(false)}
           />
           <div className={classes.card_item_resume}>
-            <h4 className={classes.profil_info_title}>Kartajob</h4>
+            <h4 className={classes.profil_info_title}>
+              Karta<span className={classes.title_bold_color}>job</span>
+            </h4>
             <div className={classes.resume_group_item}>
               <div
                 className={classes.resume_item}
@@ -334,11 +340,11 @@ const SectionProfil = (props) => {
           </div>
 
           <div className={classes.card_item_infos}>
-            <CardFav id={props.user.id} />
+            <CardFav id={props.id} />
           </div>
 
           <div className={classes.card_item_infos}>
-            <CardFav id={props.user.id} />
+            <CardFav id={props.id} />
           </div>
 
           {/* <div className={classes.card_item_infos}>
@@ -349,12 +355,12 @@ const SectionProfil = (props) => {
         {/* RIGHT BLOC */}
         <div className={classes.container_profil_section}>
           <div className={classes.container_input_user_post}>
-            <div className={classes.user_post_avatar_input}>
-              <Avatar image={props.image} medium />
-              <input placeholder="how i feel today ?" />
-              <div className={classes.container_icon_send}>
-                <Send sx={{ color: "white" }} />
-              </div>
+            <h4 className={classes.profil_info_title}>What's New Today?</h4>
+            <div className={classes.container_input}>
+              <Avatar medium image={props.image} />
+              <button className={classes.input_btn_school}>
+                What would you like to talk about?
+              </button>
             </div>
           </div>
           <div className={classes.container_user_feed_title}>
