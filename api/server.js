@@ -115,7 +115,7 @@ const limiter = rateLimit({
     // store: new MemoryStore(),
     statusCode:429,
 });
-app.use("/api",limiter)
+// app.use("/api",limiter)
   // -----------------------------------------------------------------------
     
 
