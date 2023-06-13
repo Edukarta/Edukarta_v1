@@ -7,13 +7,15 @@ import classes from "./Apply.module.css";
 
 const Apply = (props) => {
   const user = useSelector((state) => state.user);
+  const token = useSelector((state) => state.token);
   const dispatch = useDispatch();
 
   const applySchool = async () => {
     const response = await fetch(
-      `http://localhost:5000/api/v1/schools/${props.id}/apply/${user.id}`,
+      `http://localhost:5000/api/v1/schools/${props.id}/apply/${user._id}`,
       {
         method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` },
       }
     );
     const savedResponse = await response.json();
@@ -43,7 +45,7 @@ const Apply = (props) => {
         </p>
       </div>
       <div className={classes.container_profil}>
-        <Avatar big image={props.userImage} link={`/profil/${props.useerId}`} />
+        <Avatar big image={props.userImage} link={`/profil/${props.userId}`} />
         <span className={classes.name_user}>
           {props.firstname} {props.lastname}
         </span>

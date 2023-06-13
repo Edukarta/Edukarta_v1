@@ -67,12 +67,12 @@ const LoginPage = () => {
       const statusCode = loggedInResponse.status;
       // console.log("log :",loggedIn);
       onSubmitProps.resetForm();
-      if (statusCode === 200) {
       const loggedIn = await loggedInResponse.json();
+      if (loggedIn) {
       dispatch(
         setLogin({
           user: loggedIn.user,
-          token: loggedIn.token,
+          token: loggedIn.token
         })
         );
         navigate(-1);

@@ -24,7 +24,8 @@ import googleRoutes from "./routes/googleRoutes.js";
 import schoolsRoutes from "./routes/schoolsRoutes.js";
 import paiementRoutes from "./routes/paiementRoutes.js";
 import requestRoute from "./routes/requestRoutes.js";
-import rateLimit,{MemoryStore} from "express-rate-limit"
+import { verifyToken } from "./middleware/auth.js";
+import rateLimit,{MemoryStore} from "express-rate-limit";
 import eventRoutes from "./routes/eventRoutes.js";
 import nocache from "nocache";
 
