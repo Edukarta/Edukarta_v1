@@ -27,7 +27,7 @@ const MainNavigation = ({ type }) => {
       const data = await response.json();
       dispatch(setSearchResults({ results: data }));
       dispatch(setQuery(searchQuery));
-      console.log(data);
+   
       navigate("/searchResult");
     } catch (error) {
       console.error(error);

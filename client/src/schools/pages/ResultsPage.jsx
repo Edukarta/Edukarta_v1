@@ -38,7 +38,6 @@ const ResultsPage = () => {
       );
       const data = await response.json();
       dispatch(setSearchResults({ results: data }));
-      // console.log(data);
     } catch (error) {
       console.error(error);
     }
