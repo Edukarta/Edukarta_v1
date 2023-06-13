@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import schoolIcon from "../../../img/img_school.jpg";
 import { Link } from "react-router-dom";
 import classes from "./CardFav.module.css";
 

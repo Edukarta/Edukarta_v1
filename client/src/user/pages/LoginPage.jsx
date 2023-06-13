@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import { Formik } from "formik";
@@ -29,7 +29,6 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
-  let intervalId;
 
   //FONCTION QUI GERE LA CREATION DE PROFIL
   const register = async (values, onSubmitProps) => {
@@ -68,7 +67,8 @@ const LoginPage = () => {
       // console.log("log :",loggedIn);
       onSubmitProps.resetForm();
       const loggedIn = await loggedInResponse.json();
-      if (loggedIn) {
+      
+      if (statusCode === 200) {
       dispatch(
         setLogin({
           user: loggedIn.user,
