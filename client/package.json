@@ -45,7 +45,7 @@
     "yup": "^1.1.1"
   },
   "scripts": {
-    "start": "env-cmd -f .env react-scripts start",
+    "start": "react-scripts start",
     "dev": "env-cmd -f .env.development.local react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
