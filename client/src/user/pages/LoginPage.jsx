@@ -68,7 +68,7 @@ const LoginPage = () => {
       // console.log("log :",loggedIn);
       onSubmitProps.resetForm();
       const loggedIn = await loggedInResponse.json();
-      if (loggedIn) {
+      if (statusCode === 200) {
       dispatch(
         setLogin({
           user: loggedIn.user,
