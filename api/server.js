@@ -36,7 +36,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [process.env.ACCESS_URL_LOCAL,process.env.ACCESS_URL_LOCAL2,'https://hcaptcha.com/siteverify'],
+    origin: [process.env.ACCESS_URL_LOCAL, process.env.ACCESS_URL_LOCAL2,'https://hcaptcha.com/siteverify'],
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })
