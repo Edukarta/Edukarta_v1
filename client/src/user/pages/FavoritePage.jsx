@@ -58,7 +58,7 @@ const FavoritePage = () => {
         })
       );
     }
-    console.log(savedResponse);
+
     getFavorite();
   };
 

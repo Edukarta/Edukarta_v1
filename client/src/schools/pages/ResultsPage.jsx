@@ -45,9 +45,7 @@ const ResultsPage = () => {
     setDrawerIsOpen(false);
   };
 
-  console.log(previousQuery);
-  console.log(selectedFilters);
-  console.log(results);
+
 
   return (
     <>

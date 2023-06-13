@@ -17,7 +17,7 @@ const SchoolDetails = () => {
     );
     const data = await response.json();
     setSchool(data.school);
-    console.log(data);
+   
   };
   useEffect(() => {
     getSchool();

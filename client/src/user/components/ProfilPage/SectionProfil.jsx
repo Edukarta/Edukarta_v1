@@ -133,7 +133,6 @@ const SectionProfil = (props) => {
     if (imagePath) filledFields++;
     const calculatedProgress = (filledFields / totalFields) * 100;
     setProgress(calculatedProgress);
-    console.log(progress);
   };
 
   return (
