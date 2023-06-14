@@ -8,6 +8,7 @@ import "react-date-range/dist/theme/default.css";
 import classes from "./Calendar.module.css";
 import Input from "../FormElements/Input";
 import Button from "../FormElements/Button";
+import { callApi } from "../../../utils/apiUtils";
 
 const Calendar = (props) => {
   const [dateEvent, setDateEvent] = useState(null);
@@ -47,16 +48,17 @@ const Calendar = (props) => {
     };
 
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/event/${props.id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(eventData),
-        }
-      );
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/event/${props.id}`,"POST",JSON.stringify(eventData))
+      // await fetch(
+      //   `${process.env.REACT_APP_API_URL}/api/v1/event/${props.id}`,
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(eventData),
+      //   }
+      // );
       const savedResponse = await response.json();
       console.log(savedResponse);
 
@@ -70,12 +72,13 @@ const Calendar = (props) => {
 
   const getEventsBySchoolId = async () => {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/event/${props.id}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/event/${props.id}`,"GET")
+      // await fetch(
+      //   `${process.env.REACT_APP_API_URL}/api/v1/event/${props.id}`,
+      //   {
+      //     method: "GET",
+      //   }
+      // );
       const savedResponse = await response.json();
       setDateEvent(savedResponse);
 
@@ -87,12 +90,13 @@ const Calendar = (props) => {
 
   const deleteEventById = async (eventId) => {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/event/${eventId}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/event/${eventId}`,"DELETE")
+      // await fetch(
+      //   `${process.env.REACT_APP_API_URL}/api/v1/event/${eventId}`,
+      //   {
+      //     method: "DELETE",
+      //   }
+      // );
       const savedResponse = await response.json();
       // Faites quelque chose avec la réponse
     } catch (error) {

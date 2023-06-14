@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../../shared/state/store";
 import google from "../../img/logo_google.png";
 import classes from "./LoginPage.module.css";
+import { callApi } from "../../utils/apiUtils";
 
 const initialValueRegister = {
   firstname: "",
@@ -37,16 +38,10 @@ const LoginPage = () => {
     for (let value in values) {
       formData.append(value, values[value]);
     }
+    const savedUserResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/auth/register`,"POST",formData)
 
-    const savedUserResponse = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/auth/register`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-
-    const savedUser = await savedUserResponse.json();
+    const savedUser = await savedUserResponse;
+    console.log(savedUser);
     onSubmitProps.resetForm();
 
     if (savedUser) {
@@ -56,33 +51,21 @@ const LoginPage = () => {
 
   //FONCTION QUI GERE LA CONNECTION
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/auth/login`,
-      {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(values),
-      }
-      );
-      const statusCode = loggedInResponse.status;
-      // console.log("log :",loggedIn);
-      onSubmitProps.resetForm();
-      if (statusCode === 200) {
-      const loggedIn = await loggedInResponse.json();
+    const loggedInResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/auth/login`, "POST", values);
+    const response = await loggedInResponse;
+    const statusCode = response.status;
+    if (statusCode === 200) {
+      const loggedIn = response.data;
       dispatch(
         setLogin({
           user: loggedIn.user,
           token: loggedIn.token,
         })
-        );
-        navigate(-1);
-      } 
-      else if(statusCode === 429){
-        navigate("/captcha")
-        }
-        else {
-      // Afficher un message d'erreur ou ne rien faire
-      console.log("Identifiant incorrect");
+      );
+      navigate(-1);
+    }
+    else if(statusCode === 429){
+      navigate("/captcha")
     }
   };
 

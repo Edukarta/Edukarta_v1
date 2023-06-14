@@ -7,6 +7,7 @@ import { Create, Done } from "@mui/icons-material";
 import Dropzone from "react-dropzone";
 import classes from "./SchoolUpdate.module.css";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import { callApi } from "../../utils/apiUtils";
 
 const initialValueName = {
   nameUpdate: "",
@@ -43,13 +44,14 @@ const SchoolUpdate = () => {
     formData.append("imgPath", values.picture.name); // Ajoute l'imagePath d'origine
     // formData.append("picture", values.picture);
 
-    const updateSchoolResponse = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
-      {
-        method: "PATCH",
-        body: formData,
-      }
-    );
+    const updateSchoolResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,"PATCH",formData)
+    // await fetch(
+    //   `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
+    //   {
+    //     method: "PATCH",
+    //     body: formData,
+    //   }
+    // );
 
     const updateSchool = await updateSchoolResponse.json();
     console.log(updateSchool);

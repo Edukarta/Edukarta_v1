@@ -10,6 +10,7 @@ import Button from "../../shared/components/FormElements/Button";
 import classes from "./ProfilDetails.module.css";
 import LoadingDots from "../../shared/components/UIElements/LoadingDots";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
+import { callApi } from "../../utils/apiUtils";
 
 const initialValuePatch = {
   image: "",
@@ -27,10 +28,11 @@ const ProfilDetails = () => {
     setIsSubmitting(true);
     formData.append("imagePath", values.image.name); // Ajoute l'imagePath d'origine
     formData.append("image", values.image);
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`, {
-      method: "PATCH",
-      body: formData,
-    });
+    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`,"PATCH",formData)
+    // await fetch(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`, {
+    //   method: "PATCH",
+    //   body: formData,
+    // });
 
     const savedResponse = await response.json();
     onSubmitProps.resetForm();

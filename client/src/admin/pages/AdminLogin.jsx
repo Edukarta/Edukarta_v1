@@ -3,6 +3,7 @@ import classes from "./AdminLogin.module.css";
 import { useNavigate } from "react-router-dom";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
+import {callApi} from "../../utils/apiUtils"
 
 const AdminLogin = () => {
   const URL = process.env.REACT_APP_BACKEND_URL;
@@ -13,15 +14,16 @@ const AdminLogin = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const loggedInResponse = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/admin/login`,
-      {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      }
-    );
-    const statusCode = loggedInResponse.status;
+    const loggedInResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/admin/login`,"POST",JSON.stringify({ username, password }))
+    // await fetch(
+    //   `${process.env.REACT_APP_API_URL}/api/v1/admin/login`,
+    //   {
+    //     method: "POST",
+    //     headers: { "Content-type": "application/json" },
+    //     body: JSON.stringify({ username, password }),
+    //   }
+    // );
+    const statusCode = await loggedInResponse.status;
     const loggedIn = await loggedInResponse.json();
     console.log(loggedIn);
 

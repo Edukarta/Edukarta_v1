@@ -4,18 +4,20 @@ import { updateUser } from "../../state/store";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../FormElements/Button";
 import classes from "./Apply.module.css";
+import { callApi } from "../../../utils/apiUtils";
 
 const Apply = (props) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const applySchool = async () => {
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply/${user.id}`,
-      {
-        method: "PATCH",
-      }
-    );
+    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply/${user.id}`,"PATCH")
+    // await fetch(
+    //   `${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply/${user.id}`,
+    //   {
+    //     method: "PATCH",
+    //   }
+    // );
     const savedResponse = await response.json();
     if (savedResponse) {
       dispatch(

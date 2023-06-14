@@ -27,6 +27,7 @@ import LoadingDots from "../../../shared/components/UIElements/LoadingDots";
 import nft from "../../../img/nft.jpg";
 import classes from "./SchoolsInfos.module.css";
 import Button from "../../../shared/components/FormElements/Button";
+import { callApi } from "../../../utils/apiUtils";
 
 const SchoolsInfos = ({ school, getSchool }) => {
   const { id } = useParams();
@@ -105,13 +106,14 @@ const SchoolsInfos = ({ school, getSchool }) => {
       }
     }
 
-    const updateSchoolResponse = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
-      {
-        method: "PATCH",
-        body: formData,
-      }
-    );
+    const updateSchoolResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,"PATCH",formData)
+    // await fetch(
+    //   `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
+    //   {
+    //     method: "PATCH",
+    //     body: formData,
+    //   }
+    // );
 
     const updateSchool = await updateSchoolResponse.json();
     getSchool();

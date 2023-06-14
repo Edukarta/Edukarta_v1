@@ -32,6 +32,7 @@ import Avatar from "../../../shared/components/UIElements/Avatar";
 import ModalForm from "../../../shared/components/UIElements/ModalForm";
 import classes from "./SchoolsProfil.module.css";
 import StudentsApplied from "../../../shared/components/UIElements/StudentsApplied";
+import { callApi } from "../../../utils/apiUtils";
 
 const SchoolsProfil = ({ school, getSchool }) => {
   const { id } = useParams();
@@ -95,13 +96,14 @@ const SchoolsProfil = ({ school, getSchool }) => {
       }
     }
 
-    const updateSchoolResponse = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
-      {
-        method: "PATCH",
-        body: formData,
-      }
-    );
+    const updateSchoolResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,"PATCH",formData)
+    // await fetch(
+    //   `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
+    //   {
+    //     method: "PATCH",
+    //     body: formData,
+    //   }
+    // );
     const updateSchool = await updateSchoolResponse.json();
     setImgHeroIsSubmitting(false);
     setImgLogoIsSubmitting(false);

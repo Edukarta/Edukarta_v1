@@ -3,6 +3,7 @@ import Card from "../../../shared/components/UIElements/Card";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../../../shared/state/store";
 import classes from "./SchoolList.module.css";
+import { callApi } from "../../../utils/apiUtils";
 
 const SchoolList = ({
   title,
@@ -23,13 +24,9 @@ const SchoolList = ({
   };
 
   const addRemoveFav = async (schoolId) => {
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/user/${id}/${schoolId}`,
-      {
-        method: "PATCH",
-      }
-    );
-    const savedResponse = await response.json();
+    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}/${schoolId}`,"PATCH")
+    const savedResponse = await response;
+    
     if (savedResponse) {
       dispatch(
         updateUser({

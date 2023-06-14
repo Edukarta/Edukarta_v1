@@ -11,6 +11,7 @@ import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import { Create, Done } from "@mui/icons-material";
 import classes from "./RequestForm.module.css";
+import { callApi } from "../../utils/apiUtils";
 
 const RequestForm = () => {
   const { id } = useParams();
@@ -33,13 +34,14 @@ const RequestForm = () => {
     formData.append("school", id);
     formData.append("description", values.description);
 
-    const savedRequestResponse = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/request`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+    const savedRequestResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/request`,"POST",formData)
+    // await fetch(
+    //   `${process.env.REACT_APP_API_URL}/api/v1/request`,
+    //   {
+    //     method: "POST",
+    //     body: formData,
+    //   }
+    // );
 
     const savedRequest = await savedRequestResponse.json();
     const requestId = savedRequest.request.id;

@@ -8,6 +8,7 @@ import MainNavigation from "../../shared/components/Navigation/MainNavigation";
 import { Link } from "react-router-dom";
 import schoolIcon from "../../img/img_school.jpg";
 import classes from "./ResultsPage.module.css";
+import { callApi } from "../../utils/apiUtils";
 
 const ResultsPage = () => {
   const dispatch = useDispatch();
@@ -30,12 +31,13 @@ const ResultsPage = () => {
     e.preventDefault();
     try {
       const query = selectedFilters.join(",");
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/schools/filter?previousQuery=${previousQuery}&query=${query}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/filter?previousQuery=${previousQuery}&query=${query}`,"GET")
+      // await fetch(
+      //   `${process.env.REACT_APP_API_URL}/api/v1/schools/filter?previousQuery=${previousQuery}&query=${query}`,
+      //   {
+      //     method: "GET",
+      //   }
+      // );
       const data = await response.json();
       dispatch(setSearchResults({ results: data }));
       // console.log(data);

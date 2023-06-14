@@ -3,6 +3,7 @@ import Avatar from "./Avatar";
 import { Document, Page } from "react-pdf";
 import ModalResume from "./ModalResume";
 import classes from "./StudentsApplied.module.css";
+import { callApi } from "../../../utils/apiUtils";
 
 const StudentsApplied = (props) => {
   const [school, setSchool] = useState();
@@ -10,12 +11,13 @@ const StudentsApplied = (props) => {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const getSchool = async () => {
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply`,
-      {
-        method: "GET",
-      }
-    );
+    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply`,"GET")
+    // await fetch(
+    //   `${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply`,
+    //   {
+    //     method: "GET",
+    //   }
+    // );
     const data = await response.json();
     setSchool(data);
     console.log(data);

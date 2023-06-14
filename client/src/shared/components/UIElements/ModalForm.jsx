@@ -8,6 +8,7 @@ import Dropzone from "react-dropzone";
 import Button from "../FormElements/Button";
 import Input from "../FormElements/Input";
 import classes from "./ModalForm.module.css";
+import { callApi } from "../../../utils/apiUtils";
 
 const ModalForm = (props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -64,13 +65,14 @@ const ModalForm = (props) => {
       }
     }
 
-    const updateSchoolResponse = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}`,
-      {
-        method: "PATCH",
-        body: formData,
-      }
-    );
+    const updateSchoolResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}`,"PATCH",formData)
+    // await fetch(
+    //   `${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}`,
+    //   {
+    //     method: "PATCH",
+    //     body: formData,
+    //   }
+    // );
     const updateSchool = await updateSchoolResponse.json();
     setIsSubmitting(false);
     props.modal();

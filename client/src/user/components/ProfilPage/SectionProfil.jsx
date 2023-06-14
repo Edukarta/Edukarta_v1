@@ -26,6 +26,7 @@ import CardFav from "./CardFav";
 import CardFriends from "./CardFriends";
 import classes from "./SectionProfil.module.css";
 import ModalUserUpload from "../../../shared/components/UIElements/ModalUserUpload";
+import { callApi } from "../../../utils/apiUtils";
 
 const SectionProfil = (props) => {
   const { id } = useParams();
@@ -61,13 +62,14 @@ const SectionProfil = (props) => {
       formData.append("letter2", values.letter2);
       formData.append("letter2Path", values.letter2.name);
 
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/user/${id}`,
-        {
-          method: "PATCH",
-          body: formData,
-        }
-      );
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`,"PATCH",formData)
+      // await fetch(
+      //   `${process.env.REACT_APP_API_URL}/api/v1/user/${id}`,
+      //   {
+      //     method: "PATCH",
+      //     body: formData,
+      //   }
+      // );
 
       if (!response.ok) {
         throw new Error("Failed to update user image.");

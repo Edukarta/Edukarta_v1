@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import classes from "./CardFav.module.css";
+import { callApi } from "../../../utils/apiUtils";
 
 const CardFav = (props) => {
   const [favoriteSchools, setFavoriteSchools] = useState([]);
   const getFavorite = async () => {
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/user/${props.id}/favorite`,
-      {
-        method: "GET",
-      }
-    );
-    const savedResponse = await response.json();
+    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${props.id}/favorite`,"GET")
+    const savedResponse = await response;
     if (savedResponse) {
-      setFavoriteSchools(savedResponse);
+      setFavoriteSchools(savedResponse.data);
     }
   };
 
