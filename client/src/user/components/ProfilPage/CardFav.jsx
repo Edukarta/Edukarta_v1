@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import schoolIcon from "../../../img/img_school.jpg";
 import { Link } from "react-router-dom";
 import classes from "./CardFav.module.css";
 
@@ -39,7 +40,11 @@ const CardFav = (props) => {
                 className={classes.container_img}
                 key={index}
               >
-                <img src={school.imgPath1} alt="" />
+                {school.imgPath1 ? (
+                  <img src={school.imgPath1} alt={school.name} />
+                ) : (
+                  <img src={schoolIcon}alt={school.name} />
+                )}
               </Link>
             );
           })}
