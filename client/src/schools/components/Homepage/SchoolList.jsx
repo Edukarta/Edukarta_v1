@@ -6,6 +6,9 @@ import classes from "./SchoolList.module.css";
 
 const SchoolList = ({
   title,
+  country,
+  subText1,
+  subText2,
   type,
   size,
   schools,
@@ -18,7 +21,6 @@ const SchoolList = ({
   const favoriteSchools = useSelector(
     (state) => state.user?.favoriteSchools || []
   );
-
   const isSchoolFavorite = (schoolId) => {
     return favoriteSchools.includes(schoolId);
   };
@@ -45,7 +47,8 @@ const SchoolList = ({
    return (
     <>
       <section className={classes.listContainer}>
-        <h3 className={classes.listTitle}>{title}</h3>
+        <h3 className={classes.listTitle}>{title} {country}</h3>
+        <h4 className={classes.sub_text}>{subText1} {country} {subText2}</h4>
         <div
           className={
             type === "noWrap"

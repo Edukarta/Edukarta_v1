@@ -1,6 +1,6 @@
 .listContainer {
   position: relative;
-  margin: 100px auto;
+  margin: 50px auto;
   max-width: 1300px;
 }
 
@@ -25,6 +25,26 @@
   transform: scale(1.03);
 }
 
+.listTitle{
+  width: 84%;
+  margin: 0 auto;
+  font-size: 30px;
+  font-weight: 500;
+  text-transform: capitalize;
+  color: #2c2c2c;
+  padding: 8px 0;
+}
+
+.sub_text{
+  width: 84%;
+  margin: 0 auto;
+  font-size: 15px;
+  font-weight: 400;
+  text-transform: capitalize;
+  color: #5c5c5c;
+  margin-bottom: 20px;
+}
+
 @media (min-width: 400px) {
   .card__container_wrap {
     grid-template-columns: repeat(auto-fill, 350px);
@@ -32,7 +52,7 @@
 
   .container_link__card {
     width: 350px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 }
 

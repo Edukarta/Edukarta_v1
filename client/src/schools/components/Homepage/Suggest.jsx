@@ -4,15 +4,18 @@ import classes from "./Suggest.module.css";
 
 const Suggest = ({
   title,
+  subText,
   type,
   size,
   schools,
   numberOfSchools,
   firstSchool,
 }) => {
+  
   return (
     <div className={classes.container_suggest}>
       <h3 className={classes.container_suggest_title}>{title}</h3>
+      <h4 className={classes.sub_text}>{subText}</h4>
       <div
         className={
           type === "noWrap"
@@ -20,7 +23,7 @@ const Suggest = ({
             : classes.card__container_wrap
         }
       >
-        {schools.slice(firstSchool, numberOfSchools).map((school) => (
+        {schools && schools.length > 0 && schools.map((school) => (
           <div key={school.id} className={classes.container_link__card}>
             <Card
               id={school.id}

@@ -1,4 +1,5 @@
 import School from "../models/SchoolModel.js";
+import geolib from "geolib";
 import User from "../models/UserModel.js";
 import HttpError from "../models/http-errors.js";
 import { v2 as cloudinary } from "cloudinary";
@@ -9,11 +10,12 @@ import { validationResult } from "express-validator";
 //ROUTE : api/v1/schools
 export const getAllSchools = async (req, res) => {
   const currentPage = parseInt(req.query.page) || 1;
-  const itemsPerPage = parseInt(req.query.limit) || 52;
-
+  const itemsPerPage = parseInt(req.query.limit) || 21;
+  const country = req.query.country;
+  console.log(country)
   try {
     const totalCount = await School.countDocuments();
-    const schools = await School.find()
+    const schools = await School.find({ country: country })
       .skip((currentPage - 1) * itemsPerPage)
       .limit(itemsPerPage);
 
@@ -22,6 +24,19 @@ export const getAllSchools = async (req, res) => {
       currentPage,
       totalPages: Math.ceil(totalCount / itemsPerPage),
     });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+//SHOW ALL SCHOOLS
+//@GET
+//ROUTE : api/v1/schools
+export const getAllPopularSchools = async (req, res) => {
+  try {
+    const schools = await School.find({popularity: 1});
+
+    res.status(200).json({ schools: schools.map((school) => school.toObject({ getters: true })) });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -25,10 +25,9 @@ import schoolsRoutes from "./routes/schoolsRoutes.js";
 import paiementRoutes from "./routes/paiementRoutes.js";
 import requestRoute from "./routes/requestRoutes.js";
 import { verifyToken } from "./middleware/auth.js";
-import rateLimit,{MemoryStore} from "express-rate-limit";
+import rateLimit, { MemoryStore } from "express-rate-limit";
 import eventRoutes from "./routes/eventRoutes.js";
 import nocache from "nocache";
-
 
 //CONGIGURATION
 const __filename = fileURLToPath(import.meta.url);
@@ -37,12 +36,17 @@ const app = express();
 
 app.use(
   cors({
-    origin: [process.env.ACCESS_URL_LOCAL,process.env.ACCESS_URL_LOCAL2,'https://hcaptcha.com/siteverify'],
+    origin: [
+      process.env.ACCESS_URL_LOCAL,
+      process.env.ACCESS_URL_LOCAL2,
+      "https://hcaptcha.com/siteverify",
+      "https://get.geojs.io",
+      "https://api.ipify.org",
+    ],
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })
 );
-
 
 // app.use(
 //   cors({
@@ -52,7 +56,7 @@ app.use(
 //   })
 // );
 
-app.use(nocache())
+app.use(nocache());
 app.use(
   session({
     secret: "edukarta",
@@ -111,14 +115,13 @@ const upload = multer({
 const limiter = rateLimit({
   windowMs: 1 * 10 * 1000, // Période de temps (1 minute)
   max: 7, // Nombre maximal de requêtes autorisées par période de temps
-  message: 'Too many requests from this IP, please try again after a minute.',
+  message: "Too many requests from this IP, please try again after a minute.",
   keyGenerator: (req) => req.ip,
-    // store: new MemoryStore(),
-    statusCode:429,
+  // store: new MemoryStore(),
+  statusCode: 429,
 });
-app.use("/api",limiter)
-  // -----------------------------------------------------------------------
-    
+app.use("/api", limiter);
+// -----------------------------------------------------------------------
 
 //ROUTES AVEC FICHIER
 app.patch(
@@ -165,15 +168,15 @@ app.use("/api/v1/paiement", paiementRoutes);
 // -----------------------------------------------------------------
 //             CAPTCHA
 // -----------------------------------------------------------------
-app.post('/verify-hcaptcha', async (req, res) => {
+app.post("/verify-hcaptcha", async (req, res) => {
   const { token } = req.body;
   console.log("token : ", token);
   try {
     // Vérification du token hCaptcha côté serveur
-    const response = await fetch('https://hcaptcha.com/siteverify', {
-      method: 'POST',
+    const response = await fetch("https://hcaptcha.com/siteverify", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       body: `secret=${process.env.secret_Hcaptcha}&response=${token}`,
     });
@@ -185,12 +188,12 @@ app.post('/verify-hcaptcha', async (req, res) => {
     } else {
       console.log("ERREUR");
       // Le hCaptcha est invalide, renvoyer une erreur
-      res.status(403).json({ error: 'Invalid hCaptcha token' });
+      res.status(403).json({ error: "Invalid hCaptcha token" });
     }
   } catch (error) {
     // Erreur lors de la vérification du hCaptcha
-    console.error('Erreur lors de la vérification du hCaptcha:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Erreur lors de la vérification du hCaptcha:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 // -----------------------------------------------------------------

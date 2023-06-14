@@ -44,7 +44,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
   const [openModalKartaJob, setOpenModalKartaJob] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [isOwner, setIsOwner] = useState(false);
+  const [isOwner, setIsOwner] = useState(true);
   const [slideNumber, setSlideNumber] = useState(0);
   const isSmallScreen = useMediaQuery("(min-width: 1080px)");
   const listRef = useRef();
