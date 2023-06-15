@@ -18,13 +18,12 @@ const StudentsApplied = (props) => {
     );
     const data = await response.json();
     setSchool(data);
-    console.log(data);
   };
 
   useEffect(() => {
     getSchool();
   }, [props.id]);
-  console.log(selectedUser);
+
 
   return (
     <div className={classes.student_applied}>

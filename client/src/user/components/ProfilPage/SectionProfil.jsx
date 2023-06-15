@@ -11,9 +11,11 @@ import {
   Email,
   Send,
   PostAdd,
+  QuestionMark,
 } from "@mui/icons-material/";
 import { useMediaQuery } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { Tooltip } from "@mui/material";
 import Avatar from "../../../shared/components/UIElements/Avatar";
 import { updateUser } from "../../../shared/state/store";
 import { useNavigate } from "react-router-dom";
@@ -317,15 +319,41 @@ const SectionProfil = (props) => {
             </div>
           </div>
 
+          <div className={classes.card_item_resume}>
+          <div className={classes.container_title_kartajob}>
+              <h4 className={classes.profil_info_title}>
+                Speciali<span className={classes.title_bold_color}>ties</span>
+              </h4>
+              <Tooltip
+                title="Why specify your specialties?"
+                enterTouchDelay={0}
+              >
+                <div className={classes.question_mark}>
+                  <QuestionMark sx={{ color: "white", fontSize: "15px" }} />
+                </div>
+              </Tooltip>
+            </div>
+          </div>
+
           <ModalUserUpload
             show={openModalUpload}
             onClick={() => setOpenMoadlUpload(false)}
             openModal={() => setOpenMoadlUpload(false)}
           />
           <div className={classes.card_item_resume}>
-            <h4 className={classes.profil_info_title}>
-              Karta<span className={classes.title_bold_color}>job</span>
-            </h4>
+            <div className={classes.container_title_kartajob}>
+              <h4 className={classes.profil_info_title}>
+                Karta<span className={classes.title_bold_color}>job</span>
+              </h4>
+              <Tooltip
+                title="Kartajob, what is it?"
+                enterTouchDelay={0}
+              >
+                <div className={classes.question_mark}>
+                  <QuestionMark sx={{ color: "white", fontSize: "15px" }} />
+                </div>
+              </Tooltip>
+            </div>
             <div className={classes.resume_group_item}>
               <div
                 className={classes.resume_item}
@@ -343,9 +371,9 @@ const SectionProfil = (props) => {
             <CardFav id={props.id} />
           </div>
 
-          <div className={classes.card_item_infos}>
+          {/* <div className={classes.card_item_infos}>
             <CardFav id={props.id} />
-          </div>
+          </div> */}
 
           {/* <div className={classes.card_item_infos}>
             <CardFriends id={props.user.id} />

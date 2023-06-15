@@ -1,4 +1,5 @@
 import School from "../models/SchoolModel.js";
+import geolib from "geolib";
 import User from "../models/UserModel.js";
 import HttpError from "../models/http-errors.js";
 import { v2 as cloudinary } from "cloudinary";
@@ -9,11 +10,12 @@ import { validationResult } from "express-validator";
 //ROUTE : api/v1/schools
 export const getAllSchools = async (req, res) => {
   const currentPage = parseInt(req.query.page) || 1;
-  const itemsPerPage = parseInt(req.query.limit) || 52;
-
+  const itemsPerPage = parseInt(req.query.limit) || 21;
+  const country = req.query.country;
+  console.log(country)
   try {
     const totalCount = await School.countDocuments();
-    const schools = await School.find()
+    const schools = await School.find({ country: country })
       .skip((currentPage - 1) * itemsPerPage)
       .limit(itemsPerPage);
 
@@ -24,6 +26,35 @@ export const getAllSchools = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+//SHOW POPULAR SCHOOL
+//@GET
+//ROUTE : api/v1/schools/popular
+export const getAllPopularSchools = async (req, res) => {
+  try {
+    const schools = await School.find({popularity: 1});
+
+    res.status(200).json({ schools: schools.map((school) => school.toObject({ getters: true })) });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+//GET SCHOOL ON MAP
+//@GET
+//ROUTE : api/v1/schools/map
+export const getSchoolMap = async (req, res) => {
+  const { neLat, neLng, swLat, swLng } = req.query;
+
+  try {
+    const schools = await School.find();
+
+    res.json(schools);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des écoles :', error);
+    res.status(500).json({ error: 'Erreur lors de la récupération des écoles' });
   }
 };
 

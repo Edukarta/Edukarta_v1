@@ -94,7 +94,8 @@ const SchoolSchema = new mongoose.Schema({
     default: "",
   },
   gps: {
-    type: [],
+    type: [Number],
+    index: '2dsphere',
     default: [],
   },
   description: {
@@ -177,6 +178,10 @@ const SchoolSchema = new mongoose.Schema({
       timestamp: true
     },
   ],
+  popularity: {
+    type: Number,
+    default: 0,
+  }
 });
 
 const School = mongoose.model("School", SchoolSchema);

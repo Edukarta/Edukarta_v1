@@ -2,6 +2,8 @@ import express from "express";
 import { verifyToken } from "../middleware/auth.js";
 import {
   getAllSchools,
+  getAllPopularSchools,
+  getSchoolMap,
   getSchoolById,
   addSchool,
   deleteSchool,
@@ -15,6 +17,8 @@ const router = express.Router();
 
 //SHOW ALL SCHOOLS
 router.get("/", getAllSchools);
+router.get('/popular', getAllPopularSchools);
+router.get('/map', getSchoolMap);
 router.get("/search", searchSchools);
 router.get("/filter", filterSchools);
 router.get("/:id", getSchoolById);

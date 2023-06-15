@@ -57,10 +57,7 @@ const Calendar = (props) => {
           body: JSON.stringify(eventData),
         }
       );
-      const savedResponse = await response.json();
-      console.log(savedResponse);
-
-      // Faites quelque chose avec la réponse
+      const savedResponse = await response.json();  
     } catch (error) {
       console.error(error);
     }
