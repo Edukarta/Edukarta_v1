@@ -35,7 +35,7 @@ function ModalUserUpload(props) {
       formData.append("letter2", values.letter2);
       formData.append("letter2Path", values.letter2.name);
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/user/${user._id}`, {
         method: "PATCH",
         body: formData,
       });
