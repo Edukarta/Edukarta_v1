@@ -107,15 +107,11 @@ const SchoolsInfos = ({ school, getSchool }) => {
     }
 
     const updateSchoolResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,"PATCH",formData)
-    // await fetch(
-    //   `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
-    //   {
-    //     method: "PATCH",
-    //     body: formData,
-    //   }
-    // );
-
-    const updateSchool = await updateSchoolResponse.json();
+    const updateSchool = await updateSchoolResponse;
+    const statusCode = updateSchool.status;
+    if(statusCode === 429|| statusCode ===403){
+      navigate("/captcha")
+    }
     getSchool();
   };
 

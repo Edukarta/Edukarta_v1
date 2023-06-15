@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "./CardFav.module.css";
 import { callApi } from "../../../utils/apiUtils";
 
 const CardFav = (props) => {
   const [favoriteSchools, setFavoriteSchools] = useState([]);
+  const navigate = useNavigate();
   const getFavorite = async () => {
     const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${props.id}/favorite`,"GET")
     const savedResponse = await response;
+    const statusCode = savedResponse.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
     if (savedResponse) {
       setFavoriteSchools(savedResponse.data);
     }

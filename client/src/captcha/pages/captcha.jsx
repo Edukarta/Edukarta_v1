@@ -12,15 +12,9 @@ const Captcha = (props) => {
     event.preventDefault();
     try {
       const response = callApi(`${process.env.REACT_APP_API_URL}/verify-hcaptcha`,"POST",JSON.stringify({ token }))
-      // await fetch(`${process.env.REACT_APP_API_URL}/verify-hcaptcha`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ token }),
-      // });
-
+      const statusCode = await response.status;
       if (response.ok) {
+        localStorage.removeItem("captcha")
         navigate(-1)
         // redirection et reset de la limite
         // Le backend a validé le hCaptcha avec succès, continuer avec la logique de votre application

@@ -5,25 +5,25 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../FormElements/Button";
 import classes from "./Apply.module.css";
 import { callApi } from "../../../utils/apiUtils";
+import { useNavigate } from "react-router-dom";
 
 const Apply = (props) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const applySchool = async () => {
     const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply/${user.id}`,"PATCH")
-    // await fetch(
-    //   `${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply/${user.id}`,
-    //   {
-    //     method: "PATCH",
-    //   }
-    // );
-    const savedResponse = await response.json();
+    const statusCode = await response.status;
+    if(statusCode === 429  || statusCode ===403){
+      navigate("/captcha")
+    }
+    const savedResponse = await response;
     if (savedResponse) {
       dispatch(
         updateUser({
           ...user,
-          ...savedResponse.user,
+          ...savedResponse.data.user,
         })
       );
       props.closeModal();

@@ -25,6 +25,10 @@ const Offers = () => {
   const getSchool = async () => {
     const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,"GET",)
     const data = await response;
+    const statusCode = response.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
     setSchool(data.data.school);
   };
   useEffect(() => {

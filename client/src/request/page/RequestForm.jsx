@@ -35,19 +35,15 @@ const RequestForm = () => {
     formData.append("description", values.description);
 
     const savedRequestResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/request`,"POST",formData)
-    // await fetch(
-    //   `${process.env.REACT_APP_API_URL}/api/v1/request`,
-    //   {
-    //     method: "POST",
-    //     body: formData,
-    //   }
-    // );
-
-    const savedRequest = await savedRequestResponse.json();
+    const savedRequest = await savedRequestResponse;
+    const statusCode = savedRequest.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
     const requestId = savedRequest.request.id;
     const updatedUser = {
       ...user,
-      request: [...user.request, savedRequest.request],
+      request: [...user.request, savedRequest.request], //savedRequest.data.request a remplacer peux-etre
     };
     dispatch(updateUser(updatedUser));
     navigate(`/school/${id}/request/${requestId}`);

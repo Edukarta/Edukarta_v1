@@ -64,7 +64,7 @@ const LoginPage = () => {
       );
       navigate(-1);
     }
-    else if(statusCode === 429){
+    else if(statusCode === 429|| statusCode ===403){
       navigate("/captcha")
     }
   };

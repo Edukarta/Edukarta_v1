@@ -33,6 +33,10 @@ const FavoritePage = () => {
   const getFavorite = async () => {
     const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}/favorite`,"GET")
     const data = await response;
+    const statusCode = data.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
     const savedResponse = data.data
     if (savedResponse) {
       setFavoriteSchools(savedResponse);
@@ -42,15 +46,19 @@ const FavoritePage = () => {
   //Fonction pour supprimer les favoris de la liste
   const addRemoveFav = async (schoolId) => {
     const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}/${schoolId}`,"PATCH")
-    const savedResponse = await response.json();
+    const savedResponse = await response;
+    const statusCode = savedResponse.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
     if (savedResponse) {
       dispatch(
         updateUser({
-          ...savedResponse.user,
+          ...savedResponse.data.user,
         })
       );
     }
-    console.log(savedResponse);
+    console.log(savedResponse.data);
     getFavorite();
   };
 

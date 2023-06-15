@@ -45,15 +45,11 @@ const SchoolUpdate = () => {
     // formData.append("picture", values.picture);
 
     const updateSchoolResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,"PATCH",formData)
-    // await fetch(
-    //   `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
-    //   {
-    //     method: "PATCH",
-    //     body: formData,
-    //   }
-    // );
-
-    const updateSchool = await updateSchoolResponse.json();
+    const updateSchool = await updateSchoolResponse;
+    const statusCode = updateSchool.status;
+    if(statusCode === 429|| statusCode ===403){
+      navigate("/captcha")
+    }
     console.log(updateSchool);
     navigate(`/school/${id}`);
   };
@@ -68,13 +64,12 @@ const SchoolUpdate = () => {
   };
 
   const fetchRequest = async () => {
-    const responseData = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/request/${requestId}`,
-      {
-        method: "GET",
-      }
-    );
-    const allRequests = await responseData.json();
+    const responseData = callApi(`${process.env.REACT_APP_API_URL}/api/v1/request/${requestId}`)
+    const allRequests = await responseData.data;
+    const statusCode = await allRequests.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
     setRequest(allRequests);
   };
 

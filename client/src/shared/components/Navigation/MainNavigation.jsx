@@ -18,19 +18,16 @@ const MainNavigation = ({ type }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = async () => {
-      // const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${searchQuery}`,"GET")
-      const response =await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${searchQuery}`,
-        {
-          method: "GET",
-        }
-      );
-      const data = await response.json();
-      const statusCode = await response.status;
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${searchQuery}`,"GET")
+
+      const data = await response;
+      const statusCode = data.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
       if(statusCode ==200){
-        dispatch(setSearchResults({ results: data }));
+        dispatch(setSearchResults({ results: data.data }));
         dispatch(setQuery(searchQuery));
-        console.log(data.status);
         navigate("/searchResult");
       }
       else{

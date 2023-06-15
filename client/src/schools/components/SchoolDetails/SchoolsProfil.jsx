@@ -8,7 +8,7 @@ import Apply from "../../../shared/components/UIElements/Apply";
 import ModalKartaJob from "../../../shared/components/UIElements/ModalKartaJob";
 import { useSelector } from "react-redux";
 import LoadingDots from "../../../shared/components/UIElements/LoadingDots";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   CameraAlt,
   LocationOn,
@@ -97,14 +97,12 @@ const SchoolsProfil = ({ school, getSchool }) => {
     }
 
     const updateSchoolResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,"PATCH",formData)
-    // await fetch(
-    //   `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
-    //   {
-    //     method: "PATCH",
-    //     body: formData,
-    //   }
-    // );
-    const updateSchool = await updateSchoolResponse.json();
+    const updateSchool = await updateSchoolResponse;
+    const statusCode = updateSchool.status;
+    const navigate = useNavigate()
+    if(statusCode === 429|| statusCode ===403){
+      navigate("/captcha")
+    }
     setImgHeroIsSubmitting(false);
     setImgLogoIsSubmitting(false);
     setIsLoading(false);

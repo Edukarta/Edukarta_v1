@@ -10,6 +10,8 @@ export const callApi = async (url, method = 'GET', data = null) => {
       method,
       data,
     });
+    console.log("🚀 ~ file: apiUtils.js:16 ~ callApi ~ response:", response)
+    
      return response;
   } 
   //gestion des erreurs

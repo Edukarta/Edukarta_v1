@@ -63,24 +63,20 @@ const SectionProfil = (props) => {
       formData.append("letter2Path", values.letter2.name);
 
       const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`,"PATCH",formData)
-      // await fetch(
-      //   `${process.env.REACT_APP_API_URL}/api/v1/user/${id}`,
-      //   {
-      //     method: "PATCH",
-      //     body: formData,
-      //   }
-      // );
-
+      const savedResponse = await response;
+      const statusCode = savedResponse.status;
+      if(statusCode === 429 || statusCode ===403){
+        navigate("/captcha")
+      }
       if (!response.ok) {
         throw new Error("Failed to update user image.");
       }
 
-      const savedResponse = await response.json();
       if (savedResponse) {
         dispatch(
           updateUser({
-            ...savedResponse.user,
-            bannerPath: savedResponse.user.bannerPath,
+            ...savedResponse.data.user,
+            bannerPath: savedResponse.data.user.bannerPath,
           })
         );
       }

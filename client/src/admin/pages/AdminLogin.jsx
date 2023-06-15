@@ -15,21 +15,16 @@ const AdminLogin = () => {
     event.preventDefault();
 
     const loggedInResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/admin/login`,"POST",JSON.stringify({ username, password }))
-    // await fetch(
-    //   `${process.env.REACT_APP_API_URL}/api/v1/admin/login`,
-    //   {
-    //     method: "POST",
-    //     headers: { "Content-type": "application/json" },
-    //     body: JSON.stringify({ username, password }),
-    //   }
-    // );
-    const statusCode = await loggedInResponse.status;
-    const loggedIn = await loggedInResponse.json();
-    console.log(loggedIn);
-
+    const data = await loggedInResponse;
+    const statusCode = data.status;
+    console.log(data.data);
     if (statusCode === 200) {
       navigate("/admin/dashboard");
-    } else {
+    } 
+    else if(statusCode === 429|| statusCode ===403){
+      navigate("/captcha")
+    }
+    else {
       // Afficher un message d'erreur ou ne rien faire
       console.log("Identifiant incorrect");
     }
