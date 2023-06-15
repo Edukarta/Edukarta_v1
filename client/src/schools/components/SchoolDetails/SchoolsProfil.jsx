@@ -437,9 +437,9 @@ const SchoolsProfil = ({ school, getSchool }) => {
               show={openModalKartaJob}
               onClick={() => setOpenModalKartaJob(false)}
             >
-              {modalContent === "calendar" && (
+              {/* {modalContent === "calendar" && (
                 <Calendar school={school?.name} id={school?.id} />
-              )}
+              )} */}
               {modalContent === "apply" && (
                 <Apply
                   userImage={user.imagePath}

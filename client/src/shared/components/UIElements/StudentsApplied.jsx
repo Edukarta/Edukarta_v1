@@ -25,7 +25,6 @@ const StudentsApplied = (props) => {
   useEffect(() => {
     getSchool();
   }, [props.id]);
-  console.log("select u", selectedUser);
 
   return (
     <div className={classes.student_applied}>
