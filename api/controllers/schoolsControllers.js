@@ -29,9 +29,9 @@ export const getAllSchools = async (req, res) => {
   }
 };
 
-//SHOW ALL SCHOOLS
+//SHOW POPULAR SCHOOL
 //@GET
-//ROUTE : api/v1/schools
+//ROUTE : api/v1/schools/popular
 export const getAllPopularSchools = async (req, res) => {
   try {
     const schools = await School.find({popularity: 1});
@@ -39,6 +39,22 @@ export const getAllPopularSchools = async (req, res) => {
     res.status(200).json({ schools: schools.map((school) => school.toObject({ getters: true })) });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+//GET SCHOOL ON MAP
+//@GET
+//ROUTE : api/v1/schools/map
+export const getSchoolMap = async (req, res) => {
+  const { neLat, neLng, swLat, swLng } = req.query;
+
+  try {
+    const schools = await School.find();
+
+    res.json(schools);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des écoles :', error);
+    res.status(500).json({ error: 'Erreur lors de la récupération des écoles' });
   }
 };
 

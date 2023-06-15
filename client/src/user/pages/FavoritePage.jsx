@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { updateUser } from "../../shared/state/store";
 import { SentimentVeryDissatisfied } from "@mui/icons-material/";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
 import Modal from "../../shared/components/UIElements/Modal";
 import Button from "../../shared/components/FormElements/Button";
@@ -19,7 +19,9 @@ import classes from "./FavoritePage.module.css";
 const FavoritePage = () => {
   const [favoriteSchools, setFavoriteSchools] = useState([]);
   const [selectedSchoolId, setSelectedSchoolId] = useState(null);
+  const token = useSelector((state) => state.token);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -48,13 +50,15 @@ const FavoritePage = () => {
       `${process.env.REACT_APP_API_URL}/api/v1/user/${id}/${schoolId}`,
       {
         method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` }
       }
     );
     const savedResponse = await response.json();
     if (savedResponse) {
       dispatch(
         updateUser({
-          ...savedResponse.user,
+          ...user,
+          ...savedResponse.user
         })
       );
     }

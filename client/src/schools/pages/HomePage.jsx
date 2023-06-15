@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Map from "../../shared/components/UIElements/Map";
 import SchoolList from "../components/Homepage/SchoolList";
@@ -10,22 +10,26 @@ import classes from "./HomePage.module.css";
 const HomePage = () => {
   const [schools, setSchools] = useState([]);
   const [popularSchools, setPopularSchools] = useState([]);
-  const [country, setCountry] = useState(localStorage.getItem('country'));
+  
+  const [country, setCountry] = useState(localStorage.getItem("country"));
   const [page, setPage] = useState(1);
   const [limit] = useState(21);
   const [isFetching, setIsFetching] = useState(false);
 
   const getUserLocation = async () => {
     try {
-      const userIPResponse = await axios.get('https://api.ipify.org?format=json');
+      const userIPResponse = await axios.get(
+        "https://api.ipify.org?format=json"
+      );
       const userIP = userIPResponse.data.ip;
-    
-      const geoResponse = await axios.get(`https://get.geojs.io/v1/ip/geo/${userIP}.json`);
+
+      const geoResponse = await axios.get(
+        `https://get.geojs.io/v1/ip/geo/${userIP}.json`
+      );
       const geoData = geoResponse.data;
       const userCountry = geoData.country;
       setCountry(userCountry);
-      localStorage.setItem('country', userCountry);
-    
+      localStorage.setItem("country", userCountry);
     } catch (error) {
       console.log(error);
       return null;
@@ -35,19 +39,17 @@ const HomePage = () => {
   useEffect(() => {
     getUserLocation();
     fetchPopularSchools();
-  }, []);
-
-  useEffect(() => {
-    
-    fetchSchools();
-    
   }, [country]);
 
+  useEffect(() => {
+    fetchSchools();
+    console.log("je m'execute")
+  }, [country]);
 
   const fetchSchools = async () => {
     try {
       setIsFetching(true);
-          const responseData = await fetch(
+      const responseData = await fetch(
         `${process.env.REACT_APP_API_URL}/api/v1/schools?country=${country}&page=${page}&limit=${limit}`,
         {
           method: "GET",
@@ -102,16 +104,14 @@ const HomePage = () => {
 
   const fetchPopularSchools = async () => {
     try {
-          const responseData = await fetch(
+      const responseData = await fetch(
         `${process.env.REACT_APP_API_URL}/api/v1/schools/popular`,
         {
           method: "GET",
         }
       );
 
-
-      const allSchools = await responseData.json(); 
-      console.log(allSchools);
+      const allSchools = await responseData.json();
       setPopularSchools((prevSchools) => {
         const updatedSchools = [...prevSchools];
 
@@ -126,8 +126,7 @@ const HomePage = () => {
         }
 
         return updatedSchools;
-      })
-      
+      });
     } catch (error) {
       console.log(error);
     }
@@ -137,6 +136,7 @@ const HomePage = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isFetching]);
+  
 
   return (
     <>
@@ -144,13 +144,19 @@ const HomePage = () => {
         <MainNavigation />
       </header>
       <section>
-        <Map type="homepage" schools={schools} />
+        <Map type="homepage" schools={schools}/>
         <Suggest
           schools={popularSchools}
           subText="Most popular schools among Edukarta users"
           title="Notable Universities"
         />
-        <SchoolList title="Explore Schools in" subText1="Schools in" subText2="have a lot to offer." country={country} schools={schools} />
+        <SchoolList
+          title="Explore Schools in"
+          subText1="Schools in"
+          subText2="have a lot to offer."
+          country={country}
+          schools={schools}
+        />
       </section>
     </>
   );

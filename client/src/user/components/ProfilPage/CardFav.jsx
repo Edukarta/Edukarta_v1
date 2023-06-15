@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Tooltip } from "@mui/material";
 import schoolIcon from "../../../img/img_school.jpg";
 import { Link } from "react-router-dom";
 import classes from "./CardFav.module.css";
@@ -35,17 +36,25 @@ const CardFav = (props) => {
         <div className={classes.container_grid_img}>
           {favoriteSchools.slice(0, 9).map((school, index) => {
             return (
-              <Link
-                to={`/school/${school._id}`}
-                className={classes.container_img}
+              <Tooltip
+                title={
+                  school.nameUpadte ? school.nameUpdate : school.name
+                }
+                enterTouchDelay={0}
                 key={index}
               >
-                {school.imgPath1 ? (
-                  <img src={school.imgPath1} alt={school.name} />
-                ) : (
-                  <img src={schoolIcon}alt={school.name} />
-                )}
-              </Link>
+                <Link
+                  to={`/school/${school._id}`}
+                  className={classes.container_img}
+                 
+                >
+                  {school.imgPath1 ? (
+                    <img src={school.imgPath1} alt={school.name} />
+                  ) : (
+                    <img src={schoolIcon} alt={school.name} />
+                  )}
+                </Link>
+              </Tooltip>
             );
           })}
         </div>

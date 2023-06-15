@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import React, { useState, useEffect, useRef} from "react";
+import axios from "axios";
+import { MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
 import schoolIcon from "../../../img/img_school.jpg";
 import { Link } from "react-router-dom";
 import { Icon, divIcon, point } from "leaflet";
@@ -13,8 +14,12 @@ import { useMediaQuery } from '@mui/material';
 import "leaflet/dist/leaflet.css";
 import classes from "./Map.module.css";
 
-const Map = ({ type, schools }) => {
+
+
+const Map = ({ type, schools}) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  const mapRef = useRef(null);
+  const [visibleSchools, setVisibleSchools] = useState([]);
   const dispatch = useDispatch();
   const schoolDrawer = useSelector((state) => state.school);
   const isSmallerScreen = useMediaQuery('(max-width:1080px)');
@@ -35,11 +40,28 @@ const Map = ({ type, schools }) => {
     });
   };
 
+  // useEffect(() => {
+  //   const fetchSchoolsOnMap = async () => {
+     
+  //       console.log("La référence map existe");
 
+  //       const bounds = mapRef.current.leafletElement.getBounds();
+  //       const ne = bounds.getNorthEast();
+  //       const sw = bounds.getSouthWest();
+
+  //       // Effectuer l'appel API avec les coordonnées de la carte
+
+  //       console.log(mapRef.current);
+ 
+  //   };
+
+  //   fetchSchoolsOnMap();
+  // }, [mapRef]);
 
   return (
     <MapContainer
       center={[46.232192999999995, 2.209666999999996]}
+      ref={mapRef}
       zoom={zoom}
       minZoom={5}
       bounceAtZoomLimits={false}
@@ -47,6 +69,7 @@ const Map = ({ type, schools }) => {
       className={
         type === "homepage" ? classes.mapContainer : classes.mapContainer_map
       }
+      
     >
       <TileLayer url="https://maptiles.p.rapidapi.com/fr/map/v1/{z}/{x}/{y}.png?rapidapi-key=6d0707b6b6msh5953627b7c9ebb1p172529jsn057f475ae858" />
       <MarkerClusterGroup
