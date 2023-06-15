@@ -8,8 +8,11 @@ import Dropzone from "react-dropzone";
 import Button from "../FormElements/Button";
 import Input from "../FormElements/Input";
 import classes from "./ModalForm.module.css";
+import { callApi } from "../../../utils/apiUtils";
+import { useNavigate } from "react-router-dom";
 
 const ModalForm = (props) => {
+  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [previewImage1, setPreviewImage1] = useState();
   const [previewImage2, setPreviewImage2] = useState();
@@ -64,14 +67,12 @@ const ModalForm = (props) => {
       }
     }
 
-    const updateSchoolResponse = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}`,
-      {
-        method: "PATCH",
-        body: formData,
-      }
-    );
-    const updateSchool = await updateSchoolResponse.json();
+    const updateSchoolResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}`,"PATCH",formData)
+    const updateSchool = await updateSchoolResponse;
+    const statusCode = updateSchool.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
     setIsSubmitting(false);
     props.modal();
     props.getSchool();

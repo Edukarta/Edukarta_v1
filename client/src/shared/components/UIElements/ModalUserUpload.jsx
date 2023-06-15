@@ -5,13 +5,15 @@ import ReactDOM from "react-dom";
 import { Done } from "@mui/icons-material";
 import { updateUser } from "../../state/store";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { CloseRounded, Article, Person } from "@mui/icons-material";
 import Button from "../FormElements/Button";
 import classes from "./ModalUserUpload.module.css";
+import {callApi} from "../../../utils/apiUtils"
 
 function ModalUserUpload(props) {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [previewImage1, setPreviewImage1] = useState();
   const [previewImage2, setPreviewImage2] = useState();
@@ -35,24 +37,24 @@ function ModalUserUpload(props) {
       formData.append("letter2", values.letter2);
       formData.append("letter2Path", values.letter2.name);
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`, {
-        method: "PATCH",
-        body: formData,
-      });
-
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`,"PATCH",formData)
+      const savedResponse = await response;
+      const statusCode = savedResponse.status;
+      if(statusCode === 429 || statusCode ===403){
+        navigate("/captcha")
+      }
       if (!response.ok) {
         throw new Error("Failed to update user image.");
       }
 
-      const savedResponse = await response.json();
 
-      if (savedResponse && savedResponse.user) {
+      if (savedResponse.data && savedResponse.data.user) {
         dispatch(
           updateUser({
             ...savedResponse.user,
-            resumePath: savedResponse.user.resumePath,
-            letter1Path: savedResponse.user.letter1Path,
-            letter2Path: savedResponse.user.letter2Path,
+            resumePath: savedResponse.data.user.resumePath,
+            letter1Path: savedResponse.data.user.letter1Path,
+            letter2Path: savedResponse.data.user.letter2Path,
           })
         );
       }

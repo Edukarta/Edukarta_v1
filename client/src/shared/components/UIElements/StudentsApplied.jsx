@@ -3,28 +3,29 @@ import Avatar from "./Avatar";
 import { Document, Page } from "react-pdf";
 import ModalResume from "./ModalResume";
 import classes from "./StudentsApplied.module.css";
+import { callApi } from "../../../utils/apiUtils";
+import { useNavigate } from "react-router-dom";
 
 const StudentsApplied = (props) => {
   const [school, setSchool] = useState();
   const [openModal, setOpenModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const navigate = useNavigate();
 
   const getSchool = async () => {
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply`,
-      {
-        method: "GET",
-      }
-    );
-    const data = await response.json();
-    setSchool(data);
-    console.log(data);
+    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply`,"GET")
+    const data = await response;
+    const statusCode = data.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
+    setSchool(data.data);
   };
 
   useEffect(() => {
     getSchool();
   }, [props.id]);
-  console.log(selectedUser);
+  console.log("select u", selectedUser);
 
   return (
     <div className={classes.student_applied}>

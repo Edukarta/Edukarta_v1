@@ -11,6 +11,7 @@ import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import { Create, Done } from "@mui/icons-material";
 import classes from "./RequestForm.module.css";
+import { callApi } from "../../utils/apiUtils";
 
 const RequestForm = () => {
   const { id } = useParams();
@@ -33,19 +34,16 @@ const RequestForm = () => {
     formData.append("school", id);
     formData.append("description", values.description);
 
-    const savedRequestResponse = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/request`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-
-    const savedRequest = await savedRequestResponse.json();
+    const savedRequestResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/request`,"POST",formData)
+    const savedRequest = await savedRequestResponse;
+    const statusCode = savedRequest.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
     const requestId = savedRequest.request.id;
     const updatedUser = {
       ...user,
-      request: [...user.request, savedRequest.request],
+      request: [...user.request, savedRequest.request], //savedRequest.data.request a remplacer peux-etre
     };
     dispatch(updateUser(updatedUser));
     navigate(`/school/${id}/request/${requestId}`);

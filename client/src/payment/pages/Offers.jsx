@@ -13,6 +13,7 @@ import PriceCard from "../components/PriceCard";
 import Button from "../../shared/components/FormElements/Button";
 import classes from "./Offers.module.css";
 import banner from "../../img/banner_v2.jpg";
+import {callApi} from "../../utils/apiUtils"
 
 const Offers = () => {
   const { id } = useParams();
@@ -22,15 +23,13 @@ const Offers = () => {
   const dispatch = useDispatch();
 
   const getSchool = async () => {
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
-      {
-        method: "GET",
-      }
-    );
-    const data = await response.json();
-    setSchool(data.school);
-    console.log(school?.name);
+    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,"GET",)
+    const data = await response;
+    const statusCode = response.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
+    setSchool(data.data.school);
   };
   useEffect(() => {
     getSchool();

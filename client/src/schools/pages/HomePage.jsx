@@ -4,9 +4,12 @@ import SchoolList from "../components/Homepage/SchoolList";
 import Suggest from "../components/Homepage/Suggest";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
 import classes from "./HomePage.module.css";
+import { callApi } from "../../utils/apiUtils";
+import { useNavigate } from "react-router-dom";
 
 //FECTHER LES DONNEES DANS CE COMPOSANT PASSEES EN PROPS A SCHOOLLIST
 const HomePage = () => {
+  const navigate = useNavigate()
  
   const [schools, setSchools] = useState([]);
   const [page, setPage] = useState(1);
@@ -14,27 +17,28 @@ const HomePage = () => {
 
   const fetchSchools = async () => {
     try {
-      const responseData = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/schools?page=${page}&limit=${limit}`,
-        {
-          method: "GET",
-        }
-      );
-      const allSchools = await responseData.json();
- 
-  
-      setSchools((prevSchools) => {
-        const updatedSchools = [...prevSchools];
-  
-      
-        allSchools.schools.forEach((newSchool) => {
-          if (!prevSchools.some((prevSchool) => prevSchool.id === newSchool.id)) {
-            updatedSchools.push(newSchool);
-          }
+      const responseData = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools?page=${page}&limit=${limit}`)
+      //On allSchools, data use .data
+      const data =await responseData;
+      const statusCode =  data.status;
+      if(statusCode === 429 || statusCode ===403){
+        navigate("/captcha")
+      }
+      else{
+        const allSchools = await responseData;
+        
+        setSchools((prevSchools) => {
+          const updatedSchools = [...prevSchools];
+          
+          allSchools.data.schools.forEach((newSchool) => {
+            if (!prevSchools.some((prevSchool) => prevSchool.id === newSchool.id)) {
+              updatedSchools.push(newSchool);
+            }
+          });
+          
+          return updatedSchools;
         });
-  
-        return updatedSchools;
-      });
+      }
     } catch (error) {
       console.log(error);
     }

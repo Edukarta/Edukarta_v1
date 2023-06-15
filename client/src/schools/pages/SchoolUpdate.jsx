@@ -7,6 +7,7 @@ import { Create, Done } from "@mui/icons-material";
 import Dropzone from "react-dropzone";
 import classes from "./SchoolUpdate.module.css";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import { callApi } from "../../utils/apiUtils";
 
 const initialValueName = {
   nameUpdate: "",
@@ -43,15 +44,12 @@ const SchoolUpdate = () => {
     formData.append("imgPath", values.picture.name); // Ajoute l'imagePath d'origine
     // formData.append("picture", values.picture);
 
-    const updateSchoolResponse = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
-      {
-        method: "PATCH",
-        body: formData,
-      }
-    );
-
-    const updateSchool = await updateSchoolResponse.json();
+    const updateSchoolResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,"PATCH",formData)
+    const updateSchool = await updateSchoolResponse;
+    const statusCode = updateSchool.status;
+    if(statusCode === 429|| statusCode ===403){
+      navigate("/captcha")
+    }
     console.log(updateSchool);
     navigate(`/school/${id}`);
   };
@@ -66,13 +64,12 @@ const SchoolUpdate = () => {
   };
 
   const fetchRequest = async () => {
-    const responseData = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/request/${requestId}`,
-      {
-        method: "GET",
-      }
-    );
-    const allRequests = await responseData.json();
+    const responseData = callApi(`${process.env.REACT_APP_API_URL}/api/v1/request/${requestId}`)
+    const allRequests = await responseData.data;
+    const statusCode = await allRequests.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
     setRequest(allRequests);
   };
 

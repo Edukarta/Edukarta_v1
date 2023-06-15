@@ -15,6 +15,7 @@ import Button from "../../shared/components/FormElements/Button";
 import starFav from "../../img/star_fav.png";
 import schoolIcon from "../../img/img_school.jpg";
 import classes from "./FavoritePage.module.css";
+import { callApi } from "../../utils/apiUtils";
 
 const FavoritePage = () => {
   const [favoriteSchools, setFavoriteSchools] = useState([]);
@@ -30,13 +31,13 @@ const FavoritePage = () => {
 
   //Fonction qui récupère les favoris
   const getFavorite = async () => {
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/user/${id}/favorite`,
-      {
-        method: "GET",
-      }
-    );
-    const savedResponse = await response.json();
+    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}/favorite`,"GET")
+    const data = await response;
+    const statusCode = data.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
+    const savedResponse = data.data
     if (savedResponse) {
       setFavoriteSchools(savedResponse);
     }
@@ -44,21 +45,19 @@ const FavoritePage = () => {
 
   //Fonction pour supprimer les favoris de la liste
   const addRemoveFav = async (schoolId) => {
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/user/${id}/${schoolId}`,
-      {
-        method: "PATCH",
-      }
-    );
-    const savedResponse = await response.json();
+    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}/${schoolId}`,"PATCH")
+    const savedResponse = await response;
+    const statusCode = savedResponse.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
     if (savedResponse) {
       dispatch(
         updateUser({
-          ...savedResponse.user,
+          ...savedResponse.data.user,
         })
       );
     }
-
     getFavorite();
   };
 

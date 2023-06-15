@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
 import Avatar from "../UIElements/Avatar";
 import SearchBar from "../UIElements/SearchBar";
+import { callApi } from "../../../utils/apiUtils";
 
 const MainNavigation = ({ type }) => {
   const user = useSelector((state) => state.user);
@@ -17,21 +18,22 @@ const MainNavigation = ({ type }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${searchQuery}`,
-        {
-          method: "GET",
-        }
-      );
-      const data = await response.json();
-      dispatch(setSearchResults({ results: data }));
-      dispatch(setQuery(searchQuery));
-   
-      navigate("/searchResult");
-    } catch (error) {
-      console.error(error);
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${searchQuery}`,"GET")
+
+      const data = await response;
+      const statusCode = data.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
     }
+      if(statusCode ==200){
+        dispatch(setSearchResults({ results: data.data }));
+        dispatch(setQuery(searchQuery));
+        navigate("/searchResult");
+      }
+      else{
+        console.error("Fail to fetch data");
+      }
+
   };
 
   const handleKeyDown = (event) => {
