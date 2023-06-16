@@ -16,9 +16,10 @@ const Captcha = (props) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = callApi(`${process.env.REACT_APP_API_URL}/verify-hcaptcha`,"POST",JSON.stringify({token}) )
+      const response = await callApi(`${process.env.REACT_APP_API_URL}/verify-hcaptcha`,"POST",JSON.stringify({token}) )
       const data = await response
       const statusCode = await data.status;
+      console.log(statusCode);
       if (statusCode ===200) {
         localStorage.removeItem("captcha")
         navigate(-1)
