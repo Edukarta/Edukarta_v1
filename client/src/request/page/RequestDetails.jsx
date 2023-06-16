@@ -6,6 +6,7 @@ import MainNavigation from "../../admin/components/Navigation/MainNavigationAdmi
 import { ArrowDownward, Done, Close, ArrowBack } from "@mui/icons-material/";
 import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
+import { callApi } from "../../utils/apiUtils";
 
 const RequestDetails = () => {
   const { id } = useParams();
@@ -15,14 +16,13 @@ const RequestDetails = () => {
   const [requests, setRequests] = useState();
 
   const fetchRequest = async () => {
-    const responseData = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/v1/request/${id}`,
-      {
-        method: "GET",
-      }
-    );
-    const allRequests = await responseData.json();
-    setRequests(allRequests);
+    const responseData = callApi(`${process.env.REACT_APP_API_URL}/api/v1/request/${id}`)
+    const allRequests = await responseData;
+    const statusCode = responseData.status;
+    if(statusCode === 429|| statusCode ===403){
+      navigate("/captcha")
+    }
+    setRequests(allRequests.data);
   };
 
   useEffect(() => {
@@ -38,17 +38,12 @@ const RequestDetails = () => {
       const newStatus = increment
         ? requests.request.status + 1
         : requests.request.status - 1;
-      const res = await fetch(
-        `/api/v1/request/${id}/status`,
-        {
-          method: "PATCH",
-          body: JSON.stringify({ status: newStatus }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = callApi(`/api/v1/request/${id}/status`,"PATCH",JSON.stringify({ status: newStatus }))
+
       const { status } = await res.json();
+    if(status === 429){
+      navigate("/captcha")
+    }
       const updatedUser = {
         ...user,
         request: user.request.map((req) =>

@@ -49,14 +49,15 @@ const HomePage = () => {
   const fetchSchools = async () => {
     try {
       setIsFetching(true);
-      const responseData = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/schools?country=${country}&page=${page}&limit=${limit}`,
-        {
-          method: "GET",
-        }
-      );
+      const responseData = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools?page=${page}&limit=${limit}`)
+      //On allSchools, data use .data
+      const data =await responseData;
+      const statusCode =  data.status;
+      if(statusCode === 429 || statusCode ===403){
+        navigate("/captcha")
+      }
 
-      const allSchools = await responseData.json();
+      const allSchools = await responseData.data;
       setSchools((prevSchools) => {
         const updatedSchools = [...prevSchools];
 

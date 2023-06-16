@@ -4,11 +4,14 @@ import { updateUser } from "../../state/store";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../FormElements/Button";
 import classes from "./Apply.module.css";
+import { callApi } from "../../../utils/apiUtils";
+import { useNavigate } from "react-router-dom";
 
 const Apply = (props) => {
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const applySchool = async () => {
     const response = await fetch(

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Formik } from "formik";
 import { setLogin } from "../../shared/state/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import Button from "../../shared/components/FormElements/Button";
 import classes from "./ProfilDetails.module.css";
 import LoadingDots from "../../shared/components/UIElements/LoadingDots";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
+import { callApi } from "../../utils/apiUtils";
 
 const initialValuePatch = {
   image: "",
@@ -18,6 +19,7 @@ const initialValuePatch = {
 const ProfilDetails = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { id } = useParams();
@@ -27,12 +29,12 @@ const ProfilDetails = () => {
     setIsSubmitting(true);
     formData.append("imagePath", values.image.name); // Ajoute l'imagePath d'origine
     formData.append("image", values.image);
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`, {
-      method: "PATCH",
-      body: formData,
-    });
-
-    const savedResponse = await response.json();
+    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`,"PATCH",formData)
+    const savedResponse = await response.data;
+    const statusCode = savedResponse.status;
+    if(statusCode === 429|| statusCode ===403){
+      navigate("/captcha")
+    }
     onSubmitProps.resetForm();
 
     if (savedResponse) {

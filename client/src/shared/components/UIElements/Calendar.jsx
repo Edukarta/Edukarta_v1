@@ -8,8 +8,11 @@ import "react-date-range/dist/theme/default.css";
 import classes from "./Calendar.module.css";
 import Input from "../FormElements/Input";
 import Button from "../FormElements/Button";
+import { callApi } from "../../../utils/apiUtils";
+import { useNavigate } from "react-router-dom";
 
 const Calendar = (props) => {
+  const navigate = useNavigate();
   const [dateEvent, setDateEvent] = useState(null);
   const [eventDates, setEventDates] = useState([]);
   const [eventText, setEventText] = useState("");
@@ -47,18 +50,19 @@ const Calendar = (props) => {
     };
 
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/v1/event/${props.id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(eventData),
-        }
-      );
-      const savedResponse = await response.json();  
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/event/${props.id}`,"POST",JSON.stringify(eventData))
+      const savedResponse = await response;
+      console.log("ok");
+      console.log("saveRes :",savedResponse);
+      const statusCode = savedResponse.status;
+      if(statusCode === 429 || statusCode ===403){
+        navigate("/captcha")
+      }
+      console.log("save Res",savedResponse);
+
+      // Faites quelque chose avec la réponse
     } catch (error) {
+      console.log("calendar");
       console.error(error);
     }
 
@@ -67,14 +71,13 @@ const Calendar = (props) => {
 
   const getEventsBySchoolId = async () => {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/event/${props.id}`,
-        {
-          method: "GET",
-        }
-      );
-      const savedResponse = await response.json();
-      setDateEvent(savedResponse);
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/event/${props.id}`,"GET")
+      const savedResponse = await response;
+      const statusCode = savedResponse.status;
+      if(statusCode === 429 || statusCode ===403){
+        navigate("/captcha")
+      }
+      setDateEvent(savedResponse.data);
 
       // Faites quelque chose avec la réponse
     } catch (error) {
@@ -84,13 +87,12 @@ const Calendar = (props) => {
 
   const deleteEventById = async (eventId) => {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/event/${eventId}`,
-        {
-          method: "DELETE",
-        }
-      );
-      const savedResponse = await response.json();
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/event/${eventId}`,"DELETE")
+      const savedResponse = await response;
+      const statusCode = savedResponse.status;
+      if(statusCode === 429 || statusCode ===403){
+        navigate("/captcha")
+      }
       // Faites quelque chose avec la réponse
     } catch (error) {
       console.error(error);

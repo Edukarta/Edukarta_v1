@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainNavigationAdmin from "../components/Navigation/MainNavigationAdmin";
 import classes from "./Dashboard.module.css";
+import { callApi } from "../../utils/apiUtils";
 
 const Dashboard = () => {
   const [requests, setRequests] = useState([]);
+  const navigate = useNavigate();
 
 
   const fetchRequest = async () => {
-    const responseData = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/request`, {
-      method: "GET",
-    });
-    const allRequests = await responseData.json();
-    setRequests(allRequests);
+    const responseData = callApi(`${process.env.REACT_APP_API_URL}/api/v1/request`)
+    const allRequests = await responseData;
+    const statusCode = allRequests.status;
+    if(statusCode === 429 || statusCode ===403){
+      navigate("/captcha")
+    }
+    setRequests(allRequests.data);
   };
 
   useEffect(() => {

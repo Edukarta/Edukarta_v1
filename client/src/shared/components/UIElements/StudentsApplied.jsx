@@ -3,11 +3,14 @@ import Avatar from "./Avatar";
 import { Document, Page } from "react-pdf";
 import ModalResume from "./ModalResume";
 import classes from "./StudentsApplied.module.css";
+import { callApi } from "../../../utils/apiUtils";
+import { useNavigate } from "react-router-dom";
 
 const StudentsApplied = (props) => {
   const [school, setSchool] = useState();
   const [openModal, setOpenModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const navigate = useNavigate();
 
   const getSchool = async () => {
     const response = await fetch(
@@ -18,12 +21,13 @@ const StudentsApplied = (props) => {
     );
     const data = await response.json();
     setSchool(data);
+    console.log(data);
   };
 
   useEffect(() => {
     getSchool();
   }, [props.id]);
-
+  console.log(selectedUser);
 
   return (
     <div className={classes.student_applied}>

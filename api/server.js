@@ -116,9 +116,9 @@ const upload = multer({
 let blockedIPs = [];
 
 const limiter = rateLimit({
-  windowMs: 1 * 10 * 1000, // Période de temps (1 minute)
-  max: 7, // Nombre maximal de requêtes autorisées par période de temps
-  message: 'Too many requests from this IP, please try again after a minute.',
+  windowMs: 1 * 20 * 1000, // Période de temps (1 minute)
+  max: 15, // Nombre maximal de requêtes autorisées par période de temps
+  message: 'Too many requests from this IP, please try again after a minute or complete the captcha.',
   keyGenerator: (req) => req.ip,
     // store: new MemoryStore(),
     statusCode:429,

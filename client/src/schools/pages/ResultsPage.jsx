@@ -5,12 +5,14 @@ import { setSearchResults, setSearchQuery } from "../../shared/state/store";
 import FilterDrawer from "../../shared/components/UIElements/FilterDrawer";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material/";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import schoolIcon from "../../img/img_school.jpg";
 import classes from "./ResultsPage.module.css";
+import { callApi } from "../../utils/apiUtils";
 
 const ResultsPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const results = useSelector((state) => state.searchResults);
@@ -38,6 +40,7 @@ const ResultsPage = () => {
       );
       const data = await response.json();
       dispatch(setSearchResults({ results: data }));
+      // console.log(data);
     } catch (error) {
       console.error(error);
     }
