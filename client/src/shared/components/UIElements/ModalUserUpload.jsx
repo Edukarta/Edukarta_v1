@@ -40,17 +40,20 @@ function ModalUserUpload(props) {
       const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${user._id}`,"PATCH",formData)
       const savedResponse = await response;
       const statusCode = savedResponse.status;
+      console.log(savedResponse)
       if(statusCode === 429 || statusCode ===403){
         navigate("/captcha")
       }
-      if (!response.ok) {
+      else if (statusCode !== 200) {
         throw new Error("Failed to update user image.");
       }
+
 
 
       if (savedResponse.data && savedResponse.data.user) {
         dispatch(
           updateUser({
+            ...user,
             ...savedResponse.user,
             resumePath: savedResponse.data.user.resumePath,
             letter1Path: savedResponse.data.user.letter1Path,

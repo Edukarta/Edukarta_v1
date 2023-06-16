@@ -12,7 +12,6 @@ export const getAllSchools = async (req, res) => {
   const currentPage = parseInt(req.query.page) || 1;
   const itemsPerPage = parseInt(req.query.limit) || 21;
   const country = req.query.country;
-  console.log(country)
   try {
     const totalCount = await School.countDocuments();
     const schools = await School.find({ country: country })

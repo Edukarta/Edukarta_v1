@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Card from "../../../shared/components/UIElements/Card";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../../../shared/state/store";
+import { updateUser, setLogout } from "../../../shared/state/store";
 import classes from "./SchoolList.module.css";
 import { callApi } from "../../../utils/apiUtils";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ const SchoolList = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
-  const id = useSelector((state) => state.user?._id);
+  const user = useSelector((state) => state.user);
   const favoriteSchools = useSelector(
     (state) => state.user?.favoriteSchools || []
   );
@@ -29,15 +29,18 @@ const SchoolList = ({
   };
 
   const addRemoveFav = async (schoolId) => {
-    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}/${schoolId}`,"PATCH")
-    const savedResponse = await response;
-    const statusCode = savedResponse.status;
-    if(statusCode === 429|| statusCode ===403){
-      navigate("/captcha")
-    }
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/v1/user/${user._id}/${schoolId}`,
+      {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+    const savedResponse = await response.json();
     if (savedResponse) {
       dispatch(
         updateUser({
+          ...user,
           ...savedResponse.user,
         })
       );

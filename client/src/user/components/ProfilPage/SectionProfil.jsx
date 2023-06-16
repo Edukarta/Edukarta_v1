@@ -31,7 +31,7 @@ import ModalUserUpload from "../../../shared/components/UIElements/ModalUserUplo
 import { callApi } from "../../../utils/apiUtils";
 
 const SectionProfil = (props) => {
-  const id = useSelector((state) => state.user._id);
+  const user = useSelector((state) => state.user);
   const [openModalUpload, setOpenMoadlUpload] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
@@ -64,7 +64,7 @@ const SectionProfil = (props) => {
       formData.append("letter2", values.letter2);
       formData.append("letter2Path", values.letter2.name);
 
-      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`,"PATCH",formData)
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${user._id}`,"PATCH",formData)
       const savedResponse = await response;
       const statusCode = savedResponse.status;
       if(statusCode === 429 || statusCode ===403){
@@ -77,6 +77,7 @@ const SectionProfil = (props) => {
       if (savedResponse) {
         dispatch(
           updateUser({
+            ...user,
             ...savedResponse.data.user,
             bannerPath: savedResponse.data.user.bannerPath,
           })

@@ -96,12 +96,12 @@ const Map = ({ type, schools}) => {
                     {type !== "homepage" ? (
                       <div className={classes.container_Popup}>
                         <div className={classes.container_Popup_img}>
-                          {school.imgPath ? (
-                            <img src={school.imgPath} alt="image de l'école" />
+                          {school.imgPath1 ? (
+                            <img src={school.imgPath1} alt={school.nameUpdate ? school.nameUpdate : school.name} />
                           ) : (
                             <img
-                              src="https://www.edukarta.com/_nuxt/img/education-token.5b2332d.jpg"
-                              alt="image de l'école"
+                              src={schoolIcon}
+                              alt={school.nameUpdate ? school.nameUpdate : school.name}
                             />
                           )}
                         </div>

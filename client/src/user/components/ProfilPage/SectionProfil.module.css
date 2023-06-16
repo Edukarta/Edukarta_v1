@@ -173,7 +173,7 @@ a {
 }
 
 .card_item_resume{
-  width: 400px;
+  width: 100%;
   padding: 20px;
   background-color: white;
   border-radius: 10px;
@@ -563,6 +563,11 @@ input{
   .profil_info_title{
     font-size: 22px;
     font-weight: 500;
+  }
+
+  .card_item_resume{
+    width: 400px;
+    padding: 20px;
   }
 
 

@@ -2,15 +2,17 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Map from "../../shared/components/UIElements/Map";
 import SchoolList from "../components/Homepage/SchoolList";
+import { callApi } from "../../utils/apiUtils";
+import { useNavigate } from "react-router-dom";
 import Suggest from "../components/Homepage/Suggest";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
 import classes from "./HomePage.module.css";
 
 //FECTHER LES DONNEES DANS CE COMPOSANT PASSEES EN PROPS A SCHOOLLIST
 const HomePage = () => {
+  const navigate = useNavigate();
   const [schools, setSchools] = useState([]);
   const [popularSchools, setPopularSchools] = useState([]);
-  
   const [country, setCountry] = useState(localStorage.getItem("country"));
   const [page, setPage] = useState(1);
   const [limit] = useState(21);
@@ -43,13 +45,12 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchSchools();
-    console.log("je m'execute")
   }, [country]);
 
   const fetchSchools = async () => {
     try {
       setIsFetching(true);
-      const responseData = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools?page=${page}&limit=${limit}`)
+      const responseData = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools?country=${country}&page=${page}&limit=${limit}`)
       //On allSchools, data use .data
       const data =await responseData;
       const statusCode =  data.status;
@@ -57,7 +58,8 @@ const HomePage = () => {
         navigate("/captcha")
       }
 
-      const allSchools = await responseData.data;
+      const allSchools = await data.data;
+    
       setSchools((prevSchools) => {
         const updatedSchools = [...prevSchools];
 
@@ -104,14 +106,12 @@ const HomePage = () => {
 
   const fetchPopularSchools = async () => {
     try {
-      const responseData = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/schools/popular`,
-        {
-          method: "GET",
-        }
-      );
-
-      const allSchools = await responseData.json();
+      const responseData = await callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/popular`, "GET");
+      const statusCode =  await responseData.status;
+      if(statusCode === 429 || statusCode ===403){
+        navigate("/captcha")
+      }
+      const allSchools = await responseData.data;
       setPopularSchools((prevSchools) => {
         const updatedSchools = [...prevSchools];
 

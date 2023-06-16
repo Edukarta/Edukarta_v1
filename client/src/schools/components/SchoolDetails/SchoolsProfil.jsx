@@ -23,7 +23,7 @@ import {
   Person,
   Create,
   Email,
-  Login
+  Login,
 } from "@mui/icons-material/";
 import Youtube from "react-youtube";
 import fav from "../../../img/star_default.png";
@@ -45,7 +45,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
   const [openModalKartaJob, setOpenModalKartaJob] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [isOwner, setIsOwner] = useState(true);
+  const [isOwner, setIsOwner] = useState(false);
   const [slideNumber, setSlideNumber] = useState(0);
   const isSmallScreen = useMediaQuery("(min-width: 1080px)");
   const listRef = useRef();
@@ -98,17 +98,19 @@ const SchoolsProfil = ({ school, getSchool }) => {
       }
     }
 
-    const updateSchoolResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,"PATCH",formData)
+    const updateSchoolResponse = callApi(
+      `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
+      "PATCH",
+      formData
+    );
     const updateSchool = await updateSchoolResponse;
     const statusCode = updateSchool.status;
-    const navigate = useNavigate()
-    if(statusCode === 429|| statusCode ===403){
-      navigate("/captcha")
-    }
-    setImgHeroIsSubmitting(false);
-    setImgLogoIsSubmitting(false);
-    setIsLoading(false);
-    getSchool();
+    if (statusCode === 429 || statusCode === 403) navigate("/captcha");
+      setImgHeroIsSubmitting(false);
+      setImgLogoIsSubmitting(false);
+      setIsLoading(false);
+      getSchool();
+    
   };
 
   const handleImageDrop1 = (acceptedFiles, setFieldValue) => {
@@ -481,7 +483,10 @@ const SchoolsProfil = ({ school, getSchool }) => {
                     <FileOpen sx={{ fontSize: "70px", color: "#15273c" }} />
                   </div>
                 ) : (
-                  <div className={classes.btn_kartajob} onClick={() => navigate("/register")}>
+                  <div
+                    className={classes.btn_kartajob}
+                    onClick={() => navigate("/register")}
+                  >
                     <Login sx={{ fontSize: "70px", color: "#15273c" }} />
                   </div>
                 )}
