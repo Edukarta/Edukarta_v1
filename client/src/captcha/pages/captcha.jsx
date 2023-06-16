@@ -19,10 +19,10 @@ const Captcha = (props) => {
         // redirection et reset de la limite
         // Le backend a validé le hCaptcha avec succès, continuer avec la logique de votre application
       } else {
-        throw new Error('Erreur lors de la validation du hCaptcha');
+        throw new Error('Front err n°1: Erreur lors de la validation du hCaptcha');
       }
     } catch (error) {
-      console.error('Erreur lors de la validation du hCaptcha:', error);
+      console.error('Front err: Erreur lors de la validation du hCaptcha:', error);
       // Gérer les erreurs de la validation du hCaptcha
     }
   };

@@ -201,14 +201,13 @@ app.post('/verify-hcaptcha', async (req, res) => {
       blockedIPs = blockedIPs.filter(ip => ip !== req.ip)
       res.send({ success: true });
     } else {
-      console.log("ERREUR");
       // Le hCaptcha est invalide, renvoyer une erreur
-      res.status(403).json({ error: 'Invalid hCaptcha token' });
+      res.status(403).json({ error: data.error-codes });
     }
   } catch (error) {
     // Erreur lors de la vérification du hCaptcha
-    console.error('Erreur lors de la vérification du hCaptcha:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("API err: Erreur lors de la vérification du hCaptcha:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 // -----------------------------------------------------------------
