@@ -173,11 +173,29 @@ a {
 }
 
 .card_item_resume{
-  width: 400px;
+  width: 100%;
   padding: 20px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.container_title_kartajob{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.question_mark{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #15273c;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+  cursor: pointer;
 }
 
 .resume_group_item{
@@ -206,9 +224,17 @@ a {
   background-color: #c1c1c1;
 }
 
-.profil_info_title{
+
+.profil_info_title {
   font-size: 22px;
   font-weight: 500;
+  color: #343434;
+
+}
+
+
+.title_bold_color{
+  color: #4a739f;
 }
 
 .profil_info_items_group{
@@ -240,14 +266,6 @@ a {
   flex-direction: column;
   margin-top: 10px;
   gap: 20px;
-}
-
-.container_input_user_post{
-  height: 150px;
-  padding: 15px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .user_post_avatar_input{
@@ -341,8 +359,8 @@ input{
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: #333;
-  border-radius: 20px;
+  background-color: #a1a1a1;
+  border-radius: 10px;
 }
 
 .infos_divider{
@@ -352,14 +370,20 @@ input{
   background-color: #b0b0b0;
 }
 
+.container_bar{
+  width: 100%;
+  display: flex;
+  
+}
+
 .progress_bar_red {
   height: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   background-color: crimson;
   border: 1px solid #d8d8d8;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
@@ -371,8 +395,8 @@ input{
   justify-content: center;
   align-items: center;
   color: white;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   background-color: rgb(220, 93, 20);
   border: 1px solid #d8d8d8;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
@@ -384,8 +408,8 @@ input{
   justify-content: center;
   align-items: center;
   color: white;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   background-color: #15273c;
   border: 1px solid #d8d8d8;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
@@ -402,6 +426,36 @@ input{
   border: 1px solid #d8d8d8;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
+
+
+.container_input_user_post {
+  width: 100%;
+  padding: 15px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.container_input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input_btn_school {
+  padding: 10px;
+  width: 80%;
+  border: none;
+  background-color: #f1f1f1;
+  border-radius: 30px;
+  text-align: start;
+  font-size: 18px;
+  color: #868686;
+  cursor: pointer;
+}
+
 
 @media(min-width: 600px){
   input{
@@ -509,6 +563,11 @@ input{
   .profil_info_title{
     font-size: 22px;
     font-weight: 500;
+  }
+
+  .card_item_resume{
+    width: 400px;
+    padding: 20px;
   }
 
 

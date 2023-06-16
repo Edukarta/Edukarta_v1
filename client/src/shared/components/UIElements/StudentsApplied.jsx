@@ -13,19 +13,21 @@ const StudentsApplied = (props) => {
   const navigate = useNavigate();
 
   const getSchool = async () => {
-    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply`,"GET")
-    const data = await response;
-    const statusCode = data.status;
-    if(statusCode === 429 || statusCode ===403){
-      navigate("/captcha")
-    }
-    setSchool(data.data);
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply`,
+      {
+        method: "GET",
+      }
+    );
+    const data = await response.json();
+    setSchool(data);
+  
   };
 
   useEffect(() => {
     getSchool();
   }, [props.id]);
-  console.log("select u", selectedUser);
+
 
   return (
     <div className={classes.student_applied}>
@@ -94,7 +96,7 @@ const StudentsApplied = (props) => {
       </div>
       <div className={classes.student_applied_body}>
         {school?.map((student, index) => (
-          <>
+  
             <div
               key={index}
               className={classes.item_student}
@@ -107,15 +109,15 @@ const StudentsApplied = (props) => {
                 <Avatar medium image={student.imagePath} />
               </div>
               <div className={classes.container_student_infos}>
-                <span className={classes.student_name}>
-                  {student.firstname} {student.lastname}
-                </span>
+                <h5 className={classes.student_name}>
+                  {student.firstname} <br /> {student.lastname}
+                </h5>
                 <span className={classes.student_location}>
                   {student.location}
                 </span>
               </div>
             </div>
-          </>
+
         ))}
       </div>
     </div>

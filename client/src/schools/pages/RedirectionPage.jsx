@@ -13,16 +13,18 @@ const RedirectionPage = () => {
 
   const getUser = async () => {
     try {
-      if (!user) {
+      
         const url = `${process.env.REACT_APP_API_URL}/api/v1/googleAuth/google/success`;
         const { data } = await axios.get(url, { withCredentials: true });
+      
         dispatch(
           setLogin({
             user: data.user,
+            token: data.token
           })
         );
         navigate("/")
-      }
+
     } catch (err) {
       console.log(err);
     }

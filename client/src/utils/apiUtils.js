@@ -2,7 +2,6 @@ import axios from "axios";
 
 // Hook to fetch data (default methode GET)
 export const callApi = async (url, method = 'GET', data = null) => {
-  // console.log("callapi :",url,method,data);
   try {
     //appelle api
     const response = await axios({
@@ -10,7 +9,6 @@ export const callApi = async (url, method = 'GET', data = null) => {
       method,
       data,
     });
-    console.log("🚀 ~ file: apiUtils.js:16 ~ callApi ~ response:", response)
     
      return response;
   } 
@@ -33,6 +31,12 @@ export const callApi = async (url, method = 'GET', data = null) => {
       return {
         error: "Access deny",
         status: 403,
+      };
+    }
+    else if(error.response && error.response.status === 500){
+      return {
+        error: "Access server deny",
+        status: 500,
       };
     }
     // console.error(error);

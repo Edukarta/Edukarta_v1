@@ -37,20 +37,23 @@ function ModalUserUpload(props) {
       formData.append("letter2", values.letter2);
       formData.append("letter2Path", values.letter2.name);
 
-      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`,"PATCH",formData)
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${user._id}`,"PATCH",formData)
       const savedResponse = await response;
       const statusCode = savedResponse.status;
+     
       if(statusCode === 429 || statusCode ===403){
         navigate("/captcha")
       }
-      if (!response.ok) {
+      else if (statusCode !== 200) {
         throw new Error("Failed to update user image.");
       }
+
 
 
       if (savedResponse.data && savedResponse.data.user) {
         dispatch(
           updateUser({
+            ...user,
             ...savedResponse.user,
             resumePath: savedResponse.data.user.resumePath,
             letter1Path: savedResponse.data.user.letter1Path,
@@ -73,7 +76,7 @@ function ModalUserUpload(props) {
     const file = acceptedFiles[0];
     setPreviewImage1(URL.createObjectURL(file));
     setFieldValue("resume", file);
-    console.log(previewImage1.path);
+   
   };
 
   const handleImageDrop2 = (acceptedFiles, setFieldValue) => {

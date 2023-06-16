@@ -24,24 +24,30 @@ import googleRoutes from "./routes/googleRoutes.js";
 import schoolsRoutes from "./routes/schoolsRoutes.js";
 import paiementRoutes from "./routes/paiementRoutes.js";
 import requestRoute from "./routes/requestRoutes.js";
-import rateLimit,{MemoryStore} from "express-rate-limit"
+import { verifyToken } from "./middleware/auth.js";
+import rateLimit, { MemoryStore } from "express-rate-limit";
 import eventRoutes from "./routes/eventRoutes.js";
 import nocache from "nocache";
 
-
 //CONGIGURATION
+dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 
 app.use(
   cors({
-    origin: [process.env.ACCESS_URL_LOCAL,process.env.ACCESS_URL_LOCAL2,'https://hcaptcha.com/siteverify'],
+    origin: [
+      process.env.ACCESS_URL_LOCAL,
+      process.env.ACCESS_URL_LOCAL2,
+      "https://hcaptcha.com/siteverify",
+      "https://get.geojs.io",
+      "https://api.ipify.org",
+    ],
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })
 );
-
 
 // app.use(
 //   cors({
@@ -51,7 +57,7 @@ app.use(
 //   })
 // );
 
-app.use(nocache())
+app.use(nocache());
 app.use(
   session({
     secret: "edukarta",
@@ -115,27 +121,11 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again after a minute or complete the captcha.',
   keyGenerator: (req) => req.ip,
     // store: new MemoryStore(),
-  statusCode:429,
-  handler: (request, response, next, options) => {
-    blockedIPs.push(request.ip);
-    console.log("Excluded IP: ", request.ip);
-    response.status(options.statusCode).send(options.message);
-  },
+    statusCode:429,
 });
 app.use("/api",limiter)
   // -----------------------------------------------------------------------
-  //           Bloqueur d'Ip
-  // -----------------------------------------------------------------------
-
-  function blockIP(request, response, next) {
-    if (blockedIPs.includes(request.ip)) {
-      return response.status(403).json({ error: 'IP blocked' });
-    }
-    next();
-  }
-  // Utilisation du middleware personnalisé
-  app.use("/api",blockIP);
-  
+    
 
 //ROUTES AVEC FICHIER
 app.patch(
@@ -182,15 +172,18 @@ app.use("/api/v1/paiement", paiementRoutes);
 // -----------------------------------------------------------------
 //             CAPTCHA
 // -----------------------------------------------------------------
-app.post('/verify-hcaptcha', async (req, res) => {
-  const { token } = req.body;
+app.post("/verify-hcaptcha", async (req, res) => {
+  console.log(req.body);
+  const requestBody = JSON.parse(Object.keys(req.body)[0]);
+  const token = requestBody.token;
+  // const { token } = JSON.parse(req.body)
   console.log("token : ", token);
   try {
     // Vérification du token hCaptcha côté serveur
-    const response = await fetch('https://hcaptcha.com/siteverify', {
-      method: 'POST',
+    const response = await fetch("https://hcaptcha.com/siteverify", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       body: `secret=${process.env.secret_Hcaptcha}&response=${token}`,
     });

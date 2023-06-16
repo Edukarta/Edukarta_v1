@@ -8,7 +8,7 @@ import Apply from "../../../shared/components/UIElements/Apply";
 import ModalKartaJob from "../../../shared/components/UIElements/ModalKartaJob";
 import { useSelector } from "react-redux";
 import LoadingDots from "../../../shared/components/UIElements/LoadingDots";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   CameraAlt,
   LocationOn,
@@ -23,6 +23,7 @@ import {
   Person,
   Create,
   Email,
+  Login,
 } from "@mui/icons-material/";
 import Youtube from "react-youtube";
 import fav from "../../../img/star_default.png";
@@ -36,6 +37,7 @@ import { callApi } from "../../../utils/apiUtils";
 
 const SchoolsProfil = ({ school, getSchool }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const [imgHeroIsSubmitting, setImgHeroIsSubmitting] = useState(false);
   const [imgLogoIsSubmitting, setImgLogoIsSubmitting] = useState(false);
@@ -96,19 +98,19 @@ const SchoolsProfil = ({ school, getSchool }) => {
       }
     }
 
-    const updateSchoolResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,"PATCH",formData)
+    const updateSchoolResponse = callApi(
+      `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
+      "PATCH",
+      formData
+    );
     const updateSchool = await updateSchoolResponse;
     const statusCode = updateSchool.status;
-    const navigate = useNavigate()
-    if(statusCode === 429|| statusCode ===403){
-      navigate("/captcha")
-    }
-    setImgHeroIsSubmitting(false);
-    setImgLogoIsSubmitting(false);
-    setIsLoading(false);
-    getSchool();
-
-    console.log(updateSchool);
+    if (statusCode === 429 || statusCode === 403) navigate("/captcha");
+      setImgHeroIsSubmitting(false);
+      setImgLogoIsSubmitting(false);
+      setIsLoading(false);
+      getSchool();
+    
   };
 
   const handleImageDrop1 = (acceptedFiles, setFieldValue) => {
@@ -437,9 +439,9 @@ const SchoolsProfil = ({ school, getSchool }) => {
               show={openModalKartaJob}
               onClick={() => setOpenModalKartaJob(false)}
             >
-              {modalContent === "calendar" && (
+              {/* {modalContent === "calendar" && (
                 <Calendar school={school?.name} id={school?.id} />
-              )}
+              )} */}
               {modalContent === "apply" && (
                 <Apply
                   userImage={user.imagePath}
@@ -470,15 +472,24 @@ const SchoolsProfil = ({ school, getSchool }) => {
                     />
                   </div>
                 </Tooltip>
-                <div
-                  className={classes.btn_kartajob}
-                  onClick={() => {
-                    setOpenModalKartaJob(true);
-                    setModalContent("apply");
-                  }}
-                >
-                  <FileOpen sx={{ fontSize: "70px", color: "#15273c" }} />
-                </div>
+                {user ? (
+                  <div
+                    className={classes.btn_kartajob}
+                    onClick={() => {
+                      setOpenModalKartaJob(true);
+                      setModalContent("apply");
+                    }}
+                  >
+                    <FileOpen sx={{ fontSize: "70px", color: "#15273c" }} />
+                  </div>
+                ) : (
+                  <div
+                    className={classes.btn_kartajob}
+                    onClick={() => navigate("/register")}
+                  >
+                    <Login sx={{ fontSize: "70px", color: "#15273c" }} />
+                  </div>
+                )}
                 <div
                   className={classes.btn_kartajob}
                   onClick={() => {

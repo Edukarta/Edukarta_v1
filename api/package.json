@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "env-cmd -f .env nodemon server.js",
+    "start": "nodemon server.js",
     "dev": "env-cmd -f .env.development.local nodemon NODE_ENV=dev server.js",
     "test": "env-cmd -f .env.test.local nodemon NODE_ENV=test server.js"
   },
@@ -24,7 +24,9 @@
     "express-rate-limit": "^6.7.0",
     "express-session": "^1.17.3",
     "express-validator": "^6.15.0",
+    "geolib": "^3.3.4",
     "helmet": "^6.0.1",
+    "jsonwebtoken": "^9.0.0",
     "megajs": "^1.1.3",
     "mongoose": "^7.0.3",
     "morgan": "^1.10.0",

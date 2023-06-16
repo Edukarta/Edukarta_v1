@@ -11,13 +11,15 @@ import {
   Email,
   Send,
   PostAdd,
+  QuestionMark,
 } from "@mui/icons-material/";
 import { useMediaQuery } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { Tooltip } from "@mui/material";
 import Avatar from "../../../shared/components/UIElements/Avatar";
 import { updateUser } from "../../../shared/state/store";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik } from "formik";
 import Dropzone from "react-dropzone";
 import { setLogout } from "../../../shared/state/store";
@@ -29,7 +31,7 @@ import ModalUserUpload from "../../../shared/components/UIElements/ModalUserUplo
 import { callApi } from "../../../utils/apiUtils";
 
 const SectionProfil = (props) => {
-  const { id } = useParams();
+  const user = useSelector((state) => state.user);
   const [openModalUpload, setOpenMoadlUpload] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
@@ -62,7 +64,7 @@ const SectionProfil = (props) => {
       formData.append("letter2", values.letter2);
       formData.append("letter2Path", values.letter2.name);
 
-      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`,"PATCH",formData)
+      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${user._id}`,"PATCH",formData)
       const savedResponse = await response;
       const statusCode = savedResponse.status;
       if(statusCode === 429 || statusCode ===403){
@@ -75,6 +77,7 @@ const SectionProfil = (props) => {
       if (savedResponse) {
         dispatch(
           updateUser({
+            ...user,
             ...savedResponse.data.user,
             bannerPath: savedResponse.data.user.bannerPath,
           })
@@ -131,7 +134,6 @@ const SectionProfil = (props) => {
     if (imagePath) filledFields++;
     const calculatedProgress = (filledFields / totalFields) * 100;
     setProgress(calculatedProgress);
-    console.log(progress);
   };
 
   return (
@@ -259,30 +261,34 @@ const SectionProfil = (props) => {
         {/* LEFT BLOC */}
         <div className={classes.container_card_infos_left}>
           <div className={classes.card_item_infos}>
-            <h4 className={classes.profil_info_title}>About Me</h4>
+            <h4 className={classes.profil_info_title}>
+              About <span className={classes.title_bold_color}>Me</span>
+            </h4>
 
             {/* BARRE DE PROGRESSION */}
             <div className={classes.card_progress_bar_title}>
               <span>Profil completed</span>
             </div>
             <div className={classes.container_progress_bar}>
-              <div
-                className={`${
-                  progress < 20
-                    ? classes.progress_bar_red
-                    : progress > 20 && progress < 80
-                    ? classes.progress_bar_orange
-                    : progress >= 80 && progress < 100
-                    ? classes.progress_bar_green
-                    : progress === 100
-                    ? classes.progress_bar_complete
-                    : ""
-                }`}
-                style={{
-                  width: `${progress}%`,
-                }}
-              >
-                {`${progress.toFixed(0)}%`}
+              <div className={classes.container_bar}>
+                <div
+                  className={`${
+                    progress < 20
+                      ? classes.progress_bar_red
+                      : progress > 20 && progress < 80
+                      ? classes.progress_bar_orange
+                      : progress >= 80 && progress < 100
+                      ? classes.progress_bar_green
+                      : progress === 100
+                      ? classes.progress_bar_complete
+                      : ""
+                  }`}
+                  style={{
+                    width: `${progress}%`,
+                  }}
+                >
+                  {`${progress.toFixed(0)}%`}
+                </div>
               </div>
             </div>
             <div className={classes.infos_divider}></div>
@@ -312,13 +318,41 @@ const SectionProfil = (props) => {
             </div>
           </div>
 
+          <div className={classes.card_item_resume}>
+          <div className={classes.container_title_kartajob}>
+              <h4 className={classes.profil_info_title}>
+                Speciali<span className={classes.title_bold_color}>ties</span>
+              </h4>
+              <Tooltip
+                title="Why specify your specialties?"
+                enterTouchDelay={0}
+              >
+                <div className={classes.question_mark}>
+                  <QuestionMark sx={{ color: "white", fontSize: "15px" }} />
+                </div>
+              </Tooltip>
+            </div>
+          </div>
+
           <ModalUserUpload
             show={openModalUpload}
             onClick={() => setOpenMoadlUpload(false)}
             openModal={() => setOpenMoadlUpload(false)}
           />
           <div className={classes.card_item_resume}>
-            <h4 className={classes.profil_info_title}>Kartajob</h4>
+            <div className={classes.container_title_kartajob}>
+              <h4 className={classes.profil_info_title}>
+                Karta<span className={classes.title_bold_color}>job</span>
+              </h4>
+              <Tooltip
+                title="Kartajob, what is it?"
+                enterTouchDelay={0}
+              >
+                <div className={classes.question_mark}>
+                  <QuestionMark sx={{ color: "white", fontSize: "15px" }} />
+                </div>
+              </Tooltip>
+            </div>
             <div className={classes.resume_group_item}>
               <div
                 className={classes.resume_item}
@@ -333,12 +367,12 @@ const SectionProfil = (props) => {
           </div>
 
           <div className={classes.card_item_infos}>
-            <CardFav id={props.user.id} />
+            <CardFav id={props.id} />
           </div>
 
-          <div className={classes.card_item_infos}>
-            <CardFav id={props.user.id} />
-          </div>
+          {/* <div className={classes.card_item_infos}>
+            <CardFav id={props.id} />
+          </div> */}
 
           {/* <div className={classes.card_item_infos}>
             <CardFriends id={props.user.id} />
@@ -348,12 +382,12 @@ const SectionProfil = (props) => {
         {/* RIGHT BLOC */}
         <div className={classes.container_profil_section}>
           <div className={classes.container_input_user_post}>
-            <div className={classes.user_post_avatar_input}>
-              <Avatar image={props.image} medium />
-              <input placeholder="how i feel today ?" />
-              <div className={classes.container_icon_send}>
-                <Send sx={{ color: "white" }} />
-              </div>
+            <h4 className={classes.profil_info_title}>What's New Today?</h4>
+            <div className={classes.container_input}>
+              <Avatar medium image={props.image} />
+              <button className={classes.input_btn_school}>
+                What would you like to talk about?
+              </button>
             </div>
           </div>
           <div className={classes.container_user_feed_title}>

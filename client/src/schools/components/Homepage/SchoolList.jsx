@@ -1,13 +1,16 @@
 import React, { useRef, useState } from "react";
 import Card from "../../../shared/components/UIElements/Card";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../../../shared/state/store";
+import { updateUser, setLogout } from "../../../shared/state/store";
 import classes from "./SchoolList.module.css";
 import { callApi } from "../../../utils/apiUtils";
 import { useNavigate } from "react-router-dom";
 
 const SchoolList = ({
   title,
+  country,
+  subText1,
+  subText2,
   type,
   size,
   schools,
@@ -16,36 +19,40 @@ const SchoolList = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const id = useSelector((state) => state.user?.id);
+  const token = useSelector((state) => state.token);
+  const user = useSelector((state) => state.user);
   const favoriteSchools = useSelector(
     (state) => state.user?.favoriteSchools || []
   );
-
   const isSchoolFavorite = (schoolId) => {
     return favoriteSchools.includes(schoolId);
   };
 
   const addRemoveFav = async (schoolId) => {
-    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}/${schoolId}`,"PATCH")
-    const savedResponse = await response;
-    const statusCode = savedResponse.status;
-    if(statusCode === 429|| statusCode ===403){
-      navigate("/captcha")
-    }
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/v1/user/${user._id}/${schoolId}`,
+      {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+    const savedResponse = await response.json();
     if (savedResponse) {
       dispatch(
         updateUser({
+          ...user,
           ...savedResponse.user,
         })
       );
     }
-    console.log(savedResponse);
+   
   };
 
    return (
     <>
       <section className={classes.listContainer}>
-        <h3 className={classes.listTitle}>{title}</h3>
+        <h3 className={classes.listTitle}>{title} {country}</h3>
+        <h4 className={classes.sub_text}>{subText1} {country} {subText2}</h4>
         <div
           className={
             type === "noWrap"

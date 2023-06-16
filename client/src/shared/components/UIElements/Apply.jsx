@@ -9,26 +9,28 @@ import { useNavigate } from "react-router-dom";
 
 const Apply = (props) => {
   const user = useSelector((state) => state.user);
+  const token = useSelector((state) => state.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const applySchool = async () => {
-    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply/${user.id}`,"PATCH")
-    const statusCode = await response.status;
-    if(statusCode === 429  || statusCode ===403){
-      navigate("/captcha")
-    }
-    const savedResponse = await response;
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/v1/schools/${props.id}/apply/${user._id}`,
+      {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    const savedResponse = await response.json();
     if (savedResponse) {
       dispatch(
         updateUser({
           ...user,
-          ...savedResponse.data.user,
+          ...savedResponse.user,
         })
       );
       props.closeModal();
     }
-    console.log(savedResponse);
   };
 
   const handleFormSubmit = async () => {
@@ -45,7 +47,7 @@ const Apply = (props) => {
         </p>
       </div>
       <div className={classes.container_profil}>
-        <Avatar big image={props.userImage} link={`/profil/${props.useerId}`} />
+        <Avatar big image={props.userImage} link={`/profil/${props.userId}`} />
         <span className={classes.name_user}>
           {props.firstname} {props.lastname}
         </span>

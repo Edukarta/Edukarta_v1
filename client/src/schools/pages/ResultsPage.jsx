@@ -32,22 +32,21 @@ const ResultsPage = () => {
     e.preventDefault();
     try {
       const query = selectedFilters.join(",");
-      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/filter?previousQuery=${previousQuery}&query=${query}`,"GET")
-      const data = await response;
-      const statusCode = data.status;
-      if(statusCode === 429|| statusCode ===403){
-        navigate("/captcha")
-      }
-      dispatch(setSearchResults({ results: data.data }));
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/v1/schools/filter?previousQuery=${previousQuery}&query=${query}`,
+        {
+          method: "GET",
+        }
+      );
+      const data = await response.json();
+      dispatch(setSearchResults({ results: data }));
     } catch (error) {
       console.error(error);
     }
     setDrawerIsOpen(false);
   };
 
-  // console.log(previousQuery);
-  // console.log(selectedFilters);
-  // console.log(results);
+
 
   return (
     <>

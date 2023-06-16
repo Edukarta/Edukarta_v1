@@ -35,7 +35,6 @@ const Calendar = (props) => {
     }
   };
 
-  console.log(selectedDate);
 
   const createEvent = async () => {
     if (!eventText || !selectedDate) {
@@ -56,7 +55,6 @@ const Calendar = (props) => {
       if(statusCode === 429 || statusCode ===403){
         navigate("/captcha")
       }
-      console.log("save Res",savedResponse);
 
       // Faites quelque chose avec la réponse
     } catch (error) {

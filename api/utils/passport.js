@@ -1,10 +1,12 @@
 import passport from "passport";
 import User from "../models/UserModel.js";
+import jwt from "jsonwebtoken";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 
 const GOOGLE_CLIENT_ID =
   "121193193747-k7l4dvkrsnr8nrv2260kounuo9n53kdj.apps.googleusercontent.com";
 const GOOGLE_CLIENT_SECRET = "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";
+
 
 const passportSetup = () => {
   passport.use(
@@ -26,7 +28,8 @@ const passportSetup = () => {
           });
 
           if (existingUser) {
-            // Utilisateur existant trouvé, le connecter
+
+  
             return done(null, existingUser);
           }
 
@@ -47,7 +50,7 @@ const passportSetup = () => {
           const savedUser = await newUser.save();
 
           // Connecter le nouvel utilisateur
-
+        
           return done(null, savedUser);
         } catch (error) {
           done(error, null);

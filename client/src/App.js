@@ -1,7 +1,8 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./schools/pages/HomePage";
 import NavbarBottom from "./shared/components/Navigation/NavbarBottom/NavbarBottom";
 import LoginPage from "./user/pages/LoginPage";
+import { useSelector } from "react-redux";
 import ProfilPage from "./user/pages/ProfilPage";
 import FavoritePage from "./user/pages/FavoritePage";
 import ProfilDetails from "./user/pages/ProfilDetails";
@@ -21,6 +22,8 @@ import RedirectionPage from "./schools/pages/RedirectionPage";
 
 function App() {
   const location = useLocation();
+  const isAuth = Boolean(useSelector((state) => state.token));
+ 
   const localStorageCaptcha = localStorage.getItem('captcha');
   
   return (
@@ -44,7 +47,7 @@ function App() {
           <Route path="/admin" element={localStorageCaptcha?<Captcha/>:<AdminLogin />} />
           <Route path="/admin/dashboard" element={localStorageCaptcha?<Captcha/>:<Dashboard />} />
           <Route path="/admin/request/:id" element={localStorageCaptcha?<Captcha/>:<RequestDetails />} />
-          <Route path="/captcha" element={<Captcha />} />
+          <Route path="/captcha" element={localStorageCaptcha?<Captcha/>:<HomePage/>} />
           <Route path="/googleRedirect" element={localStorageCaptcha?<Captcha/>:<RedirectionPage />} />
         </Routes>
       </main>

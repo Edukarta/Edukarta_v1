@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { updateUser } from "../../shared/state/store";
 import { SentimentVeryDissatisfied } from "@mui/icons-material/";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
 import Modal from "../../shared/components/UIElements/Modal";
 import Button from "../../shared/components/FormElements/Button";
@@ -20,7 +20,9 @@ import { callApi } from "../../utils/apiUtils";
 const FavoritePage = () => {
   const [favoriteSchools, setFavoriteSchools] = useState([]);
   const [selectedSchoolId, setSelectedSchoolId] = useState(null);
+  const token = useSelector((state) => state.token);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -45,20 +47,22 @@ const FavoritePage = () => {
 
   //Fonction pour supprimer les favoris de la liste
   const addRemoveFav = async (schoolId) => {
-    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}/${schoolId}`,"PATCH")
-    const savedResponse = await response;
-    const statusCode = savedResponse.status;
-    if(statusCode === 429 || statusCode ===403){
-      navigate("/captcha")
-    }
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/v1/user/${id}/${schoolId}`,
+      {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+    const savedResponse = await response.json();
     if (savedResponse) {
       dispatch(
         updateUser({
-          ...savedResponse.data.user,
+          ...user,
+          ...savedResponse.user
         })
       );
     }
-    console.log(savedResponse.data);
     getFavorite();
   };
 

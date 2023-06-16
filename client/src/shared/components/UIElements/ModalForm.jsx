@@ -77,7 +77,6 @@ const ModalForm = (props) => {
     props.modal();
     props.getSchool();
 
-    console.log(updateSchool);
   };
 
   const handleImageDrop1 = (acceptedFiles, setFieldValue) => {

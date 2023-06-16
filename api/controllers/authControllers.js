@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import User from "../models/UserModel.js";
+import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import HttpError from "../models/http-errors.js";
 
@@ -96,10 +97,13 @@ export const login = async (req, res, next) => {
       .status(404)
       .json({ message: "L'email et le mot de passe ne corresponde pas." });
   }
+  const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
   delete user.password;
-  res
-    .status(200)
-    .json({ message: "Logged In", user: user.toObject({ getters: true }) });
+  res.status(200).json({
+    message: "Logged In",
+    user: user.toObject({ getters: true }),
+    token: token
+  });
 };
 
 //LOGIN GOOGLE SUCCESS

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import { Formik } from "formik";
@@ -30,7 +30,6 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
-  let intervalId;
 
   //FONCTION QUI GERE LA CREATION DE PROFIL
   const register = async (values, onSubmitProps) => {
@@ -41,7 +40,6 @@ const LoginPage = () => {
     const savedUserResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/auth/register`,"POST",formData)
 
     const savedUser = await savedUserResponse;
-    console.log(savedUser);
     onSubmitProps.resetForm();
 
     if (savedUser) {
@@ -59,7 +57,7 @@ const LoginPage = () => {
       dispatch(
         setLogin({
           user: loggedIn.user,
-          token: loggedIn.token,
+          token: loggedIn.token
         })
       );
       navigate(-1);
@@ -71,7 +69,6 @@ const LoginPage = () => {
 
   const googleAuth = async () => {
     try {
-      console.log("googleAuth() called");
       window.open(`${process.env.REACT_APP_API_URL}/api/v1/googleAuth/google`, "_self");
     } catch (error) {
       console.log(error);
