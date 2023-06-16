@@ -47,7 +47,7 @@ function App() {
           <Route path="/admin" element={localStorageCaptcha?<Captcha/>:<AdminLogin />} />
           <Route path="/admin/dashboard" element={localStorageCaptcha?<Captcha/>:<Dashboard />} />
           <Route path="/admin/request/:id" element={localStorageCaptcha?<Captcha/>:<RequestDetails />} />
-          <Route path="/captcha" element={<Captcha />} />
+          <Route path="/captcha" element={localStorageCaptcha?<Captcha/>:<HomePage/>} />
           <Route path="/googleRedirect" element={localStorageCaptcha?<Captcha/>:<RedirectionPage />} />
         </Routes>
       </main>

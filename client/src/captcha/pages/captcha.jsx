@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import  {useNavigate } from 'react-router-dom';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import {callApi} from "../../utils/apiUtils"
@@ -7,13 +7,19 @@ const Captcha = (props) => {
   const [token, setToken] = useState(null);
   const captchaRef = useRef(null);
   const navigate = useNavigate();
+  const captcha = localStorage.getItem("captcha")
+  useEffect(()=>{
+    if(!!captcha)
+    navigate("/")
+  },[])
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = callApi(`${process.env.REACT_APP_API_URL}/verify-hcaptcha`,"POST",JSON.stringify({ token }))
-      const statusCode = await response.status;
-      if (response.ok) {
+      const response = callApi(`${process.env.REACT_APP_API_URL}/verify-hcaptcha`,"POST",JSON.stringify({token}) )
+      const data = await response
+      const statusCode = await data.status;
+      if (statusCode ===200) {
         localStorage.removeItem("captcha")
         navigate(-1)
         // redirection et reset de la limite
