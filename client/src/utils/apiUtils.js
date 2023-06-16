@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Hook to fetch data (default methode GET)
 export const callApi = async (url, method = 'GET', data = null) => {
-  console.log(data," ",method, " ",data);
+  console.log(url,",",method, ",",data);
   try {
     //appelle api
     const response = await axios({
