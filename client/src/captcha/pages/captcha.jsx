@@ -8,10 +8,10 @@ const Captcha = (props) => {
   const captchaRef = useRef(null);
   const navigate = useNavigate();
   const captcha = localStorage.getItem("captcha")
-  useEffect(()=>{
-    if(!!captcha)
-    navigate("/")
-  },[])
+  // useEffect(()=>{
+  //   if(!!captcha)
+  //   navigate("/")
+  // },[])
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
