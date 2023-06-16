@@ -9,6 +9,7 @@ export const callApi = async (url, method = 'GET', data = null) => {
       method,
       data,
     });
+    console.log("🚀 ~ file: apiUtils.js:15 ~ callApi ~ response:", response)
     
      return response;
   } 
