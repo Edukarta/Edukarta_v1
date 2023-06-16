@@ -126,7 +126,6 @@ const SchoolsInfos = ({ school, getSchool }) => {
     setFieldValue("picture2", file);
     setFieldValue("imgPath2", file.name);
     setisImageUpload(file);
-    console.log(isImageUpload);
   };
   const handleImageDrop3 = (acceptedFiles, setFieldValue) => {
     const file = acceptedFiles[0];

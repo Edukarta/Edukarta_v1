@@ -24,7 +24,7 @@ const Dashboard = () => {
   }, []);
 
   if (requests) {
-    console.log(requests);
+    // console.log(requests);
   }
   const statusDictionary = {
     "-1": "Refusé",

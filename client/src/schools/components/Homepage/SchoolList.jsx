@@ -45,7 +45,7 @@ const SchoolList = ({
         })
       );
     }
-    console.log(savedResponse);
+   
   };
 
    return (

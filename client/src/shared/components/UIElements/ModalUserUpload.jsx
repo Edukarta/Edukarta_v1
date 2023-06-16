@@ -40,7 +40,7 @@ function ModalUserUpload(props) {
       const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/user/${user._id}`,"PATCH",formData)
       const savedResponse = await response;
       const statusCode = savedResponse.status;
-      console.log(savedResponse)
+     
       if(statusCode === 429 || statusCode ===403){
         navigate("/captcha")
       }

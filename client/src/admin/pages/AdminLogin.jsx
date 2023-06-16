@@ -17,7 +17,6 @@ const AdminLogin = () => {
     const loggedInResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/admin/login`,"POST",JSON.stringify({ username, password }))
     const data = await loggedInResponse;
     const statusCode = data.status;
-    console.log(data.data);
     if (statusCode === 200) {
       navigate("/admin/dashboard");
     } 

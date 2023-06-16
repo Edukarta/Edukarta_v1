@@ -50,7 +50,6 @@ const SchoolUpdate = () => {
     if(statusCode === 429|| statusCode ===403){
       navigate("/captcha")
     }
-    console.log(updateSchool);
     navigate(`/school/${id}`);
   };
   const handleFormSubmit = async (values, onSubmitProps) => {

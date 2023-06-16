@@ -40,7 +40,6 @@ const LoginPage = () => {
     const savedUserResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/auth/register`,"POST",formData)
 
     const savedUser = await savedUserResponse;
-    console.log(savedUser);
     onSubmitProps.resetForm();
 
     if (savedUser) {
@@ -70,7 +69,6 @@ const LoginPage = () => {
 
   const googleAuth = async () => {
     try {
-      console.log("googleAuth() called");
       window.open(`${process.env.REACT_APP_API_URL}/api/v1/googleAuth/google`, "_self");
     } catch (error) {
       console.log(error);

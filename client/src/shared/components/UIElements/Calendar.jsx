@@ -35,7 +35,6 @@ const Calendar = (props) => {
     }
   };
 
-  console.log(selectedDate);
 
   const createEvent = async () => {
     if (!eventText || !selectedDate) {
@@ -52,17 +51,13 @@ const Calendar = (props) => {
     try {
       const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/event/${props.id}`,"POST",JSON.stringify(eventData))
       const savedResponse = await response;
-      console.log("ok");
-      console.log("saveRes :",savedResponse);
       const statusCode = savedResponse.status;
       if(statusCode === 429 || statusCode ===403){
         navigate("/captcha")
       }
-      console.log("save Res",savedResponse);
 
       // Faites quelque chose avec la réponse
     } catch (error) {
-      console.log("calendar");
       console.error(error);
     }
 
