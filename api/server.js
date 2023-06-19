@@ -173,7 +173,10 @@ app.use("/api/v1/paiement", paiementRoutes);
 //             CAPTCHA
 // -----------------------------------------------------------------
 app.post("/verify-hcaptcha", async (req, res) => {
-  const { token } = req.body;
+  console.log(req.body);
+  const requestBody = JSON.parse(Object.keys(req.body)[0]);
+  const token = requestBody.token;
+  // const { token } = JSON.parse(req.body)
   console.log("token : ", token);
   try {
     // Vérification du token hCaptcha côté serveur
