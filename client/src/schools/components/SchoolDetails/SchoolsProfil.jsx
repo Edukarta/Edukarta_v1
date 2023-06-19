@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Formik } from "formik";
+import { Helmet } from "react-helmet";
 import Dropzone from "react-dropzone";
 import Tooltip from "@mui/material/Tooltip";
 import { CalendarMonth, Article, FileOpen } from "@mui/icons-material";
@@ -16,6 +17,7 @@ import {
   Flag,
   ArrowBack,
   ArrowForward,
+  Language,
   House,
   Web,
   Phone,
@@ -41,6 +43,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
   const user = useSelector((state) => state.user);
   const [imgHeroIsSubmitting, setImgHeroIsSubmitting] = useState(false);
   const [imgLogoIsSubmitting, setImgLogoIsSubmitting] = useState(false);
+  const titlePage = `${school.name} - ${school.level}`;
   const [modalContent, setModalContent] = useState("");
   const [openModalKartaJob, setOpenModalKartaJob] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -106,11 +109,10 @@ const SchoolsProfil = ({ school, getSchool }) => {
     const updateSchool = await updateSchoolResponse;
     const statusCode = updateSchool.status;
     if (statusCode === 429 || statusCode === 403) navigate("/captcha");
-      setImgHeroIsSubmitting(false);
-      setImgLogoIsSubmitting(false);
-      setIsLoading(false);
-      getSchool();
-    
+    setImgHeroIsSubmitting(false);
+    setImgLogoIsSubmitting(false);
+    setIsLoading(false);
+    getSchool();
   };
 
   const handleImageDrop1 = (acceptedFiles, setFieldValue) => {
@@ -131,6 +133,9 @@ const SchoolsProfil = ({ school, getSchool }) => {
 
   return (
     <>
+      <Helmet>
+        <title>{titlePage}</title>
+      </Helmet>
       <ModalForm
         show={modalIsOpen}
         text="Modify Infos"
@@ -349,7 +354,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
                   <School sx={{ color: "#365475", fontSize: "30px" }} />
                   <span className={classes.infos_text_light}>Level </span>
                   <span className={classes.infos_text_bold}>
-                    {school?.levelUpdate}
+                    {school?.levelUpdate ? school.levelUpdate : school.level}
                   </span>
                 </div>
 
@@ -357,7 +362,19 @@ const SchoolsProfil = ({ school, getSchool }) => {
                   <House sx={{ color: "#365475", fontSize: "30px" }} />
                   <span className={classes.infos_text_light}>Sector </span>
                   <span className={classes.infos_text_bold}>
-                    {school?.sectorUpdate}
+                    {school?.sectorUpdate
+                      ? school?.sectorUpdate
+                      : school?.sector}
+                  </span>
+                </div>
+
+                <div className={classes.profil_info_item}>
+                  <Language sx={{ color: "#365475", fontSize: "30px" }} />
+                  <span className={classes.infos_text_light}>Language </span>
+                  <span className={classes.infos_text_bold}>
+                    {school?.languageUpdate
+                      ? school?.languageUpdate
+                      : school?.language}
                   </span>
                 </div>
 

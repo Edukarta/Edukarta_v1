@@ -163,6 +163,24 @@ input[type="checkbox"] {
   margin: 0 auto;
 }
 
+.cardSugest__container_country_city{
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.cardCountry{
+  font-size: 15px;
+  color: #9a9999;
+  font-weight: 500;
+}
+
+.cardCity{
+  font-size: 15px;
+  color: #9a9999;
+  font-weight: 500;
+}
+
 @media (min-width: 1100px) {
   .container_results {
     display: flex;

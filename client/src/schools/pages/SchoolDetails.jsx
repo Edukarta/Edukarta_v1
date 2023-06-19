@@ -24,6 +24,8 @@ const SchoolDetails = () => {
   }, [id]);
   //   if (!user) return null;
 
+
+
   return (
     <>
       <header className={classes.container_navigation}>

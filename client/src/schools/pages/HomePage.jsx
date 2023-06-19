@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { Helmet } from "react-helmet";
 import axios from "axios";
 import Map from "../../shared/components/UIElements/Map";
 import SchoolList from "../components/Homepage/SchoolList";
@@ -15,7 +16,7 @@ const HomePage = () => {
   const [popularSchools, setPopularSchools] = useState([]);
   const [country, setCountry] = useState(localStorage.getItem("country"));
   const [page, setPage] = useState(1);
-  const [limit] = useState(21);
+  const [limit] = useState(12);
   const [isFetching, setIsFetching] = useState(false);
 
   const getUserLocation = async () => {
@@ -31,7 +32,7 @@ const HomePage = () => {
       const geoData = geoResponse.data;
       const userCountry = geoData.country;
       setCountry(userCountry);
-      localStorage.setItem("country", userCountry);
+      localStorage.setItem("country", userCountry || "France");
     } catch (error) {
       console.log(error);
       return null;
@@ -39,27 +40,29 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    getUserLocation();
-    fetchPopularSchools();
+    fetchSchools();
   }, [country]);
 
   useEffect(() => {
-    fetchSchools();
-  }, [country]);
+    getUserLocation();
+    fetchPopularSchools();
+  }, []);
 
   const fetchSchools = async () => {
     try {
       setIsFetching(true);
-      const responseData = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools?country=${country}&page=${page}&limit=${limit}`)
+      const responseData = callApi(
+        `${process.env.REACT_APP_API_URL}/api/v1/schools?country=${country}&page=${page}&limit=${limit}`
+      );
       //On allSchools, data use .data
-      const data =await responseData;
-      const statusCode =  data.status;
-      if(statusCode === 429 || statusCode ===403){
-        navigate("/captcha")
+      const data = await responseData;
+      const statusCode = data.status;
+      if (statusCode === 429 || statusCode === 403) {
+        navigate("/captcha");
       }
 
       const allSchools = await data.data;
-    
+
       setSchools((prevSchools) => {
         const updatedSchools = [...prevSchools];
 
@@ -106,10 +109,13 @@ const HomePage = () => {
 
   const fetchPopularSchools = async () => {
     try {
-      const responseData = await callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/popular`, "GET");
-      const statusCode =  await responseData.status;
-      if(statusCode === 429 || statusCode ===403){
-        navigate("/captcha")
+      const responseData = await callApi(
+        `${process.env.REACT_APP_API_URL}/api/v1/schools/popular`,
+        "GET"
+      );
+      const statusCode = await responseData.status;
+      if (statusCode === 429 || statusCode === 403) {
+        navigate("/captcha");
       }
       const allSchools = await responseData.data;
       setPopularSchools((prevSchools) => {
@@ -136,15 +142,17 @@ const HomePage = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isFetching]);
-  
 
   return (
     <>
+      <Helmet>
+        <title>EduKarta.com | The Biggest School Database</title>
+      </Helmet>
       <header className={classes.container_navigation}>
         <MainNavigation />
       </header>
       <section>
-        <Map type="homepage" schools={schools}/>
+        <Map type="homepage" schools={schools} />
         <Suggest
           schools={popularSchools}
           subText="Most popular schools among Edukarta users"

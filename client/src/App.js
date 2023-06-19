@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import HomePage from "./schools/pages/HomePage";
 import NavbarBottom from "./shared/components/Navigation/NavbarBottom/NavbarBottom";
 import LoginPage from "./user/pages/LoginPage";
@@ -23,8 +24,8 @@ import RedirectionPage from "./schools/pages/RedirectionPage";
 function App() {
   const location = useLocation();
   const isAuth = Boolean(useSelector((state) => state.token));
- 
   const localStorageCaptcha = localStorage.getItem('captcha');
+
   
   return (
     <>

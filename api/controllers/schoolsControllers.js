@@ -10,7 +10,7 @@ import { validationResult } from "express-validator";
 //ROUTE : api/v1/schools
 export const getAllSchools = async (req, res) => {
   const currentPage = parseInt(req.query.page) || 1;
-  const itemsPerPage = parseInt(req.query.limit) || 21;
+  const itemsPerPage = parseInt(req.query.limit) || 12;
   const country = req.query.country;
   try {
     const totalCount = await School.countDocuments();

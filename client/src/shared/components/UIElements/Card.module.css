@@ -54,8 +54,20 @@
   text-overflow: ellipsis;
 }
 
+.cardSugest__container_country_city{
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
 .cardCountry{
-  font-size: 17px;
+  font-size: 15px;
+  color: #9a9999;
+  font-weight: 500;
+}
+
+.cardCity{
+  font-size: 15px;
   color: #9a9999;
   font-weight: 500;
 }

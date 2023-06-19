@@ -46,8 +46,6 @@ const ResultsPage = () => {
     setDrawerIsOpen(false);
   };
 
-
-
   return (
     <>
       <header className={classes.container_navigation}>
@@ -318,11 +316,10 @@ const ResultsPage = () => {
                     <h6 className={classes.name}>
                       {result.nameUpdate ? result.nameUpdate : result.name}
                     </h6>
-                    <h6 className={classes.country}>
-                      {result.countryUpdate
-                        ? result.countryUpdate
-                        : result.country}
-                    </h6>
+                    <div className={classes.cardSugest__container_country_city}>
+                      <h6 className={classes.cardCountry}>{result.country},</h6>
+                      <h6 className={classes.cardCity}>{result.city}</h6>
+                    </div>
                   </div>
                 </div>
               </Link>

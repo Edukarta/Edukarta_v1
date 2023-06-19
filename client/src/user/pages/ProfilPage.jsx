@@ -1,5 +1,6 @@
 import React, {useEffect} from "react";
 import classes from "./ProfilPage.module.css";
+import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery } from "@mui/material";
 import { setLogout } from "../../shared/state/store";
@@ -10,6 +11,7 @@ import SectionProfil from "../components/ProfilPage/SectionProfil";
 
 const ProfilPage = () => {
   const user = useSelector((state) => state.user);
+  const titlePage = `${user.firstname} Profil Page`
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSmallScreen = useMediaQuery("(min-width: 1080px)");
@@ -21,6 +23,9 @@ const ProfilPage = () => {
 
   return (
     <>
+    <Helmet>
+      <title>{titlePage}</title>
+    </Helmet>
       <header className={classes.container_navigation}>
         <MainNavigation type="profil" />
       </header>
