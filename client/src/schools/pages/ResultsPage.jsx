@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../../shared/components/FormElements/Button";
 import { useSelector, useDispatch } from "react-redux";
+import { setPagination } from "../../shared/state/store";
 import { setSearchResults, setSearchQuery } from "../../shared/state/store";
 import FilterDrawer from "../../shared/components/UIElements/FilterDrawer";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material/";
@@ -17,6 +18,31 @@ const ResultsPage = () => {
   const [selectedFilters, setSelectedFilters] = useState([]);
   const results = useSelector((state) => state.searchResults);
   const previousQuery = useSelector((state) => state.searchQuery);
+  const { currentPage, totalPages } = useSelector((state) => state.pagination);
+  const [itemsPerPage] = useState(10);
+
+  const handlePageChange = (direction, e) => {
+    e.preventDefault();
+    if (direction === "left") {
+      const currentPageValue = currentPage || 1; // Utilise 1 si currentPage est null
+      if (currentPageValue > 1) {
+        const newPage = currentPageValue - 1;
+        dispatch(
+          setPagination({ ...currentPage, currentPage: newPage, totalPages })
+        );
+      }
+    }
+
+    if (direction === "right") {
+      const currentPageValue = currentPage || 1; // Utilise 0 si currentPage est null
+      const newPage = currentPageValue + 1;
+      dispatch(
+        setPagination({ ...currentPage, currentPage: newPage, totalPages })
+      );
+    }
+  };
+
+  console.log(currentPage);
 
   const handleFilterChange = (e) => {
     const value = e.target.value;
@@ -325,6 +351,10 @@ const ResultsPage = () => {
               </Link>
             ))}
           </div>
+        </div>
+        <div className={classes.container_paginate}>
+          <button onClick={(e) => handlePageChange("left", e)}>-</button>
+          <button onClick={(e) => handlePageChange("right", e)}>+</button>
         </div>
       </section>
     </>

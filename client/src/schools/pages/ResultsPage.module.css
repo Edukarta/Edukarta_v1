@@ -181,6 +181,16 @@ input[type="checkbox"] {
   font-weight: 500;
 }
 
+.container_paginate{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.container_paginate button{
+  padding: 10px 20px;
+}
+
 @media (min-width: 1100px) {
   .container_results {
     display: flex;

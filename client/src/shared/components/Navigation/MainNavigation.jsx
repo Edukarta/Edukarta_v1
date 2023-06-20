@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import MainHeader from "./MainHeader";
 import { useSelector, useDispatch } from "react-redux";
 import { setSearchResults, setQuery } from "../../state/store";
@@ -13,28 +13,43 @@ import { callApi } from "../../../utils/apiUtils";
 const MainNavigation = ({ type }) => {
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
+  const currentPage = useSelector((state) => state.pagination.currentPage);
+  const limit = useSelector((state) => state.pagination.pageSize);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
+  const currentPageRef = useRef(currentPage);
+
+
+
 
   const handleSearch = async () => {
-      const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${searchQuery}`,"GET")
+    const response = callApi(
+      `${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${searchQuery}&page=${currentPage}&perPage=${limit}`,
+      "GET"
+    );
 
-      const data = await response;
-      const statusCode = data.status;
-    if(statusCode === 429 || statusCode ===403){
-      navigate("/captcha")
+    const data = await response;
+    const statusCode = data.status;
+    if (statusCode === 429 || statusCode === 403) {
+      navigate("/captcha");
     }
-      if(statusCode ==200){
-        dispatch(setSearchResults({ results: data.data }));
-        dispatch(setQuery(searchQuery));
-        navigate("/searchResult");
-      }
-      else{
-        console.error("Fail to fetch data");
-      }
-
+    if (statusCode == 200) {
+      dispatch(setSearchResults({ results: data.data }));
+      dispatch(setQuery(searchQuery));
+      navigate("/searchResult");
+    } else {
+      console.error("Fail to fetch data");
+    }
   };
+
+  if (currentPageRef.current !== currentPage) {
+    currentPageRef.current = currentPage;
+    handleSearch();
+  }
+
+
+
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -81,7 +96,7 @@ const MainNavigation = ({ type }) => {
         {type !== "profil" && (
           <SearchBar
             value={searchQuery}
-            onKeyDown={handleKeyDown}
+            // onKeyDown={handleKeyDown}
             onChange={(e) => setSearchQuery(e.target.value)}
             onClick={handleSearch}
           />
@@ -101,7 +116,7 @@ const MainNavigation = ({ type }) => {
           {user ? (
             <>
               <div className={classes.container__avatar_logout}>
-              <span>Hello {user.firstname}</span>
+                <span>Hello {user.firstname}</span>
                 <Avatar
                   userId={user._id}
                   image={user.imagePath}
