@@ -51,6 +51,7 @@ export const authSlice = createSlice({
     setPagination: (state, action) => {
       state.pagination.currentPage = action.payload.currentPage;
       state.pagination.totalPages = action.payload.totalPages;
+      state.pagination.totalCount = action.payload.totalCount;
     },
   },
 });

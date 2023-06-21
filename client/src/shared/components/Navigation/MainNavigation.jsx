@@ -1,7 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import MainHeader from "./MainHeader";
 import { useSelector, useDispatch } from "react-redux";
-import { setSearchResults, setQuery } from "../../state/store";
+import { setSearchResults, setQuery, setPagination } from "../../state/store";
 import { NotificationsNone, ShoppingCart } from "@mui/icons-material/";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -15,13 +15,11 @@ const MainNavigation = ({ type }) => {
   const cart = useSelector((state) => state.cart);
   const currentPage = useSelector((state) => state.pagination.currentPage);
   const limit = useSelector((state) => state.pagination.pageSize);
+  const query = useSelector((state) => state.searchQuery);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(query || "");
   const currentPageRef = useRef(currentPage);
-
-
-
 
   const handleSearch = async () => {
     const response = callApi(
@@ -30,26 +28,29 @@ const MainNavigation = ({ type }) => {
     );
 
     const data = await response;
+    console.log(data);
     const statusCode = data.status;
-    if (statusCode === 429 || statusCode === 403) {
-      navigate("/captcha");
-    }
-    if (statusCode == 200) {
+    if (statusCode === 200) {
       dispatch(setSearchResults({ results: data.data }));
       dispatch(setQuery(searchQuery));
+      dispatch(
+        setPagination({
+          currentPage: currentPage,
+          totalCount: data.data.totalCount,
+          totalPages: data.data.totalPages,
+        })
+      );
+      console.log(searchQuery)
       navigate("/searchResult");
-    } else {
-      console.error("Fail to fetch data");
     }
   };
 
-  if (currentPageRef.current !== currentPage) {
-    currentPageRef.current = currentPage;
-    handleSearch();
-  }
-
-
-
+  useEffect(() => {
+    if (currentPageRef.current !== currentPage) {
+      currentPageRef.current = currentPage;
+      handleSearch();
+    }
+  }, [currentPage, handleSearch]);
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
