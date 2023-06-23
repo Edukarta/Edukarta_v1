@@ -21,6 +21,11 @@ const MainNavigation = ({ type }) => {
   const [searchQuery, setSearchQuery] = useState(query || "");
   const currentPageRef = useRef(currentPage);
 
+
+  useEffect(() => {
+    setSearchQuery(query || "");
+  }, [query]);
+
   const handleSearch = async () => {
     const response = callApi(
       `${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${searchQuery}&page=${currentPage}&perPage=${limit}`,

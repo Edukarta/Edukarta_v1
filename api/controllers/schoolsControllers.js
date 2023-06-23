@@ -96,7 +96,7 @@ export const searchSchools = async (req, res, next) => {
         { countryUpdate: { $regex: new RegExp(keyword, "i") } },
         { level: { $regex: new RegExp(keyword, "i") } },
         { levelUpdate: { $regex: new RegExp(keyword, "i") } },
-        { keywords: { $regex: new RegExp(keyword, "i") } },
+        { keywords: { $all: filteredKeywords.map((k) => new RegExp(k, "i")) } },
       ],
     }));
 

@@ -20,17 +20,18 @@ import { Link, useNavigate } from "react-router-dom";
 import schoolIcon from "../../img/img_school.jpg";
 import classes from "./ResultsPage.module.css";
 
-
 const ResultsPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width:600px)");
+  const query = useSelector((state) => state.searchQuery);
+  const results = useSelector((state) => state.searchResults);
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [cityFilter, setCityFilter] = useState("");
-  const results = useSelector((state) => state.searchResults);
-  const previousQuery = useSelector((state) => state.searchQuery);
-  const { currentPage, totalPages, totalCount} = useSelector(
+  const [searchQuery, setSearchQuery] = useState([]);
+  const [currentQuery, setCurrentQuery] = useState(query.trim() || "");
+  const { currentPage, totalPages, totalCount, limit } = useSelector(
     (state) => state.pagination
   );
   const filters = useSelector((state) => state.filters);
@@ -44,14 +45,15 @@ const ResultsPage = () => {
         totalPages: totalPages,
       })
     );
-  }, [previousQuery]);
+  
+  }, [query]);
 
   const handlePageChange = (direction) => {
     if (direction === "left") {
       const currentPageValue = currentPage || 1; // Utilise 1 si currentPage est null
       if (currentPageValue > 1) {
         const newPage = currentPageValue - 1;
-        dispatch(setQuery(previousQuery));
+        dispatch(setQuery(query));
         dispatch(setPagination({ currentPage: newPage, totalPages }));
       }
     }
@@ -59,7 +61,7 @@ const ResultsPage = () => {
     if (direction === "right") {
       const currentPageValue = currentPage || 1; // Utilise 0 si currentPage est null
       const newPage = currentPageValue + 1;
-      dispatch(setQuery(previousQuery));
+      dispatch(setQuery(query));
       dispatch(setPagination({ currentPage: newPage, totalPages }));
     }
   };
@@ -73,27 +75,46 @@ const ResultsPage = () => {
       setCityFilter(value);
     } else {
       if (checked) {
-        setSelectedFilters([...selectedFilters, value]);
+        setSearchQuery((prevQuery) => [...prevQuery, value]);
       } else {
-        setSelectedFilters(
-          selectedFilters.filter((filter) => filter !== value)
+        setSearchQuery((prevQuery) =>
+          prevQuery.filter((filter) => filter !== value)
         );
       }
     }
   };
 
+  console.log(cityFilter)
+
   const handleSearch = async (e) => {
     e.preventDefault();
+    const mergedQuery = [...searchQuery.map((word) => word.toLowerCase())];
+    if (!mergedQuery.includes(currentQuery.toLowerCase())) {
+      mergedQuery.unshift(currentQuery.toLowerCase());
+    }
+    if (cityFilter) {
+      mergedQuery.unshift(cityFilter.toLowerCase());
+    }
+    
+    const queryString = mergedQuery.join(" ").replace(/\s+/g, " ");
+    console.log("queryString " + queryString);
     try {
-      const query = selectedFilters.join(",");
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/schools/filter?previousQuery=${previousQuery}&query=${query}&city=${cityFilter}`,
+        `${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${queryString}&page=${currentPage}&perPage=${limit}`,
         {
           method: "GET",
         }
       );
       const data = await response.json();
       dispatch(setSearchResults({ results: data }));
+      dispatch(
+        setPagination({
+          currentPage,
+          totalCount: data.totalCount,
+          totalPages: data.totalPages,
+        })
+      );
+      dispatch(setQuery(queryString));
     } catch (error) {
       console.error(error);
     }
@@ -229,7 +250,7 @@ const ResultsPage = () => {
 
         <div className={classes.results_number}>
           <h5 className={classes.number_of_results}>
-            {previousQuery} {": "} <span>{totalCount}</span>{" "}
+            {query} {": "} <span>{totalCount}</span>{" "}
             {totalCount > 1 ? "schools found" : "school found"}
           </h5>
         </div>
@@ -238,9 +259,26 @@ const ResultsPage = () => {
             <div className={classes.container_title_filter_panel}>
               <h3>Filter by :</h3>
             </div>
-           
-              {filters.includes("city") && <div className={classes.container_filter_group}>
-                <h3>City</h3>
+
+            {filters.includes("country") && filters.includes("city") && (
+              <div className={classes.container_filter_group}>
+                <h3>Pays</h3>
+                <div className={classes.input_filter_goup}>
+                  <input
+                    type="text"
+                    id="country"
+                    name="country"
+                    value={cityFilter}
+                    placeholder="Search by city"
+                    onChange={handleFilterChange}
+                  />
+                </div>
+              </div>
+            )}
+
+            {filters.includes("city") && (
+              <div className={classes.container_filter_group}>
+                <h3>Ville</h3>
                 <div className={classes.input_filter_goup}>
                   <input
                     type="text"
@@ -251,11 +289,12 @@ const ResultsPage = () => {
                     onChange={handleFilterChange}
                   />
                 </div>
-              </div>}
-       
-            
-              {filters.includes("level") && <div className={classes.container_filter_group}>
-                <h3>Level</h3>
+              </div>
+            )}
+
+            {filters.includes("level") && (
+              <div className={classes.container_filter_group}>
+                <h3>Niveau</h3>
                 <div className={classes.input_filter_goup}>
                   <input
                     type="checkbox"
@@ -264,7 +303,17 @@ const ResultsPage = () => {
                     value="maternelle"
                     onChange={handleFilterChange}
                   />
-                  <label htmlFor="preschool">Kindergarden</label>
+                  <label htmlFor="preschool">Maternelle</label>
+                </div>
+                <div className={classes.input_filter_goup}>
+                  <input
+                    type="checkbox"
+                    id="elementary"
+                    name="elementary"
+                    value="primaire"
+                    onChange={handleFilterChange}
+                  />
+                  <label htmlFor="elementary">Primaire</label>
                 </div>
                 <div className={classes.input_filter_goup}>
                   <input
@@ -274,14 +323,14 @@ const ResultsPage = () => {
                     value="collège"
                     onChange={handleFilterChange}
                   />
-                  <label htmlFor="middle school">Middle School</label>
+                  <label htmlFor="middleSchool">Collège</label>
                 </div>
                 <div className={classes.input_filter_goup}>
                   <input
                     type="checkbox"
                     id="highSchool"
                     name="highSchool"
-                    value="high school"
+                    value="lycée"
                     onChange={handleFilterChange}
                   />
                   <label htmlFor="high school">High School</label>
@@ -291,24 +340,16 @@ const ResultsPage = () => {
                     type="checkbox"
                     id="university"
                     name="university"
-                    value="university"
+                    value="université"
                     onChange={handleFilterChange}
                   />
                   <label htmlFor="university">University</label>
                 </div>
-                <div className={classes.input_filter_goup}>
-                  <input
-                    type="checkbox"
-                    id="formation_center"
-                    name="formation center"
-                    value="formation center"
-                    onChange={handleFilterChange}
-                  />
-                  <label htmlFor="formation center">Formation Center</label>
-                </div>
-              </div>}
-                     
-              {filters.includes("sector") && <div className={classes.container_filter_group}>
+              </div>
+            )}
+
+            {filters.includes("sector") && (
+              <div className={classes.container_filter_group}>
                 <h3>Sector</h3>
                 <div className={classes.input_filter_goup}>
                   <input
@@ -330,8 +371,8 @@ const ResultsPage = () => {
                   />
                   <label htmlFor="private">Private</label>
                 </div>
-              </div>}
-       
+              </div>
+            )}
 
             <Button big>Apply filters</Button>
           </form>
