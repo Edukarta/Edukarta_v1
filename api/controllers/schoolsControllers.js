@@ -4,6 +4,7 @@ import User from "../models/UserModel.js";
 import HttpError from "../models/http-errors.js";
 import { v2 as cloudinary } from "cloudinary";
 import { validationResult } from "express-validator";
+import diacritic from "diacritic";
 
 //SHOW ALL SCHOOLS
 //@GET
@@ -33,9 +34,11 @@ export const getAllSchools = async (req, res) => {
 //ROUTE : api/v1/schools/popular
 export const getAllPopularSchools = async (req, res) => {
   try {
-    const schools = await School.find({popularity: 1});
+    const schools = await School.find({ popularity: 1 });
 
-    res.status(200).json({ schools: schools.map((school) => school.toObject({ getters: true })) });
+    res.status(200).json({
+      schools: schools.map((school) => school.toObject({ getters: true })),
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -52,8 +55,10 @@ export const getSchoolMap = async (req, res) => {
 
     res.json(schools);
   } catch (error) {
-    console.error('Erreur lors de la récupération des écoles :', error);
-    res.status(500).json({ error: 'Erreur lors de la récupération des écoles' });
+    console.error("Erreur lors de la récupération des écoles :", error);
+    res
+      .status(500)
+      .json({ error: "Erreur lors de la récupération des écoles" });
   }
 };
 
@@ -62,20 +67,138 @@ export const getSchoolMap = async (req, res) => {
 //ROUTE : api/v1/search
 export const searchSchools = async (req, res, next) => {
   const { query } = req.query;
+  const currentPage = parseInt(req.query.page) || 1;
+  const itemsPerPage = parseInt(req.query.limit) || 8;
+  // const normalizedQuery = query
+  //   .normalize("NFD")
+  //   .replace(/[\u0300-\u036f]/g, "");
+  const queryKeywords = query.split(" ");
+  const keywordsArray = Array.isArray(queryKeywords)
+    ? queryKeywords
+    : [queryKeywords];
+
+  const filteredKeywords = keywordsArray.filter(
+    (keyword) => !/^[^\w]+$/.test(keyword)
+  );
   try {
-    const schools = await School.find({
+    const conditions = [];
+    const condition = { $or: [] };
+    const unusedFields = [];
+
+    const keywordConditions = filteredKeywords.map((keyword) => ({
       $or: [
-        { name: { $regex: query, $options: "i" } },
-        { nameUpdate: { $regex: query, $options: "i" } },
-        { city: { $regex: query, $options: "i" } },
-        { cityUpdate: { $regex: query, $options: "i" } },
-        { country: { $regex: query, $options: "i" } },
-        { countryUpdate: { $regex: query, $options: "i" } },
-        { level: { $regex: query, $options: "i" } },
-        { levelUpdate: { $regex: query, $options: "i" } },
+        { name: { $regex: new RegExp(keyword, "i") } },
+        { nameUpdate: { $regex: new RegExp(keyword, "i") } },
+        { city: { $regex: new RegExp(keyword, "i") } },
+        { cityUpdate: { $regex: new RegExp(keyword, "i") } },
+        { sector: { $regex: new RegExp(keyword, "i") } },
+        { country: { $regex: new RegExp(keyword, "i") } },
+        { countryUpdate: { $regex: new RegExp(keyword, "i") } },
+        { level: { $regex: new RegExp(keyword, "i") } },
+        { levelUpdate: { $regex: new RegExp(keyword, "i") } },
+        { keywords: { $regex: new RegExp(keyword, "i") } },
       ],
+    }));
+
+    conditions.push(...keywordConditions);
+
+    //Récupère les champ non utilisé pour générer les filtres
+    School.schema.eachPath((path) => {
+      if (path !== "_id" && path !== "__v") {
+        let isUsed = false;
+
+        keywordsArray.forEach((keyword) => {
+          if (
+            path === "imgPath1" ||
+            path === "imgPath2" ||
+            path === "imgPath3" ||
+            path === "imgPath4" ||
+            path === "imgPath5" ||
+            path === "imgPath6" ||
+            path === "imgPath7" ||
+            path === "owner" ||
+            path === "webSiteUrl" ||
+            path === "email" ||
+            path === "phone" ||
+            path === "numberOfStudents" ||
+            path === "religionUpdate" ||
+            path === "name" ||
+            path === "nameUpdate" ||
+            path === "originalName" ||
+            path === "videoPath" ||
+            path === "address" ||
+            path === "addressUpdate" ||
+            path === "continentUpdate" ||
+            path === "countrytUpdate" ||
+            path === "foundationDate" ||
+            path === "acronym" ||
+            path === "gender" ||
+            path === "genderUpdate" ||
+            path === "area" ||
+            path === "areaUpdate" ||
+            path === "cityUpdate" ||
+            path === "countryUpdate" ||
+            path === "description" ||
+            path === "levelUpdate" ||
+            path === "sectorUpdate" ||
+            path === "slogan" ||
+            path === "languageUpdate" ||
+            path === "studentApplied" ||
+            path === "popularity" ||
+            path === "gps" ||
+            path === "language" ||
+            path === "religion" ||
+            path === "international"||
+            path === "keywords"
+          ) {
+            isUsed = true;
+            return;
+          }
+
+          if (path === "city" && keyword.toLowerCase() === "ecole") {
+            isUsed = false;
+            return;
+          }
+    
+          if (path === "level" && (keyword.toLowerCase() === "school")) {
+            isUsed = false;
+            return;
+          }
+          
+          const query = { [path]: { $regex: new RegExp(keyword, "i") } };
+          School.findOne(query)
+            .then((doc) => {
+              if (doc) {
+                isUsed = true;
+              } else {
+                unusedFields.push(path);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+
+        if (isUsed) {
+          return;
+        }
+      }
     });
-    res.json({ schools });
+
+    
+
+    //Récupère le nombre total d'école
+    const totalCount = await School.countDocuments({ $and: conditions });
+    const schools = await School.find({ $and: conditions })
+      .collation({
+        locale: "fr",
+        strength: 1,
+      })
+      .skip((currentPage - 1) * itemsPerPage)
+      .limit(itemsPerPage);
+    const totalPages = Math.ceil(totalCount / itemsPerPage);
+    console.log(unusedFields);
+    res.json({ schools, totalCount, totalPages, unusedFields: unusedFields });
   } catch (err) {
     next(err);
   }
@@ -117,6 +240,7 @@ const searchAllFields = async (searchValue) => {
 //ROUTE : api/v1/search
 export const filterSchools = async (req, res, next) => {
   const { query, previousQuery, ...filters } = req.query;
+  console.log(query);
   const searchFilters = [];
 
   // Ajouter le filtre de recherche de la requête principale
@@ -156,6 +280,7 @@ export const filterSchools = async (req, res, next) => {
             { levelUpdate: { $regex: queryValue, $options: "i" } },
             { sector: { $regex: queryValue, $options: "i" } },
             { language: { $regex: queryValue, $options: "i" } },
+            { keywords: { $regex: queryValue, $options: "i" } },
           ],
         });
       } else {
@@ -172,6 +297,7 @@ export const filterSchools = async (req, res, next) => {
               { levelUpdate: { $regex: queryValue, $options: "i" } },
               { sector: { $regex: queryValue, $options: "i" } },
               { language: { $regex: queryValue, $options: "i" } },
+              { keywords: { $regex: queryValue, $options: "i" } },
             ],
           });
         }
@@ -212,6 +338,7 @@ export const filterSchools = async (req, res, next) => {
           { levelUpdate: { $regex: previousQuery, $options: "i" } },
           { sector: { $regex: previousQuery, $options: "i" } },
           { language: { $regex: previousQuery, $options: "i" } },
+          { keywords: { $regex: previousQuery, $options: "i" } },
         ],
       },
       // Ajouter les filtres de recherche

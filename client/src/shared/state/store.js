@@ -14,6 +14,7 @@ const initialState = {
     pageSize: 8,
     totalCount: 0,
   },
+  filters : []
 };
 
 export const authSlice = createSlice({
@@ -53,6 +54,9 @@ export const authSlice = createSlice({
       state.pagination.totalPages = action.payload.totalPages;
       state.pagination.totalCount = action.payload.totalCount;
     },
+    setFilters : (state, action) => {
+      state.filters = action.payload;
+    }
   },
 });
 
@@ -65,6 +69,7 @@ export const {
   setSearchResults,
   setQuery,
   setCartItem,
-  setPagination
+  setPagination,
+  setFilters
 } = authSlice.actions;
 export default authSlice.reducer;

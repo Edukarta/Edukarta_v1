@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import MainHeader from "./MainHeader";
 import { useSelector, useDispatch } from "react-redux";
-import { setSearchResults, setQuery, setPagination } from "../../state/store";
+import { setSearchResults, setQuery, setPagination, setFilters } from "../../state/store";
 import { NotificationsNone, ShoppingCart } from "@mui/icons-material/";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -28,7 +28,7 @@ const MainNavigation = ({ type }) => {
     );
 
     const data = await response;
-    console.log(data);
+    console.log(query);
     const statusCode = data.status;
     if (statusCode === 200) {
       dispatch(setSearchResults({ results: data.data }));
@@ -40,7 +40,8 @@ const MainNavigation = ({ type }) => {
           totalPages: data.data.totalPages,
         })
       );
-      console.log(searchQuery)
+      dispatch(setFilters(data.data.unusedFields));
+      console.log(data)
       navigate("/searchResult");
     }
   };

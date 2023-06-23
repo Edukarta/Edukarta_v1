@@ -334,7 +334,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
               <div className={classes.profil_info_items_group}>
                 <div className={classes.profil_info_item}>
                   <Create sx={{ color: "#365475", fontSize: "30px" }} />
-                  <span className={classes.infos_text_light}>Created at </span>
+                  <span className={classes.infos_text_light}>Founded </span>
                   <span className={classes.infos_text_bold}>
                     {school?.foundationDate}
                   </span>

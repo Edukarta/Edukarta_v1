@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import Button from "../../shared/components/FormElements/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { setPagination } from "../../shared/state/store";
-import { setSearchResults, setSearchQuery, setQuery } from "../../shared/state/store";
+import { useMediaQuery } from "@mui/material";
+import {
+  setSearchResults,
+  setSearchQuery,
+  setQuery,
+} from "../../shared/state/store";
 import FilterDrawer from "../../shared/components/UIElements/FilterDrawer";
 import {
   KeyboardArrowDown,
@@ -14,26 +19,32 @@ import MainNavigation from "../../shared/components/Navigation/MainNavigation";
 import { Link, useNavigate } from "react-router-dom";
 import schoolIcon from "../../img/img_school.jpg";
 import classes from "./ResultsPage.module.css";
-import { callApi } from "../../utils/apiUtils";
+
 
 const ResultsPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width:600px)");
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [cityFilter, setCityFilter] = useState("");
   const results = useSelector((state) => state.searchResults);
   const previousQuery = useSelector((state) => state.searchQuery);
-  const { currentPage, totalPages, totalCount } = useSelector(
+  const { currentPage, totalPages, totalCount} = useSelector(
     (state) => state.pagination
   );
+  const filters = useSelector((state) => state.filters);
   const [itemsPerPage] = useState(10);
 
-  // const handlePageChange = (pageNumber) => {
-  //   if (pageNumber > 0 && pageNumber <= totalPages) {
-  //     dispatch(setPagination({ currentPage: pageNumber, totalPages }));
-  //   }
-  // };
-
+  useEffect(() => {
+    dispatch(
+      setPagination({
+        currentPage: 1,
+        totalCount: totalCount,
+        totalPages: totalPages,
+      })
+    );
+  }, [previousQuery]);
 
   const handlePageChange = (direction) => {
     if (direction === "left") {
@@ -54,12 +65,20 @@ const ResultsPage = () => {
   };
 
   const handleFilterChange = (e) => {
+    const name = e.target.name;
     const value = e.target.value;
     const checked = e.target.checked;
-    if (checked) {
-      setSelectedFilters([...selectedFilters, value]);
+
+    if (name === "city") {
+      setCityFilter(value);
     } else {
-      setSelectedFilters(selectedFilters.filter((filter) => filter !== value));
+      if (checked) {
+        setSelectedFilters([...selectedFilters, value]);
+      } else {
+        setSelectedFilters(
+          selectedFilters.filter((filter) => filter !== value)
+        );
+      }
     }
   };
 
@@ -68,7 +87,7 @@ const ResultsPage = () => {
     try {
       const query = selectedFilters.join(",");
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/v1/schools/filter?previousQuery=${previousQuery}&query=${query}`,
+        `${process.env.REACT_APP_API_URL}/api/v1/schools/filter?previousQuery=${previousQuery}&query=${query}&city=${cityFilter}`,
         {
           method: "GET",
         }
@@ -83,9 +102,9 @@ const ResultsPage = () => {
 
   return (
     <>
-      <header className={classes.container_navigation}>
+      <div className={classes.container_navigation}>
         <MainNavigation />
-      </header>
+      </div>
       <section className={classes.global_container}>
         <div className={classes.container_filter_result_page}>
           <button onClick={() => setDrawerIsOpen((prev) => !prev)}>
@@ -219,111 +238,104 @@ const ResultsPage = () => {
             <div className={classes.container_title_filter_panel}>
               <h3>Filter by :</h3>
             </div>
+           
+              {filters.includes("city") && <div className={classes.container_filter_group}>
+                <h3>City</h3>
+                <div className={classes.input_filter_goup}>
+                  <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    value={cityFilter}
+                    placeholder="Search by city"
+                    onChange={handleFilterChange}
+                  />
+                </div>
+              </div>}
+       
+            
+              {filters.includes("level") && <div className={classes.container_filter_group}>
+                <h3>Level</h3>
+                <div className={classes.input_filter_goup}>
+                  <input
+                    type="checkbox"
+                    id="preschool"
+                    name="preschool"
+                    value="maternelle"
+                    onChange={handleFilterChange}
+                  />
+                  <label htmlFor="preschool">Kindergarden</label>
+                </div>
+                <div className={classes.input_filter_goup}>
+                  <input
+                    type="checkbox"
+                    id="middleSchool"
+                    name="middleSchool"
+                    value="collège"
+                    onChange={handleFilterChange}
+                  />
+                  <label htmlFor="middle school">Middle School</label>
+                </div>
+                <div className={classes.input_filter_goup}>
+                  <input
+                    type="checkbox"
+                    id="highSchool"
+                    name="highSchool"
+                    value="high school"
+                    onChange={handleFilterChange}
+                  />
+                  <label htmlFor="high school">High School</label>
+                </div>
+                <div className={classes.input_filter_goup}>
+                  <input
+                    type="checkbox"
+                    id="university"
+                    name="university"
+                    value="university"
+                    onChange={handleFilterChange}
+                  />
+                  <label htmlFor="university">University</label>
+                </div>
+                <div className={classes.input_filter_goup}>
+                  <input
+                    type="checkbox"
+                    id="formation_center"
+                    name="formation center"
+                    value="formation center"
+                    onChange={handleFilterChange}
+                  />
+                  <label htmlFor="formation center">Formation Center</label>
+                </div>
+              </div>}
+                     
+              {filters.includes("sector") && <div className={classes.container_filter_group}>
+                <h3>Sector</h3>
+                <div className={classes.input_filter_goup}>
+                  <input
+                    type="checkbox"
+                    id="public"
+                    name="public"
+                    value="public"
+                    onChange={handleFilterChange}
+                  />
+                  <label htmlFor="public">Public</label>
+                </div>
+                <div className={classes.input_filter_goup}>
+                  <input
+                    type="checkbox"
+                    id="private"
+                    name="private"
+                    value="private"
+                    onChange={handleFilterChange}
+                  />
+                  <label htmlFor="private">Private</label>
+                </div>
+              </div>}
+       
 
-            <div className={classes.container_filter_group}>
-              <h3>Level</h3>
-              <div className={classes.input_filter_goup}>
-                <input
-                  type="checkbox"
-                  id="preschool"
-                  name="preschool"
-                  value="preschool"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="preschool">Preschool</label>
-              </div>
-              <div className={classes.input_filter_goup}>
-                <input
-                  type="checkbox"
-                  id="college"
-                  name="college"
-                  value="college"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="college">College</label>
-              </div>
-              <div className={classes.input_filter_goup}>
-                <input
-                  type="checkbox"
-                  id="university"
-                  name="university"
-                  value="university"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="university">University</label>
-              </div>
-              <div className={classes.input_filter_goup}>
-                <input
-                  type="checkbox"
-                  id="formation_center"
-                  name="formation center"
-                  value="formation center"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="formation center">Formation Center</label>
-              </div>
-            </div>
-
-            <div className={classes.container_filter_group}>
-              <h3>Sector</h3>
-              <div className={classes.input_filter_goup}>
-                <input
-                  type="checkbox"
-                  id="public"
-                  name="public"
-                  value="public"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="public">Public</label>
-              </div>
-              <div className={classes.input_filter_goup}>
-                <input
-                  type="checkbox"
-                  id="private"
-                  name="private"
-                  value="private"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="private">Private</label>
-              </div>
-            </div>
-
-            <div className={classes.container_filter_group}>
-              <h3>Language spoken</h3>
-              <div className={classes.input_filter_goup}>
-                <input
-                  type="checkbox"
-                  id="english"
-                  name="english"
-                  value="english"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="english">English</label>
-              </div>
-              <div className={classes.input_filter_goup}>
-                <input
-                  type="checkbox"
-                  id="chinese"
-                  name="chinese"
-                  value="chinese"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="chinese">Chinese</label>
-              </div>
-              <div className={classes.input_filter_goup}>
-                <input
-                  type="checkbox"
-                  id="french"
-                  name="french"
-                  value="french"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="french">French</label>
-              </div>
-            </div>
             <Button big>Apply filters</Button>
           </form>
-          <div className={classes.container_result_pageinate}>
+          <div className={classes.container_result_paginate}>
             <div className={classes.container_card}>
               {results?.results.schools.map((result) => (
                 <Link
@@ -362,157 +374,18 @@ const ResultsPage = () => {
               ))}
             </div>
             <div className={classes.container_paginate}>
-              {/* {Array.from({ length: totalPages }, (_, index) => {
-                const pageNumber = index + 1;
-
-                if (currentPage <= 10) {
-                  if (index < 10) {
-                    return (
-                      <button
-                        key={index}
-                        onClick={() => {
-                          handlePageChange(pageNumber);
-                          dispatch(
-                            setPagination({
-                              currentPage: pageNumber,
-                              totalPages,
-                            })
-                          );
-                        }}
-                        className={
-                          pageNumber === currentPage
-                            ? classes.activePage
-                            : classes.page
-                        }
-                      >
-                        {pageNumber}
-                      </button>
-                    );
-                  } else if (index === 10 && totalPages > 20) {
-                    return (
-                      <>
-                        <span key="ellipsis">...</span>
-                        <button
-                          key={index}
-                          onClick={() => {
-                            handlePageChange(11);
-                            dispatch(
-                              setPagination({
-                                currentPage: 11,
-                                totalPages,
-                              })
-                            );
-                          }}
-                          className={
-                            11 === currentPage
-                              ? classes.activePage
-                              : classes.page
-                          }
-                        >
-                          11
-                        </button>
-                      </>
-                    );
-                  }
-                } else {
-                  const currentGroupFirstPage =
-                    Math.floor((currentPage - 1) / 10) * 10 + 1;
-                  const lastPageInCurrentGroup = Math.min(
-                    currentGroupFirstPage + 9,
-                    totalPages
-                  );
-
-                  if (index === currentGroupFirstPage - 2) {
-                    return (
-                      <>
-                        <button
-                          key={index}
-                          onClick={() => {
-                            handlePageChange(currentGroupFirstPage - 1);
-                            dispatch(
-                              setPagination({
-                                currentPage: currentGroupFirstPage - 1,
-                                totalPages,
-                              })
-                            );
-                          }}
-                          className={
-                            currentGroupFirstPage - 1 === currentPage
-                              ? classes.activePage
-                              : classes.page
-                          }
-                        >
-                          {currentGroupFirstPage - 1}
-                        </button>
-                        <span key="ellipsis">...</span>
-                      </>
-                    );
-                  } else if (
-                    index >= currentGroupFirstPage - 1 &&
-                    index <= lastPageInCurrentGroup - 1
-                  ) {
-                    return (
-                      <button
-                        key={index}
-                        onClick={() => {
-                          handlePageChange(pageNumber);
-                          dispatch(
-                            setPagination({
-                              currentPage: pageNumber,
-                              totalPages,
-                            })
-                          );
-                        }}
-                        className={
-                          pageNumber === currentPage
-                            ? classes.activePage
-                            : classes.page
-                        }
-                      >
-                        {pageNumber}
-                      </button>
-                    );
-                  } else if (index === lastPageInCurrentGroup) {
-                    return (
-                      <>
-                        <span key="ellipsis">...</span>
-                        <button
-                          key={index}
-                          onClick={() => {
-                            handlePageChange(lastPageInCurrentGroup + 1);
-                            dispatch(
-                              setPagination({
-                                currentPage: lastPageInCurrentGroup + 1,
-                                totalPages,
-                              })
-                            );
-                          }}
-                          className={
-                            lastPageInCurrentGroup + 1 === currentPage
-                              ? classes.activePage
-                              : classes.page
-                          }
-                        >
-                          {lastPageInCurrentGroup + 1}
-                        </button>
-                      </>
-                    );
-                  }
-                }
-
-                return null;
-              })} */}
               <button onClick={() => handlePageChange("left")}>
-                <ArrowBackIos sx={{fontSize: "15px"}} />
-                précédent
+                <ArrowBackIos sx={{ fontSize: "15px" }} />
+                {!isMobile && "précédent"}
               </button>
               <button>
-                PAGE <span className={classes.currentPage}>{currentPage}</span>{" "}
-                / {totalPages}
+                {!isMobile && "PAGE"}{" "}
+                <span className={classes.currentPage}>{currentPage}</span> /{" "}
+                {totalPages}
               </button>
               <button onClick={() => handlePageChange("right")}>
-                suivant
-                <ArrowForwardIos sx={{fontSize: "15px"}} />
+                {!isMobile && "suivant"}
+                <ArrowForwardIos sx={{ fontSize: "15px" }} />
               </button>
             </div>
           </div>

@@ -178,6 +178,10 @@ const SchoolSchema = new mongoose.Schema({
       timestamp: true
     },
   ],
+  keywords: {
+    type: [String],
+    default: [],
+  },
   popularity: {
     type: Number,
     default: 0,
