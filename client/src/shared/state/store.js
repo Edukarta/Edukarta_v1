@@ -7,6 +7,7 @@ const initialState = {
   schools: [],
   school: null,
   searchQuery: "",
+  searchFilter: [],
   searchResults: [],
   pagination: {
     currentPage: 1,
@@ -46,6 +47,9 @@ export const authSlice = createSlice({
     setQuery: (state, action) => {
       state.searchQuery = action.payload;
     },
+    setFiltersQuery: (state, action) => {
+      state.searchFilter = action.payload.searchFilter;
+    },
     setSearchResults: (state, action) => {
       state.searchResults = action.payload;
     },
@@ -70,6 +74,7 @@ export const {
   setQuery,
   setCartItem,
   setPagination,
-  setFilters
+  setFilters,
+  setFiltersQuery
 } = authSlice.actions;
 export default authSlice.reducer;

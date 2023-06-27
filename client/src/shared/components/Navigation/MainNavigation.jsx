@@ -22,18 +22,19 @@ const MainNavigation = ({ type }) => {
   const currentPageRef = useRef(currentPage);
 
 
-  useEffect(() => {
-    setSearchQuery(query || "");
-  }, [query]);
+  // useEffect(() => {
+  //   console.log(query)
+  //   setSearchQuery(query || "");
+  // }, []);
 
   const handleSearch = async () => {
+    console.log(searchQuery)
     const response = callApi(
       `${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${searchQuery}&page=${currentPage}&perPage=${limit}`,
       "GET"
     );
 
     const data = await response;
-    console.log(query);
     const statusCode = data.status;
     if (statusCode === 200) {
       dispatch(setSearchResults({ results: data.data }));
@@ -46,17 +47,16 @@ const MainNavigation = ({ type }) => {
         })
       );
       dispatch(setFilters(data.data.unusedFields));
-      console.log(data)
       navigate("/searchResult");
     }
   };
 
-  useEffect(() => {
-    if (currentPageRef.current !== currentPage) {
-      currentPageRef.current = currentPage;
-      handleSearch();
-    }
-  }, [currentPage, handleSearch]);
+  // useEffect(() => {
+  //   if (currentPageRef.current !== currentPage) {
+  //     currentPageRef.current = currentPage;
+  //     handleSearch();
+  //   }
+  // }, [currentPage, handleSearch]);
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {

@@ -107,12 +107,12 @@ const SchoolSchema = new mongoose.Schema({
     default: "",
   },
   level: {
-    type: String,
-    default: "",
+    type: [String],
+    default: [],
   },
   levelUpdate: {
-    type: String,
-    default: "",
+    type: [String],
+    default: [],
   },
   language: {
     type: String,

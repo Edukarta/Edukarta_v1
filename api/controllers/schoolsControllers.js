@@ -68,7 +68,7 @@ export const getSchoolMap = async (req, res) => {
 export const searchSchools = async (req, res, next) => {
   const { query } = req.query;
   const currentPage = parseInt(req.query.page) || 1;
-  const itemsPerPage = parseInt(req.query.limit) || 8;
+  const itemsPerPage = parseInt(req.query.limit) || 20;
   // const normalizedQuery = query
   //   .normalize("NFD")
   //   .replace(/[\u0300-\u036f]/g, "");
@@ -81,8 +81,9 @@ export const searchSchools = async (req, res, next) => {
     (keyword) => !/^[^\w]+$/.test(keyword)
   );
   try {
+    const queryObj = { $and: [] };
     const conditions = [];
-    const condition = { $or: [] };
+    const onArray = [];
     const unusedFields = [];
 
     const keywordConditions = filteredKeywords.map((keyword) => ({
@@ -93,10 +94,12 @@ export const searchSchools = async (req, res, next) => {
         { cityUpdate: { $regex: new RegExp(keyword, "i") } },
         { sector: { $regex: new RegExp(keyword, "i") } },
         { country: { $regex: new RegExp(keyword, "i") } },
+        { continent: { $regex: new RegExp(keyword, "i") } },
+        { continentUpdate: { $regex: new RegExp(keyword, "i") } },
         { countryUpdate: { $regex: new RegExp(keyword, "i") } },
-        { level: { $regex: new RegExp(keyword, "i") } },
+        { level: { $in: new RegExp(keyword, "i") } },
         { levelUpdate: { $regex: new RegExp(keyword, "i") } },
-        { keywords: { $all: filteredKeywords.map((k) => new RegExp(k, "i")) } },
+        // { keywords: { $in: filteredKeywords.map((k) => new RegExp(k, "i")) } },
       ],
     }));
 
@@ -148,7 +151,7 @@ export const searchSchools = async (req, res, next) => {
             path === "gps" ||
             path === "language" ||
             path === "religion" ||
-            path === "international"||
+            path === "international" ||
             path === "keywords"
           ) {
             isUsed = true;
@@ -159,12 +162,12 @@ export const searchSchools = async (req, res, next) => {
             isUsed = false;
             return;
           }
-    
-          if (path === "level" && (keyword.toLowerCase() === "school")) {
+
+          if (path === "level" && keyword.toLowerCase() === "school") {
             isUsed = false;
             return;
           }
-          
+
           const query = { [path]: { $regex: new RegExp(keyword, "i") } };
           School.findOne(query)
             .then((doc) => {
@@ -185,8 +188,6 @@ export const searchSchools = async (req, res, next) => {
       }
     });
 
-    
-
     //Récupère le nombre total d'école
     const totalCount = await School.countDocuments({ $and: conditions });
     const schools = await School.find({ $and: conditions })
@@ -194,6 +195,7 @@ export const searchSchools = async (req, res, next) => {
         locale: "fr",
         strength: 1,
       })
+      .sort({ name: 1 })
       .skip((currentPage - 1) * itemsPerPage)
       .limit(itemsPerPage);
     const totalPages = Math.ceil(totalCount / itemsPerPage);
@@ -240,7 +242,9 @@ const searchAllFields = async (searchValue) => {
 //ROUTE : api/v1/search
 export const filterSchools = async (req, res, next) => {
   const { query, previousQuery, ...filters } = req.query;
-  console.log(query);
+  const currentPage = parseInt(req.query.page) || 1;
+  const itemsPerPage = parseInt(req.query.limit) || 20;
+
   const searchFilters = [];
 
   // Ajouter le filtre de recherche de la requête principale
@@ -347,8 +351,17 @@ export const filterSchools = async (req, res, next) => {
   };
   try {
     // Récupérer les écoles correspondantes à partir de la base de données
-    const schools = await School.find(dbFilters);
-    res.json({ schools });
+    const totalCount = await School.countDocuments(dbFilters);
+    const schools = await School.find(dbFilters)
+      .collation({
+        locale: "fr",
+        strength: 1,
+      })
+      .sort({ name: 1 })
+      .skip((currentPage - 1) * itemsPerPage)
+      .limit(itemsPerPage);
+    const totalPages = Math.ceil(totalCount / itemsPerPage);
+    res.json({ schools, totalCount, totalPages });
   } catch (err) {
     next(err);
   }
