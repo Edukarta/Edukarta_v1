@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import Button from "../../shared/components/FormElements/Button";
 import { useSelector, useDispatch } from "react-redux";
-import { setPagination, setFiltersQuery } from "../../shared/state/store";
+import { setPagination } from "../../shared/state/store";
+import Tooltip from "@mui/material/Tooltip";
+import {Grow} from "@mui/material";
+import { TransitionGroup } from "react-transition-group";
 import { useMediaQuery } from "@mui/material";
 import { setSearchResults, setQuery } from "../../shared/state/store";
 import FilterDrawer from "../../shared/components/UIElements/FilterDrawer";
@@ -12,7 +15,7 @@ import {
   ArrowForwardIos,
 } from "@mui/icons-material/";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import schoolIcon from "../../img/img_school.jpg";
 import classes from "./ResultsPage.module.css";
 
@@ -88,9 +91,9 @@ const ResultsPage = () => {
     if (event) {
       event.preventDefault();
     }
-    console.log(selectedFilters)
+    console.log(selectedFilters);
     const query = selectedFilters.join(",");
-    console.log(query)
+    console.log(query);
     setFormattedFilters(query);
     try {
       const response = await fetch(
@@ -528,40 +531,53 @@ const ResultsPage = () => {
           </form>
           <div className={classes.container_result_paginate}>
             <div className={classes.container_card}>
-              {results?.results.schools.map((result) => (
-                <Link
-                  to={`/school/${result._id}`}
-                  key={result._id}
-                  className={classes.card_link}
-                >
-                  <div className={classes.card_item}>
-                    <div className={classes.container_img}>
-                      {result.imgPath1 ? (
-                        <img
-                          src={result.imgPath1}
-                          alt={
+              {results?.results.schools.map((result, index) => (
+                <Grow in={true} key={result._id} timeout={(index + 1) * 350}>
+                  <Link
+                    to={`/school/${result._id}`}
+                    
+                    className={classes.card_link}
+                  >
+                    <div className={classes.card_item}>
+                      <div className={classes.container_img}>
+                        {result.imgPath1 ? (
+                          <img
+                            src={result.imgPath1}
+                            alt={
+                              result.nameUpdate
+                                ? result.nameUpdate
+                                : result.name
+                            }
+                          />
+                        ) : (
+                          <img src={schoolIcon} alt="ecole" />
+                        )}
+                      </div>
+                      <div className={classes.container_infos}>
+                        <Tooltip
+                          title={
                             result.nameUpdate ? result.nameUpdate : result.name
                           }
-                        />
-                      ) : (
-                        <img src={schoolIcon} alt="ecole" />
-                      )}
-                    </div>
-                    <div className={classes.container_infos}>
-                      <h6 className={classes.name}>
-                        {result.nameUpdate ? result.nameUpdate : result.name}
-                      </h6>
-                      <div
-                        className={classes.cardSugest__container_country_city}
-                      >
-                        <h6 className={classes.cardCountry}>
-                          {result.country},
-                        </h6>
-                        <h6 className={classes.cardCity}>{result.city}</h6>
+                          enterTouchDelay={0}
+                        >
+                          <h6 className={classes.name}>
+                            {result.nameUpdate
+                              ? result.nameUpdate
+                              : result.name}
+                          </h6>
+                        </Tooltip>
+                        <div
+                          className={classes.cardSugest__container_country_city}
+                        >
+                          <h6 className={classes.cardCountry}>
+                            {result.country},
+                          </h6>
+                          <h6 className={classes.cardCity}>{result.city}</h6>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                </Grow>
               ))}
             </div>
             <div className={classes.container_paginate}>
