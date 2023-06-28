@@ -27,9 +27,11 @@ const ResultsPage = () => {
   const [cityFilter, setCityFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const { currentPage, totalPages, totalCount, limit } = useSelector(
+  const [formattedFilters, setFormattedFilters] = useState([]);
+  const { currentPage, totalPages, totalCount, pageSize } = useSelector(
     (state) => state.pagination
   );
+  const limit = useSelector((state) => state.pagination.pageSize);
   const currentPageRef = useRef(currentPage);
 
   useEffect(() => {
@@ -43,12 +45,8 @@ const ResultsPage = () => {
   }, [selectedFilters]);
 
   useEffect(() => {
-    handleSearch(); // Appeler handleSearch sans argument pour la première exécution
-  
-    return () => {
-      // Nettoyage du useEffect
-    };
-  }, [currentPage]);
+    setFormattedFilters([]);
+  }, [previousQuery]);
 
   const handlePageChange = (direction) => {
     if (direction === "left") {
@@ -58,12 +56,11 @@ const ResultsPage = () => {
         dispatch(setPagination({ currentPage: newPage, totalPages }));
       }
     }
-  
+
     if (direction === "right") {
       const currentPageValue = currentPage || 1;
       const newPage = currentPageValue + 1;
       dispatch(setPagination({ currentPage: newPage, totalPages }));
-      
     }
   };
 
@@ -91,8 +88,10 @@ const ResultsPage = () => {
     if (event) {
       event.preventDefault();
     }
-
+    console.log(selectedFilters)
     const query = selectedFilters.join(",");
+    console.log(query)
+    setFormattedFilters(query);
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/api/v1/schools/filter?previousQuery=${previousQuery}&query=${query}&page=${currentPage}&perPage=${limit}`,
@@ -101,7 +100,7 @@ const ResultsPage = () => {
         }
       );
       const data = await response.json();
-      console.log(currentPage)
+      console.log(currentPage);
       dispatch(setSearchResults({ results: data }));
       dispatch(
         setPagination({
@@ -110,16 +109,20 @@ const ResultsPage = () => {
           totalPages: data.totalPages,
         })
       );
-      console.log(currentPage)
     } catch (error) {
       console.error(error);
     }
     setCityFilter("");
     setCountryFilter("");
     setDrawerIsOpen(false);
-    
   };
 
+  useEffect(() => {
+    if (currentPageRef.current !== currentPage) {
+      currentPageRef.current = currentPage;
+      handleSearch();
+    }
+  }, [currentPage, handleSearch]);
 
   const handleLevelToggle = (type) => {
     if (type === "sco") {
@@ -261,9 +264,14 @@ const ResultsPage = () => {
 
         <div className={classes.results_number}>
           <h5 className={classes.number_of_results}>
-            {previousQuery} {": "} <span>{totalCount}</span>{" "}
-            {totalCount > 1 ? "schools found" : "school found"}
+            {previousQuery}{" "}
+            {formattedFilters && formattedFilters !== ""
+              ? `${formattedFilters}`
+              : null}
+            {": "} <span>{totalCount}</span>{" "}
+            {totalCount > 1 ? "établissements trouvés" : "établissement trouvé"}
           </h5>
+          <h6>{`Page ${currentPage}`}</h6>
         </div>
         <div className={classes.container_results}>
           <form className={classes.container_filter} onSubmit={handleSearch}>
@@ -271,7 +279,7 @@ const ResultsPage = () => {
               <h3>Filter by :</h3>
             </div>
 
-            <div className={classes.container_filter_group}>
+            {/* <div className={classes.container_filter_group}>
               <h3>Pays</h3>
               <div className={classes.input_filter_goup}>
                 <input
@@ -283,9 +291,9 @@ const ResultsPage = () => {
                   onChange={handleFilterChange}
                 />
               </div>
-            </div>
+            </div> */}
 
-            <div className={classes.container_filter_group}>
+            {/* <div className={classes.container_filter_group}>
               <h3>Ville</h3>
               <div className={classes.input_filter_goup}>
                 <input
@@ -297,7 +305,7 @@ const ResultsPage = () => {
                   onChange={handleFilterChange}
                 />
               </div>
-            </div>
+            </div> */}
 
             <div className={classes.container_filter_group}>
               <h3>Niveaux</h3>
@@ -497,28 +505,26 @@ const ResultsPage = () => {
               <div className={classes.input_filter_goup}>
                 <input
                   type="checkbox"
-                  id="public"
-                  name="public"
-                  value="public"
+                  id="yes"
+                  name="yes"
+                  value="oui"
                   onChange={handleFilterChange}
                 />
-                <label htmlFor="public">Public</label>
+                <label htmlFor="yes">Oui</label>
               </div>
               <div className={classes.input_filter_goup}>
                 <input
                   type="checkbox"
-                  id="private"
-                  name="private"
-                  value="privé"
+                  id="no"
+                  name="no"
+                  value="non"
                   onChange={handleFilterChange}
                 />
-                <label htmlFor="private">Private</label>
+                <label htmlFor="private">Non</label>
               </div>
             </div>
 
-            <Button big>
-              Apply filters
-            </Button>
+            <Button big>Apply filters</Button>
           </form>
           <div className={classes.container_result_paginate}>
             <div className={classes.container_card}>

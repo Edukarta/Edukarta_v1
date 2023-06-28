@@ -28,7 +28,6 @@ const MainNavigation = ({ type }) => {
   // }, []);
 
   const handleSearch = async () => {
-    console.log(searchQuery)
     const response = callApi(
       `${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${searchQuery}&page=${currentPage}&perPage=${limit}`,
       "GET"
@@ -51,12 +50,18 @@ const MainNavigation = ({ type }) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (currentPageRef.current !== currentPage) {
-  //     currentPageRef.current = currentPage;
-  //     handleSearch();
-  //   }
-  // }, [currentPage, handleSearch]);
+  //Mise a jour de currentPage 
+  useEffect(() => {
+    currentPageRef.current = currentPage;
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+  
+  // Compare la valeur de currentPage
+  useEffect(() => {
+    if (currentPageRef.current !== currentPage) {
+      handleSearch();
+    }
+  }, [handleSearch]);
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {

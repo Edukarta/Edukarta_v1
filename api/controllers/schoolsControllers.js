@@ -73,6 +73,7 @@ export const searchSchools = async (req, res, next) => {
   //   .normalize("NFD")
   //   .replace(/[\u0300-\u036f]/g, "");
   const queryKeywords = query.split(" ");
+  console.log(queryKeywords);
   const keywordsArray = Array.isArray(queryKeywords)
     ? queryKeywords
     : [queryKeywords];
@@ -199,7 +200,6 @@ export const searchSchools = async (req, res, next) => {
       .skip((currentPage - 1) * itemsPerPage)
       .limit(itemsPerPage);
     const totalPages = Math.ceil(totalCount / itemsPerPage);
-    console.log(unusedFields);
     res.json({ schools, totalCount, totalPages, unusedFields: unusedFields });
   } catch (err) {
     next(err);
@@ -240,6 +240,7 @@ const searchAllFields = async (searchValue) => {
 //FILTER SCHOOLS
 //@GET
 //ROUTE : api/v1/search
+//Fonction qui permet de filtrer les résultats de la barre de recherche
 export const filterSchools = async (req, res, next) => {
   const { query, previousQuery, ...filters } = req.query;
   const currentPage = parseInt(req.query.page) || 1;
@@ -276,6 +277,7 @@ export const filterSchools = async (req, res, next) => {
           $or: [
             { name: { $regex: queryValue, $options: "i" } },
             { nameUpdate: { $regex: queryValue, $options: "i" } },
+            { continent: { $regex: queryValue, $options: "i" } },
             { city: { $regex: queryValue, $options: "i" } },
             { cityUpdate: { $regex: queryValue, $options: "i" } },
             { country: { $regex: queryValue, $options: "i" } },
@@ -293,6 +295,7 @@ export const filterSchools = async (req, res, next) => {
             $or: [
               { name: { $regex: queryValue, $options: "i" } },
               { nameUpdate: { $regex: queryValue, $options: "i" } },
+              { continent: { $regex: queryValue, $options: "i" } },
               { city: { $regex: queryValue, $options: "i" } },
               { cityUpdate: { $regex: queryValue, $options: "i" } },
               { country: { $regex: queryValue, $options: "i" } },
@@ -327,28 +330,35 @@ export const filterSchools = async (req, res, next) => {
   }
 
   // Construire les filtres de la base de données
+  const queryWords = previousQuery.split(" ");
+  const conditions = {
+    $and: queryWords.map((word) => ({
+      $or: [
+        { name: { $regex: word, $options: "i" } },
+        { nameUpdate: { $regex: word, $options: "i" } },
+        { continent: { $regex: word, $options: "i" } },
+        { city: { $regex: word, $options: "i" } },
+        { cityUpdate: { $regex: word, $options: "i" } },
+        { country: { $regex: word, $options: "i" } },
+        { countryUpdate: { $regex: word, $options: "i" } },
+        { level: { $regex: word, $options: "i" } },
+        { levelUpdate: { $regex: word, $options: "i" } },
+        { sector: { $regex: word, $options: "i" } },
+        { language: { $regex: word, $options: "i" } },
+        { keywords: { $regex: word, $options: "i" } },
+      ],
+    })),
+  };
+  
   const dbFilters = {
     $and: [
-      // Chercher les correspondances pour la requête actuelle ou la requête précédente
-      {
-        $or: [
-          { name: { $regex: previousQuery, $options: "i" } },
-          { nameUpdate: { $regex: previousQuery, $options: "i" } },
-          { city: { $regex: previousQuery, $options: "i" } },
-          { cityUpdate: { $regex: previousQuery, $options: "i" } },
-          { country: { $regex: previousQuery, $options: "i" } },
-          { countryUpdate: { $regex: previousQuery, $options: "i" } },
-          { level: { $regex: previousQuery, $options: "i" } },
-          { levelUpdate: { $regex: previousQuery, $options: "i" } },
-          { sector: { $regex: previousQuery, $options: "i" } },
-          { language: { $regex: previousQuery, $options: "i" } },
-          { keywords: { $regex: previousQuery, $options: "i" } },
-        ],
-      },
-      // Ajouter les filtres de recherche
+      conditions,
       ...searchFilters,
     ],
   };
+  console.log(dbFilters)
+
+
   try {
     // Récupérer les écoles correspondantes à partir de la base de données
     const totalCount = await School.countDocuments(dbFilters);

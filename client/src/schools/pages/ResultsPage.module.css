@@ -78,6 +78,7 @@ input[type="checkbox"] {
 
 .number_of_results {
   font-size: 30px;
+  text-transform: capitalize;
   font-weight: 200;
   color: #333;
 }
@@ -86,6 +87,12 @@ input[type="checkbox"] {
   color: #333;
   font-size: 30px;
   font-weight: 700;
+}
+
+.results_number h6 {
+  font-size: 20px;
+  font-weight: 400;
+  color: #9a9999;
 }
 
 .container_results {
@@ -243,7 +250,7 @@ input[type="checkbox"] {
 
 .btn_sco_sup {
   display: flex;
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
   justify-content: space-between;
 }
@@ -289,6 +296,8 @@ input[type="radio"] {
 
   .container_input_level {
     display: grid;
+    width: 90%;
+    margin: 0 auto;
     justify-content: center;
     align-items: center;
     grid-template-columns: repeat(2, 1fr); /* Deux colonnes de taille égale */
@@ -297,9 +306,10 @@ input[type="radio"] {
   }
 
   .container_filter_group h3 {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 15px;
     margin-bottom: 15px;
+    color: #303030;
   }
 
   .input_filter_goup {
@@ -311,6 +321,8 @@ input[type="radio"] {
 
   label {
     text-transform: capitalize;
+    white-space: nowrap;
+    font-weight: 400;
     font-size: 13px;
   }
 
