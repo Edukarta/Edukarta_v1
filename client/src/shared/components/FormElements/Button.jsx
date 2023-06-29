@@ -12,7 +12,7 @@ const Button = (props) => {
           props.green && classes.buttonGreen
         } ${props.big && classes.buttonBig} ${
           props.small && classes.buttonSmall
-        } ${props.dark && classes.buttonDark}`}
+        } ${props.dark && classes.buttonDark} ${props.gradient && classes.button_gradient}`}
         type={props.type}
         onClick={props.onClick}
         disabled={props.disabled}
@@ -31,7 +31,7 @@ const Button = (props) => {
           props.inverse && classes.buttonInverse
         } ${props.danger && classes.buttonDanger} ${
           props.big && classes.buttonBig
-        }`}
+        } ${props.gradient && classes.button_gradient}`}
       >
         {props.children}
       </Link>
@@ -45,7 +45,7 @@ const Button = (props) => {
         props.green && classes.buttonGreen
       } ${props.big && classes.buttonBig} ${
         props.small && classes.buttonSmall
-      } ${props.dark && classes.buttonDark}`}
+      } ${props.dark && classes.buttonDark} ${props.gradient && classes.button_gradient}`}
       type={props.type}
       onClick={props.onClick}
       disabled={props.disabled}

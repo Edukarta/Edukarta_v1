@@ -3,16 +3,15 @@ import Button from "../../shared/components/FormElements/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { setPagination } from "../../shared/state/store";
 import Tooltip from "@mui/material/Tooltip";
-import {Grow} from "@mui/material";
-import { TransitionGroup } from "react-transition-group";
+import { Grow, Collapse } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
-import { setSearchResults, setQuery } from "../../shared/state/store";
+import { setSearchResults } from "../../shared/state/store";
 import FilterDrawer from "../../shared/components/UIElements/FilterDrawer";
 import {
-  KeyboardArrowDown,
-  KeyboardArrowUp,
   ArrowBackIos,
   ArrowForwardIos,
+  KeyboardArrowUp,
+  KeyboardArrowDown,
 } from "@mui/icons-material/";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
 import { Link } from "react-router-dom";
@@ -155,187 +154,55 @@ const ResultsPage = () => {
             onSubmit={handleSearch}
           >
             <div className={classes.container_title_filter_panel_mobile}>
-              <h3>Filter by :</h3>
+              <h3>Filtrer ma recherche</h3>
             </div>
-
-            <div className={classes.container_filter_group_mobile}>
-              <h3>Level</h3>
-              <div className={classes.input_filter_goup_mobile}>
-                <input
-                  type="checkbox"
-                  id="preschool"
-                  name="preschool"
-                  value="preschool"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="preschool">Preschool</label>
-              </div>
-              <div className={classes.input_filter_goup_mobile}>
-                <input
-                  type="checkbox"
-                  id="college"
-                  name="college"
-                  value="college"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="college">College</label>
-              </div>
-              <div className={classes.input_filter_goup_mobile}>
-                <input
-                  type="checkbox"
-                  id="university"
-                  name="university"
-                  value="university"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="university">University</label>
-              </div>
-              <div className={classes.input_filter_goup_mobile}>
-                <input
-                  type="checkbox"
-                  id="formation_center"
-                  name="formation center"
-                  value="formation center"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="formation center">Formation Center</label>
-              </div>
-            </div>
-
-            <div className={classes.container_filter_group_mobile}>
-              <h3>Sector</h3>
-              <div className={classes.input_filter_goup_mobile}>
-                <input
-                  type="checkbox"
-                  id="public"
-                  name="public"
-                  value="public"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="public">Public</label>
-              </div>
-              <div className={classes.input_filter_goup_mobile}>
-                <input
-                  type="checkbox"
-                  id="private"
-                  name="private"
-                  value="private"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="private">Private</label>
-              </div>
-            </div>
-
-            <div className={classes.container_filter_group_mobile}>
-              <h3>Language spoken</h3>
-              <div className={classes.input_filter_goup_mobile}>
-                <input
-                  type="checkbox"
-                  id="english"
-                  name="english"
-                  value="english"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="english">English</label>
-              </div>
-              <div className={classes.input_filter_goup_mobile}>
-                <input
-                  type="checkbox"
-                  id="chinese"
-                  name="chinese"
-                  value="chinese"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="chinese">Chinese</label>
-              </div>
-              <div className={classes.input_filter_goup_mobile}>
-                <input
-                  type="checkbox"
-                  id="french"
-                  name="french"
-                  value="french"
-                  onChange={handleFilterChange}
-                />
-                <label htmlFor="french">French</label>
-              </div>
-            </div>
-            <div className={classes.container_btn_filter}>
-              <Button big>Apply filters</Button>
-            </div>
-          </form>
-        </FilterDrawer>
-
-        <div className={classes.results_number}>
-          <h5 className={classes.number_of_results}>
-            {previousQuery}{" "}
-            {formattedFilters && formattedFilters !== ""
-              ? `${formattedFilters}`
-              : null}
-            {": "} <span>{totalCount}</span>{" "}
-            {totalCount > 1 ? "établissements trouvés" : "établissement trouvé"}
-          </h5>
-          <h6>{`Page ${currentPage}`}</h6>
-        </div>
-        <div className={classes.container_results}>
-          <form className={classes.container_filter} onSubmit={handleSearch}>
-            <div className={classes.container_title_filter_panel}>
-              <h3>Filter by :</h3>
-            </div>
-
-            {/* <div className={classes.container_filter_group}>
-              <h3>Pays</h3>
-              <div className={classes.input_filter_goup}>
-                <input
-                  type="text"
-                  id="country"
-                  name="country"
-                  value={countryFilter}
-                  placeholder="Recherche par pays"
-                  onChange={handleFilterChange}
-                />
-              </div>
-            </div> */}
-
-            {/* <div className={classes.container_filter_group}>
-              <h3>Ville</h3>
-              <div className={classes.input_filter_goup}>
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  value={cityFilter}
-                  placeholder="Recherche par ville"
-                  onChange={handleFilterChange}
-                />
-              </div>
-            </div> */}
 
             <div className={classes.container_filter_group}>
               <h3>Niveaux</h3>
               <div className={classes.btn_sco_sup}>
-                <div className={classes.input_filter_goup}>
-                  <input
-                    type="radio"
-                    id="sco"
-                    name="level"
-                    value="sco"
-                    onChange={() => handleLevelToggle("sco")}
-                  />
-                  <label htmlFor="sco">Sco</label>
+                <div
+                  className={classes.cat_sco}
+                  onClick={() => {
+                    setScoIsOpen((prev) => !prev);
+                    setSupIsOpen(false);
+                  }}
+                >
+                  <div className={classes.arrow_icon}>
+                    {!scoIsOpen ? (
+                      <KeyboardArrowDown
+                        sx={{ color: "#C0C0C0", fontSize: "25px" }}
+                      />
+                    ) : (
+                      <KeyboardArrowUp
+                        sx={{ color: "#C0C0C0", fontSize: "25px" }}
+                      />
+                    )}
+                  </div>
+                  <span>Sco</span>
                 </div>
-                <div className={classes.input_filter_goup}>
-                  <input
-                    type="radio"
-                    id="sup"
-                    name="level"
-                    value="sup"
-                    onChange={() => handleLevelToggle("sup")}
-                  />
-                  <label htmlFor="sup">Sup</label>
+                <div
+                  className={classes.cat_sup}
+                  onClick={() => {
+                    setSupIsOpen((prev) => !prev);
+                    setScoIsOpen(false);
+                  }}
+                >
+                  <div className={classes.arrow_icon}>
+                    {!supIsOpen ? (
+                      <KeyboardArrowDown
+                        sx={{ color: "#C0C0C0", fontSize: "25px" }}
+                      />
+                    ) : (
+                      <KeyboardArrowUp
+                        sx={{ color: "#C0C0C0", fontSize: "25px" }}
+                      />
+                    )}
+                  </div>
+                  <span>Sup</span>
                 </div>
               </div>
               {/* SECTION SCO */}
-              {scoIsOpen && (
+              <Collapse in={scoIsOpen} collapsedSize={0}>
                 <div className={classes.container_input_level}>
                   <div className={classes.input_filter_goup}>
                     <input
@@ -398,10 +265,10 @@ const ResultsPage = () => {
                     <label htmlFor="high school">Lycée</label>
                   </div>
                 </div>
-              )}
+              </Collapse>
 
               {/* SECTION SUP */}
-              {supIsOpen && (
+              <Collapse in={supIsOpen} collapsedSize={0}>
                 <div className={classes.container_input_level}>
                   <div className={classes.input_filter_goup}>
                     <input
@@ -476,11 +343,11 @@ const ResultsPage = () => {
                     <label htmlFor="high school">CFA</label>
                   </div>
                 </div>
-              )}
+              </Collapse>
             </div>
 
             <div className={classes.container_filter_group}>
-              <h3>Sector</h3>
+              <h3>Secteur</h3>
               <div className={classes.input_filter_goup}>
                 <input
                   type="checkbox"
@@ -499,7 +366,7 @@ const ResultsPage = () => {
                   value="privé"
                   onChange={handleFilterChange}
                 />
-                <label htmlFor="private">Private</label>
+                <label htmlFor="private">Privé</label>
               </div>
             </div>
 
@@ -527,7 +394,298 @@ const ResultsPage = () => {
               </div>
             </div>
 
-            <Button big>Apply filters</Button>
+            <div className={classes.container_btn_filter}>
+              <Button big gradient>
+                Valider
+              </Button>
+            </div>
+          </form>
+        </FilterDrawer>
+
+        <div className={classes.results_number}>
+          <h5 className={classes.number_of_results}>
+            {previousQuery}{" "}
+            {formattedFilters && formattedFilters !== ""
+              ? `${formattedFilters}`
+              : null}
+            {": "} <span>{totalCount}</span>{" "}
+            {totalCount > 1 ? "établissements trouvés" : "établissement trouvé"}
+          </h5>
+          <h6>{`Page ${currentPage}`}</h6>
+        </div>
+        <div className={classes.container_results}>
+          <form className={classes.container_filter} onSubmit={handleSearch}>
+            <div className={classes.container_title_filter_panel}>
+              <h3>Filtrer ma recherche</h3>
+            </div>
+
+            {/* <div className={classes.container_filter_group}>
+              <h3>Pays</h3>
+              <div className={classes.input_filter_goup}>
+                <input
+                  type="text"
+                  id="country"
+                  name="country"
+                  value={countryFilter}
+                  placeholder="Recherche par pays"
+                  onChange={handleFilterChange}
+                />
+              </div>
+            </div> */}
+
+            {/* <div className={classes.container_filter_group}>
+              <h3>Ville</h3>
+              <div className={classes.input_filter_goup}>
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  value={cityFilter}
+                  placeholder="Recherche par ville"
+                  onChange={handleFilterChange}
+                />
+              </div>
+            </div> */}
+
+            <div className={classes.container_filter_group}>
+              <h3>Niveaux</h3>
+              <div className={classes.btn_sco_sup}>
+                <div
+                  className={classes.cat_sco}
+                  onClick={() => {
+                    setScoIsOpen((prev) => !prev);
+                    setSupIsOpen(false);
+                  }}
+                >
+                  <div className={classes.arrow_icon}>
+                    {!scoIsOpen ? (
+                      <KeyboardArrowDown
+                        sx={{ color: "#C0C0C0", fontSize: "25px" }}
+                      />
+                    ) : (
+                      <KeyboardArrowUp
+                        sx={{ color: "#C0C0C0", fontSize: "25px" }}
+                      />
+                    )}
+                  </div>
+                  <span>Sco</span>
+                </div>
+                <div
+                  className={classes.cat_sup}
+                  onClick={() => {
+                    setSupIsOpen((prev) => !prev);
+                    setScoIsOpen(false);
+                  }}
+                >
+                  <div className={classes.arrow_icon}>
+                    {!supIsOpen ? (
+                      <KeyboardArrowDown
+                        sx={{ color: "#C0C0C0", fontSize: "25px" }}
+                      />
+                    ) : (
+                      <KeyboardArrowUp
+                        sx={{ color: "#C0C0C0", fontSize: "25px" }}
+                      />
+                    )}
+                  </div>
+                  <span>Sup</span>
+                </div>
+              </div>
+              {/* SECTION SCO */}
+              <Collapse in={scoIsOpen} collapsedSize={0}>
+                <div className={classes.container_input_level}>
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="crib"
+                      name="crib"
+                      value="crèche"
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor="crib">Crèche</label>
+                  </div>
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="kindergarden"
+                      name="kindergarden"
+                      value="jardin d'enfant"
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor="kindergarden">Jardin d'enfant</label>
+                  </div>
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="preschool"
+                      name="preschool"
+                      value="maternelle"
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor="preschool">Maternelle</label>
+                  </div>
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="elementary"
+                      name="elementary"
+                      value="primaire"
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor="elementary">Primaire</label>
+                  </div>
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="middleSchool"
+                      name="middleSchool"
+                      value="collège"
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor="middleSchool">Collège</label>
+                  </div>
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="highSchool"
+                      name="highSchool"
+                      value="lycée"
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor="high school">Lycée</label>
+                  </div>
+                </div>
+              </Collapse>
+
+              {/* SECTION SUP */}
+              <Collapse in={supIsOpen} collapsedSize={0}>
+                <div className={classes.container_input_level}>
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="superior"
+                      name="superior"
+                      value="supérieur"
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor="preschool">Supérieur</label>
+                  </div>
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="special"
+                      name="special"
+                      value="école spécialisée"
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor="elementary">école spécialisée</label>
+                  </div>
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="university"
+                      name="university"
+                      value="université"
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor="university">Université</label>
+                  </div>
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="faculty"
+                      name="faculty"
+                      value="fac"
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor="high school">fac</label>
+                  </div>
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="engineer"
+                      name="engineer"
+                      value="école d'ingénieur"
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor="high school">école d'ingénieur</label>
+                  </div>
+
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="formationCenter"
+                      name="formationCenter"
+                      value="centre de formation"
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor="high school">centre de formation</label>
+                  </div>
+
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="cfa"
+                      name="cfa"
+                      value="CFA"
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor="high school">CFA</label>
+                  </div>
+                </div>
+              </Collapse>
+            </div>
+
+            <div className={classes.container_filter_group}>
+              <h3>Secteur</h3>
+              <div className={classes.input_filter_goup}>
+                <input
+                  type="checkbox"
+                  id="public"
+                  name="public"
+                  value="public"
+                  onChange={handleFilterChange}
+                />
+                <label htmlFor="public">Public</label>
+              </div>
+              <div className={classes.input_filter_goup}>
+                <input
+                  type="checkbox"
+                  id="private"
+                  name="private"
+                  value="privé"
+                  onChange={handleFilterChange}
+                />
+                <label htmlFor="private">Privé</label>
+              </div>
+            </div>
+
+            <div className={classes.container_filter_group}>
+              <h3>Internat</h3>
+              <div className={classes.input_filter_goup}>
+                <input
+                  type="checkbox"
+                  id="yes"
+                  name="yes"
+                  value="oui"
+                  onChange={handleFilterChange}
+                />
+                <label htmlFor="yes">Oui</label>
+              </div>
+              <div className={classes.input_filter_goup}>
+                <input
+                  type="checkbox"
+                  id="no"
+                  name="no"
+                  value="non"
+                  onChange={handleFilterChange}
+                />
+                <label htmlFor="private">Non</label>
+              </div>
+            </div>
+            <Button big gradient>
+              Valider
+            </Button>
           </form>
           <div className={classes.container_result_paginate}>
             <div className={classes.container_card}>
@@ -535,7 +693,6 @@ const ResultsPage = () => {
                 <Grow in={true} key={result._id} timeout={(index + 1) * 350}>
                   <Link
                     to={`/school/${result._id}`}
-                    
                     className={classes.card_link}
                   >
                     <div className={classes.card_item}>

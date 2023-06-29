@@ -71,9 +71,6 @@ body {
   transition: all 200ms;
 }
 
-
-
-
 .slide-in-zoom-enter {
   transform: scale(0);
 }
@@ -94,5 +91,3 @@ body {
   opacity: 0;
   transition: all 200ms;
 }
-
-

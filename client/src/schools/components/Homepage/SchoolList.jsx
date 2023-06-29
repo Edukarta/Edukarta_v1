@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import Card from "../../../shared/components/UIElements/Card";
+import { Grow } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser, setLogout } from "../../../shared/state/store";
+import { updateUser } from "../../../shared/state/store";
 import classes from "./SchoolList.module.css";
-import { callApi } from "../../../utils/apiUtils";
 import { useNavigate } from "react-router-dom";
 
 const SchoolList = ({
@@ -33,7 +33,7 @@ const SchoolList = ({
       `${process.env.REACT_APP_API_URL}/api/v1/user/${user._id}/${schoolId}`,
       {
         method: "PATCH",
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       }
     );
     const savedResponse = await response.json();
@@ -45,14 +45,17 @@ const SchoolList = ({
         })
       );
     }
-   
   };
 
-   return (
+  return (
     <>
       <section className={classes.listContainer}>
-        <h3 className={classes.listTitle}>{title} {country}</h3>
-        <h4 className={classes.sub_text}>{subText1} {country} {subText2}</h4>
+        <h3 className={classes.listTitle}>
+          {title} {country}
+        </h3>
+        <h4 className={classes.sub_text}>
+          {subText1} {country} {subText2}
+        </h4>
         <div
           className={
             type === "noWrap"
@@ -60,35 +63,37 @@ const SchoolList = ({
               : classes.card__container_wrap
           }
         >
-          {schools.map((school) => (
-            <div key={school.id} className={classes.container_link__card}>
-              <Card
-                id={school.id}
-                iconColor={isSchoolFavorite(school.id) ? true : false}
-                onClick={() => addRemoveFav(school.id)}
-                link={`/school/${school.id}`}
-                img={
-                  school.imgPath1
-                    ? school.imgPath1.startsWith("http")
-                      ? school.imgPath1
-                      : `${process.env.REACT_APP_URL}/images/${school.imgPath1}`
-                    : ""
-                }
-                name={school.nameUpdate ? school.nameUpdate : school.name}
-                continent={
-                  school.continentUpdate
-                    ? school.continentUpdate
-                    : school.continent
-                }
-                country={
-                  school.countryUpdate ? school.countryUpdate : school.country
-                }
-                area={school.areaUpdate ? school.areaUpdate : school.area}
-                city={school.cityUpdate ? school.cityUpdate : school.city}
-                default={size === "default"}
-                big={size === "big"}
-              />
-            </div>
+          {schools.map((school, index) => (
+            <Grow in={true} key={school.id} timeout={(index + 1) * 50}>
+              <div  className={classes.container_link__card}>
+                <Card
+                  id={school.id}
+                  iconColor={isSchoolFavorite(school.id) ? true : false}
+                  onClick={() => addRemoveFav(school.id)}
+                  link={`/school/${school.id}`}
+                  img={
+                    school.imgPath1
+                      ? school.imgPath1.startsWith("http")
+                        ? school.imgPath1
+                        : `${process.env.REACT_APP_URL}/images/${school.imgPath1}`
+                      : ""
+                  }
+                  name={school.nameUpdate ? school.nameUpdate : school.name}
+                  continent={
+                    school.continentUpdate
+                      ? school.continentUpdate
+                      : school.continent
+                  }
+                  country={
+                    school.countryUpdate ? school.countryUpdate : school.country
+                  }
+                  area={school.areaUpdate ? school.areaUpdate : school.area}
+                  city={school.cityUpdate ? school.cityUpdate : school.city}
+                  default={size === "default"}
+                  big={size === "big"}
+                />
+              </div>
+            </Grow>
           ))}
         </div>
       </section>

@@ -68,12 +68,11 @@ export const getSchoolMap = async (req, res) => {
 export const searchSchools = async (req, res, next) => {
   const { query } = req.query;
   const currentPage = parseInt(req.query.page) || 1;
-  const itemsPerPage = parseInt(req.query.limit) || 20;
+  const itemsPerPage = parseInt(req.query.limit) || 21;
   // const normalizedQuery = query
   //   .normalize("NFD")
   //   .replace(/[\u0300-\u036f]/g, "");
   const queryKeywords = query.split(" ");
-  console.log(queryKeywords);
   const keywordsArray = Array.isArray(queryKeywords)
     ? queryKeywords
     : [queryKeywords];
@@ -244,7 +243,7 @@ const searchAllFields = async (searchValue) => {
 export const filterSchools = async (req, res, next) => {
   const { query, previousQuery, ...filters } = req.query;
   const currentPage = parseInt(req.query.page) || 1;
-  const itemsPerPage = parseInt(req.query.limit) || 20;
+  const itemsPerPage = parseInt(req.query.limit) || 21;
 
   const searchFilters = [];
 
