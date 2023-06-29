@@ -29,9 +29,9 @@ const CardFav = (props) => {
     <div>
       <div className={classes.container_header_title}>
         <span className={classes.card_fav_title}>
-          Favorite <span className={classes.title_bold_color}>schools</span>
+          Mes <span className={classes.title_bold_color}>Favoris</span>
         </span>
-        <Link to={`/profil/${props.id}/favorite`}>See All</Link>
+        <Link to={`/profil/${props.id}/favorite`}>Voir Tout</Link>
       </div>
       {favoriteSchools.length > 0 ? (
         <div className={classes.container_grid_img}>

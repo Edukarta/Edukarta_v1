@@ -137,7 +137,7 @@ const SectionProfil = (props) => {
   };
 
   return (
-    <section>
+    <div>
       <div className={classes.container_item}>
         <Formik onSubmit={handleFormSubmit} initialValues={initialValuePatch}>
           {({ values, handleSubmit, setFieldValue, resetForm }) => (
@@ -262,7 +262,7 @@ const SectionProfil = (props) => {
         <div className={classes.container_card_infos_left}>
           <div className={classes.card_item_infos}>
             <h4 className={classes.profil_info_title}>
-              About <span className={classes.title_bold_color}>Me</span>
+              A propos de <span className={classes.title_bold_color}>Moi</span>
             </h4>
 
             {/* BARRE DE PROGRESSION */}
@@ -310,7 +310,7 @@ const SectionProfil = (props) => {
               </div>
               <div className={classes.profil_info_item}>
                 <Email sx={{ color: "#365475", fontSize: "30px" }} />
-                <span className={classes.infos_text_light}>My Email </span>
+                <span className={classes.infos_text_light}>Mon Email </span>
                 <span className={classes.infos_text_bold}>
                   {props.user.email}
                 </span>
@@ -402,7 +402,7 @@ const SectionProfil = (props) => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

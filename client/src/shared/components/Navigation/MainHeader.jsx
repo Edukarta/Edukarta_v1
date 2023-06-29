@@ -3,13 +3,13 @@ import classes from "./MainHeader.module.css";
 
 const MainHeader = (props) => {
   return (
-    <header
+    <div
       className={`${
         props.type === "profil" ? classes.mainheaderProfile : classes.mainheader
       }`}
     >
       {props.children}
-    </header>
+    </div>
   );
 };
 

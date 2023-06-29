@@ -107,8 +107,7 @@ const MainNavigation = ({ type }) => {
         </div>
         {type !== "profil" && (
           <SearchBar
-            value={searchQuery}
-            // onKeyDown={handleKeyDown}
+            onKeyDown={handleKeyDown}
             onChange={(e) => setSearchQuery(e.target.value)}
             onClick={handleSearch}
           />
@@ -121,7 +120,7 @@ const MainNavigation = ({ type }) => {
             <Link to="/">EduKarta</Link>
           </h1>
           <SearchBar
-            value={searchQuery}
+          onKeyDown={handleKeyDown}
             onChange={(e) => setSearchQuery(e.target.value)}
             onClick={handleSearch}
           />

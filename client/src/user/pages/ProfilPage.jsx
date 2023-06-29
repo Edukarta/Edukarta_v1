@@ -29,8 +29,8 @@ const ProfilPage = () => {
       <header className={classes.container_navigation}>
         <MainNavigation type="profil" />
       </header>
-      <div className={classes.containerProfil}>
-        <div className={classes.container_info}>
+      <main className={classes.containerProfil}>
+        <section className={classes.container_info}>
           <SectionProfil
             title="My account"
             titlePage={isSmallScreen ? "" : "Profil"}
@@ -53,8 +53,8 @@ const ProfilPage = () => {
               Lougout
             </Button>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </>
   );
 };

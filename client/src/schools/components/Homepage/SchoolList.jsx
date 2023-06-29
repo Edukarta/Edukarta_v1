@@ -64,7 +64,7 @@ const SchoolList = ({
           }
         >
           {schools.map((school, index) => (
-            <Grow in={true} key={school.id} timeout={(index + 1) * 50}>
+            <Grow in={true} key={school.id} timeout={(index + 1) * 30}>
               <div  className={classes.container_link__card}>
                 <Card
                   id={school.id}

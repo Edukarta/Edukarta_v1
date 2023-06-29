@@ -7,11 +7,18 @@ const SearchBar = (props) => {
   return (
     <div className={classes.searchBar_container}>
       <TextField
-        placeholder="Search for schools"
+        placeholder="Rechercher edukarta.com"
         onChange={props.onChange}
         value={props.value}
         onKeyDown={props.onKeyDown}
-        sx={{ width: "100%"}}
+        sx={{
+        width: '100%',
+        '& ::placeholder': {
+          // Styles du placeholder
+          color: 'black',
+          opacity: 1,
+        },
+      }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

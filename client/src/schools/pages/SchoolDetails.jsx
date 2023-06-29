@@ -28,13 +28,13 @@ const SchoolDetails = () => {
 
   return (
     <>
-      <div className={classes.container_navigation}>
+      <header className={classes.container_navigation}>
         <MainNavigation type="profil" />
-      </div>
-      <section>
+      </header>
+      <main>
         {/* {school && <SchoolsInfos school={school} getSchool={getSchool} />} */}
         {school && <SchoolsProfil school={school} getSchool={getSchool} />}
-      </section>
+      </main>
     </>
   );
 };

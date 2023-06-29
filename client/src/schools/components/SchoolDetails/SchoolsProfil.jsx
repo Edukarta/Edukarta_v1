@@ -147,7 +147,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
       />
 
       {/* HERO */}
-      <div className={classes.container_item}>
+      <section className={classes.container_item}>
         <Formik initialValues={initialValues} onSubmit={handleFormSubmit}>
           {({
             values,
@@ -168,9 +168,10 @@ const SchoolsProfil = ({ school, getSchool }) => {
                   backgroundSize: "cover",
                 }}
               >
+                {!school?.imgPath6 && <h6>Ajouter votre bannière ici.</h6>}
                 {imgHeroIsSubmitting && !isLoading && (
                   <div className={classes.container_btn_banner_apply}>
-                    <Button type="submit">Apply</Button>
+                    <Button type="submit" small>Apply</Button>
                   </div>
                 )}
                 {isLoading && imgHeroIsSubmitting && (
@@ -322,14 +323,15 @@ const SchoolsProfil = ({ school, getSchool }) => {
             </form>
           )}
         </Formik>
-      </div>
+      </section>
       <>
-        <div className={classes.container_profil_account}>
+        <section className={classes.container_profil_account}>
           {/* LEFT BLOC */}
           <div className={classes.container_card_infos_left}>
             <div className={classes.card_item_infos}>
               <h4 className={classes.profil_info_title}>
-                About <span className={classes.title_bold_color}>Us</span>
+                A propos de{" "}
+                <span className={classes.title_bold_color}>Nous</span>
               </h4>
               <div className={classes.profil_info_items_group}>
                 <div className={classes.profil_info_item}>
@@ -572,7 +574,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </>
     </>
   );

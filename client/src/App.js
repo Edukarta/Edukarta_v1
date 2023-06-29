@@ -20,38 +20,79 @@ import AdminLogin from "./admin/pages/AdminLogin";
 import Captcha from "./captcha/pages/captcha";
 import RedirectionPage from "./schools/pages/RedirectionPage";
 
-
 function App() {
   const location = useLocation();
   const isAuth = Boolean(useSelector((state) => state.token));
-  const localStorageCaptcha = localStorage.getItem('captcha');
+  const localStorageCaptcha = localStorage.getItem("captcha");
 
-  
   return (
     <>
-      <main>
-        <Routes>
-          <Route path="/" element={ localStorageCaptcha?<Captcha/>:<HomePage />} />
-          <Route path="/searchResult" element={localStorageCaptcha?<Captcha/>:<ResultsPage />} />
-          <Route path="/register" element={localStorageCaptcha?<Captcha/>:<LoginPage />} />
-          <Route path="/profil/:_id" element={localStorageCaptcha?<Captcha/>:<ProfilPage />} />
-          <Route path="/profil/:id/favorite" element={localStorageCaptcha?<Captcha/>:<FavoritePage />} />
-          <Route path="/profil/:id/details" element={localStorageCaptcha?<Captcha/>:<ProfilDetails />} />
-          <Route path="/school/:id" element={localStorageCaptcha?<Captcha/>:<SchoolDetails />} />
-          <Route
-            path="/school/:id/request/:requestId"
-            element={<SchoolUpdate />}
-          />
-          <Route path="/school/:id/request" element={localStorageCaptcha?<Captcha/>:<RequestForm />} />
-          <Route path="/prices/:id" element={localStorageCaptcha?<Captcha/>:<Offers />} />
-          <Route path="/paiement" element={localStorageCaptcha?<Captcha/>:<Cart />} />
-          <Route path="/admin" element={localStorageCaptcha?<Captcha/>:<AdminLogin />} />
-          <Route path="/admin/dashboard" element={localStorageCaptcha?<Captcha/>:<Dashboard />} />
-          <Route path="/admin/request/:id" element={localStorageCaptcha?<Captcha/>:<RequestDetails />} />
-          <Route path="/captcha" element={localStorageCaptcha?<Captcha/>:<HomePage/>} />
-          <Route path="/googleRedirect" element={localStorageCaptcha?<Captcha/>:<RedirectionPage />} />
-        </Routes>
-      </main>
+      <Routes>
+        <Route
+          path="/"
+          element={localStorageCaptcha ? <Captcha /> : <HomePage />}
+        />
+        <Route
+          path="/searchResult"
+          element={localStorageCaptcha ? <Captcha /> : <ResultsPage />}
+        />
+        <Route
+          path="/register"
+          element={localStorageCaptcha ? <Captcha /> : <LoginPage />}
+        />
+        <Route
+          path="/profil/:_id"
+          element={localStorageCaptcha ? <Captcha /> : <ProfilPage />}
+        />
+        <Route
+          path="/profil/:id/favorite"
+          element={localStorageCaptcha ? <Captcha /> : <FavoritePage />}
+        />
+        <Route
+          path="/profil/:id/details"
+          element={localStorageCaptcha ? <Captcha /> : <ProfilDetails />}
+        />
+        <Route
+          path="/school/:id"
+          element={localStorageCaptcha ? <Captcha /> : <SchoolDetails />}
+        />
+        <Route
+          path="/school/:id/request/:requestId"
+          element={<SchoolUpdate />}
+        />
+        <Route
+          path="/school/:id/request"
+          element={localStorageCaptcha ? <Captcha /> : <RequestForm />}
+        />
+        <Route
+          path="/prices/:id"
+          element={localStorageCaptcha ? <Captcha /> : <Offers />}
+        />
+        <Route
+          path="/paiement"
+          element={localStorageCaptcha ? <Captcha /> : <Cart />}
+        />
+        <Route
+          path="/admin"
+          element={localStorageCaptcha ? <Captcha /> : <AdminLogin />}
+        />
+        <Route
+          path="/admin/dashboard"
+          element={localStorageCaptcha ? <Captcha /> : <Dashboard />}
+        />
+        <Route
+          path="/admin/request/:id"
+          element={localStorageCaptcha ? <Captcha /> : <RequestDetails />}
+        />
+        <Route
+          path="/captcha"
+          element={localStorageCaptcha ? <Captcha /> : <HomePage />}
+        />
+        <Route
+          path="/googleRedirect"
+          element={localStorageCaptcha ? <Captcha /> : <RedirectionPage />}
+        />
+      </Routes>
       {!["/register"].includes(location.pathname) &&
         !location.pathname.startsWith("/profil/") &&
         !location.pathname.includes("request") &&
