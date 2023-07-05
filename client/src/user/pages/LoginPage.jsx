@@ -31,6 +31,13 @@ const LoginPage = () => {
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
 
+  //Fonction qui redirige vers la page de recupération de mot de passe
+
+  // Définir la fonction de gestion de clic du bouton
+  const handleClick = () => {
+    navigate('/PswdRecoverPage');
+  };
+
   //FONCTION QUI GERE LA CREATION DE PROFIL
   const register = async (values, onSubmitProps) => {
     const formData = new FormData();
@@ -257,6 +264,9 @@ const LoginPage = () => {
           </div>
         )}
       </div>
+      <Button onClick={handleClick}>
+        Forgot password?
+      </Button>
     </section>
   );
 };

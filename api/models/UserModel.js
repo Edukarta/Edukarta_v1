@@ -97,6 +97,8 @@ const UserSchema = new mongoose.Schema({
     },
   ],
   grade: String,
+  resetPasswordToken:{type:String},
+resetPasswordExpires:{type:Date},
 });
 
 const User = mongoose.model("User", UserSchema);

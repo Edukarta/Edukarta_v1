@@ -3,6 +3,9 @@ import User from "../models/UserModel.js";
 import School from "../models/SchoolModel.js";
 import HttpError from "../models/http-errors.js";
 import { v2 as cloudinary } from "cloudinary";
+import crypto from "crypto";
+import { sendEmail } from "../utils/mailer.js";
+import bcrypt from "bcrypt";
 
 //GET ALL USERS
 //@GET
@@ -89,9 +92,12 @@ export const updateUser = async (req, res, next) => {
 
   if (req.files && req.files.resume) {
     try {
-      const result = await cloudinary.uploader.upload(req.files.resume[0].path, {
-        folder: "edukarta",
-      });
+      const result = await cloudinary.uploader.upload(
+        req.files.resume[0].path,
+        {
+          folder: "edukarta",
+        }
+      );
       const resumePath = result.secure_url;
       user.resumePath = resumePath;
       console.log("Resume uploaded successfully:", resumePath);
@@ -216,4 +222,82 @@ export const getUserFavorite = async (req, res, next) => {
   }
 
   res.status(200).json(favoriteSchools);
+};
+
+// insertion de token de sécurité pour un utilisateur en fonction de son addresse mail
+export const recoveryPassword = async (req, res) => {
+  const { mailTo } = req.body;
+  try {
+    // Vérifier si l'utilisateur avec cet e-mail existe
+    const user = await User.findOne({ email: mailTo });
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur introuvable." });
+    }
+    // Générer un jeton de réinitialisation de mot de passe unique
+    const token = crypto.randomBytes(20).toString("hex");
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 3600000; // Le jeton expirera dans 1 heure
+
+    // Enregistrer le jeton dans la base de données
+    await user.save();
+
+    // Envoyer un e-mail de réinitialisation de mot de passe à l'utilisateur
+    await sendEmail(req.body, token);
+    res.status(200).json({
+      message: "Un e-mail de réinitialisation de mot de passe a été envoyé.",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message:
+        "Une erreur s'est produite lors de la récupération du mot de passe.",
+    });
+  }
+
+
+  //   .then((response) => res.send(response.message))
+  //   .catch((error) => res.status(500).send(error.message));
+};
+
+// modification de mot de passe avec verification des tokens de sécurité
+export const resetPasswordByToken = async (req, res) => {
+  const { token } = req.params; // Obtenez le token de la requête
+  try {
+    // Vérifiez si un utilisateur correspondant au token existe dans la base de données
+    const user = await User.findOne({ resetPasswordToken: token });
+
+    // Si aucun utilisateur correspondant n'est trouvé, renvoyez une réponse d'erreur
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "Token invalide ou expiré. Veuillez réessayer." });
+    }
+    if (user.resetPasswordExpires < Date.now()) {
+      return res
+        .status(400)
+        .json({
+          message:
+            "Le lien de réinitialisation du mot de passe a expiré. Veuillez en demander un nouveau.",
+        });
+    }
+
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(req.body.password, salt);
+    // Mettez à jour le mot de passe de l'utilisateur avec la nouvelle valeur
+    user.password = passwordHash;
+    user.resetPasswordToken = "";
+    user.resetPasswordExpires = "";
+
+    // Sauvegardez les modifications de l'utilisateur dans la base de données
+    await user.save();
+
+    // Renvoyez une réponse de succès
+    return res.json({ message: "Mot de passe modifié avec succès." });
+  } catch (error) {
+    console.error(error);
+    // Renvoyez une réponse d'erreur en cas d'échec du traitement de la demande
+    return res.status(500).json({
+      message: `Une erreur s'est produite lors de la modification du mot de passe.`,
+    });
+  }
 };
