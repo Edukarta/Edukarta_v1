@@ -87,6 +87,13 @@ button img{
     margin: 0 auto;
 }
 
+.forgot_password{
+    color: #333;
+    font-size: 15px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
 @media (min-width: 1080px) {
 
      .containerForm_title{

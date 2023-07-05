@@ -85,3 +85,8 @@
     border-color: red;
     background: #ffd1d1;
   }
+
+  input::placeholder {
+    color: #333;
+    font-style: italic;
+  }

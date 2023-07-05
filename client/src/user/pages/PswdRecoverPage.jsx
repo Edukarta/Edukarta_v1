@@ -1,8 +1,10 @@
-import { Input } from "@mui/material";
+
 import { useState } from "react";
 import axios from "axios";
 import Button from "../../shared/components/FormElements/Button";
+import Input from "../../shared/components/FormElements/Input";
 import { ToastContainer, toast } from "react-toastify";
+import classes from "./PasswordRecovery.module.css";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +20,7 @@ function PswdRecoverPage() {
       draggable: true,
       progress: undefined,
       theme: "light",
-      });
+    });
   const notifyErr = () =>
     toast.error(" Le mail n'a pas été trouvé!", {
       position: "top-right",
@@ -29,7 +31,7 @@ function PswdRecoverPage() {
       draggable: true,
       progress: undefined,
       theme: "light",
-      });
+    });
 
   const [mailTo, setEmail] = useState("");
   const sendMail = async () => {
@@ -42,7 +44,7 @@ function PswdRecoverPage() {
       });
       // notify();
       // setTimeout(() => {
-        navigate('/register');
+      navigate("/register");
       // }, 3000);
       return response;
     } catch (error) {
@@ -54,11 +56,18 @@ function PswdRecoverPage() {
   };
   return (
     <>
-      <Input onChange={(e) => setEmail(e.target.value)} />
-      <Button onClick={sendMail} />
-      <ToastContainer position="top-right" autoClose={5000} theme="light" />
-      {/* Same as */}
-      <ToastContainer />
+      <section className={classes.containerFormRegister}>
+        <div className={classes.containerForm_title}>
+          <h1 className={classes.formTitle}>
+            Quelle est votre adresse Email ?
+          </h1>
+          <div className={classes.container_input_btn}>
+            <Input type="text" element="input" onChange={(e) => setEmail(e.target.value)} />
+            <Button onClick={sendMail}>Envoyer</Button>
+          </div>
+        </div>
+        <ToastContainer position="top-right" autoClose={5000} theme="light" />
+      </section>
     </>
   );
 }

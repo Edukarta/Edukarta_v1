@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Button from "../../shared/components/FormElements/Button";
+import Input from "../../shared/components/FormElements/Input";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import classes from "./PasswordRecovery.module.css";
 import "react-toastify/dist/ReactToastify.css";
 
 const PasswordRecovery = () => {
@@ -53,9 +56,8 @@ const PasswordRecovery = () => {
           // }, 3000);
         }
         setPassword("");
-      }
-      else{
-        notifyError("vous n'avez pas écris le meme mot de passe")
+      } else {
+        notifyError("vous n'avez pas écris le meme mot de passe");
       }
     } catch (error) {
       let text;
@@ -70,37 +72,41 @@ const PasswordRecovery = () => {
   };
 
   return (
-    <div>
-      <h2>Modifier le mot de passe</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="password"
-          placeholder="Nouveau mot de passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+    <section className={classes.containerFormRegister}>
+      <div className={classes.containerForm_title}>
+        <h1 className={classes.formTitle}>Modifier le mot de passe</h1>
+        <form onSubmit={handleSubmit} className={classes.registerForm}>
+          <Input
+            type="password"
+            element="input"
+            placeholder="Nouveau mot de passe"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Input
+            type="passwordTwice"
+            element="input"
+            placeholder="Confirmation mot de passe"
+            value={passwordTwice}
+            onChange={(e) => setPasswordTwice(e.target.value)}
+          />
+          <Button type="submit" big>Modifier</Button>
+        </form>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
         />
-        <input
-          type="passwordTwice"
-          placeholder="Confirmation mot de passe"
-          value={passwordTwice}
-          onChange={(e) => setPasswordTwice(e.target.value)}
-        />
-        <button type="submit">Modifier</button>
-      </form>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-      <ToastContainer />
-    </div>
+        <ToastContainer />
+      </div>
+    </section>
   );
 };
 

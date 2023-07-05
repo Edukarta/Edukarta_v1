@@ -35,7 +35,7 @@ const LoginPage = () => {
 
   // Définir la fonction de gestion de clic du bouton
   const handleClick = () => {
-    navigate('/PswdRecoverPage');
+    navigate("/PswdRecoverPage");
   };
 
   //FONCTION QUI GERE LA CREATION DE PROFIL
@@ -44,7 +44,11 @@ const LoginPage = () => {
     for (let value in values) {
       formData.append(value, values[value]);
     }
-    const savedUserResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/auth/register`,"POST",formData)
+    const savedUserResponse = callApi(
+      `${process.env.REACT_APP_API_URL}/api/v1/auth/register`,
+      "POST",
+      formData
+    );
 
     const savedUser = await savedUserResponse;
     onSubmitProps.resetForm();
@@ -56,7 +60,11 @@ const LoginPage = () => {
 
   //FONCTION QUI GERE LA CONNECTION
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = callApi(`${process.env.REACT_APP_API_URL}/api/v1/auth/login`, "POST", values);
+    const loggedInResponse = callApi(
+      `${process.env.REACT_APP_API_URL}/api/v1/auth/login`,
+      "POST",
+      values
+    );
     const response = await loggedInResponse;
     const statusCode = response.status;
     if (statusCode === 200) {
@@ -64,19 +72,21 @@ const LoginPage = () => {
       dispatch(
         setLogin({
           user: loggedIn.user,
-          token: loggedIn.token
+          token: loggedIn.token,
         })
       );
       navigate(-1);
-    }
-    else if(statusCode === 429|| statusCode ===403){
-      navigate("/captcha")
+    } else if (statusCode === 429 || statusCode === 403) {
+      navigate("/captcha");
     }
   };
 
   const googleAuth = async () => {
     try {
-      window.open(`${process.env.REACT_APP_API_URL}/api/v1/googleAuth/google`, "_self");
+      window.open(
+        `${process.env.REACT_APP_API_URL}/api/v1/googleAuth/google`,
+        "_self"
+      );
     } catch (error) {
       console.log(error);
     }
@@ -245,6 +255,12 @@ const LoginPage = () => {
                     {isRegister ? "Login" : "Register"}
                   </span>
                 </h6>
+                <p
+                  className={classes.forgot_password}
+                  onClick={() => navigate("/PswdRecoverPage")}
+                >
+                  {pageType === "login" && <span>Mot de passe oublié ?</span>}
+                </p>
               </div>
               {pageType === "login" && (
                 <div className={classes.center}>
@@ -264,9 +280,6 @@ const LoginPage = () => {
           </div>
         )}
       </div>
-      <Button onClick={handleClick}>
-        Forgot password?
-      </Button>
     </section>
   );
 };
