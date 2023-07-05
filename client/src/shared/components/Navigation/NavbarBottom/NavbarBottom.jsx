@@ -58,23 +58,23 @@ const NavbarBottom = ({schools}) => {
         <MapDrawer show={drawerIsOpen}>
           <Map schools={popularSchools} />
         </MapDrawer>
-        <div className={classes.navbarBottom__container_icon}>
+        {/* <div className={classes.navbarBottom__container_icon}>
           <Link to="/">
             <House sx={{ fontSize: "40px" }} />
           </Link>
           <Link to="/">
             <Favorite sx={{ fontSize: "40px" }} />
           </Link>
-        </div>
+        </div> */}
         <ButtonNavBottom onClick={() => setDrawerIsOpen((prev) => !prev)} />
-        <div className={classes.navbarBottom__container_icon}>
+        {/* <div className={classes.navbarBottom__container_icon}>
           <Link to="/">
             <ImportContacts sx={{ fontSize: "40px" }} />
           </Link>
           <Link to="/">
             <OndemandVideo sx={{ fontSize: "40px" }} />
           </Link>
-        </div>
+        </div> */}
       </div>
     </>
   );
