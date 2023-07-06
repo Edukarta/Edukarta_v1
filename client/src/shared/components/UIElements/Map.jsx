@@ -30,10 +30,9 @@ const Map = ({ type, schools }) => {
   const schoolDrawer = useSelector((state) => state.school);
   const lastPositionRef = useRef(null);
 
-  let levels = "";
-  if (schoolDrawer) {
-    levels = schoolDrawer.level.join(" - ");
-  }
+ 
+  const  levels = schoolDrawer.level.join(" - ");
+
   const disableClusteringAtZoom = 8;
 
   const MarkerSup = new Icon({
