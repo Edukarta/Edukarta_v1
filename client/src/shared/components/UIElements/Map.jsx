@@ -31,7 +31,7 @@ const Map = ({ type, schools }) => {
   const lastPositionRef = useRef(null);
 
  
-  const  levels = schoolDrawer.level.join(" - ");
+  // const  levels = schoolDrawer.level.join(" - ");
 
   const disableClusteringAtZoom = 8;
 
@@ -342,7 +342,7 @@ const Map = ({ type, schools }) => {
                   </div>
                   <div className={classes.school_drawer_info}>
                     <School sx={{ color: "#4285F4" }} />
-                    <h5>{levels}</h5>
+                    <h5>{schoolDrawer.level}</h5>
                   </div>
                   <div className={classes.school_drawer_info}>
                     <MenuBook sx={{ color: "#0275d8" }} />
