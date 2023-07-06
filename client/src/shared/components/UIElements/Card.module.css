@@ -46,7 +46,7 @@
 
 
 .cardName{
-  font-size: 20px;
+  font-size: 16px;
   text-transform: capitalize;
   color: #2b2b2b;
   font-weight: 500;
@@ -64,13 +64,13 @@
 .cardCountry{
   font-size: 15px;
   color: #9a9999;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .cardCity{
   font-size: 15px;
-  color: #9a9999;
-  font-weight: 500;
+  color: #949494;
+  font-weight: 400;
 }
 
 

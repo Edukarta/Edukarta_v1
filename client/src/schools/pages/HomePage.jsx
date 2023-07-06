@@ -154,13 +154,12 @@ const HomePage = () => {
         <Map type="homepage" />
         <Suggest
           schools={popularSchools}
-          subText="Most popular schools among Edukarta users"
-          title="Notable Universities"
+          subText="Ces écoles prisées ont beaucoup à offrir"
+          title="Les plus populaires"
         />
         <SchoolList
-          title="Explore Schools in"
-          subText1="Schools in"
-          subText2="have a lot to offer."
+          title="Écoles en "
+          subText1="Découvrez les écoles en"
           country={country}
           schools={schools}
         />
