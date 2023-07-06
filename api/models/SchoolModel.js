@@ -185,6 +185,9 @@ const SchoolSchema = new mongoose.Schema({
   popularity: {
     type: Number,
     default: 0,
+  },
+  category: {
+    type: String,
   }
 });
 

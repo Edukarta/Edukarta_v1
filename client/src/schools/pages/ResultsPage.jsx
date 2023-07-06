@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setPagination } from "../../shared/state/store";
 import noFound from "../../img/no_found.png";
 import Tooltip from "@mui/material/Tooltip";
-import { Grow, Collapse } from "@mui/material";
+import { Grow, Collapse, CircularProgress } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { setSearchResults } from "../../shared/state/store";
 import FilterDrawer from "../../shared/components/UIElements/FilterDrawer";
@@ -13,7 +13,7 @@ import {
   ArrowForwardIos,
   KeyboardArrowUp,
   KeyboardArrowDown,
-  SentimentVeryDissatisfied
+  SentimentVeryDissatisfied,
 } from "@mui/icons-material/";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
 import { Link } from "react-router-dom";
@@ -26,6 +26,7 @@ const ResultsPage = () => {
   const previousQuery = useSelector((state) => state.searchQuery);
   const results = useSelector((state) => state.searchResults);
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  const [progress, setProgress] = useState(false);
   const [scoIsOpen, setScoIsOpen] = useState(false);
   const [supIsOpen, setSupIsOpen] = useState(false);
   const [cityFilter, setCityFilter] = useState("");
@@ -94,7 +95,7 @@ const ResultsPage = () => {
     if (event) {
       event.preventDefault();
     }
-    console.log(selectedFilters);
+    setProgress(true);
     const query = selectedFilters.join(",");
     console.log(query);
     setFormattedFilters(query);
@@ -121,6 +122,7 @@ const ResultsPage = () => {
     setCityFilter("");
     setCountryFilter("");
     setDrawerIsOpen(false);
+    setProgress(false);
   };
 
   useEffect(() => {
@@ -394,11 +396,14 @@ const ResultsPage = () => {
             </div>
           </form>
         </FilterDrawer>
+
         {results.results.schools.length < 1 && (
           <div className={classes.container_noresult}>
             <img src={noFound} alt="recherche non trouvée" />
             <h3>Aucun résultat trouvé</h3>
-            <p>Nous n'avons pas trouvé de resultat pour {`"${previousQuery}"`}.</p>
+            <p>
+              Nous n'avons pas trouvé de resultat pour {`"${previousQuery}"`}.
+            </p>
             <p>Veuillez réessayer.</p>
           </div>
         )}
@@ -502,16 +507,6 @@ const ResultsPage = () => {
                     <div className={classes.input_filter_goup}>
                       <input
                         type="checkbox"
-                        id="crib"
-                        name="crib"
-                        value="crèche"
-                        onChange={handleFilterChange}
-                      />
-                      <label htmlFor="crib">Crèche</label>
-                    </div>
-                    <div className={classes.input_filter_goup}>
-                      <input
-                        type="checkbox"
                         id="kindergarden"
                         name="kindergarden"
                         value="jardin d'enfant"
@@ -568,22 +563,12 @@ const ResultsPage = () => {
                     <div className={classes.input_filter_goup}>
                       <input
                         type="checkbox"
-                        id="superior"
-                        name="superior"
-                        value="supérieur"
-                        onChange={handleFilterChange}
-                      />
-                      <label htmlFor="preschool">Supérieur</label>
-                    </div>
-                    <div className={classes.input_filter_goup}>
-                      <input
-                        type="checkbox"
                         id="special"
                         name="special"
                         value="école spécialisée"
                         onChange={handleFilterChange}
                       />
-                      <label htmlFor="elementary">école spécialisée</label>
+                      <label htmlFor="special">école spécialisée</label>
                     </div>
                     <div className={classes.input_filter_goup}>
                       <input
@@ -598,22 +583,12 @@ const ResultsPage = () => {
                     <div className={classes.input_filter_goup}>
                       <input
                         type="checkbox"
-                        id="faculty"
-                        name="faculty"
-                        value="fac"
-                        onChange={handleFilterChange}
-                      />
-                      <label htmlFor="high school">fac</label>
-                    </div>
-                    <div className={classes.input_filter_goup}>
-                      <input
-                        type="checkbox"
                         id="engineer"
                         name="engineer"
                         value="école d'ingénieur"
                         onChange={handleFilterChange}
                       />
-                      <label htmlFor="high school">école d'ingénieur</label>
+                      <label htmlFor="engineer">école d'ingénieur</label>
                     </div>
 
                     <div className={classes.input_filter_goup}>
@@ -624,18 +599,7 @@ const ResultsPage = () => {
                         value="centre de formation"
                         onChange={handleFilterChange}
                       />
-                      <label htmlFor="high school">centre de formation</label>
-                    </div>
-
-                    <div className={classes.input_filter_goup}>
-                      <input
-                        type="checkbox"
-                        id="cfa"
-                        name="cfa"
-                        value="CFA"
-                        onChange={handleFilterChange}
-                      />
-                      <label htmlFor="high school">CFA</label>
+                      <label htmlFor="formationCenter">centre de formation</label>
                     </div>
                   </div>
                 </Collapse>
@@ -688,9 +652,15 @@ const ResultsPage = () => {
                   <label htmlFor="private">Non</label>
                 </div>
               </div>
-              <Button big gradient>
-                Valider
-              </Button>
+              {!progress ? (
+                <Button big gradient>
+                  Valider
+                </Button>
+              ) : (
+                <div className={classes.progress}>
+                  <CircularProgress />
+                </div>
+              )}
             </form>
           )}
           <div className={classes.container_result_paginate}>

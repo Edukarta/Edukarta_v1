@@ -4,7 +4,6 @@ import User from "../models/UserModel.js";
 import HttpError from "../models/http-errors.js";
 import { v2 as cloudinary } from "cloudinary";
 import { validationResult } from "express-validator";
-import diacritic from "diacritic";
 
 //SHOW ALL SCHOOLS
 //@GET
@@ -49,11 +48,48 @@ export const getAllPopularSchools = async (req, res) => {
 //ROUTE : api/v1/schools/map
 export const getSchoolMap = async (req, res) => {
   const { neLat, neLng, swLat, swLng } = req.query;
+  const currentPage = parseInt(req.query.page) || 1;
+  const itemsPerPage = parseInt(req.query.limit) || 400;
+
+  const sudOuestLong = parseFloat(swLng);
+  const sudOuestLat = parseFloat(swLat);
+  const nordEstLong = parseFloat(neLng);
+  const sudEstLat = parseFloat(neLat);
 
   try {
-    const schools = await School.find();
+    const schoolsCount = await School.countDocuments({
+      gps: {
+        $geoWithin: {
+          $box: [
+            [sudOuestLat, sudOuestLong],
+            [sudEstLat, nordEstLong],
+          ],
+        },
+      },
+    });
 
-    res.json(schools);
+    const schools = await School.aggregate([
+      {
+        $match: {
+          gps: {
+            $geoWithin: {
+              $box: [
+                [sudOuestLat, sudOuestLong], // Longitude, Latitude pour le coin sud-ouest
+                [sudEstLat, nordEstLong], // Longitude, Latitude pour le coin nord-est
+              ],
+            },
+          },
+        },
+      },
+      { $sample: { size: itemsPerPage } },
+    ]);
+
+    res.json({
+      schools,
+      currentPage,
+      totalPages: Math.ceil(schoolsCount / itemsPerPage),
+    });
+
   } catch (error) {
     console.error("Erreur lors de la récupération des écoles :", error);
     res
@@ -65,6 +101,7 @@ export const getSchoolMap = async (req, res) => {
 //SEARCH SCHOOLS
 //@GET
 //ROUTE : api/v1/search
+//FONCTION POUR LA BARRE DE RECHERCHE
 export const searchSchools = async (req, res, next) => {
   const { query } = req.query;
   const currentPage = parseInt(req.query.page) || 1;
@@ -99,7 +136,7 @@ export const searchSchools = async (req, res, next) => {
         { countryUpdate: { $regex: new RegExp(keyword, "i") } },
         { level: { $in: new RegExp(keyword, "i") } },
         { levelUpdate: { $regex: new RegExp(keyword, "i") } },
-        // { keywords: { $in: filteredKeywords.map((k) => new RegExp(k, "i")) } },
+        { keywords: { $in: filteredKeywords.map((k) => new RegExp(k, "i")) } },
       ],
     }));
 
@@ -348,15 +385,11 @@ export const filterSchools = async (req, res, next) => {
       ],
     })),
   };
-  
-  const dbFilters = {
-    $and: [
-      conditions,
-      ...searchFilters,
-    ],
-  };
-  console.log(dbFilters)
 
+  const dbFilters = {
+    $and: [conditions, ...searchFilters],
+  };
+  console.log(dbFilters);
 
   try {
     // Récupérer les écoles correspondantes à partir de la base de données

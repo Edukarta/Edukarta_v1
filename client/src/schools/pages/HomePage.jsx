@@ -54,12 +54,11 @@ const HomePage = () => {
       const responseData = callApi(
         `${process.env.REACT_APP_API_URL}/api/v1/schools?country=${country}&page=${page}&limit=${limit}`
       );
-      //On allSchools, data use .data
       const data = await responseData;
-      const statusCode = data.status;
-      if (statusCode === 429 || statusCode === 403) {
-        navigate("/captcha");
-      }
+      // const statusCode = data.status;
+      // if (statusCode === 429 || statusCode === 403) {
+      //   navigate("/captcha");
+      // }
 
       const allSchools = await data.data;
 
@@ -152,16 +151,15 @@ const HomePage = () => {
         <MainNavigation />
       </header>
       <section>
-        <Map type="homepage" schools={schools} />
+        <Map type="homepage" />
         <Suggest
           schools={popularSchools}
-          subText="Most popular schools among Edukarta users"
-          title="Notable Universities"
+          subText="Ces écoles prisées ont beaucoup à offrir"
+          title="Les plus populaires"
         />
         <SchoolList
-          title="Explore Schools in"
-          subText1="Schools in"
-          subText2="have a lot to offer."
+          title="Écoles en "
+          subText1="Découvrez les écoles en"
           country={country}
           schools={schools}
         />

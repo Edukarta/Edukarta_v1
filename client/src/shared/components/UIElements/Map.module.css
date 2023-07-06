@@ -6,6 +6,7 @@
   margin-bottom: 100px;
   position: relative;
   border-bottom: 1px solid #aeaeae;
+  z-index: 1;
 }
 
 
@@ -67,34 +68,58 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 3rem;
-  width: 3rem;
+  height: 2rem;
+  width: 2rem;
   color: white;
   font-size: 16px;
   font-weight: 900;
   border-radius: 300px;
   background-color: rgb(11, 71, 110);
   transform: translate(-50%, -50%);
+  
+}
+
+.red {
+  background-color: crimson;
+  height: 4rem;
+  width: 4rem;
   animation: scale 2s infinite;
 }
 
 @keyframes scale {
   0% {
-    width: 3rem;
-    height: 3rem;
-    background-color: rgb(11, 71, 110);
+    width: 2rem;
+    height: 2rem;
+  
   }
   50% {
-    width: 4rem;
-    height: 4rem;
-    background-color: rgb(33, 129, 192);
-  }
-  100% {
     width: 3rem;
     height: 3rem;
-    background-color: rgb(11, 71, 110);
+
+  }
+  100% {
+    width: 2rem;
+    height: 2rem;
+ 
   }
 }
+
+.blue {
+  background-color: #528AAE;
+  height: 2rem;
+  width: 2rem;
+  animation: scale 2s infinite;
+}
+
+
+.orange{
+  background-color: rgb(254, 146, 57);
+  height: 3rem;
+  width: 3rem;
+  animation: scale 2s infinite;
+}
+
+
 
 .popup_schoolNameSmall{
   font-size: 17px;
@@ -138,6 +163,7 @@
   color: #4f4f4f;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+  cursor: pointer;
 }
 .container_infos{
   padding: 20px;
@@ -145,6 +171,8 @@
 
 .school_drawer_name{
   font-size: 25px;
+  text-transform: capitalize;
+  font-weight: 400;
   color: #333;
 }
 
@@ -160,13 +188,83 @@
 .school_drawer_info{
   display: flex;
   align-items: center;
+  text-transform: capitalize;
   gap: 10px;
 
 }
 
 .school_drawer_info h5{
   color: #333;
+  font-weight: 400;
 }
+
+.progress_bar{
+  position: absolute;
+  top: 200px;
+}
+
+.custom-marker-icon{
+  width: 50px;
+  height: 50px;
+  background-color: red;
+}
+
+.container_legend{
+  display: flex;
+  gap: 10px;
+}
+
+.container_map_btn{
+  position: absolute;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  gap: 10px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 5%, transparent);
+  z-index: 555555;
+}
+
+.container_form_control{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bloc_legend{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.form_control{
+  display: flex;
+  align-items: center;
+  pointer-events: auto;
+  gap: 5px;
+}
+
+input[type="radio"] {
+ height: 20px;
+ width: 20px;
+}
+
+.map_label{
+  color: #555555;
+  font-size: 17px;
+}
+
+.container_legend{
+  display: flex;
+}
+
+.container_legend img{
+  width: 15px;
+}
+
 
 
 @media (min-width: 800px) {

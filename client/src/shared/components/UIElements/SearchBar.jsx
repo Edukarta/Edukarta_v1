@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, InputAdornment, IconButton, Button } from "@mui/material";
+import { TextField, InputAdornment, IconButton, Button, CircularProgress } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import classes from "./SearchBar.module.css";
 
@@ -22,9 +22,9 @@ const SearchBar = (props) => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <IconButton sx={{ color: "blue" }} onClick={props.onClick}>
+              {!props.progress ? <IconButton sx={{ color: "blue" }} onClick={props.onClick}>
                 <Search sx={{ fontSize: "20px" }} />
-              </IconButton>
+              </IconButton> : <CircularProgress/>}
             </InputAdornment>
           ),
           sx: {

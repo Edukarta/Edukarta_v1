@@ -1,7 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import MainHeader from "./MainHeader";
 import { useSelector, useDispatch } from "react-redux";
-import { setSearchResults, setQuery, setPagination, setFilters } from "../../state/store";
+import {
+  setSearchResults,
+  setQuery,
+  setPagination,
+  setFilters,
+} from "../../state/store";
 import { NotificationsNone, ShoppingCart } from "@mui/icons-material/";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -16,11 +21,11 @@ const MainNavigation = ({ type }) => {
   const currentPage = useSelector((state) => state.pagination.currentPage);
   const limit = useSelector((state) => state.pagination.pageSize);
   const query = useSelector((state) => state.searchQuery);
+  const [progress, setProgress] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState(query || "");
   const currentPageRef = useRef(currentPage);
-
 
   // useEffect(() => {
   //   console.log(query)
@@ -28,6 +33,7 @@ const MainNavigation = ({ type }) => {
   // }, []);
 
   const handleSearch = async () => {
+    setProgress(true);
     const response = callApi(
       `${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${searchQuery}&page=${currentPage}&perPage=${limit}`,
       "GET"
@@ -48,14 +54,15 @@ const MainNavigation = ({ type }) => {
       dispatch(setFilters(data.data.unusedFields));
       navigate("/searchResult");
     }
+    setProgress(false);
   };
 
-  //Mise a jour de currentPage 
+  //Mise a jour de currentPage
   useEffect(() => {
     currentPageRef.current = currentPage;
     window.scrollTo(0, 0);
   }, [currentPage]);
-  
+
   // Compare la valeur de currentPage
   useEffect(() => {
     if (currentPageRef.current !== currentPage) {
@@ -107,6 +114,7 @@ const MainNavigation = ({ type }) => {
         </div>
         {type !== "profil" && (
           <SearchBar
+            progress={progress}
             onKeyDown={handleKeyDown}
             onChange={(e) => setSearchQuery(e.target.value)}
             onClick={handleSearch}
@@ -120,7 +128,8 @@ const MainNavigation = ({ type }) => {
             <Link to="/">EduKarta</Link>
           </h1>
           <SearchBar
-          onKeyDown={handleKeyDown}
+            progress={progress}
+            onKeyDown={handleKeyDown}
             onChange={(e) => setSearchQuery(e.target.value)}
             onClick={handleSearch}
           />
