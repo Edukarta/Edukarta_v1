@@ -1,12 +1,10 @@
-
-import nodemailer from "nodemailer"
+import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 // Fonction d'envoie de mails, configuration requise, template de mail intégré au code
-export const sendEmail = async ( {mailTo},token) => {
-  
+export const sendEmail = async ({ mailTo }, token) => {
   return new Promise((resolve, reject) => {
     var transporter = nodemailer.createTransport({
       service: "gmail",
@@ -21,36 +19,22 @@ export const sendEmail = async ( {mailTo},token) => {
       to: mailTo,
       subject: "KODING 101 PASSWORD RECOVERY",
       html: `<!DOCTYPE html>
-<html lang="en" >
+<html lang="fr" >
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - OTP Email Template</title>
-  
-
+  <title>Edukarta.com | réinitialisation mot de passe</title>
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
-  <div style="margin:50px auto;width:70%;padding:20px 0">
-    <div style="border-bottom:1px solid #eee">
-      <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Koding 101</a>
+    <div style="font-family: Helvetica,Arial,sans-serif;text-align:center; margin-top:100px">
+      <div style="margin:20px auto; width:70%;">
+        <div>
+          <h1 style="color: #333">EduKarta.com</h1>
+        </div>
+        <p style="color: #626262; margin-bottom: 60px">Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien ci-dessous.</p>
+        <a href="${process.env.ACCESS_URL_LOCAL}/PasswordRecovery/${token}" style="background: #365475; padding: 15px 40px; color: white; text-decoration: none; border-radius: 8px;">Réinitialiser mon mot de passe<a/>
+      </div>
     </div>
-    <p style="font-size:1.1em">Hi,</p>
-    <p>Thank you for choosing Koding 101. Use the following OTP to complete your Password Recovery Procedure. OTP is valid for 5 minutes</p>
-    <a href="${process.env.ACCESS_URL_LOCAL}/PasswordRecovery/${token}">Reset password<a/>
-    <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;"></h2>
-    <p style="font-size:0.9em;">Regards,<br />Koding 101</p>
-    <hr style="border:none;border-top:1px solid #eee" />
-    <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
-      <p>Koding 101 Inc</p>
-      <p>1600 Amphitheatre Parkway</p>
-      <p>California</p>
-    </div>
-  </div>
-</div>
-<!-- partial -->
-  
-</body>
+    </body>
 </html>`,
     };
     transporter.sendMail(mail_configs, function (error, info) {
@@ -61,4 +45,4 @@ export const sendEmail = async ( {mailTo},token) => {
       return resolve({ message: "Email sent succesfuly" });
     });
   });
-}
+};

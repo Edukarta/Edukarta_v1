@@ -15,10 +15,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 5px;
 }
 
 .mainNavigation__title {
-  font-size: 23px;
+  font-size: 18px;
   color: white;
   font-weight: 800;
 }
@@ -31,7 +32,7 @@
 
 .container__avatar_logout span {
   color: white;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .mainNavigation__container_title_avatar a {
@@ -78,6 +79,13 @@
 .cart_item_number h6{
   color: white;
   font-size: 15px;
+}
+
+@media (min-width: 350px) {
+  .mainNavigation__title {
+    font-size: 23px;
+  }
+
 }
 
 

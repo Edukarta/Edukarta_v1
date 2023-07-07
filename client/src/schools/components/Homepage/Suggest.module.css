@@ -9,7 +9,6 @@
   margin: 0 auto;
   font-size: 30px;
   font-weight: 500;
-
   color: #2c2c2c;
   padding: 8px 0;
 }
@@ -19,7 +18,6 @@
   margin: 0 auto;
   font-size: 15px;
   font-weight: 400;
- 
   color: #5c5c5c;
   margin-bottom: 20px;
 }
@@ -28,7 +26,7 @@
     width: 100%;
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(auto-fill, 350px);
+    grid-template-columns: repeat(auto-fill, 320px);
     grid-gap: 20px;
     max-width: 2000px;
   }

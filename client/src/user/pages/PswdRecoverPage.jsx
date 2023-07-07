@@ -44,7 +44,7 @@ function PswdRecoverPage() {
       });
       // notify();
       // setTimeout(() => {
-      navigate("/register");
+      navigate("/");
       // }, 3000);
       return response;
     } catch (error) {

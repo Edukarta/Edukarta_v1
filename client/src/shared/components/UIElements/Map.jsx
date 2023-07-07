@@ -12,12 +12,14 @@ import { LocationOn, School, Flag, MenuBook } from "@mui/icons-material";
 import markerSup from "../../../img/point_sup.png";
 import markerSco from "../../../img/point_sco.png";
 import MapCardDrawer from "./MapCardDrawer";
+import MapCardDrawerBottom from "./MapCardDrawerBottom";
 import { useMediaQuery } from "@mui/material";
 import "leaflet/dist/leaflet.css";
 import classes from "./Map.module.css";
 
-const Map = ({ type, schools }) => {
+const Map = ({ type}) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  const [drawerBottomIsOpen, setDrawerBottomIsOpen] = useState(false);
   const [schoolsMap, setSchoolsMap] = useState([]);
   const [selectedType, setSelectedType] = useState();
   const isSmallerScreen = useMediaQuery("(max-width:1080px)");
@@ -30,12 +32,8 @@ const Map = ({ type, schools }) => {
   const schoolDrawer = useSelector((state) => state.school);
   const lastPositionRef = useRef(null);
 
- 
   // const  levels = schoolDrawer.level.join(" - ");
-
-  const disableClusteringAtZoom = 8;
-
-  const MarkerSup = new Icon({
+   const MarkerSup = new Icon({
     iconUrl: markerSup,
     iconSize: [20, 20],
     iconAnchor: [5, 5],
@@ -49,28 +47,27 @@ const Map = ({ type, schools }) => {
     className: "custom-marker-icon",
   });
 
-  const cretaedCustomClusterIcon = (cluster) => {
-    let clusterColor = classes.blue;
-    const childCount = cluster.getChildCount();
-    if (childCount >= 20 && childCount <= 50) {
-      clusterColor = classes.orange;
-    } else if (childCount >= 50) {
-      clusterColor = classes.red;
-    }
+  // const cretaedCustomClusterIcon = (cluster) => {
+  //   let clusterColor = classes.blue;
+  //   const childCount = cluster.getChildCount();
+  //   if (childCount >= 20 && childCount <= 50) {
+  //     clusterColor = classes.orange;
+  //   } else if (childCount >= 50) {
+  //     clusterColor = classes.red;
+  //   }
 
-    return new divIcon({
-      html: `<div class="${classes.cluster_icon} ${clusterColor}"></div>`,
-      className: "custom-marker-cluster",
-      iconSize: point(20, 20, true),
-    });
-  };
+  //   return new divIcon({
+  //     html: `<div class="${classes.cluster_icon} ${clusterColor}"></div>`,
+  //     className: "custom-marker-cluster",
+  //     iconSize: point(20, 20, true),
+  //   });
+  // };
 
   const fetchSchoolsMap = async () => {
     const center = mapRef.current.getCenter();
     const bounds = mapRef.current.getBounds();
-    const mapSize = mapRef.current.getSize();
 
-    const offset = 0.5; // Ajustez la valeur de l'offset selon votre besoin
+    const offset = 0.5;
 
     const latDiff = bounds.getNorth() - bounds.getSouth();
     const lngDiff = bounds.getEast() - bounds.getWest();
@@ -100,7 +97,7 @@ const Map = ({ type, schools }) => {
           (school) => school.category === "SUP"
         );
       } else {
-        // Cas par défaut, toutes les écoles sont affichées
+        
       }
       setSchoolsMap(filteredSchools);
     } catch (error) {
@@ -110,11 +107,11 @@ const Map = ({ type, schools }) => {
 
   const calculateLimit = (zoom) => {
     if (zoom <= 5) {
-      return 50;
+      return 30;
     } else if (zoom <= 8) {
-      return 100;
+      return 60;
     } else {
-      return 700;
+      return 200;
     }
   };
 
@@ -155,11 +152,11 @@ const Map = ({ type, schools }) => {
     useEffect(() => {
       mapRef.current = map;
       map.on("moveend", handleMoveEnd);
-      map.on("zoomend", handleMoveEnd); // Ajouter cette ligne
+      map.on("zoomend", handleMoveEnd);
 
       return () => {
         map.off("moveend", handleMoveEnd);
-        map.off("zoomend", handleMoveEnd); // Ajouter cette ligne
+        map.off("zoomend", handleMoveEnd);
       };
     }, []);
 
@@ -168,7 +165,7 @@ const Map = ({ type, schools }) => {
 
   return (
     <>
-      <div className={classes.container_map_btn}>
+      <div className={type === "homepage" ? classes.container_map_btn : classes.container_map_btn_bottom}>
         <div className={classes.container_legend}>
           <div className={classes.bloc_legend}>
             <img src={markerSco} alt="scolaire" />
@@ -249,58 +246,11 @@ const Map = ({ type, schools }) => {
                   click: () => {
                     dispatch(setSchool({ school }));
                     setDrawerIsOpen(true);
+                    setDrawerBottomIsOpen(true);
                   },
                 }}
               >
-                <Link to={`/school/${school._id}`}>
-                  <Popup>
-                    {type !== "homepage" ? (
-                      <div className={classes.container_Popup}>
-                        <div className={classes.container_Popup_img}>
-                          {school.imgPath1 ? (
-                            <img
-                              src={school.imgPath1}
-                              alt={
-                                school.nameUpdate
-                                  ? school.nameUpdate
-                                  : school.name
-                              }
-                            />
-                          ) : (
-                            <img
-                              src={schoolIcon}
-                              alt={
-                                school.nameUpdate
-                                  ? school.nameUpdate
-                                  : school.name
-                              }
-                            />
-                          )}
-                        </div>
-                        <div className={classes.container_infos}>
-                          <h1 className={classes.popup_schoolName}>
-                            {school.name}
-                          </h1>
-                          <div className={classes.container_infos_item}>
-                            <LocationOn sx={{ color: "#324964" }} />
-                            <p className={classes.container_infos_address}>
-                              {school.address}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div>
-                        <h5 className={classes.popup_schoolNameSmall}>
-                          {school.name}
-                        </h5>
-                        <p className={classes.popup_schoolAddressSmall}>
-                          {school.address}
-                        </p>
-                      </div>
-                    )}
-                  </Popup>
-                </Link>
+
               </Marker>
             );
           }
@@ -353,6 +303,52 @@ const Map = ({ type, schools }) => {
             </div>
           )}
         </MapCardDrawer>
+        <MapCardDrawerBottom show={drawerBottomIsOpen}>
+          {schoolDrawer && (
+            <div className={classes.container_infos_drawer}>
+              <div className={classes.container_img_drawer_bottom}>
+                {schoolDrawer.imgPath1 ? (
+                  <img src={schoolDrawer.imgPath1} alt="" />
+                ) : (
+                  <img src={schoolIcon} alt="" />
+                )}
+                <button
+                  className={classes.drawer_close_btn_bottom}
+                  onClick={() => setDrawerBottomIsOpen(false)}
+                >
+                  X
+                </button>
+              </div>
+              <div className={classes.container_infos}>
+                <Link to={`/school/${schoolDrawer._id}`}>
+                  <h3 className={classes.school_drawer_name}>
+                    {schoolDrawer.nameUpdate
+                      ? schoolDrawer.nameUpdate
+                      : schoolDrawer.name}
+                  </h3>
+                </Link>
+                <div className={classes.school_drawer_infos_items}>
+                  <div className={classes.school_drawer_info}>
+                    <LocationOn sx={{ color: "#4285F4" }} />
+                    <h5>{schoolDrawer.address}</h5>
+                  </div>
+                  <div className={classes.school_drawer_info}>
+                    <Flag sx={{ color: "#4285F4" }} />
+                    <h5>{schoolDrawer.country}</h5>
+                  </div>
+                  <div className={classes.school_drawer_info}>
+                    <School sx={{ color: "#4285F4" }} />
+                    <h5>{schoolDrawer.level}</h5>
+                  </div>
+                  <div className={classes.school_drawer_info}>
+                    <MenuBook sx={{ color: "#0275d8" }} />
+                    <h5>{schoolDrawer.sector}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </MapCardDrawerBottom>
         ;
       </MapContainer>
     </>

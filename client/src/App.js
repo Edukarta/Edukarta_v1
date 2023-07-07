@@ -19,8 +19,9 @@ import ResultsPage from "./schools/pages/ResultsPage";
 import AdminLogin from "./admin/pages/AdminLogin";
 import Captcha from "./captcha/pages/captcha";
 import RedirectionPage from "./schools/pages/RedirectionPage";
-import PswdRecoverPage from "./user/pages/PswdRecoverPage"
-import PasswordRecovery from "./user/pages/PasswordRecovery"
+import PswdRecoverPage from "./user/pages/PswdRecoverPage";
+import PasswordRecovery from "./user/pages/PasswordRecovery";
+
 
 function App() {
   const location = useLocation();

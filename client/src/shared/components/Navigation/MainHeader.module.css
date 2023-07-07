@@ -6,7 +6,7 @@
     align-items: center;
     position: fixed;
     background-color: var(--bg-nav-bottom);
-    padding: 0 1rem;
+    padding: 0;
     z-index: 1000000;
   }
 
@@ -19,6 +19,13 @@
     background-color: var(--bg-nav-bottom);
     padding: 0 1rem;
     z-index: 1000000;
+  }
+
+
+  @media (min-width: 350px) {
+    .mainheader {
+      padding: 0 1rem;
+    }
   }
 
 
