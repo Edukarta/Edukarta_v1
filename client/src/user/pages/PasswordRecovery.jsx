@@ -52,7 +52,7 @@ const PasswordRecovery = () => {
         if (response.status === 200) {
           // notify();
           // setTimeout(() => {
-          navigate("/register");
+          navigate("/");
           // }, 3000);
         }
         setPassword("");
