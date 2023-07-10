@@ -74,8 +74,8 @@ export const getSchoolMap = async (req, res) => {
           gps: {
             $geoWithin: {
               $box: [
-                [sudOuestLat, sudOuestLong], // Longitude, Latitude pour le coin sud-ouest
-                [sudEstLat, nordEstLong], // Longitude, Latitude pour le coin nord-est
+                [sudOuestLat, sudOuestLong],
+                [sudEstLat, nordEstLong],
               ],
             },
           },

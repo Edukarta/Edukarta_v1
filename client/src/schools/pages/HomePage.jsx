@@ -6,18 +6,29 @@ import SchoolList from "../components/Homepage/SchoolList";
 import { callApi } from "../../utils/apiUtils";
 import { useNavigate } from "react-router-dom";
 import Suggest from "../components/Homepage/Suggest";
+import { Fab, Collapse, Tooltip } from "@mui/material";
+import {
+  MailOutline,
+  QuestionAnswer,
+  QuestionMark,
+  Info,
+  Add,
+} from "@mui/icons-material/";
 import MainNavigation from "../../shared/components/Navigation/MainNavigation";
 import classes from "./HomePage.module.css";
 
 //FECTHER LES DONNEES DANS CE COMPOSANT PASSEES EN PROPS A SCHOOLLIST
 const HomePage = () => {
   const navigate = useNavigate();
+  const [isBtnOpen, setIsBtnOpen] = useState(false);
   const [schools, setSchools] = useState([]);
   const [popularSchools, setPopularSchools] = useState([]);
   const [country, setCountry] = useState(localStorage.getItem("country"));
   const [page, setPage] = useState(1);
   const [limit] = useState(12);
   const [isFetching, setIsFetching] = useState(false);
+  const addButtonColor = "#15273c";
+  const itemButtonColor = "#365475";
 
   const getUserLocation = async () => {
     try {
@@ -137,6 +148,14 @@ const HomePage = () => {
     }
   };
 
+  const handleMouseEnter = () => {
+    setIsBtnOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsBtnOpen(false);
+  };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -152,11 +171,56 @@ const HomePage = () => {
       </header>
       <section>
         <Map type="homepage" />
+        <div className={classes.floating_btn_container}>
+          <div
+            className={`${classes.float_btn_add} ${isBtnOpen && classes.float_active}`}
+            onClick={() => setIsBtnOpen((prev) => !prev)}
+          >
+            <Fab
+              style={{
+                backgroundColor: addButtonColor
+              }}
+              sx={{boxShadow: "0px 0px 5px 3px rgba(0, 0, 0, 0.2)"}}
+              aria-label="add"
+            >
+              <Add
+                sx={{ fontSize: "30px", fontWeight: "300", color: "white" }}
+              />
+            </Fab>
+          </div>
+          <Collapse in={isBtnOpen} collapsedSize={0}>
+            <div className={classes.float_items}>
+              <Tooltip title="A propos d'EduKarta" placement="right">
+                <Fab
+                  size="medium"
+                  style={{ backgroundColor: itemButtonColor }}
+                  aria-label="info"
+                >
+                  <Info
+                    sx={{ fontSize: "30px", fontWeight: "300", color: "white" }}
+                  />
+                </Fab>
+              </Tooltip>
+              <Tooltip title="Nous contacter" placement="right">
+                <Fab
+                  size="medium"
+                  style={{ backgroundColor: itemButtonColor }}
+                  aria-label="question"
+                >
+                  <QuestionAnswer
+                    sx={{ fontSize: "30px", fontWeight: "300", color: "white" }}
+                  />
+                </Fab>
+              </Tooltip>
+            </div>
+          </Collapse>
+        </div>
         <Suggest
           schools={popularSchools}
           subText="Ces écoles prisées ont beaucoup à offrir"
           title="Les plus populaires"
         />
+
         <SchoolList
           title="Écoles en "
           subText1="Découvrez les écoles en"

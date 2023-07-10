@@ -1,4 +1,3 @@
-
 .mapContainer {
   width: 100%;
   height: 450px;
@@ -9,7 +8,6 @@
   z-index: 1;
 }
 
-
 .mapContainer_map {
   width: 100%;
   height: 100vh;
@@ -18,7 +16,6 @@
 .leaflet-container {
   height: 100%;
 }
-
 
 .container_Popup {
   width: 100%;
@@ -30,42 +27,40 @@
   position: relative;
 }
 
-
-.container_Popup_img{
+.container_Popup_img {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.container_Popup_img img{
+.container_Popup_img img {
   width: 180px;
 }
 
-.container_infos{
+.container_infos {
   width: 100%;
 }
 
-
-.popup_schoolName{
+.popup_schoolName {
   font-size: 22px;
   font-weight: 500;
   padding: 10px;
   border-bottom: 1px solid #4f4f4f;
 }
 
-.container_infos_item{
+.container_infos_item {
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-.container_infos_address{
+.container_infos_address {
   padding: 0;
   margin: 0;
 }
 
-.cluster_icon{
+.cluster_icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,7 +72,6 @@
   border-radius: 300px;
   background-color: rgb(11, 71, 110);
   transform: translate(-50%, -50%);
-  
 }
 
 .red {
@@ -91,62 +85,56 @@
   0% {
     width: 2rem;
     height: 2rem;
-  
   }
   50% {
     width: 3rem;
     height: 3rem;
-
   }
   100% {
     width: 2rem;
     height: 2rem;
- 
   }
 }
 
 .blue {
-  background-color: #528AAE;
+  background-color: #528aae;
   height: 2rem;
   width: 2rem;
   animation: scale 2s infinite;
 }
 
-
-.orange{
+.orange {
   background-color: rgb(254, 146, 57);
   height: 3rem;
   width: 3rem;
   animation: scale 2s infinite;
 }
 
-
-
-.popup_schoolNameSmall{
+.popup_schoolNameSmall {
   font-size: 17px;
   font-weight: 700;
   margin-bottom: -15px;
 }
 
-.popup_schoolAddressSmall{
+.popup_schoolAddressSmall {
   font-size: 15px;
 }
 
-.container_infos_drawer{
+.container_infos_drawer {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.container_img_drawer{
+.container_img_drawer {
   position: relative;
   width: 100%;
   height: 250px;
   object-fit: cover;
 }
 
-.container_img_drawer_bottom{
+.container_img_drawer_bottom {
   position: relative;
   width: 100%;
   height: 250px;
@@ -155,7 +143,7 @@
   object-fit: cover;
 }
 
-.container_img_drawer_bottom img{
+.container_img_drawer_bottom img {
   width: 100%;
   height: 100%;
   border-top-left-radius: 30px;
@@ -163,12 +151,12 @@
   object-fit: cover;
 }
 
-.container_img_drawer img{
+.container_img_drawer img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.drawer_close_btn_bottom{
+.drawer_close_btn_bottom {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -185,8 +173,7 @@
   cursor: pointer;
 }
 
-
-.drawer_close_btn{
+.drawer_close_btn {
   position: absolute;
   top: 0;
   right: 0;
@@ -201,18 +188,18 @@
   border-bottom-left-radius: 10px;
   cursor: pointer;
 }
-.container_infos{
+.container_infos {
   padding: 20px;
 }
 
-.school_drawer_name{
+.school_drawer_name {
   font-size: 25px;
   text-transform: capitalize;
   font-weight: 400;
   color: #333;
 }
 
-.school_drawer_infos_items{
+.school_drawer_infos_items {
   margin-top: 10px;
   padding: 20px 0;
   display: flex;
@@ -221,51 +208,67 @@
   border-bottom: 1px solid #adadad;
 }
 
-.school_drawer_info{
+.school_drawer_info {
   display: flex;
   align-items: center;
   text-transform: capitalize;
   gap: 10px;
-
 }
 
-.school_drawer_info h5{
+.school_drawer_info h5 {
   color: #333;
   font-weight: 400;
 }
 
-.progress_bar{
+.progress_bar {
   position: absolute;
   top: 200px;
 }
 
-.custom-marker-icon{
+.custom-marker-icon {
   width: 50px;
   height: 50px;
   background-color: red;
 }
 
-.container_legend{
+.container_legend {
   display: flex;
   gap: 10px;
 }
 
-
-.container_legend img{
-  width: 10px;
-}
-
-.bloc_legend{
+.bloc_legend {
   display: flex;
   align-items: center;
   gap: 2px;
 }
 
-.bloc_legend span{
+.bloc_legend span {
   font-size: 12px;
 }
+.container_img_level {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: White;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+  border: 3px solid #6f6f6f;
+  z-index: 0;
+}
 
-.container_map_btn{
+.scoBorder {
+  border: 3px solid #49bc42;
+}
+
+.supBorder {
+  border: 3px solid #5274b5;
+}
+.container_img_level img {
+  width: 12px;
+}
+.container_map_btn {
   position: absolute;
   width: 100%;
   display: flex;
@@ -280,7 +283,7 @@
   z-index: 555555;
 }
 
-.container_map_btn_bottom{
+.container_map_btn_bottom {
   position: absolute;
   width: 100%;
   display: flex;
@@ -295,76 +298,70 @@
   z-index: 555555;
 }
 
-.container_form_control{
+.container_form_control {
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-
-
-.form_control{
+.form_control {
+  position: relative;
   display: flex;
   align-items: center;
   pointer-events: auto;
   gap: 5px;
 }
 
-input[type="radio"] {
- height: 15px;
- width: 15px;
+.form_control input[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+  z-index: 1;
 }
 
-.map_label{
+.map_label {
   color: #2a2a2a;
   font-size: 12px;
 }
-
-
-
 
 @media (min-width: 800px) {
   .mapContainer {
     height: 600px;
   }
-
 }
 
 @media (min-width: 850px) {
-  .container_img_drawer_bottom{
+  .container_img_drawer_bottom {
     height: 350px;
   }
-
 }
 
 @media (min-width: 1080px) {
-  .container_map_btn{
+  .container_map_btn {
     margin-top: inherit;
     padding: 40px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 5%, transparent);
     gap: 10px;
   }
 
-  .map_label{
+  .map_label {
     color: #555555;
     font-size: 17px;
   }
 
-  input[type="radio"] {
-    height: 20px;
+  .form_control input[type="checkbox"] {
+    opacity: 0;
     width: 20px;
-   }
-   .container_legend img{
-    width: 15px;
+    height: 20px;
+    z-index: 1;
   }
 
-  .bloc_legend span{
+  .bloc_legend span {
     font-size: 12px;
   }
 
-  .bloc_legend{
+  .bloc_legend {
     gap: 5px;
   }
-
-  
 }

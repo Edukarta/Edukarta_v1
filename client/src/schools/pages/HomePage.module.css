@@ -4,3 +4,38 @@
     justify-content: center;
   }
 
+.floating_btn_container{
+  position: fixed;
+  display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+  bottom: 70px;
+  right: 20px;
+  z-index: 5555555;
+}
+
+.float_btn_add{
+  transform: rotate(0deg);
+  transition: all 0.3s ease-in-out;
+}
+
+.float_active{
+  transform: rotate(180deg);
+}
+
+.float_items{
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  gap: 20px;
+}
+
+@media (min-width: 1080px) {
+  .floating_btn_container{
+    bottom: 40px;
+    right: 40px;
+  }
+}
+
+
+

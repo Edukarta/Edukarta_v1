@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Button from "../FormElements/Button";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import schoolIcon from "../../../img/img_school.jpg";
 import { Link } from "react-router-dom";
 import { Icon, divIcon, point } from "leaflet";
@@ -13,15 +13,15 @@ import markerSup from "../../../img/point_sup.png";
 import markerSco from "../../../img/point_sco.png";
 import MapCardDrawer from "./MapCardDrawer";
 import MapCardDrawerBottom from "./MapCardDrawerBottom";
-import { useMediaQuery } from "@mui/material";
+import { useMediaQuery, Tooltip } from "@mui/material";
 import "leaflet/dist/leaflet.css";
 import classes from "./Map.module.css";
 
-const Map = ({ type}) => {
+const Map = ({ type }) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const [drawerBottomIsOpen, setDrawerBottomIsOpen] = useState(false);
   const [schoolsMap, setSchoolsMap] = useState([]);
-  const [selectedType, setSelectedType] = useState();
+  const [selectedType, setSelectedType] = useState("both");
   const isSmallerScreen = useMediaQuery("(max-width:1080px)");
   const zoom = isSmallerScreen ? 2 : 6;
   const [currentZoom, setCurrentZoom] = useState(zoom);
@@ -32,16 +32,18 @@ const Map = ({ type}) => {
   const schoolDrawer = useSelector((state) => state.school);
   const lastPositionRef = useRef(null);
 
-  // const  levels = schoolDrawer.level.join(" - ");
-   const MarkerSup = new Icon({
-    iconUrl: markerSup,
+  const levels = schoolDrawer && schoolDrawer.level && schoolDrawer.level.length > 0
+  ? schoolDrawer.level.join(" - ")
+  : "";
+  const MarkerSup = new Icon({
+    iconUrl: markerSco,
     iconSize: [20, 20],
     iconAnchor: [5, 5],
     className: "custom-marker-icon",
   });
 
   const MarkerSco = new Icon({
-    iconUrl: markerSco,
+    iconUrl: markerSup,
     iconSize: [20, 20],
     iconAnchor: [5, 5],
     className: "custom-marker-icon",
@@ -88,17 +90,21 @@ const Map = ({ type}) => {
       const data = await responseData;
       const allSchools = await data.data;
       let filteredSchools = allSchools.schools;
-      if (selectedType === "sco") {
-        filteredSchools = allSchools.schools.filter(
+      if (selectedType.includes("sco")) {
+        filteredSchools = filteredSchools.filter(
           (school) => school.category === "SCO"
         );
-      } else if (selectedType === "sup") {
-        filteredSchools = allSchools.schools.filter(
+      }
+      if (selectedType.includes("sup")) {
+        filteredSchools = filteredSchools.filter(
           (school) => school.category === "SUP"
         );
-      } else {
-        
       }
+
+      if (selectedType === "") {
+        filteredSchools = [];
+      }
+
       setSchoolsMap(filteredSchools);
     } catch (error) {
       console.log(error);
@@ -162,53 +168,96 @@ const Map = ({ type}) => {
 
     return null;
   };
-
+  console.log(selectedType);
   return (
     <>
-      <div className={type === "homepage" ? classes.container_map_btn : classes.container_map_btn_bottom}>
-        <div className={classes.container_legend}>
-          <div className={classes.bloc_legend}>
-            <img src={markerSco} alt="scolaire" />
-            <span>Scolaire</span>
-          </div>
-          <div className={classes.bloc_legend}>
-            <img src={markerSup} alt="superieur" />
-            <span>Supérieur</span>
-          </div>
-        </div>
+      <div
+        className={
+          type === "homepage"
+            ? classes.container_map_btn
+            : classes.container_map_btn_bottom
+        }
+      >
         <div className={classes.container_form_control}>
           <div className={classes.form_control}>
             <input
-              type="radio"
-              id="all"
-              name="type"
-              value="all"
-              onChange={(e) => setSelectedType(e.target.value)}
-            />
-            <label htmlFor="all" className={classes.map_label}>
-              Tout
-            </label>
-          </div>
-          <div className={classes.form_control}>
-            <input
-              type="radio"
+              type="checkbox"
               id="sco"
               name="type"
               value="sco"
-              onChange={(e) => setSelectedType(e.target.value)}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setSelectedType((prevType) => {
+                    if (prevType.includes("sup")) {
+                      return "both";
+                    } else {
+                      return "sco";
+                    }
+                  });
+                } else {
+                  setSelectedType((prevType) => {
+                    if (prevType === "both") {
+                      return "sup";
+                    } else {
+                      return "";
+                    }
+                  });
+                }
+              }}
+              checked={selectedType.includes("sco") || selectedType === "both"}
             />
+            <div
+              className={`${classes.container_img_level} ${
+                (selectedType.includes("sco") || selectedType === "both") &&
+                classes.scoBorder
+              }`}
+            >
+              {selectedType.includes("sco") || selectedType === "both" ? (
+                <img src={markerSup} alt="" />
+              ) : null}
+            </div>
             <label htmlFor="sco" className={classes.map_label}>
               Scolaire
             </label>
           </div>
           <div className={classes.form_control}>
             <input
-              type="radio"
+              type="checkbox"
               id="sup"
               name="type"
               value="sup"
-              onChange={(e) => setSelectedType(e.target.value)}
+              className={classes.input_checkbox}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setSelectedType((prevType) => {
+                    if (prevType.includes("sco")) {
+                      return "both";
+                    } else {
+                      return "sup";
+                    }
+                  });
+                } else {
+                  setSelectedType((prevType) => {
+                    if (prevType === "both") {
+                      return "sco";
+                    } else {
+                      return "";
+                    }
+                  });
+                }
+              }}
+              checked={selectedType.includes("sup") || selectedType === "both"}
             />
+            <div
+              className={`${classes.container_img_level} ${
+                (selectedType.includes("sup") || selectedType === "both") &&
+                classes.supBorder
+              }`}
+            >
+              {selectedType.includes("sup") || selectedType === "both" ? (
+                <img src={markerSco} alt="" />
+              ) : null}
+            </div>
             <label htmlFor="sup" className={classes.map_label}>
               Supérieur
             </label>
@@ -250,7 +299,6 @@ const Map = ({ type}) => {
                   },
                 }}
               >
-
               </Marker>
             );
           }
@@ -292,7 +340,7 @@ const Map = ({ type}) => {
                   </div>
                   <div className={classes.school_drawer_info}>
                     <School sx={{ color: "#4285F4" }} />
-                    <h5>{schoolDrawer.level}</h5>
+                    <h5>{levels}</h5>
                   </div>
                   <div className={classes.school_drawer_info}>
                     <MenuBook sx={{ color: "#0275d8" }} />
@@ -338,7 +386,7 @@ const Map = ({ type}) => {
                   </div>
                   <div className={classes.school_drawer_info}>
                     <School sx={{ color: "#4285F4" }} />
-                    <h5>{schoolDrawer.level}</h5>
+                    <h5>{levels}</h5>
                   </div>
                   <div className={classes.school_drawer_info}>
                     <MenuBook sx={{ color: "#0275d8" }} />

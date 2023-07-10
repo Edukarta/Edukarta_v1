@@ -115,14 +115,14 @@ const Offers = () => {
             </div>
             <div className={classes.enum_item}>
               <span className={classes.number}>2</span>
-              <h6 className={classes.enum_title}>Clear</h6>
+              <h6 className={classes.enum_title}>Clair</h6>
               <p className={classes.enum_description}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </p>
             </div>
             <div className={classes.enum_item}>
               <span className={classes.number}>3</span>
-              <h6 className={classes.enum_title}>effective</h6>
+              <h6 className={classes.enum_title}>efficace</h6>
               <p className={classes.enum_description}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </p>
@@ -133,7 +133,7 @@ const Offers = () => {
               title="Plan Eco"
               green
               color="#088f8f"
-              price="120€ / year"
+              price="120€ / an"
               onClick={() => handleSubscribe("Eco", 120)}
               anchor="info"
               text_green
@@ -197,7 +197,7 @@ const Offers = () => {
               title="Plan Standard"
               blue
               color="#414c68"
-              price="480€ / year"
+              price="480€ / an"
               onClick={() => handleSubscribe("Standard", 480)}
               anchor="info"
               text_blue
@@ -262,7 +262,7 @@ const Offers = () => {
               title="Plan Premium"
               orange
               color="#ff8b3d"
-              price="1560€ / year"
+              price="1560€ / an"
               onClick={() => handleSubscribe("Premium", 1560)}
               text_orange
               anchor="info"
@@ -348,7 +348,7 @@ const Offers = () => {
               establishment.
             </p>
             <div className={classes.container_btn_info}>
-              <Button>Subscribe</Button>
+              <Button>Souscrire</Button>
             </div>
           </div>
 
@@ -371,7 +371,7 @@ const Offers = () => {
               establishment.
             </p>
             <div className={classes.container_btn_info}>
-              <Button>Subscribe</Button>
+              <Button>Souscrire</Button>
             </div>
           </div>
 
@@ -395,7 +395,7 @@ const Offers = () => {
               establishment.
             </p>
             <div className={classes.container_btn_info}>
-              <Button>Subscribe</Button>
+              <Button>Souscrire</Button>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Button from "../../shared/components/FormElements/Button";
 import Input from "../../shared/components/FormElements/Input";
 import axios from "axios";
+import { CircularProgress } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import classes from "./PasswordRecovery.module.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -71,11 +72,17 @@ const PasswordRecovery = () => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
   return (
     <section className={classes.containerFormRegister}>
       <div className={classes.containerForm_title}>
         <h1 className={classes.formTitle}>Modifier le mot de passe</h1>
-        <form onSubmit={handleSubmit} className={classes.registerForm}>
+        <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} className={classes.registerForm}>
           <Input
             type="password"
             element="input"

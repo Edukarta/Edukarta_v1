@@ -26,7 +26,7 @@ export const register = async (req, res, next) => {
 
   let existingUser;
   try {
-    existingUser = await User.findOne({ email: email });
+    existingUser = await User.findOne({ email: email.toLowerCase() });
   } catch (err) {
     const error = new HttpError(
       "Signing up failed, please try again later.",
@@ -46,7 +46,7 @@ export const register = async (req, res, next) => {
   const newUser = new User({
     firstname,
     lastname,
-    email,
+    email: email.toLowerCase(),
     password: passwordHash,
     location,
     address,
@@ -77,7 +77,7 @@ export const login = async (req, res, next) => {
   const { email, password } = req.body;
   let user;
   try {
-    user = await User.findOne({ email: email });
+    user = await User.findOne({ email: email.toLowerCase() });
   } catch (err) {
     const error = new HttpError(
       "Erreur lors de l'authentification, réessayer plus tard.",

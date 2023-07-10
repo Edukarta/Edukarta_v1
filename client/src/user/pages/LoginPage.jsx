@@ -31,13 +31,7 @@ const LoginPage = () => {
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
 
-  //Fonction qui redirige vers la page de recupération de mot de passe
-
-  // Définir la fonction de gestion de clic du bouton
-  const handleClick = () => {
-    navigate("/PswdRecoverPage");
-  };
-
+ 
   //FONCTION QUI GERE LA CREATION DE PROFIL
   const register = async (values, onSubmitProps) => {
     const formData = new FormData();
@@ -102,6 +96,12 @@ const LoginPage = () => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleFormSubmit();
+    }
+  };
+
   return (
     <section className={classes.containerFormRegister}>
       <div className={classes.containerForm_title}>
@@ -124,7 +124,7 @@ const LoginPage = () => {
             setFieldValue,
             resetForm,
           }) => (
-            <form className={classes.registerForm} onSubmit={handleSubmit}>
+            <form className={classes.registerForm} onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
               {isRegister && (
                 <>
                   <div>
