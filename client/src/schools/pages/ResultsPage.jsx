@@ -32,6 +32,7 @@ const ResultsPage = () => {
   const [cityFilter, setCityFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [checkAll, setCheckAll] = useState(false);
   const [formattedFilters, setFormattedFilters] = useState([]);
   const { currentPage, totalPages, totalCount, pageSize } = useSelector(
     (state) => state.pagination
@@ -71,6 +72,12 @@ const ResultsPage = () => {
     }
   };
 
+  const handleCheckAll = () => {
+    setCheckAll(!checkAll);
+    setSelectedFilters(checkAll ? [] : formattedFilters);
+  };
+  
+
   const handleFilterChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -90,7 +97,6 @@ const ResultsPage = () => {
       }
     }
 
-  
   };
 
 
@@ -531,14 +537,14 @@ const ResultsPage = () => {
                   <div className={classes.container_input_level}>
 
                   <div className={classes.input_filter_goup}>
-                      <input
+                      {/* <input
                         type="checkbox"
                         id="all"
                         name="all"
                         value="all"
                         onChange={handleFilterChange}
                       />
-                      <label htmlFor="all">Tout Cocher</label>
+                      <label htmlFor="all">Tout Cocher</label> */}
                     </div>
 
                     <div className={classes.input_filter_goup}>

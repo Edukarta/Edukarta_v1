@@ -13,7 +13,7 @@ import PriceCard from "../components/PriceCard";
 import Button from "../../shared/components/FormElements/Button";
 import classes from "./Offers.module.css";
 import banner from "../../img/banner_v2.jpg";
-import {callApi} from "../../utils/apiUtils"
+import { callApi } from "../../utils/apiUtils";
 
 const Offers = () => {
   const { id } = useParams();
@@ -23,11 +23,14 @@ const Offers = () => {
   const dispatch = useDispatch();
 
   const getSchool = async () => {
-    const response = callApi(`${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,"GET",)
+    const response = callApi(
+      `${process.env.REACT_APP_API_URL}/api/v1/schools/${id}`,
+      "GET"
+    );
     const data = await response;
     const statusCode = response.status;
-    if(statusCode === 429 || statusCode ===403){
-      navigate("/captcha")
+    if (statusCode === 429 || statusCode === 403) {
+      navigate("/captcha");
     }
     setSchool(data.data.school);
   };
@@ -46,15 +49,13 @@ const Offers = () => {
           schoolImg: school.imgPath7,
           price: price,
           title: title,
-          quantity: 1
-        }
-      ]
+          quantity: 1,
+        },
+      ],
     };
     dispatch(setCartItem(userCart));
-    navigate("/paiement")
-
+    navigate("/paiement");
   };
-
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -141,25 +142,38 @@ const Offers = () => {
               <div className={classes.container_body_price}>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>Page sans pub</span>
+                </div>
+
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
                   <span className={classes.price_item}>
                     Changer les informations
                   </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>Ajouter une description</span>
+                  <span className={classes.price_item}>
+                    Ajouter une description
+                  </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>Ajout d'une image de couverture</span>
+                  <span className={classes.price_item}>
+                    Ajout d'une image de couverture
+                  </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
-                  <span className={classes.price_item}>Edukartadds (mise en avant publicitaire)</span>
+                  <span className={classes.price_item}>
+                    Edukartadds (mise en avant publicitaire)
+                  </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
-                  <span className={classes.price_item}>annonces (portes ouvertes, événements, etc..)</span>
+                  <span className={classes.price_item}>
+                    annonces (portes ouvertes, événements, etc..)
+                  </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
@@ -173,7 +187,9 @@ const Offers = () => {
                 </div>
                 <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
-                  <span className={classes.price_item}>ajout d'une bannière</span>
+                  <span className={classes.price_item}>
+                    ajout d'une bannière
+                  </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
@@ -187,10 +203,10 @@ const Offers = () => {
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
                   <span className={classes.price_item}>wallet</span>
                 </div>
-                <div className={classes.container_text_icon}>
+                {/* <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
                   <span className={classes.price_item}>NFT creator</span>
-                </div>
+                </div> */}
               </div>
             </PriceCard>
             <PriceCard
@@ -205,25 +221,37 @@ const Offers = () => {
               <div className={classes.container_body_price}>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>Page sans pub</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
                   <span className={classes.price_item}>
                     Changer les informations
                   </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>Ajouter une description</span>
+                  <span className={classes.price_item}>
+                    Ajouter une description
+                  </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>Ajout d'une image de couverture</span>
-                </div>
-                <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>Edukartadds (mise en avant publicitaire)</span>
+                  <span className={classes.price_item}>
+                    Ajout d'une image de couverture
+                  </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>annonces (portes ouvertes, événements, etc..)</span>
+                  <span className={classes.price_item}>
+                    Edukartadds (mise en avant publicitaire)
+                  </span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>
+                    annonces (portes ouvertes, événements, etc..)
+                  </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
@@ -231,14 +259,16 @@ const Offers = () => {
                     ajout de plusieurs images
                   </span>
                 </div>
-                
+
                 <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
                   <span className={classes.price_item}>ajout d'un logo</span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
-                  <span className={classes.price_item}>ajout d'une bannière</span>
+                  <span className={classes.price_item}>
+                    ajout d'une bannière
+                  </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
@@ -252,10 +282,10 @@ const Offers = () => {
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
                   <span className={classes.price_item}>wallet</span>
                 </div>
-                <div className={classes.container_text_icon}>
+                {/* <div className={classes.container_text_icon}>
                   <CloseRounded sx={{ fontSize: "40px", color: "red" }} />
                   <span className={classes.price_item}>NFT creator</span>
-                </div>
+                </div> */}
               </div>
             </PriceCard>
             <PriceCard
@@ -270,25 +300,37 @@ const Offers = () => {
               <div className={classes.container_body_price}>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>Page sans pub</span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
                   <span className={classes.price_item}>
                     Changer les informations
                   </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>Ajouter une description</span>
+                  <span className={classes.price_item}>
+                    Ajouter une description
+                  </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>Ajout d'une image de couverture</span>
-                </div>
-                <div className={classes.container_text_icon}>
-                <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>Edukartadds (mise en avant publicitaire)</span>
+                  <span className={classes.price_item}>
+                    Ajout d'une image de couverture
+                  </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>annonces (portes ouvertes, événements, etc..)</span>
+                  <span className={classes.price_item}>
+                    Edukartadds (mise en avant publicitaire)
+                  </span>
+                </div>
+                <div className={classes.container_text_icon}>
+                  <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
+                  <span className={classes.price_item}>
+                    annonces (portes ouvertes, événements, etc..)
+                  </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
@@ -302,7 +344,9 @@ const Offers = () => {
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
-                  <span className={classes.price_item}>ajout d'une bannière</span>
+                  <span className={classes.price_item}>
+                    ajout d'une bannière
+                  </span>
                 </div>
                 <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
@@ -316,10 +360,10 @@ const Offers = () => {
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
                   <span className={classes.price_item}>wallet</span>
                 </div>
-                <div className={classes.container_text_icon}>
+                {/* <div className={classes.container_text_icon}>
                   <DoneRounded sx={{ fontSize: "40px", color: "green" }} />
                   <span className={classes.price_item}>NFT creator</span>
-                </div>
+                </div> */}
               </div>
             </PriceCard>
           </div>
