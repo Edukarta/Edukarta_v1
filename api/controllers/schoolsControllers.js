@@ -89,7 +89,6 @@ export const getSchoolMap = async (req, res) => {
       currentPage,
       totalPages: Math.ceil(schoolsCount / itemsPerPage),
     });
-
   } catch (error) {
     console.error("Erreur lors de la récupération des écoles :", error);
     res
@@ -125,7 +124,7 @@ export const searchSchools = async (req, res, next) => {
 
     const keywordConditions = filteredKeywords.map((keyword) => ({
       $or: [
-        { name: { $regex: new RegExp(keyword, "i") } },
+        { name: { $regex: new RegExp(`\\b${keyword}\\b`, "i") } },
         { nameUpdate: { $regex: new RegExp(keyword, "i") } },
         { city: { $regex: new RegExp(keyword, "i") } },
         { cityUpdate: { $regex: new RegExp(keyword, "i") } },
@@ -232,7 +231,6 @@ export const searchSchools = async (req, res, next) => {
         locale: "fr",
         strength: 1,
       })
-      .sort({ name: 1 })
       .skip((currentPage - 1) * itemsPerPage)
       .limit(itemsPerPage);
     const totalPages = Math.ceil(totalCount / itemsPerPage);
@@ -311,8 +309,8 @@ export const filterSchools = async (req, res, next) => {
       if (group.searchValue.lenght < 1) {
         orArray.push({
           $or: [
-            { name: { $regex: queryValue, $options: "i" } },
-            { nameUpdate: { $regex: queryValue, $options: "i" } },
+            // { name: { $regex: queryValue, $options: "i" } },
+            // { nameUpdate: { $regex: queryValue, $options: "i" } },
             { continent: { $regex: queryValue, $options: "i" } },
             { city: { $regex: queryValue, $options: "i" } },
             { cityUpdate: { $regex: queryValue, $options: "i" } },
@@ -329,8 +327,8 @@ export const filterSchools = async (req, res, next) => {
         for (const queryValue of group.searchValue) {
           orArray.push({
             $or: [
-              { name: { $regex: queryValue, $options: "i" } },
-              { nameUpdate: { $regex: queryValue, $options: "i" } },
+              // { name: { $regex: queryValue, $options: "i" } },
+              // { nameUpdate: { $regex: queryValue, $options: "i" } },
               { continent: { $regex: queryValue, $options: "i" } },
               { city: { $regex: queryValue, $options: "i" } },
               { cityUpdate: { $regex: queryValue, $options: "i" } },
@@ -408,6 +406,7 @@ export const filterSchools = async (req, res, next) => {
     next(err);
   }
 };
+
 
 //SHOW ONE SCHOOL
 //@GET
