@@ -89,7 +89,10 @@ const ResultsPage = () => {
         );
       }
     }
+
+  
   };
+
 
   const handleSearch = async (event = null, newCurrentPage = null) => {
     if (event) {
@@ -97,7 +100,6 @@ const ResultsPage = () => {
     }
     setProgress(true);
     const query = selectedFilters.join(",");
-    console.log(query);
     setFormattedFilters(query);
     try {
       const response = await fetch(
@@ -107,7 +109,6 @@ const ResultsPage = () => {
         }
       );
       const data = await response.json();
-      console.log(currentPage);
       dispatch(setSearchResults({ results: data }));
       dispatch(
         setPagination({
@@ -124,6 +125,8 @@ const ResultsPage = () => {
     setDrawerIsOpen(false);
     setProgress(false);
   };
+
+  
 
   useEffect(() => {
     if (currentPageRef.current !== currentPage) {
@@ -268,16 +271,6 @@ const ResultsPage = () => {
                   <div className={classes.input_filter_goup}>
                     <input
                       type="checkbox"
-                      id="superior"
-                      name="superior"
-                      value="supérieur"
-                      onChange={handleFilterChange}
-                    />
-                    <label htmlFor="preschool">Supérieur</label>
-                  </div>
-                  <div className={classes.input_filter_goup}>
-                    <input
-                      type="checkbox"
                       id="university"
                       name="university"
                       value="université"
@@ -325,18 +318,9 @@ const ResultsPage = () => {
                       value="centre de formation"
                       onChange={handleFilterChange}
                     />
-                    <label htmlFor="formationCenter">centre de formation Pro</label>
-                  </div>
-
-                  <div className={classes.input_filter_goup}>
-                    <input
-                      type="checkbox"
-                      id="cfa"
-                      name="cfa"
-                      value="CFA"
-                      onChange={handleFilterChange}
-                    />
-                    <label htmlFor="cfa">CFA</label>
+                    <label htmlFor="formationCenter">
+                      centre de formation Pro
+                    </label>
                   </div>
                 </div>
               </Collapse>
@@ -430,7 +414,7 @@ const ResultsPage = () => {
               <div className={classes.container_title_filter_panel}>
                 <h3>Filtrer ma recherche</h3>
               </div>
-               <div className={classes.container_filter_group}>
+              <div className={classes.container_filter_group}>
                 <h3>Niveaux</h3>
                 <div className={classes.btn_sco_sup}>
                   <div
@@ -480,6 +464,17 @@ const ResultsPage = () => {
                     <div className={classes.input_filter_goup}>
                       <input
                         type="checkbox"
+                        id="crib"
+                        name="crib"
+                        value="crèche"
+                        onChange={handleFilterChange}
+                      />
+                      <label htmlFor="crib">Crèche</label>
+                    </div>
+
+                    <div className={classes.input_filter_goup}>
+                      <input
+                        type="checkbox"
                         id="kindergarden"
                         name="kindergarden"
                         value="jardin d'enfant"
@@ -487,6 +482,7 @@ const ResultsPage = () => {
                       />
                       <label htmlFor="kindergarden">Jardin d'enfant</label>
                     </div>
+
                     <div className={classes.input_filter_goup}>
                       <input
                         type="checkbox"
@@ -533,7 +529,19 @@ const ResultsPage = () => {
                 {/* SECTION SUP */}
                 <Collapse in={supIsOpen} collapsedSize={0}>
                   <div className={classes.container_input_level}>
+
                   <div className={classes.input_filter_goup}>
+                      <input
+                        type="checkbox"
+                        id="all"
+                        name="all"
+                        value="all"
+                        onChange={handleFilterChange}
+                      />
+                      <label htmlFor="all">Tout Cocher</label>
+                    </div>
+
+                    <div className={classes.input_filter_goup}>
                       <input
                         type="checkbox"
                         id="university"
@@ -567,15 +575,15 @@ const ResultsPage = () => {
                     </div>
 
                     <div className={classes.input_filter_goup}>
-                    <input
-                      type="checkbox"
-                      id="buissnessSchool"
-                      name="buissnessSchool"
-                      value="école de commerce"
-                      onChange={handleFilterChange}
-                    />
-                    <label htmlFor="buissnessSchool">école de commerce</label>
-                  </div>
+                      <input
+                        type="checkbox"
+                        id="buissnessSchool"
+                        name="buissnessSchool"
+                        value="école de commerce"
+                        onChange={handleFilterChange}
+                      />
+                      <label htmlFor="buissnessSchool">école de commerce</label>
+                    </div>
 
                     <div className={classes.input_filter_goup}>
                       <input
@@ -585,7 +593,9 @@ const ResultsPage = () => {
                         value="centre de formation"
                         onChange={handleFilterChange}
                       />
-                      <label htmlFor="formationCenter">centre de formation Pro</label>
+                      <label htmlFor="formationCenter">
+                        centre de formation Pro
+                      </label>
                     </div>
                   </div>
                 </Collapse>
