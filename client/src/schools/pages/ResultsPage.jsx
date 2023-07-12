@@ -135,9 +135,16 @@ const ResultsPage = () => {
   const handleFilterScoChange = (e) => {
     const name = e.target.name;
     const checked = e.target.checked;
-    
-    const scoCheckboxValues = ["crèche", "jardin d'enfant", "maternelle", "primaire", "collège", "lycée"];
-  
+
+    const scoCheckboxValues = [
+      "crèche",
+      "jardin d'enfant",
+      "maternelle",
+      "primaire",
+      "collège",
+      "lycée",
+    ];
+
     if (name === "allSco") {
       setScoCheckboxes({
         allSco: checked,
@@ -148,19 +155,19 @@ const ResultsPage = () => {
         middleSchool: checked,
         highSchool: checked,
       });
-      
+
       if (checked) {
         setSelectedFilters(scoCheckboxValues);
       } else {
         setSelectedFilters([]);
       }
     } else {
-      setScoCheckboxes(prevCheckboxes => ({
+      setScoCheckboxes((prevCheckboxes) => ({
         ...prevCheckboxes,
         [name]: checked,
         allSco: false,
       }));
-  
+
       if (checked) {
         setSelectedFilters([...selectedFilters, e.target.value]);
       } else {
@@ -205,7 +212,6 @@ const ResultsPage = () => {
     setProgress(false);
   };
 
- 
   useEffect(() => {
     if (currentPageRef.current !== currentPage) {
       currentPageRef.current = currentPage;
@@ -282,7 +288,17 @@ const ResultsPage = () => {
               {/* SECTION SCO / MOBILE */}
               <Collapse in={scoIsOpen} collapsedSize={0}>
                 <div className={classes.container_input_level}>
-                  <div className={classes.input_filter_goup}>
+                <div className={classes.input_filter_goup}>
+                      <input
+                        type="checkbox"
+                        id="allSco"
+                        name="allSco"
+                        value="allSco"
+                        onChange={handleFilterScoChange}
+                      />
+                      <label htmlFor="allSco">Tout Cocher</label>
+                    </div>
+                  {/* <div className={classes.input_filter_goup}>
                     <input
                       type="checkbox"
                       id="crib"
@@ -291,14 +307,14 @@ const ResultsPage = () => {
                       onChange={handleFilterSupChange}
                     />
                     <label htmlFor="crib">Crèche</label>
-                  </div>
+                  </div> */}
                   <div className={classes.input_filter_goup}>
                     <input
                       type="checkbox"
                       id="kindergarden"
                       name="kindergarden"
                       value="jardin d'enfant"
-                      onChange={handleFilterSupChange}
+                      onChange={handleFilterScoChange}
                     />
                     <label htmlFor="kindergarden">Jardin d'enfant</label>
                   </div>
@@ -308,7 +324,7 @@ const ResultsPage = () => {
                       id="preschool"
                       name="preschool"
                       value="maternelle"
-                      onChange={handleFilterSupChange}
+                      onChange={handleFilterScoChange}
                     />
                     <label htmlFor="preschool">Maternelle</label>
                   </div>
@@ -318,7 +334,7 @@ const ResultsPage = () => {
                       id="elementary"
                       name="elementary"
                       value="primaire"
-                      onChange={handleFilterSupChange}
+                      onChange={handleFilterScoChange}
                     />
                     <label htmlFor="elementary">Primaire</label>
                   </div>
@@ -328,7 +344,7 @@ const ResultsPage = () => {
                       id="middleSchool"
                       name="middleSchool"
                       value="collège"
-                      onChange={handleFilterSupChange}
+                      onChange={handleFilterScoChange}
                     />
                     <label htmlFor="middleSchool">Collège</label>
                   </div>
@@ -338,7 +354,7 @@ const ResultsPage = () => {
                       id="highSchool"
                       name="highSchool"
                       value="lycée"
-                      onChange={handleFilterSupChange}
+                      onChange={handleFilterScoChange}
                     />
                     <label htmlFor="highschool">Lycée</label>
                   </div>
@@ -552,7 +568,7 @@ const ResultsPage = () => {
                 {/* SECTION SCO / DESKTOP */}
                 <Collapse in={scoIsOpen} collapsedSize={0}>
                   <div className={classes.container_input_level}>
-                  <div className={classes.input_filter_goup}>
+                    <div className={classes.input_filter_goup}>
                       <input
                         type="checkbox"
                         id="allSco"
@@ -563,7 +579,7 @@ const ResultsPage = () => {
                       <label htmlFor="allSco">Tout Cocher</label>
                     </div>
 
-                    <div className={classes.input_filter_goup}>
+                    {/* <div className={classes.input_filter_goup}>
                       <input
                         type="checkbox"
                         id="crib"
@@ -573,7 +589,7 @@ const ResultsPage = () => {
                         onChange={handleFilterScoChange}
                       />
                       <label htmlFor="crib">Crèche</label>
-                    </div>
+                    </div> */}
 
                     <div className={classes.input_filter_goup}>
                       <input
