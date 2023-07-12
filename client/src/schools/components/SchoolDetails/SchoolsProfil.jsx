@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import Dropzone from "react-dropzone";
 import Tooltip from "@mui/material/Tooltip";
 import { CalendarMonth, Article, FileOpen } from "@mui/icons-material";
+import schoolIcon from "../../../img/institution.png";
 import Calendar from "../../../shared/components/UIElements/Calendar";
 import Apply from "../../../shared/components/UIElements/Apply";
 import ModalKartaJob from "../../../shared/components/UIElements/ModalKartaJob";
@@ -336,41 +337,41 @@ const SchoolsProfil = ({ school, getSchool }) => {
               <div className={classes.profil_info_items_group}>
                 <div className={classes.profil_info_item}>
                   <Create sx={{ color: "#365475", fontSize: "30px" }} />
-                  <span className={classes.infos_text_light}>Founded </span>
-                  <span className={classes.infos_text_bold}>
+                  <span className={classes.infos_text_light}>Date de création</span>
+                  {isOwner && <span className={classes.infos_text_bold}>
                     {school?.foundationDate}
-                  </span>
+                  </span>}
                 </div>
 
                 <div className={classes.profil_info_item}>
                   <Person sx={{ color: "#365475", fontSize: "30px" }} />
                   <span className={classes.infos_text_light}>
-                    Number of students
+                    Nombre d'étudiants
                   </span>
-                  <span className={classes.infos_text_bold}>
+                  {isOwner && <span className={classes.infos_text_bold}>
                     {school?.numberOfStudents}
-                  </span>
+                  </span>}
                 </div>
 
                 <div className={classes.profil_info_item}>
                   <School sx={{ color: "#365475", fontSize: "30px" }} />
-                  <span className={classes.infos_text_light}>Level </span>
-                  <span className={classes.infos_text_bold}>
-                    {school?.levelUpdate ? school.levelUpdate : school.level}
-                  </span>
+                  <span className={classes.infos_text_light}>Niveaux enseignés </span>
+                  {isOwner && <span className={classes.infos_text_bold}>
+                    {school?.level}
+                  </span>}
                 </div>
 
                 <div className={classes.profil_info_item}>
                   <House sx={{ color: "#365475", fontSize: "30px" }} />
-                  <span className={classes.infos_text_light}>Sector </span>
-                  <span className={classes.infos_text_bold}>
+                  <span className={classes.infos_text_light}>Secteur </span>
+                  {isOwner && <span className={classes.infos_text_bold}>
                     {school?.sectorUpdate
                       ? school?.sectorUpdate
                       : school?.sector}
-                  </span>
+                  </span>}
                 </div>
 
-                <div className={classes.profil_info_item}>
+                {/* <div className={classes.profil_info_item}>
                   <Language sx={{ color: "#365475", fontSize: "30px" }} />
                   <span className={classes.infos_text_light}>Language </span>
                   <span className={classes.infos_text_bold}>
@@ -378,40 +379,40 @@ const SchoolsProfil = ({ school, getSchool }) => {
                       ? school?.languageUpdate
                       : school?.language}
                   </span>
-                </div>
+                </div> */}
 
                 <div className={classes.profil_info_item}>
                   <Phone sx={{ color: "#365475", fontSize: "30px" }} />
-                  <span className={classes.infos_text_light}>Phone</span>
-                  <span className={classes.infos_text_bold}>
+                  <span className={classes.infos_text_light}>Téléphone</span>
+                  {isOwner && <span className={classes.infos_text_bold}>
                     {school?.phone}
-                  </span>
+                  </span>}
                 </div>
 
                 <div className={classes.profil_info_item}>
                   <Email sx={{ color: "#365475", fontSize: "30px" }} />
                   <span className={classes.infos_text_light}>Email</span>
-                  <span className={classes.infos_text_bold}>
+                  {isOwner && <span className={classes.infos_text_bold}>
                     {school?.email}
-                  </span>
+                  </span>}
                 </div>
 
                 <div className={classes.profil_info_item}>
                   <Web sx={{ color: "#365475", fontSize: "30px" }} />
-                  <span className={classes.infos_text_light}>Web Site</span>
-                  <span className={classes.infos_text_bold}>
+                  <span className={classes.infos_text_light}>Site internet</span>
+                  {isOwner && <span className={classes.infos_text_bold}>
                     <a href={`https://${school?.webSiteUrl}`} target="_blank">
                       {school?.webSiteUrl}
                     </a>
-                  </span>
+                  </span>}
                 </div>
                 {!isOwner ? (
                   <Button to={user ? `/prices/${id}` : "/register"}>
-                    Are you the owner ?
+                  Êtes-vous le propriétaire ?
                   </Button>
                 ) : (
                   <Button onClick={() => setModalIsOpen(true)}>
-                    Modify Infos
+                    Modifier les infos
                   </Button>
                 )}
               </div>
@@ -447,7 +448,7 @@ const SchoolsProfil = ({ school, getSchool }) => {
                   </p>
                 ) : (
                   <p className={classes.profil_infos_school_description}>
-                    No description yet.
+                    Pas encore de description.
                   </p>
                 )}
               </div>
@@ -565,11 +566,11 @@ const SchoolsProfil = ({ school, getSchool }) => {
               </div>
             )}
             <div className={classes.container_input_school_post}>
-              <h4 className={classes.profil_info_title}>What's New Today?</h4>
+              <h4 className={classes.profil_info_title}>Exprimez-vous</h4>
               <div className={classes.container_input}>
-                <Avatar medium image={school?.imgPath7} />
+                <Avatar medium image={school?.imgPath7 ? school?.imgPath7 : schoolIcon } />
                 <button className={classes.input_btn_school}>
-                  What would you like to talk about?
+                  De quoi voulez-vous parler ?
                 </button>
               </div>
             </div>
