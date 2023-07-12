@@ -137,8 +137,8 @@ const ResultsPage = () => {
     const checked = e.target.checked;
 
     const scoCheckboxValues = [
-      "crèche",
-      "jardin d'enfant",
+      // "crèche",
+      // "jardin d'enfant",
       "maternelle",
       "primaire",
       "collège",
@@ -148,8 +148,8 @@ const ResultsPage = () => {
     if (name === "allSco") {
       setScoCheckboxes({
         allSco: checked,
-        crib: checked,
-        kindergarden: checked,
+        // crib: checked,
+        // kindergarden: checked,
         preschool: checked,
         elementary: checked,
         middleSchool: checked,
