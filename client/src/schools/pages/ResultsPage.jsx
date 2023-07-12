@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Button from "../../shared/components/FormElements/Button";
 import { useSelector, useDispatch } from "react-redux";
-import { setPagination } from "../../shared/state/store";
+import { setPagination, setIsFiltering } from "../../shared/state/store";
 import noFound from "../../img/no_found.png";
 import Tooltip from "@mui/material/Tooltip";
 import { Grow, Collapse, CircularProgress } from "@mui/material";
@@ -182,9 +182,12 @@ const ResultsPage = () => {
     if (event) {
       event.preventDefault();
     }
-    setProgress(true);
+    dispatch(setIsFiltering(true));
+    if(selectedFilters.length > 0){
+      setProgress(true);
+    }
     const query = selectedFilters.join(",");
-    console.log(query);
+   
     setFormattedFilters(query);
     try {
       const response = await fetch(
@@ -210,14 +213,13 @@ const ResultsPage = () => {
     setCountryFilter("");
     setDrawerIsOpen(false);
     setProgress(false);
+    dispatch(setIsFiltering(false));
   };
 
   useEffect(() => {
-    if (currentPageRef.current !== currentPage) {
+    if ((currentPageRef.current !== currentPage)) {
       currentPageRef.current = currentPage;
-      if (selectedFilters.length > 0) {
-        handleSearch();
-      }
+      handleSearch();
     }
   }, [currentPage, handleSearch]);
 

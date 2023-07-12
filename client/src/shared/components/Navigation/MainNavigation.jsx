@@ -19,6 +19,7 @@ const MainNavigation = ({ type }) => {
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
   const currentPage = useSelector((state) => state.pagination.currentPage);
+  const isFiltering = useSelector((state) => state.isFiltering);
   const limit = useSelector((state) => state.pagination.pageSize);
   const query = useSelector((state) => state.searchQuery);
   const [progress, setProgress] = useState(false);
@@ -33,6 +34,9 @@ const MainNavigation = ({ type }) => {
 
   const handleSearch = async () => {
     setProgress(true);
+    if (isFiltering) {
+      return;
+    }
     const response = callApi(
       `${process.env.REACT_APP_API_URL}/api/v1/schools/search?query=${searchQuery}&page=${currentPage}&perPage=${limit}`,
       "GET"
@@ -58,12 +62,16 @@ const MainNavigation = ({ type }) => {
 
   //Mise a jour de currentPage
   useEffect(() => {
-
+    currentPageRef.current = currentPage;
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+  
+  // Compare la valeur de currentPage
+  useEffect(() => {
     if (currentPageRef.current !== currentPage) {
-      currentPageRef.current = currentPage;
       handleSearch();
     }
-  }, [currentPage, handleSearch]);
+  }, [handleSearch]);
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
