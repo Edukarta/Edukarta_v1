@@ -148,14 +148,7 @@ const HomePage = () => {
     }
   };
 
-  const handleMouseEnter = () => {
-    setIsBtnOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsBtnOpen(false);
-  };
-
+ 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -173,14 +166,16 @@ const HomePage = () => {
         <Map type="homepage" />
         <div className={classes.floating_btn_container}>
           <div
-            className={`${classes.float_btn_add} ${isBtnOpen && classes.float_active}`}
+            className={`${classes.float_btn_add} ${
+              isBtnOpen && classes.float_active
+            }`}
             onClick={() => setIsBtnOpen((prev) => !prev)}
           >
             <Fab
               style={{
-                backgroundColor: addButtonColor
+                backgroundColor: addButtonColor,
               }}
-              sx={{boxShadow: "0px 0px 5px 3px rgba(0, 0, 0, 0.2)"}}
+              sx={{ boxShadow: "0px 0px 5px 3px rgba(0, 0, 0, 0.2)" }}
               aria-label="add"
             >
               <Add
@@ -202,15 +197,21 @@ const HomePage = () => {
                 </Fab>
               </Tooltip>
               <Tooltip title="Nous contacter" placement="right">
-                <Fab
-                  size="medium"
-                  style={{ backgroundColor: itemButtonColor }}
-                  aria-label="question"
-                >
-                  <QuestionAnswer
-                    sx={{ fontSize: "30px", fontWeight: "300", color: "white" }}
-                  />
-                </Fab>
+                <a href="mailto:edukarta.validator@gmail.com">
+                  <Fab
+                    size="medium"
+                    style={{ backgroundColor: itemButtonColor }}
+                    aria-label="question"
+                  >
+                    <QuestionAnswer
+                      sx={{
+                        fontSize: "30px",
+                        fontWeight: "300",
+                        color: "white",
+                      }}
+                    />
+                  </Fab>
+                </a>
               </Tooltip>
             </div>
           </Collapse>

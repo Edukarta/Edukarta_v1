@@ -32,7 +32,23 @@ const ResultsPage = () => {
   const [cityFilter, setCityFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const [checkAll, setCheckAll] = useState(false);
+  const [supCheckboxes, setSupCheckboxes] = useState({
+    all: false,
+    university: false,
+    special: false,
+    engineer: false,
+    buissnessSchool: false,
+    formationCenter: false,
+  });
+  const [scoCheckboxes, setScoCheckboxes] = useState({
+    allSco: false,
+    crib: false,
+    kindergarden: false,
+    preschool: false,
+    elementary: false,
+    middleSchool: false,
+    highSchool: false,
+  });
   const [formattedFilters, setFormattedFilters] = useState([]);
   const { currentPage, totalPages, totalCount, pageSize } = useSelector(
     (state) => state.pagination
@@ -72,21 +88,84 @@ const ResultsPage = () => {
     }
   };
 
-  const handleFilterChange = (e) => {
+  const handleFilterSupChange = (e) => {
     const name = e.target.name;
-    const value = e.target.value;
     const checked = e.target.checked;
 
-    if (name === "country") {
-      setCountryFilter(value);
-    } else if (name === "city") {
-      setCityFilter(value);
-    } else {
+    const supCheckboxValues = [
+      "université",
+      "école spécialisée",
+      "école d'ingénieur",
+      "école de commerce",
+      "centre de formation",
+    ];
+
+    if (name === "all") {
+      setSupCheckboxes({
+        all: checked,
+        university: checked,
+        special: checked,
+        engineer: checked,
+        buissnessSchool: checked,
+        formationCenter: checked,
+      });
+
       if (checked) {
-        setSelectedFilters([...selectedFilters, value]);
+        setSelectedFilters(supCheckboxValues);
+      } else {
+        setSelectedFilters([]);
+      }
+    } else {
+      setSupCheckboxes((prevCheckboxes) => ({
+        ...prevCheckboxes,
+        [name]: checked,
+        all: false,
+      }));
+
+      if (checked) {
+        setSelectedFilters([...selectedFilters, e.target.value]);
       } else {
         setSelectedFilters(
-          selectedFilters.filter((filter) => filter !== value)
+          selectedFilters.filter((filter) => filter !== e.target.value)
+        );
+      }
+    }
+  };
+
+  const handleFilterScoChange = (e) => {
+    const name = e.target.name;
+    const checked = e.target.checked;
+    
+    const scoCheckboxValues = ["crèche", "jardin d'enfant", "maternelle", "primaire", "collège", "lycée"];
+  
+    if (name === "allSco") {
+      setScoCheckboxes({
+        allSco: checked,
+        crib: checked,
+        kindergarden: checked,
+        preschool: checked,
+        elementary: checked,
+        middleSchool: checked,
+        highSchool: checked,
+      });
+      
+      if (checked) {
+        setSelectedFilters(scoCheckboxValues);
+      } else {
+        setSelectedFilters([]);
+      }
+    } else {
+      setScoCheckboxes(prevCheckboxes => ({
+        ...prevCheckboxes,
+        [name]: checked,
+        allSco: false,
+      }));
+  
+      if (checked) {
+        setSelectedFilters([...selectedFilters, e.target.value]);
+      } else {
+        setSelectedFilters(
+          selectedFilters.filter((filter) => filter !== e.target.value)
         );
       }
     }
@@ -126,6 +205,7 @@ const ResultsPage = () => {
     setProgress(false);
   };
 
+ 
   useEffect(() => {
     if (currentPageRef.current !== currentPage) {
       currentPageRef.current = currentPage;
@@ -199,7 +279,7 @@ const ResultsPage = () => {
                   <span>Sup</span>
                 </div>
               </div>
-              {/* SECTION SCO */}
+              {/* SECTION SCO / MOBILE */}
               <Collapse in={scoIsOpen} collapsedSize={0}>
                 <div className={classes.container_input_level}>
                   <div className={classes.input_filter_goup}>
@@ -208,7 +288,7 @@ const ResultsPage = () => {
                       id="crib"
                       name="crib"
                       value="crèche"
-                      onChange={handleFilterChange}
+                      onChange={handleFilterSupChange}
                     />
                     <label htmlFor="crib">Crèche</label>
                   </div>
@@ -218,7 +298,7 @@ const ResultsPage = () => {
                       id="kindergarden"
                       name="kindergarden"
                       value="jardin d'enfant"
-                      onChange={handleFilterChange}
+                      onChange={handleFilterSupChange}
                     />
                     <label htmlFor="kindergarden">Jardin d'enfant</label>
                   </div>
@@ -228,7 +308,7 @@ const ResultsPage = () => {
                       id="preschool"
                       name="preschool"
                       value="maternelle"
-                      onChange={handleFilterChange}
+                      onChange={handleFilterSupChange}
                     />
                     <label htmlFor="preschool">Maternelle</label>
                   </div>
@@ -238,7 +318,7 @@ const ResultsPage = () => {
                       id="elementary"
                       name="elementary"
                       value="primaire"
-                      onChange={handleFilterChange}
+                      onChange={handleFilterSupChange}
                     />
                     <label htmlFor="elementary">Primaire</label>
                   </div>
@@ -248,7 +328,7 @@ const ResultsPage = () => {
                       id="middleSchool"
                       name="middleSchool"
                       value="collège"
-                      onChange={handleFilterChange}
+                      onChange={handleFilterSupChange}
                     />
                     <label htmlFor="middleSchool">Collège</label>
                   </div>
@@ -258,23 +338,34 @@ const ResultsPage = () => {
                       id="highSchool"
                       name="highSchool"
                       value="lycée"
-                      onChange={handleFilterChange}
+                      onChange={handleFilterSupChange}
                     />
                     <label htmlFor="highschool">Lycée</label>
                   </div>
                 </div>
               </Collapse>
 
-              {/* SECTION SUP */}
+              {/* SECTION SUP / MOBILE */}
               <Collapse in={supIsOpen} collapsedSize={0}>
                 <div className={classes.container_input_level}>
+                  <div className={classes.input_filter_goup}>
+                    <input
+                      type="checkbox"
+                      id="all"
+                      name="all"
+                      value="all"
+                      onChange={handleFilterSupChange}
+                    />
+                    <label htmlFor="all">Tout Cocher</label>
+                  </div>
+
                   <div className={classes.input_filter_goup}>
                     <input
                       type="checkbox"
                       id="university"
                       name="university"
                       value="université"
-                      onChange={handleFilterChange}
+                      onChange={handleFilterSupChange}
                     />
                     <label htmlFor="university">Université</label>
                   </div>
@@ -284,7 +375,7 @@ const ResultsPage = () => {
                       id="special"
                       name="special"
                       value="école spécialisée"
-                      onChange={handleFilterChange}
+                      onChange={handleFilterSupChange}
                     />
                     <label htmlFor="special">école spécialisée</label>
                   </div>
@@ -294,7 +385,7 @@ const ResultsPage = () => {
                       id="engineer"
                       name="engineer"
                       value="école d'ingénieur"
-                      onChange={handleFilterChange}
+                      onChange={handleFilterSupChange}
                     />
                     <label htmlFor="engineer">école d'ingénieur</label>
                   </div>
@@ -305,7 +396,7 @@ const ResultsPage = () => {
                       id="buissnessSchool"
                       name="buissnessSchool"
                       value="école de commerce"
-                      onChange={handleFilterChange}
+                      onChange={handleFilterSupChange}
                     />
                     <label htmlFor="buissnessSchool">école de commerce</label>
                   </div>
@@ -316,7 +407,7 @@ const ResultsPage = () => {
                       id="formationCenter"
                       name="formationCenter"
                       value="centre de formation"
-                      onChange={handleFilterChange}
+                      onChange={handleFilterSupChange}
                     />
                     <label htmlFor="formationCenter">
                       centre de formation Pro
@@ -334,7 +425,7 @@ const ResultsPage = () => {
                   id="public"
                   name="public"
                   value="public"
-                  onChange={handleFilterChange}
+                  onChange={handleFilterSupChange}
                 />
                 <label htmlFor="public">Public</label>
               </div>
@@ -344,7 +435,7 @@ const ResultsPage = () => {
                   id="private"
                   name="private"
                   value="privé"
-                  onChange={handleFilterChange}
+                  onChange={handleFilterSupChange}
                 />
                 <label htmlFor="private">Privé</label>
               </div>
@@ -358,7 +449,7 @@ const ResultsPage = () => {
                   id="yes"
                   name="yes"
                   value="oui"
-                  onChange={handleFilterChange}
+                  onChange={handleFilterSupChange}
                 />
                 <label htmlFor="yes">Oui</label>
               </div>
@@ -368,7 +459,7 @@ const ResultsPage = () => {
                   id="no"
                   name="no"
                   value="non"
-                  onChange={handleFilterChange}
+                  onChange={handleFilterSupChange}
                 />
                 <label htmlFor="no">Non</label>
               </div>
@@ -458,16 +549,28 @@ const ResultsPage = () => {
                     <span>Sup</span>
                   </div>
                 </div>
-                {/* SECTION SCO */}
+                {/* SECTION SCO / DESKTOP */}
                 <Collapse in={scoIsOpen} collapsedSize={0}>
                   <div className={classes.container_input_level}>
+                  <div className={classes.input_filter_goup}>
+                      <input
+                        type="checkbox"
+                        id="allSco"
+                        name="allSco"
+                        value="allSco"
+                        onChange={handleFilterScoChange}
+                      />
+                      <label htmlFor="allSco">Tout Cocher</label>
+                    </div>
+
                     <div className={classes.input_filter_goup}>
                       <input
                         type="checkbox"
                         id="crib"
                         name="crib"
                         value="crèche"
-                        onChange={handleFilterChange}
+                        checked={scoCheckboxes.crib}
+                        onChange={handleFilterScoChange}
                       />
                       <label htmlFor="crib">Crèche</label>
                     </div>
@@ -478,7 +581,8 @@ const ResultsPage = () => {
                         id="kindergarden"
                         name="kindergarden"
                         value="jardin d'enfant"
-                        onChange={handleFilterChange}
+                        checked={scoCheckboxes.kindergarden}
+                        onChange={handleFilterScoChange}
                       />
                       <label htmlFor="kindergarden">Jardin d'enfant</label>
                     </div>
@@ -489,7 +593,8 @@ const ResultsPage = () => {
                         id="preschool"
                         name="preschool"
                         value="maternelle"
-                        onChange={handleFilterChange}
+                        checked={scoCheckboxes.preschool}
+                        onChange={handleFilterScoChange}
                       />
                       <label htmlFor="preschool">Maternelle</label>
                     </div>
@@ -499,7 +604,8 @@ const ResultsPage = () => {
                         id="elementary"
                         name="elementary"
                         value="primaire"
-                        onChange={handleFilterChange}
+                        checked={scoCheckboxes.elementary}
+                        onChange={handleFilterScoChange}
                       />
                       <label htmlFor="elementary">Primaire</label>
                     </div>
@@ -509,7 +615,8 @@ const ResultsPage = () => {
                         id="middleSchool"
                         name="middleSchool"
                         value="collège"
-                        onChange={handleFilterChange}
+                        checked={scoCheckboxes.middleSchool}
+                        onChange={handleFilterScoChange}
                       />
                       <label htmlFor="middleSchool">Collège</label>
                     </div>
@@ -519,26 +626,26 @@ const ResultsPage = () => {
                         id="highSchool"
                         name="highSchool"
                         value="lycée"
-                        onChange={handleFilterChange}
+                        checked={scoCheckboxes.highSchool}
+                        onChange={handleFilterScoChange}
                       />
                       <label htmlFor="highschool">Lycée</label>
                     </div>
                   </div>
                 </Collapse>
 
-                {/* SECTION SUP */}
+                {/* SECTION SUP / DESKTOP */}
                 <Collapse in={supIsOpen} collapsedSize={0}>
                   <div className={classes.container_input_level}>
-
-                  <div className={classes.input_filter_goup}>
-                      {/* <input
+                    <div className={classes.input_filter_goup}>
+                      <input
                         type="checkbox"
                         id="all"
                         name="all"
                         value="all"
-                        onChange={handleFilterChange}
+                        onChange={handleFilterSupChange}
                       />
-                      <label htmlFor="all">Tout Cocher</label> */}
+                      <label htmlFor="all">Tout Cocher</label>
                     </div>
 
                     <div className={classes.input_filter_goup}>
@@ -547,7 +654,8 @@ const ResultsPage = () => {
                         id="university"
                         name="university"
                         value="université"
-                        onChange={handleFilterChange}
+                        checked={supCheckboxes.university}
+                        onChange={handleFilterSupChange}
                       />
                       <label htmlFor="university">Université</label>
                     </div>
@@ -558,7 +666,8 @@ const ResultsPage = () => {
                         id="special"
                         name="special"
                         value="école spécialisée"
-                        onChange={handleFilterChange}
+                        checked={supCheckboxes.special}
+                        onChange={handleFilterSupChange}
                       />
                       <label htmlFor="special">école spécialisée</label>
                     </div>
@@ -569,7 +678,8 @@ const ResultsPage = () => {
                         id="engineer"
                         name="engineer"
                         value="école d'ingénieur"
-                        onChange={handleFilterChange}
+                        checked={supCheckboxes.engineer}
+                        onChange={handleFilterSupChange}
                       />
                       <label htmlFor="engineer">école d'ingénieur</label>
                     </div>
@@ -580,7 +690,8 @@ const ResultsPage = () => {
                         id="buissnessSchool"
                         name="buissnessSchool"
                         value="école de commerce"
-                        onChange={handleFilterChange}
+                        checked={supCheckboxes.buissnessSchool}
+                        onChange={handleFilterSupChange}
                       />
                       <label htmlFor="buissnessSchool">école de commerce</label>
                     </div>
@@ -591,7 +702,8 @@ const ResultsPage = () => {
                         id="formationCenter"
                         name="formationCenter"
                         value="centre de formation"
-                        onChange={handleFilterChange}
+                        checked={supCheckboxes.formationCenter}
+                        onChange={handleFilterSupChange}
                       />
                       <label htmlFor="formationCenter">
                         centre de formation Pro
@@ -609,7 +721,7 @@ const ResultsPage = () => {
                     id="public"
                     name="public"
                     value="public"
-                    onChange={handleFilterChange}
+                    onChange={handleFilterSupChange}
                   />
                   <label htmlFor="public">Public</label>
                 </div>
@@ -619,7 +731,7 @@ const ResultsPage = () => {
                     id="private"
                     name="private"
                     value="privé"
-                    onChange={handleFilterChange}
+                    onChange={handleFilterSupChange}
                   />
                   <label htmlFor="private">Privé</label>
                 </div>
@@ -633,7 +745,7 @@ const ResultsPage = () => {
                     id="yes"
                     name="yes"
                     value="oui"
-                    onChange={handleFilterChange}
+                    onChange={handleFilterSupChange}
                   />
                   <label htmlFor="yes">Oui</label>
                 </div>
@@ -643,7 +755,7 @@ const ResultsPage = () => {
                     id="no"
                     name="no"
                     value="non"
-                    onChange={handleFilterChange}
+                    onChange={handleFilterSupChange}
                   />
                   <label htmlFor="private">Non</label>
                 </div>

@@ -320,7 +320,7 @@ export const filterSchools = async (req, res, next) => {
             { levelUpdate: { $regex: queryValue, $options: "i" } },
             { sector: { $regex: queryValue, $options: "i" } },
             { language: { $regex: queryValue, $options: "i" } },
-            { keywords: { $regex: queryValue, $options: "i" } },
+            // { keywords: { $regex: queryValue, $options: "i" } },
           ],
         });
       } else {
@@ -338,28 +338,30 @@ export const filterSchools = async (req, res, next) => {
               { levelUpdate: { $regex: queryValue, $options: "i" } },
               { sector: { $regex: queryValue, $options: "i" } },
               { language: { $regex: queryValue, $options: "i" } },
-              { keywords: { $regex: queryValue, $options: "i" } },
+              // { keywords: { $regex: queryValue, $options: "i" } },
             ],
           });
         }
       }
       queryObj.$and.push({ $or: orArray });
     }
-    console.log("queryObj", queryObj);
     searchFilters.push(queryObj);
   }
 
-  // Construire les filtres de recherche
-  for (const [key, value] of Object.entries(filters)) {
+   for (const [key, value] of Object.entries(filters)) {
     if (value) {
       const filterValues = value.split(",");
-      const filterObj = { $or: [] };
+      const orArray = [];
       for (const filterValue of filterValues) {
-        filterObj["$or"].push({
-          [key]: { $regex: filterValue, $options: "i" },
-        });
+        const filter = { [key]: { $regex: filterValue, $options: "i" } };
+        const count = await School.countDocuments(filter);
+        if (count > 0) {
+          orArray.push(filter);
+        }
       }
-      searchFilters.push(filterObj);
+      if (orArray.length > 0) {
+        searchFilters.push({ $or: orArray });
+      }
     }
   }
 
@@ -379,16 +381,15 @@ export const filterSchools = async (req, res, next) => {
         { levelUpdate: { $regex: word, $options: "i" } },
         { sector: { $regex: word, $options: "i" } },
         { language: { $regex: word, $options: "i" } },
-        { keywords: { $regex: word, $options: "i" } },
+        // { keywords: { $regex: word, $options: "i" } },
       ],
     })),
   };
 
   const dbFilters = {
-    $and: [conditions, ...searchFilters],
+    $and: [...searchFilters, conditions],
   };
-  console.log(dbFilters);
-
+ 
   try {
     // Récupérer les écoles correspondantes à partir de la base de données
     const totalCount = await School.countDocuments(dbFilters);
