@@ -58,12 +58,7 @@ const MainNavigation = ({ type }) => {
 
   //Mise a jour de currentPage
   useEffect(() => {
-    currentPageRef.current = currentPage;
-    window.scrollTo(0, 0);
-  }, [currentPage]);
 
-  // Compare la valeur de currentPage
-  useEffect(() => {
     if (currentPageRef.current !== currentPage) {
       currentPageRef.current = currentPage;
       handleSearch();
