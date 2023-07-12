@@ -203,10 +203,13 @@ const ResultsPage = () => {
     setProgress(false);
   };
 
+ 
   useEffect(() => {
     if (currentPageRef.current !== currentPage) {
       currentPageRef.current = currentPage;
-      handleSearch();
+      if (selectedFilters.length > 0) {
+        handleSearch();
+      }
     }
   }, [currentPage, handleSearch]);
 
