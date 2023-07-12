@@ -308,7 +308,7 @@ const ResultsPage = () => {
                     />
                     <label htmlFor="crib">Crèche</label>
                   </div> */}
-                  <div className={classes.input_filter_goup}>
+                  {/* <div className={classes.input_filter_goup}>
                     <input
                       type="checkbox"
                       id="kindergarden"
@@ -317,7 +317,7 @@ const ResultsPage = () => {
                       onChange={handleFilterScoChange}
                     />
                     <label htmlFor="kindergarden">Jardin d'enfant</label>
-                  </div>
+                  </div> */}
                   <div className={classes.input_filter_goup}>
                     <input
                       type="checkbox"
@@ -591,7 +591,7 @@ const ResultsPage = () => {
                       <label htmlFor="crib">Crèche</label>
                     </div> */}
 
-                    <div className={classes.input_filter_goup}>
+                    {/* <div className={classes.input_filter_goup}>
                       <input
                         type="checkbox"
                         id="kindergarden"
@@ -601,7 +601,7 @@ const ResultsPage = () => {
                         onChange={handleFilterScoChange}
                       />
                       <label htmlFor="kindergarden">Jardin d'enfant</label>
-                    </div>
+                    </div> */}
 
                     <div className={classes.input_filter_goup}>
                       <input
