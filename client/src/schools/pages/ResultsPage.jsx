@@ -72,12 +72,6 @@ const ResultsPage = () => {
     }
   };
 
-  const handleCheckAll = () => {
-    setCheckAll(!checkAll);
-    setSelectedFilters(checkAll ? [] : formattedFilters);
-  };
-  
-
   const handleFilterChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -96,9 +90,7 @@ const ResultsPage = () => {
         );
       }
     }
-
   };
-
 
   const handleSearch = async (event = null, newCurrentPage = null) => {
     if (event) {
@@ -106,6 +98,7 @@ const ResultsPage = () => {
     }
     setProgress(true);
     const query = selectedFilters.join(",");
+    console.log(query);
     setFormattedFilters(query);
     try {
       const response = await fetch(
@@ -115,6 +108,7 @@ const ResultsPage = () => {
         }
       );
       const data = await response.json();
+      console.log(currentPage);
       dispatch(setSearchResults({ results: data }));
       dispatch(
         setPagination({
@@ -132,12 +126,12 @@ const ResultsPage = () => {
     setProgress(false);
   };
 
-  
-
   useEffect(() => {
     if (currentPageRef.current !== currentPage) {
       currentPageRef.current = currentPage;
-      handleSearch();
+      if (selectedFilters.length > 0) {
+        handleSearch();
+      }
     }
   }, [currentPage, handleSearch]);
 

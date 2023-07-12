@@ -27,10 +27,9 @@ const MainNavigation = ({ type }) => {
   const [searchQuery, setSearchQuery] = useState(query || "");
   const currentPageRef = useRef(currentPage);
 
-  // useEffect(() => {
-  //   console.log(query)
-  //   setSearchQuery(query || "");
-  // }, []);
+  useEffect(() => {
+    setSearchQuery(query || "");
+  }, []);
 
   const handleSearch = async () => {
     setProgress(true);
@@ -57,18 +56,14 @@ const MainNavigation = ({ type }) => {
     setProgress(false);
   };
 
-  //Mise a jour de currentPage
+   // Compare la valeur de currentPage
   useEffect(() => {
-    currentPageRef.current = currentPage;
     window.scrollTo(0, 0);
-  }, [currentPage]);
-
-  // Compare la valeur de currentPage
-  useEffect(() => {
     if (currentPageRef.current !== currentPage) {
+      currentPageRef.current = currentPage;
       handleSearch();
     }
-  }, [handleSearch]);
+  }, [currentPage, handleSearch]);
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
